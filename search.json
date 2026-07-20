@@ -1,0 +1,801 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Estadística para Ciencias de la Computación",
+    "section": "",
+    "text": "Presentación\nEstas notas acompañan el curso de Estadística de la Licenciatura en Ciencias de la Computación de la Universidad de Sonora (5.º semestre). Son la continuación natural del curso de Probabilidad y la antesala de Introducción al Aprendizaje Automático: aquí es donde aprendemos a mirar datos, producir datos y hacer inferencia sobre ellos con criterio.",
+    "crumbs": [
+      "Presentación"
+    ]
+  },
+  {
+    "objectID": "index.html#cómo-están-pensadas-estas-notas",
+    "href": "index.html#cómo-están-pensadas-estas-notas",
+    "title": "Estadística para Ciencias de la Computación",
+    "section": "Cómo están pensadas estas notas",
+    "text": "Cómo están pensadas estas notas\nEl curso descansa en cuatro ideas, y el libro también:\n\nInterpretar antes que calcular. Cada técnica se presenta con la misma secuencia: una pregunta real, la técnica que le corresponde, los supuestos que hay que verificar, el cálculo en R y —lo más importante— la interpretación en español dirigida a alguien que no es estadístico.\nSaber qué técnica usar. A lo largo del libro se construye un mapa de decisión: dado el tipo de pregunta y el tipo de datos, ¿qué técnica corresponde? Cada vez que aparezca este recuadro, estamos agregando una pieza a ese mapa.\n\n\n\n\n\n\nTip¿Qué técnica uso?\n\n\n\nEstos recuadros conectan una pregunta con una técnica. Al final del curso, juntos forman una guía para elegir el procedimiento correcto sin memorizar.\n\n\nPocos contextos, muchas veces. En lugar de cambiar de problema en cada ejemplo, trabajamos sobre unos pocos conjuntos de datos que reaparecen en todo el curso. Los conocerás desde hoy y los verás madurar: primero los describimos, luego entendemos cómo se produjeron y al final les hacemos inferencia.\nR desde el primer día. Todo el cómputo se hace en R. No necesitas saber estadística para empezar a usarlo, ni saber programar (eso ya lo sabes): solo aprender el vocabulario de R que iremos usando.\n\n\n\n\n\n\nNotaInterpreta\n\n\n\nCuando veas este recuadro, el reto no es calcular sino leer el resultado: ¿qué le dirías a la persona que trajo el problema?",
+    "crumbs": [
+      "Presentación"
+    ]
+  },
+  {
+    "objectID": "index.html#los-conjuntos-de-datos-del-curso",
+    "href": "index.html#los-conjuntos-de-datos-del-curso",
+    "title": "Estadística para Ciencias de la Computación",
+    "section": "Los conjuntos de datos del curso",
+    "text": "Los conjuntos de datos del curso\n\n\n\n\n\n\n\n\nConjunto\nQué es\nLo usamos para\n\n\n\n\nPingüinos (Palmer Penguins)\nDatos reales y limpios de 344 pingüinos de la Antártida\nLaboratorio de enseñanza: aprender la mecánica de cada técnica sin fricción\n\n\nGalletas\nCata a ciegas de marcas de galletas, diseñada por el grupo\nDiseño de experimentos y ANOVA\n\n\nLagartijas\nFisiología de lagartijas urbanas vs. de campo\nComparación de dos grupos\n\n\nRickettsiosis\nFactores asociados a un resultado de laboratorio\nProporciones y ji-cuadrada\n\n\nAlgoritmos\nTiempos de ejecución según el tamaño de entrada\nRegresión y pruebas A/B\n\n\nHongos / sustrato\nCultivo de seta en distintos sustratos\nANOVA con datos de laboratorio\n\n\n\nLos conjuntos aplicados están en la carpeta datos/ de este proyecto. Los pingüinos vienen en un paquete de R.",
+    "crumbs": [
+      "Presentación"
+    ]
+  },
+  {
+    "objectID": "index.html#sec-preparacion",
+    "href": "index.html#sec-preparacion",
+    "title": "Estadística para Ciencias de la Computación",
+    "section": "Preparar tu computadora",
+    "text": "Preparar tu computadora\nNecesitas R y RStudio (o Posit Cloud, que corre en el navegador y no requiere instalar nada). Una sola vez, instala los paquetes que usaremos:\n\ninstall.packages(c(\"tidyverse\", \"palmerpenguins\"))\n\n\ntidyverse reúne las herramientas para manipular datos (dplyr) y graficar (ggplot2).\npalmerpenguins trae el conjunto de pingüinos.\n\nCon eso listo, pasa al 1  Exploración de los datos.\n\n\n\n\n\n\nNotaSobre el origen de estas notas\n\n\n\nLa estructura y muchos ejercicios provienen de las notas que la Dra. Gudelia Figueroa desarrolló durante tres décadas para este curso. Esta versión conserva ese esqueleto y lo actualiza con software estadístico, datos actuales y un énfasis explícito en la interpretación.",
+    "crumbs": [
+      "Presentación"
+    ]
+  },
+  {
+    "objectID": "01-exploracion.html",
+    "href": "01-exploracion.html",
+    "title": "1  Exploración de los datos",
+    "section": "",
+    "text": "1.1 ¿Qué es la estadística?\nUsamos la palabra estadística todos los días —“las estadísticas del equipo”, “según las estadísticas”— casi siempre para referirnos a números sueltos. Pero la estadística es más que eso: es la ciencia (y el arte) de obtener conocimiento a partir de datos. Nos permite decir algo sobre un conjunto grande cuando solo hemos observado una parte.\nConviene dividir esa ciencia en tres grandes tareas, que además son la columna vertebral de este curso:\nEste capítulo abre la Parte I: aprender a mirar los datos.",
+    "crumbs": [
+      "I. Exploración de los datos",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Exploración de los datos</span>"
+    ]
+  },
+  {
+    "objectID": "01-exploracion.html#qué-es-la-estadística",
+    "href": "01-exploracion.html#qué-es-la-estadística",
+    "title": "1  Exploración de los datos",
+    "section": "",
+    "text": "Análisis de los datos (Parte I). Lo que tradicionalmente llamamos estadística descriptiva: organizar, resumir y visualizar lo que tenemos frente a nosotros.\nProducción de los datos (Parte II). De dónde salen los datos importa tanto como qué hacemos con ellos. Un muestreo mal hecho o un experimento mal diseñado arruinan cualquier análisis posterior.\nInferencia (Parte III). A partir de una muestra, hacer afirmaciones —bien fundamentadas y con su margen de incertidumbre— sobre la población de la que provino.",
+    "crumbs": [
+      "I. Exploración de los datos",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Exploración de los datos</span>"
+    ]
+  },
+  {
+    "objectID": "01-exploracion.html#individuos-variables-y-la-tabla-de-datos",
+    "href": "01-exploracion.html#individuos-variables-y-la-tabla-de-datos",
+    "title": "1  Exploración de los datos",
+    "section": "1.2 Individuos, variables y la tabla de datos",
+    "text": "1.2 Individuos, variables y la tabla de datos\nCasi todo en este curso empieza con una tabla: las filas son los individuos (o unidades de observación) y las columnas son las variables (lo que medimos de cada individuo).\nTrabajemos con un conjunto real: mediciones de 344 pingüinos de tres especies del archipiélago Palmer, en la Antártida. Es nuestro laboratorio de enseñanza: limpio, ordenado y siempre disponible.\n\nlibrary(palmerpenguins)\nglimpse(penguins)\n#&gt; Rows: 344\n#&gt; Columns: 8\n#&gt; $ species           &lt;fct&gt; Adelie, Adelie, Adelie, Adelie, Adelie, Adelie, Adel…\n#&gt; $ island            &lt;fct&gt; Torgersen, Torgersen, Torgersen, Torgersen, Torgerse…\n#&gt; $ bill_length_mm    &lt;dbl&gt; 39.1, 39.5, 40.3, NA, 36.7, 39.3, 38.9, 39.2, 34.1, …\n#&gt; $ bill_depth_mm     &lt;dbl&gt; 18.7, 17.4, 18.0, NA, 19.3, 20.6, 17.8, 19.6, 18.1, …\n#&gt; $ flipper_length_mm &lt;int&gt; 181, 186, 195, NA, 193, 190, 181, 195, 193, 190, 186…\n#&gt; $ body_mass_g       &lt;int&gt; 3750, 3800, 3250, NA, 3450, 3650, 3625, 4675, 3475, …\n#&gt; $ sex               &lt;fct&gt; male, female, female, NA, female, male, female, male…\n#&gt; $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007…\n\nCada fila es un pingüino (el individuo); cada columna es una variable: su especie, la isla donde se le observó, medidas de su pico y aleta, su masa corporal, su sexo y el año. Una tabla así, con un individuo por fila y una variable por columna, se llama datos ordenados (tidy data), y es la forma en que R espera recibirlos.\n\n\n\n\n\n\nNotaInterpreta\n\n\n\nAntes de calcular nada, responde: en tu tabla, ¿qué es un individuo y qué es cada variable? Confundir esto es la fuente número uno de errores. En los datos de galletas del curso, por ejemplo, ¿el individuo es una marca o una calificación de un juez? (Es cada calificación: una fila por juez y marca.)",
+    "crumbs": [
+      "I. Exploración de los datos",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Exploración de los datos</span>"
+    ]
+  },
+  {
+    "objectID": "01-exploracion.html#tipos-de-variables-y-escalas-de-medición",
+    "href": "01-exploracion.html#tipos-de-variables-y-escalas-de-medición",
+    "title": "1  Exploración de los datos",
+    "section": "1.3 Tipos de variables y escalas de medición",
+    "text": "1.3 Tipos de variables y escalas de medición\nNo todas las variables son iguales, y el tipo determina qué podemos hacer con ellas.\nA grandes rasgos hay dos familias:\n\nCategóricas (o cualitativas): clasifican al individuo en grupos. La especie o la isla del pingüino.\nCuantitativas (o numéricas): miden una cantidad. La masa corporal o el largo de la aleta.\n\nCon más detalle, cada variable vive en una de cuatro escalas de medición:\n\n\n\n\n\n\n\n\nEscala\n¿Qué permite?\nEjemplo\n\n\n\n\nNominal\nSolo distinguir categorías, sin orden\nEspecie del pingüino; marca de galleta\n\n\nOrdinal\nCategorías con orden, pero sin distancia definida\nNivel de agrado (bajo/medio/alto); escalaridad de un dolor\n\n\nIntervalo\nOrden y distancias iguales, pero sin cero absoluto\nTemperatura en °C (0 °C no es “ausencia de temperatura”)\n\n\nRazón\nOrden, distancias y un cero que significa ausencia\nMasa, longitud, tiempo, conteos\n\n\n\nLa escala importa porque decide qué operaciones tienen sentido. Promediar temperaturas corporales (razón) es válido; “promediar” especies (nominal) no lo es.\n\n\n\n\n\n\nTip¿Qué técnica uso?\n\n\n\nEl tipo de variable decide casi todo lo que sigue en el curso: qué gráfica hacer, qué resumen numérico calcular y, más adelante, qué prueba aplicar. Antes de cualquier análisis, clasifica tus variables.",
+    "crumbs": [
+      "I. Exploración de los datos",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Exploración de los datos</span>"
+    ]
+  },
+  {
+    "objectID": "01-exploracion.html#tipos-de-estudio-de-dónde-vienen-los-datos",
+    "href": "01-exploracion.html#tipos-de-estudio-de-dónde-vienen-los-datos",
+    "title": "1  Exploración de los datos",
+    "section": "1.4 Tipos de estudio: ¿de dónde vienen los datos?",
+    "text": "1.4 Tipos de estudio: ¿de dónde vienen los datos?\nAunque este capítulo trata del análisis, conviene desde ya distinguir cómo se producen los datos, porque cambia lo que podemos concluir.\n\nEn un estudio observacional medimos a los individuos sin intervenir. Comparar la temperatura de lagartijas urbanas y de campo es observacional: no asignamos nosotros dónde vive cada lagartija.\nEn un experimento el investigador aplica tratamientos y observa la respuesta. La cata de galletas es un experimento: nosotros decidimos qué marca prueba cada juez y en qué orden.\n\nLa diferencia es enorme para la interpretación: un experimento bien diseñado permite hablar de causa y efecto; un estudio observacional, en general, solo de asociación. Volveremos a esto en la Parte II.\nTambién conviene separar tres formas de obtener datos: un censo mide a toda la población; una muestra mide solo a una parte (bien elegida, para representar al todo); un experimento produce datos nuevos bajo condiciones controladas.\n\n\n\n\n\n\nNotaInterpreta\n\n\n\nSi un titular dice “las personas que toman café viven más”, pregúntate: ¿fue un experimento o un estudio observacional? Casi siempre es observacional, así que no podemos concluir que el café cause mayor longevidad: quizá quienes toman café tienen otros hábitos en común.",
+    "crumbs": [
+      "I. Exploración de los datos",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Exploración de los datos</span>"
+    ]
+  },
+  {
+    "objectID": "01-exploracion.html#primer-contacto-con-r-y-con-nuestros-datos",
+    "href": "01-exploracion.html#primer-contacto-con-r-y-con-nuestros-datos",
+    "title": "1  Exploración de los datos",
+    "section": "1.5 Primer contacto con R y con nuestros datos",
+    "text": "1.5 Primer contacto con R y con nuestros datos\nLos pingüinos ya viven dentro de un paquete de R. Los conjuntos aplicados del curso están en archivos .csv en la carpeta datos/. Se leen así:\n\ngalletas &lt;- read.csv(\"datos/galletas.csv\")\nhead(galletas)\n\n\n  \n\n\n\nPara conocer una tabla nueva, tres funciones bastan al inicio: glimpse() (un vistazo a todas las columnas), head() (las primeras filas) y summary() (un resumen rápido).\n\nsummary(galletas)\n#&gt;       juez        orden         marca               agrado    \n#&gt;  Min.   : 1   Min.   :1.00   Length:100         Min.   :3.00  \n#&gt;  1st Qu.: 7   1st Qu.:1.75   Class :character   1st Qu.:5.00  \n#&gt;  Median :13   Median :2.50   Mode  :character   Median :6.00  \n#&gt;  Mean   :13   Mean   :2.50                      Mean   :6.26  \n#&gt;  3rd Qu.:19   3rd Qu.:3.25                      3rd Qu.:7.00  \n#&gt;  Max.   :25   Max.   :4.00                      Max.   :9.00\n\nFíjate que R trató agrado como numérica (correcto: es una calificación en escala 1–9) y marca como texto. Muchas veces querremos decirle a R que una columna es categórica; en R eso se llama factor:\n\ngalletas$marca &lt;- factor(galletas$marca)\nlevels(galletas$marca)\n#&gt; [1] \"Chokis\"     \"GreatValue\" \"Lors\"       \"Oreo\"",
+    "crumbs": [
+      "I. Exploración de los datos",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Exploración de los datos</span>"
+    ]
+  },
+  {
+    "objectID": "01-exploracion.html#gráficas-para-variables-categóricas",
+    "href": "01-exploracion.html#gráficas-para-variables-categóricas",
+    "title": "1  Exploración de los datos",
+    "section": "1.6 Gráficas para variables categóricas",
+    "text": "1.6 Gráficas para variables categóricas\nLa pregunta natural sobre una variable categórica es ¿cuántos hay de cada categoría? La respuesta se ve en un diagrama de barras.\n\nggplot(penguins, aes(x = species)) +\n  geom_bar(fill = \"#1F4E79\") +\n  labs(x = \"Especie\", y = \"Cantidad\")\n\n\n\n\n\n\n\nFigura 1.1: Número de pingüinos por especie.\n\n\n\n\n\nCada barra cuenta cuántos individuos caen en esa categoría. Podemos cruzar dos variables categóricas —especie e isla— coloreando o separando las barras:\n\nggplot(penguins, aes(x = island, fill = species)) +\n  geom_bar(position = \"dodge\") +\n  labs(x = \"Isla\", y = \"Cantidad\", fill = \"Especie\")\n\n\n\n\n\n\n\nFigura 1.2: Distribución de especies por isla.\n\n\n\n\n\n\n\n\n\n\n\nNotaInterpreta\n\n\n\nLa segunda gráfica ya cuenta una historia: la especie Gentoo solo aparece en Biscoe y Chinstrap solo en Dream, mientras que Adelie está en las tres islas. Una gráfica bien hecha responde una pregunta de un vistazo.",
+    "crumbs": [
+      "I. Exploración de los datos",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Exploración de los datos</span>"
+    ]
+  },
+  {
+    "objectID": "01-exploracion.html#gráficas-para-variables-cuantitativas",
+    "href": "01-exploracion.html#gráficas-para-variables-cuantitativas",
+    "title": "1  Exploración de los datos",
+    "section": "1.7 Gráficas para variables cuantitativas",
+    "text": "1.7 Gráficas para variables cuantitativas\nPara una variable cuantitativa la pregunta es ¿cómo se distribuyen los valores? La herramienta básica es el histograma: parte el rango en intervalos y cuenta cuántos individuos caen en cada uno.\n\nggplot(penguins, aes(x = body_mass_g)) +\n  geom_histogram(binwidth = 250, fill = \"#1F4E79\", color = \"white\") +\n  labs(x = \"Masa corporal (g)\", y = \"Cantidad\")\n\n\n\n\n\n\n\nFigura 1.3: Distribución de la masa corporal de los pingüinos.\n\n\n\n\n\nAl leer un histograma nos fijamos en tres cosas: el centro (¿alrededor de qué valor se acumulan los datos?), la dispersión (¿qué tan esparcidos están?) y la forma (¿simétrica?, ¿sesgada?, ¿con uno o varios picos?). Esta masa se ve con dos montículos —una pista de que hay grupos distintos mezclados (las especies)—. Separándola por especie lo confirmamos:\n\nggplot(penguins, aes(x = body_mass_g, fill = species)) +\n  geom_histogram(binwidth = 250, alpha = 0.7, position = \"identity\") +\n  labs(x = \"Masa corporal (g)\", y = \"Cantidad\", fill = \"Especie\")\n\n\n\n\n\n\n\nFigura 1.4: Masa corporal por especie.\n\n\n\n\n\n\n\n\n\n\n\nTip¿Qué técnica uso?\n\n\n\nPrimera entrada de nuestro mapa de decisión, según el tipo de variable a graficar:\n\n\n\nQuiero ver…\nTipo de variable\nGráfica\n\n\n\n\nCuántos hay de cada categoría\n1 categórica\nDiagrama de barras\n\n\nCómo se distribuyen los valores\n1 cuantitativa\nHistograma\n\n\nRelación entre dos categóricas\n2 categóricas\nBarras agrupadas\n\n\n\nEn el próximo capítulo agregaremos los resúmenes numéricos (media, mediana, desviación) y el diagrama de caja.",
+    "crumbs": [
+      "I. Exploración de los datos",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Exploración de los datos</span>"
+    ]
+  },
+  {
+    "objectID": "01-exploracion.html#resumen",
+    "href": "01-exploracion.html#resumen",
+    "title": "1  Exploración de los datos",
+    "section": "1.8 Resumen",
+    "text": "1.8 Resumen\nEmpezamos por lo más importante y lo más olvidado: entender los datos antes de tocarlos. Identificamos individuos y variables, clasificamos cada variable por su tipo y escala, distinguimos estudios observacionales de experimentos, y elegimos la gráfica según el tipo de variable. Todo lo demás en el curso se apoya en esto: si clasificas bien tus variables, casi siempre sabrás qué hacer con ellas.",
+    "crumbs": [
+      "I. Exploración de los datos",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Exploración de los datos</span>"
+    ]
+  },
+  {
+    "objectID": "01-exploracion.html#ejercicios",
+    "href": "01-exploracion.html#ejercicios",
+    "title": "1  Exploración de los datos",
+    "section": "1.9 Ejercicios",
+    "text": "1.9 Ejercicios\n\nTipos y escalas. Para cada variable de penguins (species, island, bill_length_mm, body_mass_g, sex, year), indica si es categórica o cuantitativa y en qué escala de medición vive.\nIndividuos y variables. Abre datos/lagartijas.csv con read.csv(). ¿Qué es un individuo en esa tabla? Lista sus variables y clasifícalas.\nObservacional o experimental. Clasifica cada estudio y justifica en una frase:\n\nSe registra la temperatura corporal de lagartijas encontradas en la ciudad y en el campo.\nSe asigna al azar a cada juez un orden para probar cuatro marcas de galletas y se mide su agrado.\nSe comparan las calificaciones de estudiantes que asistieron a asesorías contra las de quienes no.\n\nBarras. Con los datos de hongos_sustrato.csv, haz un diagrama de barras del número de bolsas por sustrato. ¿Está balanceado el experimento?\nHistograma y forma. Grafica el histograma de flipper_length_mm de los pingüinos con binwidth = 5. Describe centro, dispersión y forma. ¿Ves indicios de más de un grupo?\nEscala de medición (opción múltiple). El nivel de agrado en una escala “bajo / medio / alto” es una variable de escala: (a) nominal, (b) ordinal, (c) intervalo, (d) razón. Justifica.",
+    "crumbs": [
+      "I. Exploración de los datos",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Exploración de los datos</span>"
+    ]
+  },
+  {
+    "objectID": "02-descriptiva.html",
+    "href": "02-descriptiva.html",
+    "title": "2  Análisis numérico de datos",
+    "section": "",
+    "text": "2.1 Medidas de localización: media, mediana, cuartiles\n(En construcción.)",
+    "crumbs": [
+      "I. Exploración de los datos",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Análisis numérico de datos</span>"
+    ]
+  },
+  {
+    "objectID": "02-descriptiva.html#medidas-de-dispersión-rango-varianza-desviación-estándar-ric",
+    "href": "02-descriptiva.html#medidas-de-dispersión-rango-varianza-desviación-estándar-ric",
+    "title": "2  Análisis numérico de datos",
+    "section": "2.2 Medidas de dispersión: rango, varianza, desviación estándar, RIC",
+    "text": "2.2 Medidas de dispersión: rango, varianza, desviación estándar, RIC\n(En construcción.)",
+    "crumbs": [
+      "I. Exploración de los datos",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Análisis numérico de datos</span>"
+    ]
+  },
+  {
+    "objectID": "02-descriptiva.html#el-diagrama-de-caja-boxplot-y-la-comparación-entre-grupos",
+    "href": "02-descriptiva.html#el-diagrama-de-caja-boxplot-y-la-comparación-entre-grupos",
+    "title": "2  Análisis numérico de datos",
+    "section": "2.3 El diagrama de caja (boxplot) y la comparación entre grupos",
+    "text": "2.3 El diagrama de caja (boxplot) y la comparación entre grupos\n(En construcción.)",
+    "crumbs": [
+      "I. Exploración de los datos",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Análisis numérico de datos</span>"
+    ]
+  },
+  {
+    "objectID": "02-descriptiva.html#forma-de-una-distribución-y-el-q-q-plot-complemento-para-el-examen-de-la-mcd",
+    "href": "02-descriptiva.html#forma-de-una-distribución-y-el-q-q-plot-complemento-para-el-examen-de-la-mcd",
+    "title": "2  Análisis numérico de datos",
+    "section": "2.4 Forma de una distribución y el Q-Q plot (complemento para el examen de la MCD)",
+    "text": "2.4 Forma de una distribución y el Q-Q plot (complemento para el examen de la MCD)\n(En construcción.)",
+    "crumbs": [
+      "I. Exploración de los datos",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Análisis numérico de datos</span>"
+    ]
+  },
+  {
+    "objectID": "02-descriptiva.html#resúmenes-por-grupo-con-dplyr",
+    "href": "02-descriptiva.html#resúmenes-por-grupo-con-dplyr",
+    "title": "2  Análisis numérico de datos",
+    "section": "2.5 Resúmenes por grupo con dplyr",
+    "text": "2.5 Resúmenes por grupo con dplyr\n(En construcción.)\n\n\n\n\n\n\nTip¿Qué técnica uso?\n\n\n\nResumir una variable cuantitativa: ¿centro? → media/mediana; ¿dispersión? → desviación/RIC; ¿comparar grupos? → boxplot.",
+    "crumbs": [
+      "I. Exploración de los datos",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Análisis numérico de datos</span>"
+    ]
+  },
+  {
+    "objectID": "02-descriptiva.html#ejercicios",
+    "href": "02-descriptiva.html#ejercicios",
+    "title": "2  Análisis numérico de datos",
+    "section": "2.6 Ejercicios",
+    "text": "2.6 Ejercicios\nPor desarrollar (banco de la Dra. Figueroa reorganizado + reactivos nuevos).",
+    "crumbs": [
+      "I. Exploración de los datos",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Análisis numérico de datos</span>"
+    ]
+  },
+  {
+    "objectID": "03-relaciones.html",
+    "href": "03-relaciones.html",
+    "title": "3  Relaciones entre variables",
+    "section": "",
+    "text": "3.1 Variable dependiente y variable regresora\n(En construcción.)",
+    "crumbs": [
+      "I. Exploración de los datos",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Relaciones entre variables</span>"
+    ]
+  },
+  {
+    "objectID": "03-relaciones.html#diagrama-de-dispersión",
+    "href": "03-relaciones.html#diagrama-de-dispersión",
+    "title": "3  Relaciones entre variables",
+    "section": "3.2 Diagrama de dispersión",
+    "text": "3.2 Diagrama de dispersión\n(En construcción.)",
+    "crumbs": [
+      "I. Exploración de los datos",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Relaciones entre variables</span>"
+    ]
+  },
+  {
+    "objectID": "03-relaciones.html#correlación-de-pearson",
+    "href": "03-relaciones.html#correlación-de-pearson",
+    "title": "3  Relaciones entre variables",
+    "section": "3.3 Correlación de Pearson",
+    "text": "3.3 Correlación de Pearson\n(En construcción.)",
+    "crumbs": [
+      "I. Exploración de los datos",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Relaciones entre variables</span>"
+    ]
+  },
+  {
+    "objectID": "03-relaciones.html#regresión-por-mínimos-cuadrados-enfoque-descriptivo",
+    "href": "03-relaciones.html#regresión-por-mínimos-cuadrados-enfoque-descriptivo",
+    "title": "3  Relaciones entre variables",
+    "section": "3.4 Regresión por mínimos cuadrados (enfoque descriptivo)",
+    "text": "3.4 Regresión por mínimos cuadrados (enfoque descriptivo)\n(En construcción.)",
+    "crumbs": [
+      "I. Exploración de los datos",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Relaciones entre variables</span>"
+    ]
+  },
+  {
+    "objectID": "03-relaciones.html#análisis-gráfico-de-residuales",
+    "href": "03-relaciones.html#análisis-gráfico-de-residuales",
+    "title": "3  Relaciones entre variables",
+    "section": "3.5 Análisis gráfico de residuales",
+    "text": "3.5 Análisis gráfico de residuales\n(En construcción.)",
+    "crumbs": [
+      "I. Exploración de los datos",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Relaciones entre variables</span>"
+    ]
+  },
+  {
+    "objectID": "03-relaciones.html#matriz-de-correlación-entre-varias-variables",
+    "href": "03-relaciones.html#matriz-de-correlación-entre-varias-variables",
+    "title": "3  Relaciones entre variables",
+    "section": "3.6 Matriz de correlación entre varias variables",
+    "text": "3.6 Matriz de correlación entre varias variables\n(En construcción.)\n\n\n\n\n\n\nTip¿Qué técnica uso?\n\n\n\nDos variables cuantitativas: ¿fuerza de la relación? → correlación; ¿predecir Y a partir de X? → recta de regresión.",
+    "crumbs": [
+      "I. Exploración de los datos",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Relaciones entre variables</span>"
+    ]
+  },
+  {
+    "objectID": "03-relaciones.html#ejercicios",
+    "href": "03-relaciones.html#ejercicios",
+    "title": "3  Relaciones entre variables",
+    "section": "3.7 Ejercicios",
+    "text": "3.7 Ejercicios\nPor desarrollar (banco de la Dra. Figueroa reorganizado + reactivos nuevos).",
+    "crumbs": [
+      "I. Exploración de los datos",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Relaciones entre variables</span>"
+    ]
+  },
+  {
+    "objectID": "04-muestreo.html",
+    "href": "04-muestreo.html",
+    "title": "4  Producción de datos: muestreo",
+    "section": "",
+    "text": "4.1 Población, muestra y unidad de muestreo\n(En construcción.)",
+    "crumbs": [
+      "II. Producción de los datos",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Producción de datos: muestreo</span>"
+    ]
+  },
+  {
+    "objectID": "04-muestreo.html#sesgo-de-selección-y-sesgo-de-medición",
+    "href": "04-muestreo.html#sesgo-de-selección-y-sesgo-de-medición",
+    "title": "4  Producción de datos: muestreo",
+    "section": "4.2 Sesgo de selección y sesgo de medición",
+    "text": "4.2 Sesgo de selección y sesgo de medición\n(En construcción.)",
+    "crumbs": [
+      "II. Producción de los datos",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Producción de datos: muestreo</span>"
+    ]
+  },
+  {
+    "objectID": "04-muestreo.html#margen-de-error-errores-de-muestreo-y-no-de-muestreo",
+    "href": "04-muestreo.html#margen-de-error-errores-de-muestreo-y-no-de-muestreo",
+    "title": "4  Producción de datos: muestreo",
+    "section": "4.3 Margen de error; errores de muestreo y no de muestreo",
+    "text": "4.3 Margen de error; errores de muestreo y no de muestreo\n(En construcción.)",
+    "crumbs": [
+      "II. Producción de los datos",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Producción de datos: muestreo</span>"
+    ]
+  },
+  {
+    "objectID": "04-muestreo.html#muestreo-aleatorio-simple-estratificado-por-conglomerados-sistemático-y-multietápico",
+    "href": "04-muestreo.html#muestreo-aleatorio-simple-estratificado-por-conglomerados-sistemático-y-multietápico",
+    "title": "4  Producción de datos: muestreo",
+    "section": "4.4 Muestreo aleatorio simple, estratificado, por conglomerados, sistemático y multietápico",
+    "text": "4.4 Muestreo aleatorio simple, estratificado, por conglomerados, sistemático y multietápico\n(En construcción.)",
+    "crumbs": [
+      "II. Producción de los datos",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Producción de datos: muestreo</span>"
+    ]
+  },
+  {
+    "objectID": "04-muestreo.html#simular-muestreos-en-r-y-ver-el-efecto-del-sesgo",
+    "href": "04-muestreo.html#simular-muestreos-en-r-y-ver-el-efecto-del-sesgo",
+    "title": "4  Producción de datos: muestreo",
+    "section": "4.5 Simular muestreos en R y ver el efecto del sesgo",
+    "text": "4.5 Simular muestreos en R y ver el efecto del sesgo\n(En construcción.)\n\n\n\n\n\n\nTip¿Qué técnica uso?\n\n\n\nAntes de recolectar: ¿la muestra representa a la población? Un buen muestreo previene sesgos que ningún análisis posterior corrige.",
+    "crumbs": [
+      "II. Producción de los datos",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Producción de datos: muestreo</span>"
+    ]
+  },
+  {
+    "objectID": "04-muestreo.html#ejercicios",
+    "href": "04-muestreo.html#ejercicios",
+    "title": "4  Producción de datos: muestreo",
+    "section": "4.6 Ejercicios",
+    "text": "4.6 Ejercicios\nPor desarrollar (banco de la Dra. Figueroa reorganizado + reactivos nuevos).",
+    "crumbs": [
+      "II. Producción de los datos",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Producción de datos: muestreo</span>"
+    ]
+  },
+  {
+    "objectID": "05-experimentos.html",
+    "href": "05-experimentos.html",
+    "title": "5  Producción de datos: diseño de experimentos",
+    "section": "",
+    "text": "5.1 Unidad experimental, tratamientos, factores y niveles\n(En construcción.)",
+    "crumbs": [
+      "II. Producción de los datos",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Producción de datos: diseño de experimentos</span>"
+    ]
+  },
+  {
+    "objectID": "05-experimentos.html#los-tres-principios-control-aleatorización-y-réplicas",
+    "href": "05-experimentos.html#los-tres-principios-control-aleatorización-y-réplicas",
+    "title": "5  Producción de datos: diseño de experimentos",
+    "section": "5.2 Los tres principios: control, aleatorización y réplicas",
+    "text": "5.2 Los tres principios: control, aleatorización y réplicas\n(En construcción.)",
+    "crumbs": [
+      "II. Producción de los datos",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Producción de datos: diseño de experimentos</span>"
+    ]
+  },
+  {
+    "objectID": "05-experimentos.html#sesgos-en-experimentos-con-personas-orden-de-prueba-cegado-contaminación-entre-jueces",
+    "href": "05-experimentos.html#sesgos-en-experimentos-con-personas-orden-de-prueba-cegado-contaminación-entre-jueces",
+    "title": "5  Producción de datos: diseño de experimentos",
+    "section": "5.3 Sesgos en experimentos con personas: orden de prueba, cegado, contaminación entre jueces",
+    "text": "5.3 Sesgos en experimentos con personas: orden de prueba, cegado, contaminación entre jueces\n(En construcción.)",
+    "crumbs": [
+      "II. Producción de los datos",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Producción de datos: diseño de experimentos</span>"
+    ]
+  },
+  {
+    "objectID": "05-experimentos.html#ejemplos-de-diseños-sencillos",
+    "href": "05-experimentos.html#ejemplos-de-diseños-sencillos",
+    "title": "5  Producción de datos: diseño de experimentos",
+    "section": "5.4 Ejemplos de diseños sencillos",
+    "text": "5.4 Ejemplos de diseños sencillos\n(En construcción.)",
+    "crumbs": [
+      "II. Producción de los datos",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Producción de datos: diseño de experimentos</span>"
+    ]
+  },
+  {
+    "objectID": "05-experimentos.html#diseño-del-experimento-de-galletas-sesión-en-clase",
+    "href": "05-experimentos.html#diseño-del-experimento-de-galletas-sesión-en-clase",
+    "title": "5  Producción de datos: diseño de experimentos",
+    "section": "5.5 Diseño del experimento de galletas (sesión en clase)",
+    "text": "5.5 Diseño del experimento de galletas (sesión en clase)\n(En construcción.)\n\n\n\n\n\n\nTip¿Qué técnica uso?\n\n\n\n¿Quieres hablar de causa y efecto? Necesitas un experimento con aleatorización y control, no solo observación.",
+    "crumbs": [
+      "II. Producción de los datos",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Producción de datos: diseño de experimentos</span>"
+    ]
+  },
+  {
+    "objectID": "05-experimentos.html#ejercicios",
+    "href": "05-experimentos.html#ejercicios",
+    "title": "5  Producción de datos: diseño de experimentos",
+    "section": "5.6 Ejercicios",
+    "text": "5.6 Ejercicios\nPor desarrollar (banco de la Dra. Figueroa reorganizado + reactivos nuevos).",
+    "crumbs": [
+      "II. Producción de los datos",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Producción de datos: diseño de experimentos</span>"
+    ]
+  },
+  {
+    "objectID": "06-muestrales.html",
+    "href": "06-muestrales.html",
+    "title": "6  Distribuciones muestrales y TCL",
+    "section": "",
+    "text": "6.1 Parámetros y estadísticos\n(En construcción.)",
+    "crumbs": [
+      "III. Inferencia estadística",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Distribuciones muestrales y TCL</span>"
+    ]
+  },
+  {
+    "objectID": "06-muestrales.html#el-concepto-de-distribución-muestral",
+    "href": "06-muestrales.html#el-concepto-de-distribución-muestral",
+    "title": "6  Distribuciones muestrales y TCL",
+    "section": "6.2 El concepto de distribución muestral",
+    "text": "6.2 El concepto de distribución muestral\n(En construcción.)",
+    "crumbs": [
+      "III. Inferencia estadística",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Distribuciones muestrales y TCL</span>"
+    ]
+  },
+  {
+    "objectID": "06-muestrales.html#distribución-muestral-de-la-media",
+    "href": "06-muestrales.html#distribución-muestral-de-la-media",
+    "title": "6  Distribuciones muestrales y TCL",
+    "section": "6.3 Distribución muestral de la media",
+    "text": "6.3 Distribución muestral de la media\n(En construcción.)",
+    "crumbs": [
+      "III. Inferencia estadística",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Distribuciones muestrales y TCL</span>"
+    ]
+  },
+  {
+    "objectID": "06-muestrales.html#teorema-central-del-límite",
+    "href": "06-muestrales.html#teorema-central-del-límite",
+    "title": "6  Distribuciones muestrales y TCL",
+    "section": "6.4 Teorema Central del Límite",
+    "text": "6.4 Teorema Central del Límite\n(En construcción.)",
+    "crumbs": [
+      "III. Inferencia estadística",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Distribuciones muestrales y TCL</span>"
+    ]
+  },
+  {
+    "objectID": "06-muestrales.html#distribución-muestral-de-una-proporción",
+    "href": "06-muestrales.html#distribución-muestral-de-una-proporción",
+    "title": "6  Distribuciones muestrales y TCL",
+    "section": "6.5 Distribución muestral de una proporción",
+    "text": "6.5 Distribución muestral de una proporción\n(En construcción.)",
+    "crumbs": [
+      "III. Inferencia estadística",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Distribuciones muestrales y TCL</span>"
+    ]
+  },
+  {
+    "objectID": "06-muestrales.html#ilustrar-el-tcl-por-simulación-en-r",
+    "href": "06-muestrales.html#ilustrar-el-tcl-por-simulación-en-r",
+    "title": "6  Distribuciones muestrales y TCL",
+    "section": "6.6 Ilustrar el TCL por simulación en R",
+    "text": "6.6 Ilustrar el TCL por simulación en R\n(En construcción.)\n\n\n\n\n\n\nTip¿Qué técnica uso?\n\n\n\nLa distribución muestral es el puente entre una muestra y la población: nos dice cuánto varía un estadístico de muestra en muestra.",
+    "crumbs": [
+      "III. Inferencia estadística",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Distribuciones muestrales y TCL</span>"
+    ]
+  },
+  {
+    "objectID": "06-muestrales.html#ejercicios",
+    "href": "06-muestrales.html#ejercicios",
+    "title": "6  Distribuciones muestrales y TCL",
+    "section": "6.7 Ejercicios",
+    "text": "6.7 Ejercicios\nPor desarrollar (banco de la Dra. Figueroa reorganizado + reactivos nuevos).",
+    "crumbs": [
+      "III. Inferencia estadística",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Distribuciones muestrales y TCL</span>"
+    ]
+  },
+  {
+    "objectID": "07-estimacion-pruebas.html",
+    "href": "07-estimacion-pruebas.html",
+    "title": "7  Estimación y prueba de hipótesis",
+    "section": "",
+    "text": "7.1 Estimación puntual y por intervalos de confianza\n(En construcción.)",
+    "crumbs": [
+      "III. Inferencia estadística",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Estimación y prueba de hipótesis</span>"
+    ]
+  },
+  {
+    "objectID": "07-estimacion-pruebas.html#intervalo-de-confianza-para-una-media",
+    "href": "07-estimacion-pruebas.html#intervalo-de-confianza-para-una-media",
+    "title": "7  Estimación y prueba de hipótesis",
+    "section": "7.2 Intervalo de confianza para una media",
+    "text": "7.2 Intervalo de confianza para una media\n(En construcción.)",
+    "crumbs": [
+      "III. Inferencia estadística",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Estimación y prueba de hipótesis</span>"
+    ]
+  },
+  {
+    "objectID": "07-estimacion-pruebas.html#la-lógica-de-la-prueba-de-hipótesis",
+    "href": "07-estimacion-pruebas.html#la-lógica-de-la-prueba-de-hipótesis",
+    "title": "7  Estimación y prueba de hipótesis",
+    "section": "7.3 La lógica de la prueba de hipótesis",
+    "text": "7.3 La lógica de la prueba de hipótesis\n(En construcción.)",
+    "crumbs": [
+      "III. Inferencia estadística",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Estimación y prueba de hipótesis</span>"
+    ]
+  },
+  {
+    "objectID": "07-estimacion-pruebas.html#prueba-de-hipótesis-para-una-media",
+    "href": "07-estimacion-pruebas.html#prueba-de-hipótesis-para-una-media",
+    "title": "7  Estimación y prueba de hipótesis",
+    "section": "7.4 Prueba de hipótesis para una media",
+    "text": "7.4 Prueba de hipótesis para una media\n(En construcción.)",
+    "crumbs": [
+      "III. Inferencia estadística",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Estimación y prueba de hipótesis</span>"
+    ]
+  },
+  {
+    "objectID": "07-estimacion-pruebas.html#usos-y-abusos-de-la-inferencia-p-hacking-significancia-vs.-relevancia-práctica",
+    "href": "07-estimacion-pruebas.html#usos-y-abusos-de-la-inferencia-p-hacking-significancia-vs.-relevancia-práctica",
+    "title": "7  Estimación y prueba de hipótesis",
+    "section": "7.5 Usos y abusos de la inferencia: p-hacking, significancia vs. relevancia práctica",
+    "text": "7.5 Usos y abusos de la inferencia: p-hacking, significancia vs. relevancia práctica\n(En construcción.)\n\n\n\n\n\n\nTip¿Qué técnica uso?\n\n\n\nUna muestra, un parámetro: ¿estimarlo con margen? → intervalo de confianza; ¿contrastarlo con un valor? → prueba de hipótesis.",
+    "crumbs": [
+      "III. Inferencia estadística",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Estimación y prueba de hipótesis</span>"
+    ]
+  },
+  {
+    "objectID": "07-estimacion-pruebas.html#ejercicios",
+    "href": "07-estimacion-pruebas.html#ejercicios",
+    "title": "7  Estimación y prueba de hipótesis",
+    "section": "7.6 Ejercicios",
+    "text": "7.6 Ejercicios\nPor desarrollar (banco de la Dra. Figueroa reorganizado + reactivos nuevos).",
+    "crumbs": [
+      "III. Inferencia estadística",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Estimación y prueba de hipótesis</span>"
+    ]
+  },
+  {
+    "objectID": "08-dos-muestras.html",
+    "href": "08-dos-muestras.html",
+    "title": "8  Inferencia para dos parámetros",
+    "section": "",
+    "text": "8.1 Intervalo y prueba para la diferencia de dos medias (independientes y pareadas)\n(En construcción.)",
+    "crumbs": [
+      "III. Inferencia estadística",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Inferencia para dos parámetros</span>"
+    ]
+  },
+  {
+    "objectID": "08-dos-muestras.html#la-prueba-ab-como-comparación-de-dos-grupos",
+    "href": "08-dos-muestras.html#la-prueba-ab-como-comparación-de-dos-grupos",
+    "title": "8  Inferencia para dos parámetros",
+    "section": "8.2 La prueba A/B como comparación de dos grupos",
+    "text": "8.2 La prueba A/B como comparación de dos grupos\n(En construcción.)",
+    "crumbs": [
+      "III. Inferencia estadística",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Inferencia para dos parámetros</span>"
+    ]
+  },
+  {
+    "objectID": "08-dos-muestras.html#comparación-de-varianzas-complemento-para-el-examen-de-la-mcd",
+    "href": "08-dos-muestras.html#comparación-de-varianzas-complemento-para-el-examen-de-la-mcd",
+    "title": "8  Inferencia para dos parámetros",
+    "section": "8.3 Comparación de varianzas (complemento para el examen de la MCD)",
+    "text": "8.3 Comparación de varianzas (complemento para el examen de la MCD)\n(En construcción.)",
+    "crumbs": [
+      "III. Inferencia estadística",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Inferencia para dos parámetros</span>"
+    ]
+  },
+  {
+    "objectID": "08-dos-muestras.html#verificación-de-supuestos",
+    "href": "08-dos-muestras.html#verificación-de-supuestos",
+    "title": "8  Inferencia para dos parámetros",
+    "section": "8.4 Verificación de supuestos",
+    "text": "8.4 Verificación de supuestos\n(En construcción.)\n\n\n\n\n\n\nTip¿Qué técnica uso?\n\n\n\nDos grupos, una variable cuantitativa: prueba t para la diferencia de medias. Es exactamente lo que hay detrás de una prueba A/B.",
+    "crumbs": [
+      "III. Inferencia estadística",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Inferencia para dos parámetros</span>"
+    ]
+  },
+  {
+    "objectID": "08-dos-muestras.html#ejercicios",
+    "href": "08-dos-muestras.html#ejercicios",
+    "title": "8  Inferencia para dos parámetros",
+    "section": "8.5 Ejercicios",
+    "text": "8.5 Ejercicios\nPor desarrollar (banco de la Dra. Figueroa reorganizado + reactivos nuevos).",
+    "crumbs": [
+      "III. Inferencia estadística",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Inferencia para dos parámetros</span>"
+    ]
+  },
+  {
+    "objectID": "09-enumerativos.html",
+    "href": "09-enumerativos.html",
+    "title": "9  Inferencia para datos enumerativos",
+    "section": "",
+    "text": "9.1 Intervalo y prueba para una proporción\n(En construcción.)",
+    "crumbs": [
+      "III. Inferencia estadística",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Inferencia para datos enumerativos</span>"
+    ]
+  },
+  {
+    "objectID": "09-enumerativos.html#diferencia-de-dos-proporciones",
+    "href": "09-enumerativos.html#diferencia-de-dos-proporciones",
+    "title": "9  Inferencia para datos enumerativos",
+    "section": "9.2 Diferencia de dos proporciones",
+    "text": "9.2 Diferencia de dos proporciones\n(En construcción.)",
+    "crumbs": [
+      "III. Inferencia estadística",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Inferencia para datos enumerativos</span>"
+    ]
+  },
+  {
+    "objectID": "09-enumerativos.html#tablas-de-contingencia",
+    "href": "09-enumerativos.html#tablas-de-contingencia",
+    "title": "9  Inferencia para datos enumerativos",
+    "section": "9.3 Tablas de contingencia",
+    "text": "9.3 Tablas de contingencia\n(En construcción.)",
+    "crumbs": [
+      "III. Inferencia estadística",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Inferencia para datos enumerativos</span>"
+    ]
+  },
+  {
+    "objectID": "09-enumerativos.html#la-prueba-ji-cuadrada-de-independencia",
+    "href": "09-enumerativos.html#la-prueba-ji-cuadrada-de-independencia",
+    "title": "9  Inferencia para datos enumerativos",
+    "section": "9.4 La prueba ji-cuadrada de independencia",
+    "text": "9.4 La prueba ji-cuadrada de independencia\n(En construcción.)\n\n\n\n\n\n\nTip¿Qué técnica uso?\n\n\n\nDatos de conteo o categóricos: ¿una proporción? → prueba para p; ¿asociación entre dos categóricas? → ji-cuadrada.",
+    "crumbs": [
+      "III. Inferencia estadística",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Inferencia para datos enumerativos</span>"
+    ]
+  },
+  {
+    "objectID": "09-enumerativos.html#ejercicios",
+    "href": "09-enumerativos.html#ejercicios",
+    "title": "9  Inferencia para datos enumerativos",
+    "section": "9.5 Ejercicios",
+    "text": "9.5 Ejercicios\nPor desarrollar (banco de la Dra. Figueroa reorganizado + reactivos nuevos).",
+    "crumbs": [
+      "III. Inferencia estadística",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Inferencia para datos enumerativos</span>"
+    ]
+  },
+  {
+    "objectID": "10-anova.html",
+    "href": "10-anova.html",
+    "title": "10  Análisis de varianza (ANOVA)",
+    "section": "",
+    "text": "10.1 ANOVA de un factor y la prueba F\n(En construcción.)",
+    "crumbs": [
+      "III. Inferencia estadística",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Análisis de varianza (ANOVA)</span>"
+    ]
+  },
+  {
+    "objectID": "10-anova.html#verificación-de-supuestos-normalidad-de-residuos-y-homogeneidad-de-varianzas-bartlettlevene",
+    "href": "10-anova.html#verificación-de-supuestos-normalidad-de-residuos-y-homogeneidad-de-varianzas-bartlettlevene",
+    "title": "10  Análisis de varianza (ANOVA)",
+    "section": "10.2 Verificación de supuestos: normalidad de residuos y homogeneidad de varianzas (Bartlett/Levene)",
+    "text": "10.2 Verificación de supuestos: normalidad de residuos y homogeneidad de varianzas (Bartlett/Levene)\n(En construcción.)",
+    "crumbs": [
+      "III. Inferencia estadística",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Análisis de varianza (ANOVA)</span>"
+    ]
+  },
+  {
+    "objectID": "10-anova.html#comparación-gráfica-de-medias",
+    "href": "10-anova.html#comparación-gráfica-de-medias",
+    "title": "10  Análisis de varianza (ANOVA)",
+    "section": "10.3 Comparación gráfica de medias",
+    "text": "10.3 Comparación gráfica de medias\n(En construcción.)",
+    "crumbs": [
+      "III. Inferencia estadística",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Análisis de varianza (ANOVA)</span>"
+    ]
+  },
+  {
+    "objectID": "10-anova.html#comparaciones-post-hoc-tukey",
+    "href": "10-anova.html#comparaciones-post-hoc-tukey",
+    "title": "10  Análisis de varianza (ANOVA)",
+    "section": "10.4 Comparaciones post-hoc (Tukey)",
+    "text": "10.4 Comparaciones post-hoc (Tukey)\n(En construcción.)",
+    "crumbs": [
+      "III. Inferencia estadística",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Análisis de varianza (ANOVA)</span>"
+    ]
+  },
+  {
+    "objectID": "10-anova.html#análisis-del-experimento-de-galletas",
+    "href": "10-anova.html#análisis-del-experimento-de-galletas",
+    "title": "10  Análisis de varianza (ANOVA)",
+    "section": "10.5 Análisis del experimento de galletas",
+    "text": "10.5 Análisis del experimento de galletas\n(En construcción.)\n\n\n\n\n\n\nTip¿Qué técnica uso?\n\n\n\nTres o más grupos, una variable cuantitativa: ANOVA + prueba F; si hay diferencias, post-hoc (Tukey) para ver entre cuáles.",
+    "crumbs": [
+      "III. Inferencia estadística",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Análisis de varianza (ANOVA)</span>"
+    ]
+  },
+  {
+    "objectID": "10-anova.html#ejercicios",
+    "href": "10-anova.html#ejercicios",
+    "title": "10  Análisis de varianza (ANOVA)",
+    "section": "10.6 Ejercicios",
+    "text": "10.6 Ejercicios\nPor desarrollar (banco de la Dra. Figueroa reorganizado + reactivos nuevos).",
+    "crumbs": [
+      "III. Inferencia estadística",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Análisis de varianza (ANOVA)</span>"
+    ]
+  },
+  {
+    "objectID": "11-regresion.html",
+    "href": "11-regresion.html",
+    "title": "11  Inferencia en regresión",
+    "section": "",
+    "text": "11.1 Prueba de hipótesis para los coeficientes de la recta\n(En construcción.)",
+    "crumbs": [
+      "III. Inferencia estadística",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Inferencia en regresión</span>"
+    ]
+  },
+  {
+    "objectID": "11-regresion.html#prueba-de-hipótesis-para-el-coeficiente-de-correlación",
+    "href": "11-regresion.html#prueba-de-hipótesis-para-el-coeficiente-de-correlación",
+    "title": "11  Inferencia en regresión",
+    "section": "11.2 Prueba de hipótesis para el coeficiente de correlación",
+    "text": "11.2 Prueba de hipótesis para el coeficiente de correlación\n(En construcción.)",
+    "crumbs": [
+      "III. Inferencia estadística",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Inferencia en regresión</span>"
+    ]
+  },
+  {
+    "objectID": "11-regresion.html#diagnóstico-de-residuos-y-normalidad-de-los-errores",
+    "href": "11-regresion.html#diagnóstico-de-residuos-y-normalidad-de-los-errores",
+    "title": "11  Inferencia en regresión",
+    "section": "11.3 Diagnóstico de residuos y normalidad de los errores",
+    "text": "11.3 Diagnóstico de residuos y normalidad de los errores\n(En construcción.)",
+    "crumbs": [
+      "III. Inferencia estadística",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Inferencia en regresión</span>"
+    ]
+  },
+  {
+    "objectID": "11-regresion.html#del-modelo-lineal-hacia-el-aprendizaje-automático-próxima-parada",
+    "href": "11-regresion.html#del-modelo-lineal-hacia-el-aprendizaje-automático-próxima-parada",
+    "title": "11  Inferencia en regresión",
+    "section": "11.4 Del modelo lineal hacia el aprendizaje automático (próxima parada)",
+    "text": "11.4 Del modelo lineal hacia el aprendizaje automático (próxima parada)\n(En construcción.)\n\n\n\n\n\n\nTip¿Qué técnica uso?\n\n\n\n¿La relación entre X e Y es real o azar? Prueba sobre la pendiente. Verificar la normalidad de los errores conecta con la validación de modelos de ML.",
+    "crumbs": [
+      "III. Inferencia estadística",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Inferencia en regresión</span>"
+    ]
+  },
+  {
+    "objectID": "11-regresion.html#ejercicios",
+    "href": "11-regresion.html#ejercicios",
+    "title": "11  Inferencia en regresión",
+    "section": "11.5 Ejercicios",
+    "text": "11.5 Ejercicios\nPor desarrollar (banco de la Dra. Figueroa reorganizado + reactivos nuevos).",
+    "crumbs": [
+      "III. Inferencia estadística",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Inferencia en regresión</span>"
+    ]
+  }
+]

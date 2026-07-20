@@ -1,0 +1,39 @@
+# Estimación y prueba de hipótesis {#sec-cap7}
+
+::: {.callout-important title="Plantilla en construcción"}
+Este capítulo corresponde a **Semana 8-9** del calendario y usa los datos de **lagartijas, algoritmos**. La estructura de secciones ya está fijada; el contenido se desarrolla con el mismo formato del @sec-cap1: pregunta real, técnica, supuestos, cómputo en R e interpretación.
+:::
+
+```{r}
+#| label: setup-sec-cap7
+#| include: false
+library(tidyverse)
+```
+
+## Estimación puntual y por intervalos de confianza
+
+*(En construcción.)*
+
+## Intervalo de confianza para una media
+
+*(En construcción.)*
+
+## La lógica de la prueba de hipótesis
+
+*(En construcción.)*
+
+## Prueba de hipótesis para una media
+
+*(En construcción.)*
+
+## Usos y abusos de la inferencia: p-hacking, significancia vs. relevancia práctica
+
+*(En construcción.)*
+
+::: {.callout-tip title="¿Qué técnica uso?"}
+Una muestra, un parámetro: ¿estimarlo con margen? → intervalo de confianza; ¿contrastarlo con un valor? → prueba de hipótesis.
+:::
+
+## Ejercicios
+
+*Por desarrollar (banco de la Dra. Figueroa reorganizado + reactivos nuevos).*

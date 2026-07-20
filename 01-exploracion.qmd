@@ -1,0 +1,199 @@
+# Exploración de los datos {#sec-cap1}
+
+```{r}
+#| label: setup
+#| include: false
+library(tidyverse)
+library(palmerpenguins)
+theme_set(theme_minimal(base_size = 12))
+```
+
+::: {.callout-tip title="Al terminar este capítulo podrás"}
+- Distinguir **individuos** y **variables** en una tabla de datos.
+- Clasificar una variable por su **tipo** y su **escala de medición**.
+- Diferenciar un **estudio observacional** de un **experimento**.
+- Cargar datos en R y elegir la **gráfica** adecuada según el tipo de variable.
+:::
+
+## ¿Qué es la estadística?
+
+Usamos la palabra *estadística* todos los días —"las estadísticas del equipo", "según las estadísticas"— casi siempre para referirnos a números sueltos. Pero la estadística es más que eso: es la ciencia (y el arte) de **obtener conocimiento a partir de datos**. Nos permite decir algo sobre un conjunto grande cuando solo hemos observado una parte.
+
+Conviene dividir esa ciencia en tres grandes tareas, que además son la columna vertebral de este curso:
+
+- **Análisis de los datos** (Parte I). Lo que tradicionalmente llamamos *estadística descriptiva*: organizar, resumir y visualizar lo que tenemos frente a nosotros.
+- **Producción de los datos** (Parte II). De dónde salen los datos importa tanto como qué hacemos con ellos. Un muestreo mal hecho o un experimento mal diseñado arruinan cualquier análisis posterior.
+- **Inferencia** (Parte III). A partir de una muestra, hacer afirmaciones —bien fundamentadas y con su margen de incertidumbre— sobre la población de la que provino.
+
+Este capítulo abre la Parte I: aprender a mirar los datos.
+
+## Individuos, variables y la tabla de datos
+
+Casi todo en este curso empieza con una **tabla**: las filas son los **individuos** (o unidades de observación) y las columnas son las **variables** (lo que medimos de cada individuo).
+
+Trabajemos con un conjunto real: mediciones de 344 pingüinos de tres especies del archipiélago Palmer, en la Antártida. Es nuestro **laboratorio de enseñanza**: limpio, ordenado y siempre disponible.
+
+```{r}
+#| label: glimpse-penguins
+library(palmerpenguins)
+glimpse(penguins)
+```
+
+Cada fila es **un pingüino** (el individuo); cada columna es una **variable**: su especie, la isla donde se le observó, medidas de su pico y aleta, su masa corporal, su sexo y el año. Una tabla así, con un individuo por fila y una variable por columna, se llama **datos ordenados** (*tidy data*), y es la forma en que R espera recibirlos.
+
+::: {.callout-note title="Interpreta"}
+Antes de calcular nada, responde: en tu tabla, ¿qué es un individuo y qué es cada variable? Confundir esto es la fuente número uno de errores. En los datos de **galletas** del curso, por ejemplo, ¿el individuo es una marca o una calificación de un juez? (Es cada *calificación*: una fila por juez y marca.)
+:::
+
+## Tipos de variables y escalas de medición
+
+No todas las variables son iguales, y el tipo determina qué podemos hacer con ellas.
+
+A grandes rasgos hay dos familias:
+
+- **Categóricas** (o cualitativas): clasifican al individuo en grupos. La *especie* o la *isla* del pingüino.
+- **Cuantitativas** (o numéricas): miden una cantidad. La *masa corporal* o el *largo de la aleta*.
+
+Con más detalle, cada variable vive en una de cuatro **escalas de medición**:
+
+| Escala | ¿Qué permite? | Ejemplo |
+|---|---|---|
+| **Nominal** | Solo distinguir categorías, sin orden | Especie del pingüino; marca de galleta |
+| **Ordinal** | Categorías con orden, pero sin distancia definida | Nivel de agrado (bajo/medio/alto); escalaridad de un dolor |
+| **Intervalo** | Orden y distancias iguales, pero sin cero absoluto | Temperatura en °C (0 °C no es "ausencia de temperatura") |
+| **Razón** | Orden, distancias y un cero que significa ausencia | Masa, longitud, tiempo, conteos |
+
+La escala importa porque decide qué operaciones tienen sentido. Promediar temperaturas corporales (razón) es válido; "promediar" especies (nominal) no lo es.
+
+::: {.callout-tip title="¿Qué técnica uso?"}
+El **tipo de variable** decide casi todo lo que sigue en el curso: qué gráfica hacer, qué resumen numérico calcular y, más adelante, qué prueba aplicar. Antes de cualquier análisis, clasifica tus variables.
+:::
+
+## Tipos de estudio: ¿de dónde vienen los datos?
+
+Aunque este capítulo trata del análisis, conviene desde ya distinguir **cómo se producen** los datos, porque cambia lo que podemos concluir.
+
+- En un **estudio observacional** medimos a los individuos **sin intervenir**. Comparar la temperatura de lagartijas urbanas y de campo es observacional: no asignamos nosotros dónde vive cada lagartija.
+- En un **experimento** el investigador **aplica tratamientos** y observa la respuesta. La cata de galletas es un experimento: nosotros decidimos qué marca prueba cada juez y en qué orden.
+
+La diferencia es enorme para la interpretación: un experimento bien diseñado permite hablar de **causa y efecto**; un estudio observacional, en general, solo de **asociación**. Volveremos a esto en la Parte II.
+
+También conviene separar tres formas de obtener datos: un **censo** mide a *toda* la población; una **muestra** mide solo a una parte (bien elegida, para representar al todo); un **experimento** produce datos nuevos bajo condiciones controladas.
+
+::: {.callout-note title="Interpreta"}
+Si un titular dice "las personas que toman café viven más", pregúntate: ¿fue un experimento o un estudio observacional? Casi siempre es observacional, así que no podemos concluir que el café *cause* mayor longevidad: quizá quienes toman café tienen otros hábitos en común.
+:::
+
+## Primer contacto con R y con nuestros datos
+
+Los pingüinos ya viven dentro de un paquete de R. Los conjuntos aplicados del curso están en archivos `.csv` en la carpeta `datos/`. Se leen así:
+
+```{r}
+#| label: leer-csv
+galletas <- read.csv("datos/galletas.csv")
+head(galletas)
+```
+
+Para conocer una tabla nueva, tres funciones bastan al inicio: `glimpse()` (un vistazo a todas las columnas), `head()` (las primeras filas) y `summary()` (un resumen rápido).
+
+```{r}
+#| label: summary-galletas
+summary(galletas)
+```
+
+Fíjate que R trató `agrado` como numérica (correcto: es una calificación en escala 1–9) y `marca` como texto. Muchas veces querremos decirle a R que una columna es **categórica**; en R eso se llama *factor*:
+
+```{r}
+#| label: factor-marca
+galletas$marca <- factor(galletas$marca)
+levels(galletas$marca)
+```
+
+## Gráficas para variables categóricas
+
+La pregunta natural sobre una variable categórica es **¿cuántos hay de cada categoría?** La respuesta se ve en un **diagrama de barras**.
+
+```{r}
+#| label: fig-barras-especie
+#| fig-cap: "Número de pingüinos por especie."
+#| fig-width: 5
+#| fig-height: 3
+ggplot(penguins, aes(x = species)) +
+  geom_bar(fill = "#1F4E79") +
+  labs(x = "Especie", y = "Cantidad")
+```
+
+Cada barra cuenta cuántos individuos caen en esa categoría. Podemos cruzar dos variables categóricas —especie e isla— coloreando o separando las barras:
+
+```{r}
+#| label: fig-barras-isla
+#| fig-cap: "Distribución de especies por isla."
+#| fig-width: 6
+#| fig-height: 3
+ggplot(penguins, aes(x = island, fill = species)) +
+  geom_bar(position = "dodge") +
+  labs(x = "Isla", y = "Cantidad", fill = "Especie")
+```
+
+::: {.callout-note title="Interpreta"}
+La segunda gráfica ya cuenta una historia: la especie *Gentoo* solo aparece en Biscoe y *Chinstrap* solo en Dream, mientras que *Adelie* está en las tres islas. Una gráfica bien hecha responde una pregunta de un vistazo.
+:::
+
+## Gráficas para variables cuantitativas
+
+Para una variable cuantitativa la pregunta es **¿cómo se distribuyen los valores?** La herramienta básica es el **histograma**: parte el rango en intervalos y cuenta cuántos individuos caen en cada uno.
+
+```{r}
+#| label: fig-histograma-masa
+#| fig-cap: "Distribución de la masa corporal de los pingüinos."
+#| fig-width: 5
+#| fig-height: 3
+ggplot(penguins, aes(x = body_mass_g)) +
+  geom_histogram(binwidth = 250, fill = "#1F4E79", color = "white") +
+  labs(x = "Masa corporal (g)", y = "Cantidad")
+```
+
+Al leer un histograma nos fijamos en tres cosas: el **centro** (¿alrededor de qué valor se acumulan los datos?), la **dispersión** (¿qué tan esparcidos están?) y la **forma** (¿simétrica?, ¿sesgada?, ¿con uno o varios picos?). Esta masa se ve con *dos* montículos —una pista de que hay grupos distintos mezclados (las especies)—. Separándola por especie lo confirmamos:
+
+```{r}
+#| label: fig-histograma-especie
+#| fig-cap: "Masa corporal por especie."
+#| fig-width: 6
+#| fig-height: 3.2
+ggplot(penguins, aes(x = body_mass_g, fill = species)) +
+  geom_histogram(binwidth = 250, alpha = 0.7, position = "identity") +
+  labs(x = "Masa corporal (g)", y = "Cantidad", fill = "Especie")
+```
+
+::: {.callout-tip title="¿Qué técnica uso?"}
+Primera entrada de nuestro **mapa de decisión**, según el tipo de variable a graficar:
+
+| Quiero ver… | Tipo de variable | Gráfica |
+|---|---|---|
+| Cuántos hay de cada categoría | 1 categórica | Diagrama de barras |
+| Cómo se distribuyen los valores | 1 cuantitativa | Histograma |
+| Relación entre dos categóricas | 2 categóricas | Barras agrupadas |
+
+En el próximo capítulo agregaremos los **resúmenes numéricos** (media, mediana, desviación) y el **diagrama de caja**.
+:::
+
+## Resumen
+
+Empezamos por lo más importante y lo más olvidado: **entender los datos antes de tocarlos**. Identificamos individuos y variables, clasificamos cada variable por su tipo y escala, distinguimos estudios observacionales de experimentos, y elegimos la gráfica según el tipo de variable. Todo lo demás en el curso se apoya en esto: si clasificas bien tus variables, casi siempre sabrás qué hacer con ellas.
+
+## Ejercicios
+
+1. **Tipos y escalas.** Para cada variable de `penguins` (`species`, `island`, `bill_length_mm`, `body_mass_g`, `sex`, `year`), indica si es categórica o cuantitativa y en qué escala de medición vive.
+
+2. **Individuos y variables.** Abre `datos/lagartijas.csv` con `read.csv()`. ¿Qué es un individuo en esa tabla? Lista sus variables y clasifícalas.
+
+3. **Observacional o experimental.** Clasifica cada estudio y justifica en una frase:
+   a. Se registra la temperatura corporal de lagartijas encontradas en la ciudad y en el campo.
+   b. Se asigna al azar a cada juez un orden para probar cuatro marcas de galletas y se mide su agrado.
+   c. Se comparan las calificaciones de estudiantes que asistieron a asesorías contra las de quienes no.
+
+4. **Barras.** Con los datos de `hongos_sustrato.csv`, haz un diagrama de barras del número de bolsas por `sustrato`. ¿Está balanceado el experimento?
+
+5. **Histograma y forma.** Grafica el histograma de `flipper_length_mm` de los pingüinos con `binwidth = 5`. Describe centro, dispersión y forma. ¿Ves indicios de más de un grupo?
+
+6. **Escala de medición (opción múltiple).** El nivel de agrado en una escala "bajo / medio / alto" es una variable de escala: (a) nominal, (b) ordinal, (c) intervalo, (d) razón. Justifica.

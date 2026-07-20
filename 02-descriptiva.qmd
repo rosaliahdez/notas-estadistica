@@ -1,0 +1,39 @@
+# Análisis numérico de datos {#sec-cap2}
+
+::: {.callout-important title="Plantilla en construcción"}
+Este capítulo corresponde a **Semana 2** del calendario y usa los datos de **pingüinos, lagartijas**. La estructura de secciones ya está fijada; el contenido se desarrolla con el mismo formato del @sec-cap1: pregunta real, técnica, supuestos, cómputo en R e interpretación.
+:::
+
+```{r}
+#| label: setup-sec-cap2
+#| include: false
+library(tidyverse)
+```
+
+## Medidas de localización: media, mediana, cuartiles
+
+*(En construcción.)*
+
+## Medidas de dispersión: rango, varianza, desviación estándar, RIC
+
+*(En construcción.)*
+
+## El diagrama de caja (boxplot) y la comparación entre grupos
+
+*(En construcción.)*
+
+## Forma de una distribución y el Q-Q plot *(complemento para el examen de la MCD)*
+
+*(En construcción.)*
+
+## Resúmenes por grupo con `dplyr`
+
+*(En construcción.)*
+
+::: {.callout-tip title="¿Qué técnica uso?"}
+Resumir una variable cuantitativa: ¿centro? → media/mediana; ¿dispersión? → desviación/RIC; ¿comparar grupos? → boxplot.
+:::
+
+## Ejercicios
+
+*Por desarrollar (banco de la Dra. Figueroa reorganizado + reactivos nuevos).*

@@ -1,0 +1,43 @@
+# Distribuciones muestrales y TCL {#sec-cap6}
+
+::: {.callout-important title="Plantilla en construcción"}
+Este capítulo corresponde a **Semana 7** del calendario y usa los datos de **simulación**. La estructura de secciones ya está fijada; el contenido se desarrolla con el mismo formato del @sec-cap1: pregunta real, técnica, supuestos, cómputo en R e interpretación.
+:::
+
+```{r}
+#| label: setup-sec-cap6
+#| include: false
+library(tidyverse)
+```
+
+## Parámetros y estadísticos
+
+*(En construcción.)*
+
+## El concepto de distribución muestral
+
+*(En construcción.)*
+
+## Distribución muestral de la media
+
+*(En construcción.)*
+
+## Teorema Central del Límite
+
+*(En construcción.)*
+
+## Distribución muestral de una proporción
+
+*(En construcción.)*
+
+## Ilustrar el TCL por simulación en R
+
+*(En construcción.)*
+
+::: {.callout-tip title="¿Qué técnica uso?"}
+La distribución muestral es el puente entre una muestra y la población: nos dice cuánto varía un estadístico de muestra en muestra.
+:::
+
+## Ejercicios
+
+*Por desarrollar (banco de la Dra. Figueroa reorganizado + reactivos nuevos).*

@@ -1,0 +1,35 @@
+# Inferencia para datos enumerativos {#sec-cap9}
+
+::: {.callout-important title="Plantilla en construcción"}
+Este capítulo corresponde a **Semana 11** del calendario y usa los datos de **rickettsiosis**. La estructura de secciones ya está fijada; el contenido se desarrolla con el mismo formato del @sec-cap1: pregunta real, técnica, supuestos, cómputo en R e interpretación.
+:::
+
+```{r}
+#| label: setup-sec-cap9
+#| include: false
+library(tidyverse)
+```
+
+## Intervalo y prueba para una proporción
+
+*(En construcción.)*
+
+## Diferencia de dos proporciones
+
+*(En construcción.)*
+
+## Tablas de contingencia
+
+*(En construcción.)*
+
+## La prueba ji-cuadrada de independencia
+
+*(En construcción.)*
+
+::: {.callout-tip title="¿Qué técnica uso?"}
+Datos de conteo o categóricos: ¿una proporción? → prueba para p; ¿asociación entre dos categóricas? → ji-cuadrada.
+:::
+
+## Ejercicios
+
+*Por desarrollar (banco de la Dra. Figueroa reorganizado + reactivos nuevos).*

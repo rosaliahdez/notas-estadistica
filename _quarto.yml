@@ -1,0 +1,66 @@
+project:
+  type: book
+  output-dir: _book
+
+lang: es
+
+book:
+  title: "Estadística para Ciencias de la Computación"
+  subtitle: "Notas del curso · LCC · Universidad de Sonora"
+  author: "Rosalía Hernández"
+  date: today
+  date-format: "MMMM YYYY"
+  reader-mode: true
+  search: true
+  page-footer:
+    left: "Estadística LCC · Universidad de Sonora"
+    right: "Hecho con Quarto"
+  chapters:
+    - index.qmd
+    - part: "I. Exploración de los datos"
+      chapters:
+        - 01-exploracion.qmd
+        - 02-descriptiva.qmd
+        - 03-relaciones.qmd
+    - part: "II. Producción de los datos"
+      chapters:
+        - 04-muestreo.qmd
+        - 05-experimentos.qmd
+    - part: "III. Inferencia estadística"
+      chapters:
+        - 06-muestrales.qmd
+        - 07-estimacion-pruebas.qmd
+        - 08-dos-muestras.qmd
+        - 09-enumerativos.qmd
+        - 10-anova.qmd
+        - 11-regresion.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme:
+      - cosmo
+      - theme.scss
+    toc: true
+    toc-title: "En este capítulo"
+    number-sections: true
+    code-copy: true
+    code-overflow: wrap
+    fig-align: center
+    df-print: paged
+  # Para exportar a PDF necesitas TinyTeX: quarto install tinytex
+  # pdf:
+  #   documentclass: scrbook
+  #   papersize: letter
+
+execute:
+  freeze: auto     # no re-ejecuta un capítulo si no cambió
+  warning: false
+  message: false
+
+knitr:
+  opts_chunk:
+    comment: "#>"
+    collapse: true

@@ -1,0 +1,39 @@
+# Producción de datos: muestreo {#sec-cap4}
+
+::: {.callout-important title="Plantilla en construcción"}
+Este capítulo corresponde a **Semana 4** del calendario y usa los datos de **rickettsiosis (marco poblacional)**. La estructura de secciones ya está fijada; el contenido se desarrolla con el mismo formato del @sec-cap1: pregunta real, técnica, supuestos, cómputo en R e interpretación.
+:::
+
+```{r}
+#| label: setup-sec-cap4
+#| include: false
+library(tidyverse)
+```
+
+## Población, muestra y unidad de muestreo
+
+*(En construcción.)*
+
+## Sesgo de selección y sesgo de medición
+
+*(En construcción.)*
+
+## Margen de error; errores de muestreo y no de muestreo
+
+*(En construcción.)*
+
+## Muestreo aleatorio simple, estratificado, por conglomerados, sistemático y multietápico
+
+*(En construcción.)*
+
+## Simular muestreos en R y ver el efecto del sesgo
+
+*(En construcción.)*
+
+::: {.callout-tip title="¿Qué técnica uso?"}
+Antes de recolectar: ¿la muestra representa a la población? Un buen muestreo previene sesgos que ningún análisis posterior corrige.
+:::
+
+## Ejercicios
+
+*Por desarrollar (banco de la Dra. Figueroa reorganizado + reactivos nuevos).*

@@ -1,0 +1,19 @@
+/*-- scss:defaults --*/
+$primary:   #1F4E79;
+$body-font-family: "Source Sans Pro", -apple-system, "Segoe UI", sans-serif;
+$headings-font-weight: 600;
+$toc-color: #1F4E79;
+
+/*-- scss:rules --*/
+h1, h2, h3 { color: #1F4E79; }
+
+/* Recuadro "¿Qué técnica uso?" — usa callout-tip con este título */
+div.callout-tip.callout {
+  border-left-color: #1F4E79;
+}
+
+/* Tablas de datos un poco más compactas */
+.cell-output table { font-size: 0.9em; }
+
+/* Bloque de "Interpretación" más cálido */
+div.callout-note.callout { border-left-color: #2E7D5B; }

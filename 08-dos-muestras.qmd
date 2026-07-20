@@ -1,0 +1,35 @@
+# Inferencia para dos parámetros {#sec-cap8}
+
+::: {.callout-important title="Plantilla en construcción"}
+Este capítulo corresponde a **Semana 10** del calendario y usa los datos de **lagartijas, algoritmos (A/B)**. La estructura de secciones ya está fijada; el contenido se desarrolla con el mismo formato del @sec-cap1: pregunta real, técnica, supuestos, cómputo en R e interpretación.
+:::
+
+```{r}
+#| label: setup-sec-cap8
+#| include: false
+library(tidyverse)
+```
+
+## Intervalo y prueba para la diferencia de dos medias (independientes y pareadas)
+
+*(En construcción.)*
+
+## La prueba A/B como comparación de dos grupos
+
+*(En construcción.)*
+
+## Comparación de varianzas *(complemento para el examen de la MCD)*
+
+*(En construcción.)*
+
+## Verificación de supuestos
+
+*(En construcción.)*
+
+::: {.callout-tip title="¿Qué técnica uso?"}
+Dos grupos, una variable cuantitativa: prueba t para la diferencia de medias. Es exactamente lo que hay detrás de una prueba A/B.
+:::
+
+## Ejercicios
+
+*Por desarrollar (banco de la Dra. Figueroa reorganizado + reactivos nuevos).*

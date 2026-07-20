@@ -1,0 +1,39 @@
+# Análisis de varianza (ANOVA) {#sec-cap10}
+
+::: {.callout-important title="Plantilla en construcción"}
+Este capítulo corresponde a **Semana 13** del calendario y usa los datos de **galletas, hongos/sustrato**. La estructura de secciones ya está fijada; el contenido se desarrolla con el mismo formato del @sec-cap1: pregunta real, técnica, supuestos, cómputo en R e interpretación.
+:::
+
+```{r}
+#| label: setup-sec-cap10
+#| include: false
+library(tidyverse)
+```
+
+## ANOVA de un factor y la prueba F
+
+*(En construcción.)*
+
+## Verificación de supuestos: normalidad de residuos y homogeneidad de varianzas (Bartlett/Levene)
+
+*(En construcción.)*
+
+## Comparación gráfica de medias
+
+*(En construcción.)*
+
+## Comparaciones post-hoc (Tukey)
+
+*(En construcción.)*
+
+## Análisis del experimento de galletas
+
+*(En construcción.)*
+
+::: {.callout-tip title="¿Qué técnica uso?"}
+Tres o más grupos, una variable cuantitativa: ANOVA + prueba F; si hay diferencias, post-hoc (Tukey) para ver entre cuáles.
+:::
+
+## Ejercicios
+
+*Por desarrollar (banco de la Dra. Figueroa reorganizado + reactivos nuevos).*

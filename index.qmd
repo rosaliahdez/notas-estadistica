@@ -1,0 +1,54 @@
+# Presentación {.unnumbered}
+
+Estas notas acompañan el curso de **Estadística** de la Licenciatura en Ciencias de la Computación de la Universidad de Sonora (5.º semestre). Son la continuación natural del curso de Probabilidad y la antesala de *Introducción al Aprendizaje Automático*: aquí es donde aprendemos a **mirar datos, producir datos y hacer inferencia sobre ellos** con criterio.
+
+## Cómo están pensadas estas notas
+
+El curso descansa en cuatro ideas, y el libro también:
+
+1. **Interpretar antes que calcular.** Cada técnica se presenta con la misma secuencia: una pregunta real, la técnica que le corresponde, los supuestos que hay que verificar, el cálculo en R y —lo más importante— la interpretación en español dirigida a alguien que no es estadístico.
+
+2. **Saber *qué* técnica usar.** A lo largo del libro se construye un **mapa de decisión**: dado el tipo de pregunta y el tipo de datos, ¿qué técnica corresponde? Cada vez que aparezca este recuadro, estamos agregando una pieza a ese mapa.
+
+   ::: {.callout-tip title="¿Qué técnica uso?"}
+   Estos recuadros conectan una **pregunta** con una **técnica**. Al final del curso, juntos forman una guía para elegir el procedimiento correcto sin memorizar.
+   :::
+
+3. **Pocos contextos, muchas veces.** En lugar de cambiar de problema en cada ejemplo, trabajamos sobre unos pocos conjuntos de datos que reaparecen en todo el curso. Los conocerás desde hoy y los verás madurar: primero los describimos, luego entendemos cómo se produjeron y al final les hacemos inferencia.
+
+4. **R desde el primer día.** Todo el cómputo se hace en R. No necesitas saber estadística para empezar a usarlo, ni saber programar (eso ya lo sabes): solo aprender el vocabulario de R que iremos usando.
+
+   ::: {.callout-note title="Interpreta"}
+   Cuando veas este recuadro, el reto no es calcular sino **leer** el resultado: ¿qué le dirías a la persona que trajo el problema?
+   :::
+
+## Los conjuntos de datos del curso
+
+| Conjunto | Qué es | Lo usamos para |
+|---|---|---|
+| **Pingüinos** (Palmer Penguins) | Datos reales y limpios de 344 pingüinos de la Antártida | Laboratorio de enseñanza: aprender la mecánica de cada técnica sin fricción |
+| **Galletas** | Cata a ciegas de marcas de galletas, diseñada por el grupo | Diseño de experimentos y ANOVA |
+| **Lagartijas** | Fisiología de lagartijas urbanas vs. de campo | Comparación de dos grupos |
+| **Rickettsiosis** | Factores asociados a un resultado de laboratorio | Proporciones y ji-cuadrada |
+| **Algoritmos** | Tiempos de ejecución según el tamaño de entrada | Regresión y pruebas A/B |
+| **Hongos / sustrato** | Cultivo de seta en distintos sustratos | ANOVA con datos de laboratorio |
+
+Los conjuntos aplicados están en la carpeta `datos/` de este proyecto. Los pingüinos vienen en un paquete de R.
+
+## Preparar tu computadora {#sec-preparacion}
+
+Necesitas **R** y **RStudio** (o **Posit Cloud**, que corre en el navegador y no requiere instalar nada). Una sola vez, instala los paquetes que usaremos:
+
+```{r}
+#| eval: false
+install.packages(c("tidyverse", "palmerpenguins"))
+```
+
+- `tidyverse` reúne las herramientas para manipular datos (`dplyr`) y graficar (`ggplot2`).
+- `palmerpenguins` trae el conjunto de pingüinos.
+
+Con eso listo, pasa al @sec-cap1.
+
+::: {.callout-note title="Sobre el origen de estas notas"}
+La estructura y muchos ejercicios provienen de las notas que la Dra. Gudelia Figueroa desarrolló durante tres décadas para este curso. Esta versión conserva ese esqueleto y lo actualiza con software estadístico, datos actuales y un énfasis explícito en la interpretación.
+:::

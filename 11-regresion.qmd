@@ -1,0 +1,35 @@
+# Inferencia en regresión {#sec-cap11}
+
+::: {.callout-important title="Plantilla en construcción"}
+Este capítulo corresponde a **Semana 14** del calendario y usa los datos de **algoritmos**. La estructura de secciones ya está fijada; el contenido se desarrolla con el mismo formato del @sec-cap1: pregunta real, técnica, supuestos, cómputo en R e interpretación.
+:::
+
+```{r}
+#| label: setup-sec-cap11
+#| include: false
+library(tidyverse)
+```
+
+## Prueba de hipótesis para los coeficientes de la recta
+
+*(En construcción.)*
+
+## Prueba de hipótesis para el coeficiente de correlación
+
+*(En construcción.)*
+
+## Diagnóstico de residuos y normalidad de los errores
+
+*(En construcción.)*
+
+## Del modelo lineal hacia el aprendizaje automático (próxima parada)
+
+*(En construcción.)*
+
+::: {.callout-tip title="¿Qué técnica uso?"}
+¿La relación entre X e Y es real o azar? Prueba sobre la pendiente. Verificar la normalidad de los errores conecta con la validación de modelos de ML.
+:::
+
+## Ejercicios
+
+*Por desarrollar (banco de la Dra. Figueroa reorganizado + reactivos nuevos).*

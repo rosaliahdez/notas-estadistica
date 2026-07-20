@@ -1,0 +1,43 @@
+# Relaciones entre variables {#sec-cap3}
+
+::: {.callout-important title="Plantilla en construcción"}
+Este capítulo corresponde a **Semana 3** del calendario y usa los datos de **algoritmos, pingüinos**. La estructura de secciones ya está fijada; el contenido se desarrolla con el mismo formato del @sec-cap1: pregunta real, técnica, supuestos, cómputo en R e interpretación.
+:::
+
+```{r}
+#| label: setup-sec-cap3
+#| include: false
+library(tidyverse)
+```
+
+## Variable dependiente y variable regresora
+
+*(En construcción.)*
+
+## Diagrama de dispersión
+
+*(En construcción.)*
+
+## Correlación de Pearson
+
+*(En construcción.)*
+
+## Regresión por mínimos cuadrados (enfoque descriptivo)
+
+*(En construcción.)*
+
+## Análisis gráfico de residuales
+
+*(En construcción.)*
+
+## Matriz de correlación entre varias variables
+
+*(En construcción.)*
+
+::: {.callout-tip title="¿Qué técnica uso?"}
+Dos variables cuantitativas: ¿fuerza de la relación? → correlación; ¿predecir Y a partir de X? → recta de regresión.
+:::
+
+## Ejercicios
+
+*Por desarrollar (banco de la Dra. Figueroa reorganizado + reactivos nuevos).*

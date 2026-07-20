@@ -1,0 +1,39 @@
+# Producción de datos: diseño de experimentos {#sec-cap5}
+
+::: {.callout-important title="Plantilla en construcción"}
+Este capítulo corresponde a **Semana 5** del calendario y usa los datos de **galletas, hongos/sustrato**. La estructura de secciones ya está fijada; el contenido se desarrolla con el mismo formato del @sec-cap1: pregunta real, técnica, supuestos, cómputo en R e interpretación.
+:::
+
+```{r}
+#| label: setup-sec-cap5
+#| include: false
+library(tidyverse)
+```
+
+## Unidad experimental, tratamientos, factores y niveles
+
+*(En construcción.)*
+
+## Los tres principios: control, aleatorización y réplicas
+
+*(En construcción.)*
+
+## Sesgos en experimentos con personas: orden de prueba, cegado, contaminación entre jueces
+
+*(En construcción.)*
+
+## Ejemplos de diseños sencillos
+
+*(En construcción.)*
+
+## Diseño del experimento de galletas (sesión en clase)
+
+*(En construcción.)*
+
+::: {.callout-tip title="¿Qué técnica uso?"}
+¿Quieres hablar de causa y efecto? Necesitas un experimento con aleatorización y control, no solo observación.
+:::
+
+## Ejercicios
+
+*Por desarrollar (banco de la Dra. Figueroa reorganizado + reactivos nuevos).*

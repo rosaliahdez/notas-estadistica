@@ -1,35 +1,321 @@
 # Inferencia para dos parámetros {#sec-cap8}
 
-::: {.callout-important title="Plantilla en construcción"}
-Este capítulo corresponde a **Semana 10** del calendario y usa los datos de **lagartijas, algoritmos (A/B)**. La estructura de secciones ya está fijada; el contenido se desarrolla con el mismo formato del @sec-cap1: pregunta real, técnica, supuestos, cómputo en R e interpretación.
-:::
-
 ```{r}
-#| label: setup-sec-cap8
+#| label: setup-cap8
 #| include: false
 library(tidyverse)
+theme_set(theme_minimal(base_size = 12))
+lagartijas <- read.csv("datos/lagartijas.csv")
 ```
 
-## Intervalo y prueba para la diferencia de dos medias (independientes y pareadas)
+::: {.callout-tip title="Al terminar este capítulo podrás"}
+- Comparar las medias de **dos grupos independientes** con un intervalo y una prueba.
+- Reconocer cuándo los datos están **pareados** y por qué eso cambia el análisis.
+- Entender una **prueba A/B** como lo que es: una comparación de dos muestras.
+- Comparar **varianzas** de dos poblaciones *(complemento para el examen de la MCD)*.
+- Verificar los **supuestos** antes de confiar en el resultado.
+:::
 
-*(En construcción.)*
+En el @sec-cap7 comparamos una muestra contra un valor de referencia. Pero la pregunta más común en la práctica es otra: **¿estos dos grupos difieren?** ¿Las lagartijas urbanas son más cálidas que las de campo? ¿La versión nueva del sistema es más rápida que la anterior? Ese es el tema de este capítulo.
 
-## La prueba A/B como comparación de dos grupos
+## Dos grupos independientes
 
-*(En construcción.)*
+Dos muestras son **independientes** cuando los individuos de una no tienen relación con los de la otra: lagartijas distintas, usuarios distintos, parcelas distintas. El parámetro de interés es la **diferencia de medias** $\mu_1 - \mu_2$, y el procedimiento es el mismo de siempre: un estimador (la diferencia de medias muestrales), su error estándar, y a partir de ahí el intervalo y la prueba.
 
-## Comparación de varianzas *(complemento para el examen de la MCD)*
+Empecemos como siempre: **mirando** los datos.
 
-*(En construcción.)*
+```{r}
+#| label: fig-box-temp
+#| fig-cap: "Temperatura corporal por hábitat."
+#| fig-width: 4.6
+#| fig-height: 3.2
+ggplot(lagartijas, aes(x = habitat, y = temp_corporal, fill = habitat)) +
+  geom_boxplot() +
+  labs(x = "Hábitat", y = "Temperatura corporal (°C)") +
+  theme(legend.position = "none")
+```
+
+```{r}
+#| label: resumen-temp
+lagartijas |>
+  group_by(habitat) |>
+  summarise(n = n(), media = mean(temp_corporal), de = sd(temp_corporal))
+```
+
+Ahora la inferencia. Las hipótesis son $H_0: \mu_1 = \mu_2$ (equivalente a $\mu_1 - \mu_2 = 0$) contra $H_1: \mu_1 \neq \mu_2$:
+
+```{r}
+#| label: t-temp
+t.test(temp_corporal ~ habitat, data = lagartijas)
+```
+
+::: {.callout-note title="Interpreta"}
+El valor p es muy pequeño, así que rechazamos $H_0$: las lagartijas urbanas son significativamente más cálidas. Pero lo más informativo es el **intervalo de confianza de la diferencia**: nos dice que la diferencia real ronda 1.4 °C. Redacción para una bióloga: *"Las lagartijas de zona urbana presentan una temperatura corporal media aproximadamente 1.4 °C mayor que las de campo abierto (p < 0.001), diferencia compatible con el efecto de isla de calor urbana."*
+
+Nota que R usa por omisión la **prueba t de Welch**, que no exige que las dos poblaciones tengan la misma varianza. Es la opción segura y la recomendable por defecto.
+:::
+
+## Cuando NO hay diferencia
+
+Un resultado no significativo también es un resultado, y saber reportarlo es parte del oficio. Comparemos ahora la longitud hocico–cloaca:
+
+```{r}
+#| label: t-lhc
+t.test(lhc_mm ~ habitat, data = lagartijas)
+```
+
+::: {.callout-important title="Ausencia de evidencia no es evidencia de ausencia"}
+Aquí el valor p ronda 0.25: **no rechazamos** $H_0$. La redacción correcta es *"no encontramos evidencia de que la longitud difiera entre hábitats"*, y **no** *"se demostró que son iguales"*.
+
+Mira el intervalo de confianza de la diferencia: incluye al cero, pero también valores de varios milímetros en ambas direcciones. Es decir, los datos son compatibles con "no hay diferencia" y también con "hay una diferencia moderada": simplemente no tenemos precisión suficiente para distinguirlas. Por eso el intervalo es más honesto que el valor p.
+:::
+
+### Laboratorio: traslape y significancia {#sec-lab-traslape}
+
+Aquí se corrige una intuición muy extendida: *"si las cajas se traslapan, no hay diferencia"*. Falso. Mueve la diferencia real entre grupos y el tamaño de muestra, y observa que con $n$ grande dos cajas que se traslapan bastante pueden resultar claramente significativas.
+
+```{ojs}
+//| panel: input
+//| echo: false
+viewof dif = Inputs.range([0, 3], {value: 0.8, step: 0.1, label: "diferencia real entre medias"})
+viewof nGrupo = Inputs.range([5, 200], {value: 20, step: 5, label: "n por grupo"})
+viewof remuestrear = Inputs.button("Nuevas muestras")
+```
+
+```{ojs}
+//| echo: false
+muestras = {
+  remuestrear;
+  const nA = d3.randomNormal(10, 2), nB = d3.randomNormal(10 + dif, 2);
+  return [
+    ...Array.from({length: nGrupo}, () => ({ grupo: "A", valor: nA() })),
+    ...Array.from({length: nGrupo}, () => ({ grupo: "B", valor: nB() }))
+  ];
+}
+```
+
+```{ojs}
+//| echo: false
+gammlnJS = (x) => {
+  const cof = [76.18009172947146, -86.50532032941677, 24.01409824083091,
+               -1.231739572450155, 0.1208650973866179e-2, -0.5395239384953e-5];
+  let y = x, tmp = x + 5.5;
+  tmp -= (x + 0.5) * Math.log(tmp);
+  let ser = 1.000000000190015;
+  for (let j = 0; j < 6; j++) ser += cof[j] / ++y;
+  return -tmp + Math.log(2.5066282746310005 * ser / x);
+}
+```
+
+```{ojs}
+//| echo: false
+betacf = (a, b, x) => {
+  const qab = a + b, qap = a + 1, qam = a - 1;
+  let c = 1, d = 1 - qab * x / qap;
+  if (Math.abs(d) < 1e-300) d = 1e-300;
+  d = 1 / d;
+  let h = d;
+  for (let m = 1; m <= 300; m++) {
+    const m2 = 2 * m;
+    let aa = m * (b - m) * x / ((qam + m2) * (a + m2));
+    d = 1 + aa * d; if (Math.abs(d) < 1e-300) d = 1e-300;
+    c = 1 + aa / c; if (Math.abs(c) < 1e-300) c = 1e-300;
+    d = 1 / d; h *= d * c;
+    aa = -(a + m) * (qab + m) * x / ((a + m2) * (qap + m2));
+    d = 1 + aa * d; if (Math.abs(d) < 1e-300) d = 1e-300;
+    c = 1 + aa / c; if (Math.abs(c) < 1e-300) c = 1e-300;
+    d = 1 / d;
+    const del = d * c; h *= del;
+    if (Math.abs(del - 1) < 1e-12) break;
+  }
+  return h;
+}
+```
+
+```{ojs}
+//| echo: false
+betai = (a, b, x) => {
+  if (x <= 0) return 0;
+  if (x >= 1) return 1;
+  const bt = Math.exp(gammlnJS(a + b) - gammlnJS(a) - gammlnJS(b)
+             + a * Math.log(x) + b * Math.log(1 - x));
+  return x < (a + 1) / (a + b + 2)
+    ? bt * betacf(a, b, x) / a
+    : 1 - bt * betacf(b, a, 1 - x) / b;
+}
+```
+
+```{ojs}
+//| echo: false
+prueba = {
+  const A = muestras.filter(d => d.grupo === "A").map(d => d.valor);
+  const B = muestras.filter(d => d.grupo === "B").map(d => d.valor);
+  const m1 = d3.mean(A), m2 = d3.mean(B);
+  const v1 = d3.variance(A), v2 = d3.variance(B);
+  const n1 = A.length, n2 = B.length;
+  const t = (m2 - m1) / Math.sqrt(v1 / n1 + v2 / n2);
+  const gl = Math.pow(v1 / n1 + v2 / n2, 2) /
+             (Math.pow(v1 / n1, 2) / (n1 - 1) + Math.pow(v2 / n2, 2) / (n2 - 1));
+  return { t, gl, p: betai(gl / 2, 0.5, gl / (gl + t * t)) };
+}
+```
+
+```{ojs}
+//| echo: false
+Plot.plot({
+  height: 250,
+  x: { label: "grupo" },
+  y: { label: "valor" },
+  marks: [
+    Plot.boxY(muestras, { x: "grupo", y: "valor", fill: "#DCE6F1", stroke: "#1F4E79" }),
+    Plot.dot(muestras, { x: "grupo", y: "valor", fill: "#1F4E79",
+      fillOpacity: 0.35, r: 2.5, dx: () => (Math.random() - 0.5) * 14 })
+  ]
+})
+```
+
+```{ojs}
+//| echo: false
+md`t = **${prueba.t.toFixed(2)}** · valor p = **${prueba.p < 0.0001 ? "< 0.0001" : prueba.p.toFixed(4)}** · ${prueba.p < 0.05 ? "**diferencia significativa** (α = 0.05)" : "no significativa (α = 0.05)"}`
+```
+
+::: {.callout-note title="Interpreta"}
+Pon la diferencia en 0.8 y el tamaño en 10 por grupo: las cajas se traslapan y el resultado casi nunca es significativo. Ahora **sube $n$ a 150 sin tocar la diferencia**: las cajas se traslapan prácticamente igual, pero el valor p se desploma y la diferencia se vuelve significativa.
+
+¿Por qué? Porque la caja describe la dispersión de **los datos individuales**, mientras que la prueba se refiere a la precisión de **las medias**, que mejora con $\sqrt{n}$. Son cosas distintas. Por eso el traslape de cajas no es criterio para decidir significancia —y, en el otro sentido, tampoco basta con que las cajas se separen si $n$ es minúsculo—.
+
+Prueba también el caso incómodo: diferencia en **0** con $n = 200$. De vez en cuando saldrá "significativo": es el error tipo I, ocurriendo el 5 % de las veces, tal como está diseñado.
+:::
+
+## Muestras pareadas
+
+A veces las observaciones **vienen en parejas naturales**: el mismo paciente antes y después, el mismo terreno con dos tratamientos, o —como en nuestro proyecto— **el mismo juez calificando dos marcas**. Ignorar ese emparejamiento desperdicia información.
+
+La solución es elegante: se calcula la **diferencia dentro de cada par** y se le aplica la prueba de **una** muestra del @sec-cap7, con $H_0: \mu_d = 0$.
+
+```{r}
+#| label: pareada
+galletas <- read.csv("datos/galletas.csv")
+pares <- galletas |>
+  filter(marca %in% c("Oreo", "GreatValue")) |>
+  pivot_wider(id_cols = juez, names_from = marca, values_from = agrado)
+
+t.test(pares$Oreo, pares$GreatValue, paired = TRUE)
+```
+
+::: {.callout-note title="Interpreta"}
+La diferencia media es de unos **2.4 puntos** de agrado a favor de Oreo, con un intervalo aproximado de 1.8 a 3.0 y un valor p minúsculo.
+
+La ventaja del análisis pareado es que **elimina la variabilidad entre jueces**: no importa que Juan califique todo alto y María todo bajo, porque a cada quien se le resta consigo mismo. Al quitar esa fuente de ruido, la prueba gana potencia. Aplicar por error una prueba de muestras independientes aquí daría un resultado más débil y sería metodológicamente incorrecto.
+
+**La regla:** si puedes trazar una línea que una cada dato de un grupo con exactamente un dato del otro, tus datos son pareados.
+:::
+
+## La prueba A/B
+
+En la industria del software, comparar dos versiones de un sistema con usuarios asignados al azar se llama **prueba A/B**. Estadísticamente **no es nada nuevo**: es un experimento aleatorizado (@sec-cap5) analizado con una comparación de dos muestras.
+
+Comparemos el tiempo de ejecución del mismo algoritmo en dos entornos:
+
+```{r}
+#| label: prueba-ab
+ab <- read.csv("datos/algoritmos_ab.csv")
+ab |> group_by(entorno) |> summarise(n = n(), media = mean(tiempo_ms), de = sd(tiempo_ms))
+t.test(tiempo_ms ~ entorno, data = ab)
+```
+
+::: {.callout-note title="Interpreta"}
+Windows resulta unos **2 ms más lento** en promedio, con un valor p muy pequeño. Reportar solo "es significativo" sería insuficiente: lo que decide si vale la pena migrar es el **tamaño del efecto** y su intervalo, junto con el costo de cambiar. Es la misma lección del @sec-cap7: significancia estadística no es relevancia práctica.
+:::
+
+## Comparación de varianzas
+
+::: {.callout-tip title="Complemento para el examen de admisión de la MCD"}
+Este tema no está en el temario del curso, pero sí en la guía del examen de admisión de la Maestría en Ciencia de Datos, y además motiva el chequeo de supuestos del ANOVA (@sec-cap10).
+:::
+
+A veces la pregunta no es sobre el centro sino sobre la **variabilidad**: ¿un proceso es más consistente que otro? Se compara mediante el **cociente de varianzas**, cuya distribución bajo $H_0: \sigma_1^2 = \sigma_2^2$ es una **F de Fisher**.
+
+```{r}
+#| label: var-test
+var.test(temp_corporal ~ habitat, data = lagartijas)
+```
+
+::: {.callout-note title="Interpreta"}
+El cociente de varianzas es cercano a 2 (la desviación urbana es 1.63 °C contra 1.17 °C en el campo). Además de ser más cálidas, las lagartijas urbanas son **más variables**, lo cual es biológicamente razonable: la ciudad ofrece microambientes muy distintos —asfalto, sombra, jardines— mientras que el campo abierto es más homogéneo.
+
+Cuidado: la prueba F es **muy sensible a la no normalidad**. Si los datos no son aproximadamente normales, conviene usar la prueba de Levene, más robusta.
+:::
 
 ## Verificación de supuestos
 
-*(En construcción.)*
+Antes de confiar en cualquiera de estas pruebas, hay que revisar tres cosas:
+
+1. **Independencia**: las observaciones deben ser independientes entre sí (garantizada por el diseño: muestreo aleatorio o asignación aleatoria).
+2. **Normalidad**: importa sobre todo con muestras pequeñas; con $n$ grande el TCL nos protege. Se revisa con un Q-Q plot **por grupo**.
+3. **Igualdad de varianzas**: la prueba de Welch —la de R por omisión— no la requiere, así que este supuesto deja de ser crítico.
+
+```{r}
+#| label: fig-qq-supuestos
+#| fig-cap: "Q-Q plot por hábitat: los puntos deben seguir la recta."
+#| fig-width: 6
+#| fig-height: 3
+ggplot(lagartijas, aes(sample = temp_corporal)) +
+  stat_qq() + stat_qq_line(color = "#1F4E79") +
+  facet_wrap(~habitat) +
+  labs(x = "Cuantiles teóricos", y = "Cuantiles de los datos")
+```
 
 ::: {.callout-tip title="¿Qué técnica uso?"}
-Dos grupos, una variable cuantitativa: prueba t para la diferencia de medias. Es exactamente lo que hay detrás de una prueba A/B.
+Con **dos grupos**:
+
+| Situación | Técnica en R |
+|---|---|
+| Dos grupos independientes, variable cuantitativa | `t.test(y ~ grupo)` (Welch) |
+| Observaciones emparejadas (antes/después, mismo sujeto) | `t.test(x, y, paired = TRUE)` |
+| Prueba A/B con una métrica numérica | Es el primer caso: `t.test(y ~ version)` |
+| Comparar variabilidad entre dos grupos | `var.test(y ~ grupo)` |
+| Los supuestos de normalidad fallan con $n$ pequeño | Prueba no paramétrica (`wilcox.test`) |
+
+**Siempre**: primero el boxplot, luego la prueba, y reporta el **intervalo de la diferencia**, no solo el valor p.
 :::
+
+## Resumen
+
+Para comparar dos grupos, el parámetro de interés es la **diferencia de medias**. Con grupos **independientes** usamos la prueba t de Welch; con datos **pareados**, la diferencia dentro de cada par convierte el problema en uno de una sola muestra, ganando potencia al eliminar la variabilidad entre sujetos. Una **prueba A/B** no es más que este análisis con vocabulario de la industria. El **traslape de cajas no decide** la significancia, porque las cajas describen los datos y la prueba habla de las medias. Y un resultado no significativo significa "no hay evidencia suficiente", no "son iguales". En el @sec-cap9 pasaremos a las variables **categóricas**: proporciones y tablas de contingencia.
 
 ## Ejercicios
 
-*Por desarrollar (banco de la Dra. Figueroa reorganizado + reactivos nuevos).*
+1. **Dos grupos.** Con `datos/lagartijas.csv`, prueba si la **masa** difiere entre hábitats. Reporta el intervalo de la diferencia e interpreta en una frase.
+
+2. **Pareado o independiente.** Clasifica cada situación:
+   a. Se mide la presión de 30 pacientes antes y después de un medicamento.
+   b. Se compara el rendimiento de 25 parcelas con fertilizante A contra otras 25 con B.
+   c. Cada juez de la cata califica Oreo y Chokis.
+   d. Se comparan los tiempos de 30 corridas en Mac contra 30 en Windows.
+
+3. **Pareado en R.** Con los datos de galletas, compara **Oreo contra Chokis** de forma pareada. ¿La diferencia es significativa? Compárala con la de Oreo contra Great Value.
+
+4. **El error de ignorar el emparejamiento.** Corre la comparación del ejercicio 3 dos veces: una con `paired = TRUE` y otra con `paired = FALSE`. ¿En cuál el valor p es menor? Explica por qué.
+
+5. **Laboratorio.** En el @sec-lab-traslape, fija la diferencia en 0.5 y encuentra aproximadamente el $n$ mínimo con el que el resultado se vuelve consistentemente significativo. ¿Qué te dice eso sobre el diseño de un estudio?
+
+6. **Varianzas.** Aplica `var.test()` a la longitud (`lhc_mm`) por hábitat. ¿Difieren las variabilidades? Combina este resultado con el de la prueba de medias del capítulo para describir a los dos grupos.
+
+7. **Redacción.** Una prueba A/B con 40 usuarios por grupo da $p = 0.08$ para una diferencia observada de 3 segundos. Escribe la conclusión correcta y señala qué NO se puede afirmar.
+
+::: {.callout-tip title="Soluciones y retroalimentación" collapse="true"}
+**1.** Con `t.test(masa_g ~ habitat, data = lagartijas)` se obtiene un valor p cercano a **0.01**: las lagartijas urbanas son significativamente más pesadas, con una diferencia media aproximada de 1.6 g y un intervalo que no incluye al cero. Interpretación: *"Las lagartijas urbanas pesan en promedio alrededor de 1.6 g más que las de campo abierto (p ≈ 0.01)"*. *Nota que la evidencia aquí es más moderada que en la temperatura (p < 0.001): conviene reflejar esa diferencia de fuerza en la redacción.*
+
+**2.** (a) **Pareado**: el mismo paciente medido dos veces. (b) **Independiente**: son parcelas distintas. (c) **Pareado**: el mismo juez califica ambas marcas. (d) **Independiente**: corridas distintas, sin correspondencia una a una. *La prueba decisiva: ¿puedo unir cada dato de un grupo con exactamente uno del otro por una razón sustantiva? En (d) la corrida 7 de Mac no tiene nada que ver con la 7 de Windows, así que no.*
+
+**3.** La diferencia media Oreo − Chokis es de apenas **0.52 puntos**, con $p \approx 0.07$: **no** alcanza significancia al 5 %. Compárala con Oreo − Great Value, donde la diferencia es de 2.36 puntos y $p < 0.001$. Conclusión: hay evidencia clara de que Oreo supera a Great Value, pero no de que supere a Chokis. *Esto ilustra algo que reaparecerá en el @sec-cap10: no basta con saber que "las marcas difieren"; hay que averiguar **entre cuáles** está la diferencia, y para eso servirán las pruebas post-hoc. Fíjate además en que un p de 0.07 no significa "casi significativo": significa que los datos son razonablemente compatibles con que ambas marcas gusten igual.*
+
+**4.** El valor p es **menor con `paired = TRUE`** (≈ 0.07 pareado contra ≈ 0.12 sin parear). Al emparejar, la variabilidad entre jueces —unos califican todo alto, otros todo bajo— desaparece del cálculo, así que el error estándar se reduce y la prueba gana **potencia**. *Aquí ninguna de las dos versiones resulta significativa, pero el ejemplo muestra el mecanismo con claridad: el análisis correcto extrae más información de los mismos datos. Y ojo: ignorar el emparejamiento no es solo perder sensibilidad, es aplicar una prueba cuyo supuesto de independencia no se cumple, porque las dos calificaciones vienen de la misma persona.*
+
+**5.** Con una diferencia de 0.5 y una desviación de 2 en cada grupo, se necesitan aproximadamente **250 a 300 observaciones por grupo** para detectar el efecto de forma consistente. Con $n = 20$ el resultado casi nunca sale significativo aunque la diferencia **exista de verdad**. *Esto es el **poder estadístico**, y la lección de diseño es enorme: un estudio con muestra insuficiente puede no detectar un efecto real, lo que produce el error tipo II. Por eso el tamaño de muestra debe calcularse **antes** de recolectar, no lamentarse después.*
+
+**6.** El cociente de varianzas de `lhc_mm` es cercano a 1 (desviaciones de 5.5 y 5.2 mm), así que **no** hay evidencia de que las variabilidades difieran. Combinando con la prueba de medias: en longitud, los dos grupos son **similares tanto en centro como en dispersión**. En cambio, en temperatura difieren en ambas cosas. *Buen ejercicio de síntesis: describir un grupo requiere hablar de centro **y** de dispersión, como aprendimos en el @sec-cap2.*
+
+**7.** Conclusión correcta: *"Con 40 usuarios por grupo, la diferencia observada de 3 segundos no alcanzó significancia estadística al nivel del 5 % (p = 0.08); no hay evidencia suficiente para afirmar que las versiones difieran."* **No** se puede afirmar: que las versiones sean iguales; que "casi" hay diferencia (el valor p no mide grados de casi); ni que el efecto no exista. Lo que sí conviene añadir: el **intervalo de confianza** de la diferencia, que probablemente incluya tanto el cero como efectos de varios segundos, y notar que **la muestra pudo ser insuficiente** para detectar un efecto real. *Este es el escenario donde más se cae en el "casi significativo": la respuesta profesional es reportar el intervalo y, si el efecto importa, repetir el estudio con más usuarios.*
+:::

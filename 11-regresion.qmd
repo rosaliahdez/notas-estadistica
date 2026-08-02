@@ -1,35 +1,290 @@
 # Inferencia en regresión {#sec-cap11}
 
-::: {.callout-important title="Plantilla en construcción"}
-Este capítulo corresponde a **Semana 14** del calendario y usa los datos de **algoritmos**. La estructura de secciones ya está fijada; el contenido se desarrolla con el mismo formato del @sec-cap1: pregunta real, técnica, supuestos, cómputo en R e interpretación.
-:::
-
 ```{r}
-#| label: setup-sec-cap11
+#| label: setup-cap11
 #| include: false
 library(tidyverse)
+theme_set(theme_minimal(base_size = 12))
+alg <- read.csv("datos/algoritmos_regresion.csv")
+mac <- filter(alg, entorno == "Mac")
 ```
 
-## Prueba de hipótesis para los coeficientes de la recta
+::: {.callout-tip title="Al terminar este capítulo podrás"}
+- Probar si la **pendiente** de una recta de regresión difiere de cero.
+- Probar la significancia del **coeficiente de correlación**.
+- Leer por completo la salida de `summary(lm())`, incluido el $R^2$.
+- **Diagnosticar los residuos** y reconocer cuándo el modelo lineal no es adecuado.
+:::
 
-*(En construcción.)*
+En el @sec-cap3 ajustamos una recta y la usamos para **describir** una relación. Ahora la sometemos a inferencia: la pendiente que calculamos viene de una muestra, así que cabe preguntarse si la relación es **real** o si pudo surgir del azar. Con esto cerramos el curso, y el capítulo abre además la puerta hacia el aprendizaje automático.
 
-## Prueba de hipótesis para el coeficiente de correlación
+## El modelo y su parámetro
 
-*(En construcción.)*
+El modelo de regresión lineal simple supone que, en la población,
 
-## Diagnóstico de residuos y normalidad de los errores
+$$Y = \beta_0 + \beta_1 X + \varepsilon, \qquad \varepsilon \sim N(0, \sigma^2)$$
 
-*(En construcción.)*
+Es decir: la relación media entre $X$ e $Y$ es una recta, y cada observación se aparta de ella por un **error aleatorio** $\varepsilon$ de media cero y varianza constante.
 
-## Del modelo lineal hacia el aprendizaje automático (próxima parada)
+Lo que calculamos con `lm()` son $b_0$ y $b_1$, **estimaciones muestrales** de $\beta_0$ y $\beta_1$. La pregunta central es sobre la pendiente:
 
-*(En construcción.)*
+- $H_0: \beta_1 = 0$ (no hay relación lineal: $X$ no ayuda a predecir $Y$)
+- $H_1: \beta_1 \neq 0$
+
+## La salida completa de `lm()`
+
+Trabajemos con los tiempos de ejecución del algoritmo en el entorno Mac:
+
+```{r}
+#| label: modelo-completo
+modelo <- lm(tiempo_ms ~ n, data = mac)
+summary(modelo)
+```
+
+Vale la pena leer esta salida por partes, porque contiene casi todo el curso:
+
+**La tabla de coeficientes.** Cada renglón trae la estimación, su error estándar, el estadístico $t$ y el valor p. Para `n` (la pendiente), la estimación es aproximadamente **0.00179 ms por elemento**, con $t \approx 28$ y un valor p del orden de $10^{-31}$: rechazamos $H_0$ contundentemente, hay relación lineal.
+
+**El intercepto** vale unos 1.19 ms y también resulta significativo; representa el costo fijo del algoritmo, independiente del tamaño de entrada.
+
+**Residual standard error** (≈ 1.29 ms) estima $\sigma$: la dispersión típica de los puntos alrededor de la recta.
+
+**R-squared** (≈ 0.943) es la proporción de la variabilidad de $Y$ explicada por el modelo: el 94 % de la variación en los tiempos se explica por el tamaño de entrada.
+
+**El estadístico F** al final prueba la significancia global del modelo. En regresión simple es redundante: equivale exactamente al cuadrado del $t$ de la pendiente.
+
+```{r}
+#| label: ic-pendiente
+confint(modelo)
+```
+
+::: {.callout-note title="Interpreta"}
+El intervalo de confianza de la pendiente va aproximadamente de **0.00167 a 0.00192 ms por elemento**. Redacción para un lector técnico: *"Cada elemento adicional en la entrada añade entre 1.67 y 1.92 microsegundos al tiempo de ejecución (95 % de confianza)."*
+
+Como el intervalo **no contiene al cero**, sabíamos de antemano que la prueba iba a rechazar $H_0$: son, otra vez, dos caras de la misma moneda (@sec-cap7). Y como siempre, el intervalo es más informativo porque cuantifica el efecto.
+:::
+
+### Laboratorio: la incertidumbre de la pendiente {#sec-lab-pendiente}
+
+La recta que calculas depende de la muestra que te tocó. Aquí se ve cuánto: cada línea gris es la recta ajustada a una muestra distinta de la **misma** población. Mueve el ruido y el tamaño de muestra para ver cómo se abre o se cierra el abanico.
+
+```{ojs}
+//| panel: input
+//| echo: false
+viewof ruidoReg = Inputs.range([0.5, 6], {value: 2, step: 0.25, label: "dispersión de los errores"})
+viewof nReg = Inputs.range([6, 100], {value: 20, step: 2, label: "tamaño de muestra n"})
+viewof pendVerd = Inputs.range([0, 1.5], {value: 0.8, step: 0.1, label: "pendiente verdadera"})
+viewof nuevasReg = Inputs.button("Nuevas muestras")
+```
+
+```{ojs}
+//| echo: false
+ajustes = {
+  nuevasReg;
+  const out = [];
+  for (let k = 0; k < 40; k++) {
+    const err = d3.randomNormal(0, ruidoReg);
+    const xs = Array.from({length: nReg}, () => Math.random() * 10);
+    const ys = xs.map(x => 5 + pendVerd * x + err());
+    const xb = d3.mean(xs), yb = d3.mean(ys);
+    const Sxx = d3.sum(xs, x => (x - xb) ** 2);
+    const Sxy = d3.sum(xs.map((x, i) => (x - xb) * (ys[i] - yb)));
+    const b = Sxy / Sxx, a = yb - b * xb;
+    out.push({ k, a, b });
+  }
+  return out;
+}
+```
+
+```{ojs}
+//| echo: false
+lineas = ajustes.flatMap(d => [
+  { k: d.k, x: 0,  y: d.a },
+  { k: d.k, x: 10, y: d.a + d.b * 10 }
+])
+```
+
+```{ojs}
+//| echo: false
+Plot.plot({
+  height: 260,
+  x: { label: "x", domain: [0, 10] },
+  y: { label: "y", domain: [-2, 22] },
+  marks: [
+    Plot.line(lineas, { x: "x", y: "y", z: "k", stroke: "#888780", strokeOpacity: 0.35 }),
+    Plot.line([{x: 0, y: 5}, {x: 10, y: 5 + pendVerd * 10}],
+      { x: "x", y: "y", stroke: "#C0392B", strokeWidth: 2.5 })
+  ]
+})
+```
+
+```{ojs}
+//| echo: false
+md`Pendiente verdadera: **${pendVerd.toFixed(1)}** (línea roja) · pendientes estimadas: de **${d3.min(ajustes, d => d.b).toFixed(2)}** a **${d3.max(ajustes, d => d.b).toFixed(2)}** · desviación estándar de las estimaciones: **${d3.deviation(ajustes, d => d.b).toFixed(3)}**`
+```
+
+::: {.callout-note title="Interpreta"}
+El abanico de rectas grises **es** la distribución muestral de la pendiente, dibujada. Sube el ruido y el abanico se abre: con datos muy dispersos, la pendiente estimada es poco confiable. Sube el tamaño de muestra y el abanico se cierra alrededor de la recta verdadera.
+
+Ahora pon la **pendiente verdadera en 0** con ruido alto y $n$ pequeño: verás rectas grises con inclinaciones visibles hacia arriba y hacia abajo, ¡aunque en la población no haya ninguna relación! Ese es exactamente el riesgo que la prueba de hipótesis nos protege: distinguir una pendiente real de una que el azar dibujó.
+:::
+
+## Prueba para el coeficiente de correlación
+
+Probar $H_0: \rho = 0$ (correlación poblacional nula) es equivalente a probar que la pendiente es cero: ambas preguntas son "¿hay relación lineal?".
+
+```{r}
+#| label: cor-test
+cor.test(mac$n, mac$tiempo_ms)
+```
+
+::: {.callout-note title="Interpreta"}
+El coeficiente de correlación es $r \approx 0.97$ y su prueba da el **mismo estadístico $t$ y el mismo valor p** que la pendiente. No es coincidencia: son formulaciones distintas de la misma hipótesis. La correlación aporta además el intervalo de confianza para $\rho$.
+
+Cuidado con el reflejo de sobreinterpretar: un $r$ alto indica relación lineal **fuerte**, pero sigue sin implicar causalidad (@sec-cap3), y tampoco garantiza que la recta sea el modelo correcto —eso lo dicen los residuos—.
+:::
+
+## Diagnóstico de residuos
+
+Los supuestos del modelo se verifican **en los residuos**, no en los datos crudos. Son cuatro, y hay una gráfica para cada uno.
+
+```{r}
+#| label: fig-diagnostico
+#| fig-cap: "Diagnóstico del modelo: residuos contra ajustados y Q-Q plot."
+#| fig-width: 7
+#| fig-height: 3.2
+par(mfrow = c(1, 2))
+plot(modelo, which = 1)   # linealidad y varianza constante
+plot(modelo, which = 2)   # normalidad de los errores
+par(mfrow = c(1, 1))
+```
+
+```{r}
+#| label: shapiro-residuos
+shapiro.test(residuals(modelo))
+```
+
+::: {.callout-important title="Los cuatro supuestos y cómo se ven cuando fallan"}
+1. **Linealidad.** En la gráfica de residuos contra ajustados no debe haber patrón. Una **curva** en forma de U indica que la relación real no es lineal.
+2. **Varianza constante** (homocedasticidad). El ancho de la nube debe ser parejo. Una forma de **embudo** indica que la dispersión crece con el valor ajustado; se corrige transformando $Y$ o usando errores robustos.
+3. **Normalidad de los errores.** Los puntos del Q-Q plot deben seguir la recta. Es el supuesto **menos crítico** con muestras grandes, gracias al TCL.
+4. **Independencia.** No hay gráfica que la salve: depende del diseño. Con datos tomados en el tiempo, hay que revisar que no haya autocorrelación.
+
+En nuestro caso los residuos insinúan una **curvatura muy leve** —los datos se generaron con un pequeño término cuadrático— que ilustra por qué esta gráfica no es un trámite: es la que te avisa de que el modelo lineal podría estar simplificando de más.
+:::
+
+## Predicción y sus límites
+
+Con el modelo ajustado se puede predecir, pero con dos advertencias:
+
+```{r}
+#| label: prediccion
+nuevos <- data.frame(n = c(5000, 12000))
+predict(modelo, newdata = nuevos, interval = "prediction")
+```
+
+::: {.callout-important title="No extrapoles"}
+El primer valor ($n = 5000$) está dentro del rango observado: la predicción es razonable. El segundo ($n = 12000$) queda **fuera** del rango con el que se ajustó el modelo (1000 a 10000). R lo calcula sin protestar, pero nada garantiza que la relación siga siendo lineal más allá de lo observado — de hecho, sabemos que hay una curvatura leve que se acentuaría.
+
+Nota también la diferencia entre el intervalo de **confianza** (para la media de $Y$ dado $X$) y el de **predicción** (para una observación individual): este último es mucho más ancho, porque debe incluir la variabilidad individual además de la incertidumbre de la recta.
+:::
+
+## Hacia el aprendizaje automático
+
+Este capítulo es la frontera del curso, y conviene decir hacia dónde sigue el camino.
+
+La regresión lineal es el **modelo predictivo más simple**, y muchas ideas del aprendizaje automático son extensiones suyas: agregar varias variables explicativas da la **regresión múltiple**; cambiar la respuesta a categórica da la **regresión logística**; penalizar los coeficientes da **ridge** y **lasso**.
+
+Pero hay una diferencia de énfasis que vale la pena señalar. En estadística clásica nos preocupa **si los coeficientes son significativos** y si los supuestos se cumplen, porque queremos *entender* el fenómeno. En aprendizaje automático interesa sobre todo **qué tan bien predice** el modelo en datos nuevos, y para eso se usa validación cruzada más que valores p.
+
+Las dos miradas se necesitan. Cuando en su curso de Aprendizaje Automático evalúen un modelo, el diagnóstico de residuos que aprendieron aquí seguirá siendo la herramienta para detectar que algo va mal: errores con estructura, varianza que crece, valores atípicos influyentes. Saber leer esas gráficas es lo que distingue a quien entrena modelos de quien los **valida**.
 
 ::: {.callout-tip title="¿Qué técnica uso?"}
-¿La relación entre X e Y es real o azar? Prueba sobre la pendiente. Verificar la normalidad de los errores conecta con la validación de modelos de ML.
+Con **dos variables cuantitativas** y una pregunta inferencial:
+
+| Mi pregunta | Herramienta en R |
+|---|---|
+| ¿La relación lineal es real? | `summary(lm(y ~ x))`, valor p de la pendiente |
+| ¿Cuánto cambia $Y$ por unidad de $X$? | `confint(modelo)` |
+| ¿Qué tan fuerte es la relación? | $R^2$ del modelo, o `cor.test()` |
+| ¿El modelo lineal es adecuado? | `plot(modelo)`: residuos y Q-Q plot |
+| ¿Cuánto vale $Y$ para un $X$ nuevo? | `predict(modelo, newdata, interval = "prediction")` |
+
+**Nunca** reportes una regresión sin haber mirado sus residuos.
 :::
+
+## Resumen
+
+La recta ajustada proviene de una muestra, así que su pendiente tiene incertidumbre. La **prueba sobre $\beta_1$** decide si la relación lineal es real, y su intervalo de confianza dice **cuánto** cambia $Y$ por unidad de $X$; probar la correlación es la misma prueba con otro nombre. El $R^2$ resume qué proporción de la variabilidad explica el modelo, y el **diagnóstico de residuos** —linealidad, varianza constante, normalidad, independencia— es lo que decide si el modelo merece confianza. Predecir fuera del rango observado es extrapolar, y eso es cosa de fe, no de estadística.
+
+## Cierre del curso: el mapa de decisión completo
+
+A lo largo del libro fuimos armando, recuadro a recuadro, una guía para elegir la técnica correcta. Aquí está completa. Es la respuesta a la pregunta que abre todo análisis: **¿qué hago con estos datos?**
+
+| Mi pregunta | Tipo de datos | Técnica | Capítulo |
+|---|---|---|---|
+| ¿Cómo se ve esta variable? | 1 categórica | Barras, tabla de frecuencias | @sec-cap1 |
+| ¿Cómo se distribuye? | 1 cuantitativa | Histograma, boxplot, Q-Q plot | @sec-cap1, @sec-cap2 |
+| ¿Cuál es su centro y dispersión? | 1 cuantitativa | Media/mediana, desviación/RIC | @sec-cap2 |
+| ¿Cómo se relacionan dos variables? | 2 cuantitativas | Dispersión, correlación, recta | @sec-cap3 |
+| ¿Cómo obtengo datos representativos? | — | Muestreo aleatorio (simple, estratificado…) | @sec-cap4 |
+| ¿Cómo pruebo causa y efecto? | — | Experimento: control, aleatorización, réplicas | @sec-cap5 |
+| ¿Cuánto vale un parámetro? | 1 muestra | Intervalo de confianza | @sec-cap7 |
+| ¿Difiere de un valor de referencia? | 1 muestra | `t.test(x, mu = ...)` | @sec-cap7 |
+| ¿Difieren dos grupos independientes? | Cuantitativa por 2 grupos | `t.test(y ~ grupo)` | @sec-cap8 |
+| ¿Difieren dos medidas del mismo sujeto? | Datos pareados | `t.test(x, y, paired = TRUE)` | @sec-cap8 |
+| ¿Difieren dos varianzas? | Cuantitativa por 2 grupos | `var.test(y ~ grupo)` | @sec-cap8 |
+| ¿Cuánto vale una proporción? | 1 categórica binaria | `prop.test(x, n)` | @sec-cap9 |
+| ¿Difieren dos proporciones? | Binaria por 2 grupos | `prop.test(c(x1,x2), c(n1,n2))` | @sec-cap9 |
+| ¿Están asociadas dos categóricas? | Tabla de contingencia | `chisq.test(tabla)` | @sec-cap9 |
+| ¿Difieren tres o más grupos? | Cuantitativa por k grupos | `aov()` + `TukeyHSD()` | @sec-cap10 |
+| ¿La relación entre X e Y es real? | 2 cuantitativas | `lm()` y prueba sobre la pendiente | @sec-cap11 |
+
+Tres reglas que valen para todas las filas de esa tabla:
+
+1. **Mira los datos antes de calcular.** Una gráfica te dice si la técnica tiene sentido.
+2. **Verifica los supuestos.** Un valor p calculado sobre supuestos rotos no significa nada.
+3. **Interpreta en el lenguaje del problema.** Nadie fuera de esta clase quiere saber tu estadístico $t$: quieren saber si las galletas gustan distinto, si el tratamiento sirve, cuánto tarda el algoritmo.
 
 ## Ejercicios
 
-*Por desarrollar (banco de la Dra. Figueroa reorganizado + reactivos nuevos).*
+1. **Modelo completo.** Ajusta la regresión para el entorno **Windows** y reporta: pendiente, su intervalo de confianza, $R^2$ y la conclusión de la prueba.
+
+2. **Comparar pendientes.** Compara la pendiente de Windows con la de Mac. ¿Cuál entorno se degrada más rápido al crecer la entrada? ¿Se traslapan sus intervalos de confianza?
+
+3. **Equivalencia.** Verifica en la salida de `summary(lm())` que el estadístico $F$ es igual al cuadrado del $t$ de la pendiente. Explica por qué.
+
+4. **Diagnóstico.** Grafica los residuos del modelo de Windows. ¿Observas algún patrón? ¿Qué supuesto pondrías en duda?
+
+5. **Interpretación de $R^2$.** El modelo tiene $R^2 \approx 0.94$. ¿Cuál de estas lecturas es correcta?
+   a. El 94 % de las predicciones son correctas.
+   b. El 94 % de la variabilidad en los tiempos se explica por el tamaño de entrada.
+   c. Hay 94 % de probabilidad de que el modelo sea correcto.
+
+6. **Predicción y extrapolación.** Predice el tiempo para $n = 3000$ y para $n = 50000$. ¿Cuál predicción confiarías y por qué?
+
+7. **Laboratorio.** En el @sec-lab-pendiente, pon la pendiente verdadera en **0**, el ruido en 5 y $n$ en 8. Observa el abanico de rectas. ¿Qué le pasaría a alguien que ajustara **una sola** de esas muestras y no hiciera prueba de hipótesis?
+
+8. **Síntesis del curso.** Para cada situación, di qué técnica del mapa de decisión usarías:
+   a. Comparar la satisfacción promedio de estudiantes de tres carreras.
+   b. Ver si el género está asociado con la elección de optativa.
+   c. Estimar el porcentaje de egresados empleados, con margen de error.
+   d. Evaluar si un nuevo método de enseñanza mejora las calificaciones frente al tradicional, con grupos asignados al azar.
+
+::: {.callout-tip title="Soluciones y retroalimentación" collapse="true"}
+**1.** Con `summary(lm(tiempo_ms ~ n, data = filter(alg, entorno == "Windows")))`: pendiente ≈ **0.00212 ms por elemento**, intervalo aproximado de **0.00197 a 0.00228**, $R^2 \approx 0.94$, y un valor p del orden de $10^{-31}$. Conclusión: existe una relación lineal fuerte y altamente significativa entre el tamaño de entrada y el tiempo. *Reporta la pendiente con su intervalo, no solo el valor p: el intervalo es lo que permite comparar entornos.*
+
+**2.** La pendiente de Windows (0.00212) es mayor que la de Mac (0.00179): **Windows se degrada más rápido** al crecer la entrada. Sus intervalos —aproximadamente (0.00197, 0.00228) contra (0.00167, 0.00192)— **no se traslapan**, lo que sugiere que la diferencia es real. *Advertencia metodológica: comparar intervalos "a ojo" es una aproximación informal. La forma rigurosa es ajustar un modelo con interacción, `lm(tiempo_ms ~ n * entorno)`, y probar directamente si el término de interacción difiere de cero. Es un buen puente hacia la regresión múltiple.*
+
+**3.** $F = t^2$: aquí $28.24^2 \approx 797$. La razón es que en regresión **simple** solo hay una variable explicativa, así que "¿el modelo global sirve?" y "¿la pendiente es distinta de cero?" son la misma pregunta. *La equivalencia se rompe en regresión múltiple: ahí el $F$ global prueba si **al menos una** de las variables aporta, mientras que cada $t$ prueba una variable en particular.*
+
+**4.** Los residuos de Windows muestran la misma **curvatura leve** que los de Mac, porque ambos conjuntos se generaron con un pequeño término cuadrático. El supuesto en duda es la **linealidad**: la relación real tiene una componente curva que el modelo lineal no captura. *Con datos de tiempos de ejecución esto es esperable: muchos algoritmos tienen complejidad superlineal, así que un término en $n^2$ o un modelo en escala logarítmica podría ajustar mejor. Este es justo el tipo de hallazgo para el que sirve mirar los residuos.*
+
+**5.** La correcta es la **(b)**. La (a) confunde $R^2$ con una tasa de acierto —concepto que ni siquiera aplica a una respuesta continua—; la (c) le atribuye una probabilidad al modelo, que no es lo que mide. *Otra advertencia sobre $R^2$: un valor alto no garantiza que el modelo sea adecuado. Se pueden tener datos claramente curvos con $R^2$ elevado; por eso el diagnóstico de residuos es indispensable, no opcional.*
+
+**6.** La predicción para $n = 3000$ es confiable: está **dentro** del rango observado (1000 a 10000). La de $n = 50000$ es una **extrapolación** cinco veces más allá del máximo observado: el modelo la calcula, pero no hay evidencia de que la relación siga siendo lineal tan lejos, y la curvatura detectada en los residuos sugiere que el tiempo real crecería más rápido de lo predicho. *Regla práctica: predice dentro del rango de tus datos; fuera de él, estás haciendo un supuesto no verificado y conviene decirlo explícitamente.*
+
+**7.** Vería una recta con pendiente aparente —a veces positiva, a veces negativa— y podría concluir que existe una relación **que en realidad no existe** (la pendiente verdadera es cero). Sin prueba de hipótesis no hay forma de distinguir una señal real del ruido, y con $n$ pequeño y mucho ruido el azar dibuja tendencias convincentes. *Esta es la razón de ser de todo el bloque de inferencia: nuestros ojos encuentran patrones en el ruido con demasiada facilidad, y la estadística es el antídoto contra esa tendencia.*
+
+**8.** (a) **ANOVA** de un factor con post-hoc de Tukey (@sec-cap10): una cuantitativa comparada entre tres grupos. (b) **Prueba ji-cuadrada** de independencia (@sec-cap9): dos variables categóricas. (c) **Intervalo de confianza para una proporción** (@sec-cap9), con `prop.test`. (d) **Prueba t de dos muestras independientes** (@sec-cap8) sobre un **experimento aleatorizado** (@sec-cap5); como hubo asignación al azar, aquí sí es válido hablar de causa. *Fíjate en que responder bien requiere identificar dos cosas: el tipo de variable y el número de grupos. Ese es, en el fondo, todo el mapa de decisión.*
+:::

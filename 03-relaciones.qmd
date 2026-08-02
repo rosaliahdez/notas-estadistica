@@ -1,43 +1,205 @@
 # Relaciones entre variables {#sec-cap3}
 
-::: {.callout-important title="Plantilla en construcción"}
-Este capítulo corresponde a **Semana 3** del calendario y usa los datos de **algoritmos, pingüinos**. La estructura de secciones ya está fijada; el contenido se desarrolla con el mismo formato del @sec-cap1: pregunta real, técnica, supuestos, cómputo en R e interpretación.
-:::
-
 ```{r}
-#| label: setup-sec-cap3
+#| label: setup-cap3
 #| include: false
 library(tidyverse)
+library(palmerpenguins)
+theme_set(theme_minimal(base_size = 12))
 ```
 
-## Variable dependiente y variable regresora
+::: {.callout-tip title="Al terminar este capítulo podrás"}
+- Explorar la relación entre dos variables cuantitativas con un **diagrama de dispersión**.
+- Cuantificar una relación lineal con el **coeficiente de correlación**.
+- Ajustar una **recta de regresión** por mínimos cuadrados e interpretar sus coeficientes.
+- Revisar el ajuste con el **análisis de residuales**.
+- Resumir varias variables a la vez con una **matriz de correlación**.
+:::
 
-*(En construcción.)*
+Hasta aquí describimos **una** variable a la vez. Casi siempre la pregunta interesante es sobre **dos**: ¿el tiempo de ejecución crece con el tamaño de entrada?, ¿un pico más largo viene con un pico más profundo? Este capítulo cierra la Parte I estudiando cómo se relacionan dos variables cuantitativas.
 
-## Diagrama de dispersión
+## El diagrama de dispersión
 
-*(En construcción.)*
+La primera herramienta —siempre— es graficar. En un **diagrama de dispersión** cada individuo es un punto: una variable en el eje horizontal (la **regresora** o explicativa, `x`) y otra en el vertical (la **respuesta** o dependiente, `y`).
 
-## Correlación de Pearson
+Usemos los tiempos de ejecución de un algoritmo según el tamaño de la entrada.
 
-*(En construcción.)*
+```{r}
+#| label: fig-dispersion-alg
+#| fig-cap: "Tiempo de ejecución según el tamaño de entrada (entorno Mac)."
+#| fig-width: 5
+#| fig-height: 3.4
+alg <- read.csv("datos/algoritmos_regresion.csv")
+mac <- filter(alg, entorno == "Mac")
+ggplot(mac, aes(x = n, y = tiempo_ms)) +
+  geom_point(color = "#1F4E79", alpha = 0.7) +
+  labs(x = "Tamaño de entrada (n)", y = "Tiempo (ms)")
+```
 
-## Regresión por mínimos cuadrados (enfoque descriptivo)
+Al leer una nube de puntos nos fijamos en tres rasgos: la **dirección** (¿sube o baja?), la **forma** (¿recta o curva?) y la **fuerza** (¿los puntos están apretados sobre un patrón o dispersos?). Aquí la relación es creciente, aproximadamente lineal y bastante fuerte.
 
-*(En construcción.)*
+## El coeficiente de correlación
 
-## Análisis gráfico de residuales
+El **coeficiente de correlación de Pearson**, `r`, resume en un número la **fuerza y dirección de una relación lineal**. Va de −1 a 1: cerca de 1 es una relación lineal creciente fuerte; cerca de −1, decreciente fuerte; cerca de 0, sin relación lineal.
 
-*(En construcción.)*
+```{r}
+#| label: cor-alg
+cor(mac$n, mac$tiempo_ms)
+```
 
-## Matriz de correlación entre varias variables
+::: {.callout-important title="Correlación no es causalidad"}
+Que dos variables estén correlacionadas **no** significa que una cause a la otra. El clásico ejemplo: las ventas de helado y los ahogamientos suben juntos, pero ninguno causa al otro (los une el calor del verano). La correlación describe *asociación*; para hablar de *causa* necesitamos un experimento (Parte II). Además, `r` solo mide relación **lineal**: una relación fuerte pero curva puede dar `r` cercano a 0.
+:::
 
-*(En construcción.)*
+### Laboratorio: ¿cómo se ve cada valor de r? {#sec-lab-cor}
+
+Leer un número como "r = 0.6" no dice mucho hasta que se ve la nube que le corresponde. Mueve el deslizador y entrena el ojo: para cada valor de $r$, así se ven los datos.
+
+```{ojs}
+//| panel: input
+//| echo: false
+viewof rval = Inputs.range([-1, 1], {value: 0.7, step: 0.05, label: "correlación r"})
+```
+
+```{ojs}
+//| echo: false
+base = Array.from({length: 90}, () => [d3.randomNormal()(), d3.randomNormal()()])
+```
+
+```{ojs}
+//| echo: false
+nube = base.map(([z1, z2]) => ({
+  x: z1,
+  y: rval * z1 + Math.sqrt(Math.max(0, 1 - rval * rval)) * z2
+}))
+```
+
+```{ojs}
+//| echo: false
+Plot.plot({
+  height: 260,
+  x: { label: "x", domain: [-3.2, 3.2] },
+  y: { label: "y", domain: [-3.2, 3.2] },
+  marks: [
+    Plot.dot(nube, { x: "x", y: "y", fill: "#1F4E79", fillOpacity: 0.65, r: 3.5 }),
+    Plot.linearRegressionY(nube, { x: "x", y: "y", stroke: "#C0392B" })
+  ]
+})
+```
+
+::: {.callout-note title="Interpreta"}
+Con $r$ cerca de 0 la nube es un borrón redondo: conocer $x$ no ayuda a adivinar $y$. Conforme $|r|$ crece, la nube se aprieta contra la recta hasta volverse casi una línea en $\pm 1$. Nota también que el **signo** solo cambia la inclinación, no la fuerza: $r = -0.8$ es tan fuerte como $r = 0.8$. Un ejercicio útil: pon el deslizador en 0.5 y observa cuánta dispersión sigue habiendo — mucha gente sobrestima lo que significa "correlación moderada".
+:::
+
+## La recta de regresión por mínimos cuadrados
+
+Cuando la relación es lineal, podemos resumirla con una **recta**: $\hat{y} = b_0 + b_1 x$. El método de **mínimos cuadrados** elige la recta que hace más pequeña la suma de los errores al cuadrado (las distancias verticales de los puntos a la recta). En R se ajusta con `lm()` ("modelo lineal").
+
+```{r}
+#| label: lm-alg
+modelo <- lm(tiempo_ms ~ n, data = mac)
+coef(modelo)
+```
+
+```{r}
+#| label: fig-recta-alg
+#| fig-cap: "Recta de mínimos cuadrados sobre los datos."
+#| fig-width: 5
+#| fig-height: 3.4
+ggplot(mac, aes(x = n, y = tiempo_ms)) +
+  geom_point(color = "#1F4E79", alpha = 0.7) +
+  geom_smooth(method = "lm", se = FALSE, color = "#C0392B") +
+  labs(x = "Tamaño de entrada (n)", y = "Tiempo (ms)")
+```
+
+::: {.callout-note title="Interpreta"}
+La **pendiente** ($b_1$) es lo que más nos dice: por cada elemento adicional en la entrada, el tiempo aumenta aproximadamente ese número de milisegundos. La **ordenada al origen** ($b_0$) es el tiempo estimado cuando $n = 0$; muchas veces es solo un punto de anclaje sin sentido físico (aquí, un "costo fijo" del algoritmo). Interpreta siempre la pendiente en las unidades del problema.
+:::
+
+En este capítulo la recta es **descripción**: resume la tendencia. En el @sec-cap11 volveremos a ella para *hacer inferencia*: ¿la pendiente es realmente distinta de cero o pudo salir por azar?
+
+## Análisis de residuales
+
+Un **residual** es lo que la recta no explicó: la diferencia entre el valor observado y el predicho, $y - \hat{y}$. Si la recta es un buen resumen, los residuales no deben mostrar ningún patrón: solo ruido alrededor de cero. Graficarlos contra los valores ajustados es el chequeo básico.
+
+```{r}
+#| label: fig-residuales
+#| fig-cap: "Residuales contra valores ajustados."
+#| fig-width: 5
+#| fig-height: 3.4
+mac_aug <- mac |>
+  mutate(ajustado = fitted(modelo),
+         residual = resid(modelo))
+ggplot(mac_aug, aes(x = ajustado, y = residual)) +
+  geom_point(color = "#1F4E79", alpha = 0.7) +
+  geom_hline(yintercept = 0, color = "#C0392B") +
+  labs(x = "Valor ajustado (ms)", y = "Residual (ms)")
+```
+
+::: {.callout-note title="Interpreta"}
+Buscamos una nube **sin estructura**, repartida arriba y abajo del cero. Si vieras una curva (forma de U), la relación real no sería del todo lineal; si el ancho creciera hacia la derecha (forma de embudo), la dispersión no sería constante. Estos diagnósticos serán obligatorios cuando hagamos inferencia con regresión.
+:::
+
+## Matriz de correlación: varias variables a la vez
+
+Cuando hay **varias** variables cuantitativas, una **matriz de correlación** muestra el `r` de cada par. Con los pingüinos:
+
+```{r}
+#| label: matriz-cor
+penguins |>
+  select(bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g) |>
+  cor(use = "complete.obs") |>
+  round(2)
+```
+
+Cada celda es la correlación de un par de variables (la diagonal es 1: toda variable se correlaciona perfecto consigo misma). Se lee de un vistazo: el largo de la aleta y la masa corporal van muy de la mano (0.87), mientras que el largo y la profundidad del pico casi no se relacionan de forma lineal (−0.24).
 
 ::: {.callout-tip title="¿Qué técnica uso?"}
-Dos variables cuantitativas: ¿fuerza de la relación? → correlación; ¿predecir Y a partir de X? → recta de regresión.
+Ampliamos el mapa de decisión para **dos o más variables cuantitativas**:
+
+| Mi pregunta | Herramienta |
+|---|---|
+| ¿Cómo se ven relacionadas dos variables? | Diagrama de dispersión |
+| ¿Qué tan fuerte es su relación lineal? | Coeficiente de correlación `r` |
+| ¿Cómo predigo `y` a partir de `x`? | Recta de regresión (`lm`) |
+| ¿La recta ajusta bien? | Análisis de residuales |
+| ¿Cómo se relacionan varias variables? | Matriz de correlación |
+
+**Advertencia permanente:** correlación describe asociación, no causa.
 :::
+
+## Del resumen a la inferencia (próxima parada)
+
+La matriz de correlación y la covarianza son el punto de partida de técnicas más avanzadas de ciencia de datos —componentes principales, reducción de dimensión— que verás en la Maestría en Ciencia de Datos. Aquí nos quedamos en el nivel descriptivo; en la Parte III aprenderemos a decidir si estas relaciones son **estadísticamente significativas** o pudieron surgir por azar.
+
+## Resumen
+
+Para relacionar dos variables cuantitativas: primero un **diagrama de dispersión**, luego el **coeficiente de correlación** para medir la fuerza lineal y la **recta de mínimos cuadrados** para resumir la tendencia y predecir. El **análisis de residuales** nos dice si la recta es un buen resumen, y la **matriz de correlación** extiende la idea a varias variables. Cierra aquí la Parte I: ya sabemos explorar datos. En la Parte II veremos de dónde deben *venir* esos datos para que las conclusiones valgan.
 
 ## Ejercicios
 
-*Por desarrollar (banco de la Dra. Figueroa reorganizado + reactivos nuevos).*
+1. **Dispersión y correlación.** Con los pingüinos, grafica `body_mass_g` (y) contra `flipper_length_mm` (x) y calcula su correlación. Describe dirección, forma y fuerza.
+
+2. **Interpretar la pendiente.** Ajusta `lm(tiempo_ms ~ n)` para el entorno **Windows** de `datos/algoritmos_regresion.csv`. ¿Cuántos milisegundos agrega cada elemento adicional? Compara la pendiente con la de Mac.
+
+3. **Correlación y linealidad.** Inventa (o dibuja) un conjunto de puntos con una relación fuerte pero **curva** y explica por qué su `r` puede ser cercano a cero. ¿Qué mostraría el diagrama de dispersión que `r` esconde?
+
+4. **Residuales.** Para el modelo del ejercicio 2, grafica los residuales contra los valores ajustados. ¿Ves algún patrón? ¿Qué indicaría si lo hubiera?
+
+5. **Causa vs. asociación.** Da un ejemplo, distinto al del helado, de dos variables correlacionadas donde sería un error concluir que una causa la otra. Identifica una posible variable oculta que las relacione.
+
+6. **Matriz de correlación.** Calcula la matriz de correlación de las cuatro medidas numéricas de los pingüinos por separado para la especie *Gentoo* (`filter(species == "Gentoo")`). ¿Cambian mucho las correlaciones respecto a la matriz global? ¿Por qué podría pasar eso?
+
+::: {.callout-tip title="Soluciones y retroalimentación" collapse="true"}
+**1.** `cor(penguins$flipper_length_mm, penguins$body_mass_g, use = "complete.obs")` da aproximadamente **0.87**. La relación es **creciente, aproximadamente lineal y fuerte**: pingüinos con aletas más largas tienden a pesar más. *Tiene sentido biológico: ambas variables reflejan el tamaño general del animal.*
+
+**2.** La pendiente de Windows ronda **0.0019–0.0020 ms por elemento**, ligeramente mayor que la de Mac (≈0.0018). Interpretación: por cada elemento adicional en la entrada, Windows tarda un poco más. *Ojo: la diferencia se ve pequeña porque está en milisegundos por elemento; multiplicada por 10 000 elementos se vuelve visible. Siempre interpreta la pendiente en la escala del problema.*
+
+**3.** El caso clásico es una **parábola**, por ejemplo puntos sobre $y = x^2$ con $x$ entre $-3$ y $3$: hay una relación perfectamente determinista, pero $r \approx 0$ porque la parte creciente y la decreciente se cancelan. El diagrama de dispersión muestra de inmediato la curva que `r` esconde. *Moraleja: nunca reportes `r` sin haber visto la nube de puntos.*
+
+**4.** Los residuales muestran una **curvatura leve** (los datos fueron generados con un pequeño término cuadrático). Un patrón en forma de U indicaría que la relación no es del todo lineal y que un modelo curvo ajustaría mejor; un patrón de embudo indicaría que la dispersión crece con el valor ajustado. *Estos dos diagnósticos son los que revisaremos formalmente en el @sec-cap11.*
+
+**5.** Ejemplos válidos: el número de bomberos en un incendio y los daños (los une el **tamaño del incendio**); las ventas de lentes de sol y de trajes de baño (los une la **estación del año**); el tamaño del pie y la habilidad lectora en niños (los une la **edad**). *En todos, la tercera variable se llama variable de confusión o variable oculta; solo un experimento aleatorizado la neutraliza.*
+
+**6.** Sí cambian, y a veces mucho. La correlación entre el largo y la profundidad del pico pasa de ser **negativa** en el conjunto global (≈ −0.24) a **positiva** dentro de cada especie. Esto ocurre porque las especies difieren sistemáticamente en su forma de pico, y mezclarlas crea una tendencia artificial. *Es una manifestación de la **paradoja de Simpson**: una relación puede invertirse al agrupar o desagrupar los datos. Es la razón por la que siempre conviene explorar por subgrupos antes de concluir.*
+:::

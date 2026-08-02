@@ -1,0 +1,52 @@
+# Laboratorio interactivo: la estandarización {#sec-lab-z}
+
+::: {.callout-note title="Cómo funciona esto"}
+Los deslizadores de abajo corren **en el navegador** con Observable JS (OJS), que Quarto trae integrado. No necesitas Shiny ni un servidor: funciona tal cual en el sitio publicado en GitHub Pages. Para reusar este patrón en cualquier capítulo, copia los bloques ```` ```{ojs} ```` a tu `.qmd`.
+:::
+
+Mueve la **media** $\mu$, la **desviación** $\sigma$ y un **valor** $x$. Observa dos cosas: cómo la campana se desplaza y se ensancha, y cómo el mismo valor $x$ se convierte en $z = \dfrac{x - \mu}{\sigma}$, su posición en la **normal estándar** $N(0,1)$ (la curva punteada). La estandarización no cambia la probabilidad: solo cambia la regla.
+
+```{ojs}
+//| panel: input
+viewof mu    = Inputs.range([-3, 3], {value: 0, step: 0.1, label: "media μ"})
+viewof sigma = Inputs.range([0.5, 3], {value: 1, step: 0.1, label: "desviación σ"})
+viewof xval  = Inputs.range([-8, 8], {value: 1, step: 0.1, label: "valor x"})
+```
+
+```{ojs}
+//| echo: false
+dnorm = (x, m, s) => Math.exp(-0.5 * ((x - m) / s) ** 2) / (s * Math.sqrt(2 * Math.PI))
+```
+
+```{ojs}
+//| echo: false
+malla = d3.range(-8, 8.01, 0.05)
+```
+
+```{ojs}
+//| echo: false
+Plot.plot({
+  height: 280,
+  x: { label: "x", domain: [-8, 8] },
+  y: { label: "densidad", domain: [0, 0.85] },
+  marks: [
+    Plot.areaY(malla.filter(x => x <= xval),
+      { x: d => d, y: d => dnorm(d, mu, sigma), fill: "#1F4E79", fillOpacity: 0.15 }),
+    Plot.lineY(malla, { x: d => d, y: d => dnorm(d, 0, 1),
+      stroke: "#888780", strokeDasharray: "4" }),
+    Plot.lineY(malla, { x: d => d, y: d => dnorm(d, mu, sigma),
+      stroke: "#1F4E79", strokeWidth: 2 }),
+    Plot.ruleX([xval], { stroke: "#1F4E79" }),
+    Plot.ruleY([0])
+  ]
+})
+```
+
+```{ojs}
+//| echo: false
+md`Con estos valores, **z = (x − μ) / σ = (${xval.toFixed(1)} − ${mu.toFixed(1)}) / ${sigma.toFixed(1)} = ${((xval - mu) / sigma).toFixed(2)}**. La línea punteada es la normal estándar N(0, 1); la sólida, tu N(μ, σ).`
+```
+
+::: {.callout-note title="Interpreta"}
+Al aumentar $\sigma$, la campana se aplana y se ensancha (más dispersión); al mover $\mu$, se desplaza sin cambiar de forma. El valor estandarizado $z$ te dice **a cuántas desviaciones estándar** está $x$ de la media: un $z = 2$ significa "dos desviaciones por encima del promedio", sin importar las unidades originales. Por eso la estandarización nos deja comparar cosas medidas en escalas distintas.
+:::

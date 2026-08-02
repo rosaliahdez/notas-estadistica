@@ -1,39 +1,349 @@
 # Análisis de varianza (ANOVA) {#sec-cap10}
 
-::: {.callout-important title="Plantilla en construcción"}
-Este capítulo corresponde a **Semana 13** del calendario y usa los datos de **galletas, hongos/sustrato**. La estructura de secciones ya está fijada; el contenido se desarrolla con el mismo formato del @sec-cap1: pregunta real, técnica, supuestos, cómputo en R e interpretación.
-:::
-
 ```{r}
-#| label: setup-sec-cap10
+#| label: setup-cap10
 #| include: false
 library(tidyverse)
+theme_set(theme_minimal(base_size = 12))
+galletas <- read.csv("datos/galletas.csv")
+hongos <- read.csv("datos/hongos_sustrato.csv")
 ```
 
-## ANOVA de un factor y la prueba F
+::: {.callout-tip title="Al terminar este capítulo podrás"}
+- Explicar por qué **no** se deben hacer muchas pruebas t para comparar varios grupos.
+- Entender el ANOVA como una comparación entre **variación entre grupos** y **dentro de grupos**.
+- Aplicar la **prueba F** y verificar sus **supuestos**.
+- Identificar **entre cuáles** grupos está la diferencia con pruebas **post-hoc**.
+:::
 
-*(En construcción.)*
+Llegamos al capítulo del proyecto. Ya sabemos comparar dos grupos (@sec-cap8); ahora son **tres o más**: cuatro marcas de galletas, cuatro sustratos de cultivo, tres terapias. La técnica se llama **análisis de varianza**, y su nombre es curioso: usa varianzas para comparar **medias**.
 
-## Verificación de supuestos: normalidad de residuos y homogeneidad de varianzas (Bartlett/Levene)
+## Por qué no muchas pruebas t
 
-*(En construcción.)*
+La tentación es obvia: si tengo cuatro marcas, hago todas las comparaciones de a dos. Con cuatro grupos son seis pruebas. El problema es el de las **comparaciones múltiples** que ya vimos en el @sec-cap7: cada prueba tiene 5 % de probabilidad de dar un falso positivo, y esas probabilidades se acumulan.
 
-## Comparación gráfica de medias
+```{r}
+#| label: comparaciones-multiples
+1 - 0.95^6   # probabilidad de al menos un falso positivo en 6 pruebas
+```
 
-*(En construcción.)*
+Es decir, **más del 26 %** de probabilidad de "descubrir" al menos una diferencia inexistente. Con diez grupos serían 45 pruebas y la probabilidad superaría el 90 %. El ANOVA resuelve esto con **una sola prueba global** que mantiene el error en 5 %.
 
-## Comparaciones post-hoc (Tukey)
+## La idea: dos fuentes de variación
 
-*(En construcción.)*
+Miremos primero los datos del experimento de la cata:
 
-## Análisis del experimento de galletas
+```{r}
+#| label: fig-box-galletas
+#| fig-cap: "Agrado por marca de galleta (25 jueces, cata a ciegas)."
+#| fig-width: 5.5
+#| fig-height: 3.4
+ggplot(galletas, aes(x = reorder(marca, agrado), y = agrado, fill = marca)) +
+  geom_boxplot() +
+  labs(x = "Marca", y = "Agrado (1–9)") +
+  theme(legend.position = "none")
+```
 
-*(En construcción.)*
+Las medias por marca difieren, pero dentro de cada marca también hay dispersión: no todos los jueces coinciden. La pregunta del ANOVA es exactamente esa comparación:
+
+> ¿La variación **entre** las medias de los grupos es grande comparada con la variación **dentro** de los grupos?
+
+Si las medias están muy separadas respecto al ruido interno, concluimos que los grupos difieren de verdad. Si la separación es del mismo orden que el ruido, no.
+
+Formalmente se descompone la variación total en dos partes:
+
+$$SC_{\text{total}} = \underbrace{SC_{\text{entre}}}_{\text{efecto del factor}} + \underbrace{SC_{\text{dentro}}}_{\text{ruido}}$$
+
+y el estadístico es su cociente, ajustado por grados de libertad:
+
+$$F = \frac{SC_{\text{entre}} / (k-1)}{SC_{\text{dentro}} / (N-k)} = \frac{\text{variación entre grupos}}{\text{variación dentro de grupos}}$$
+
+Bajo $H_0$ (todas las medias iguales), $F$ ronda 1. Valores grandes son evidencia contra $H_0$.
+
+### Laboratorio: entre grupos contra dentro de grupos {#sec-lab-f}
+
+Aquí se ve el corazón del ANOVA. Mueve la **separación entre las medias** y la **dispersión dentro de cada grupo**, y observa cómo responde $F$. Descubrirás que lo que importa no es la separación en sí, sino la separación **relativa al ruido**.
+
+```{ojs}
+//| panel: input
+//| echo: false
+viewof separacion = Inputs.range([0, 4], {value: 1.5, step: 0.1, label: "separación entre medias"})
+viewof ruido = Inputs.range([0.3, 3], {value: 1, step: 0.1, label: "dispersión dentro de grupos"})
+viewof nGrupoF = Inputs.range([5, 40], {value: 15, step: 5, label: "n por grupo"})
+viewof regenerar = Inputs.button("Nuevas muestras")
+```
+
+```{ojs}
+//| echo: false
+datosF = {
+  regenerar;
+  const medias = [10, 10 + separacion, 10 + 2 * separacion];
+  const nombres = ["A", "B", "C"];
+  const out = [];
+  medias.forEach((m, i) => {
+    const gen = d3.randomNormal(m, ruido);
+    for (let j = 0; j < nGrupoF; j++) out.push({ grupo: nombres[i], valor: gen() });
+  });
+  return out;
+}
+```
+
+```{ojs}
+//| echo: false
+anovaF = {
+  const grupos = d3.group(datosF, d => d.grupo);
+  const todos = datosF.map(d => d.valor);
+  const granMedia = d3.mean(todos);
+  let ssb = 0, ssw = 0;
+  for (const [, vals] of grupos) {
+    const v = vals.map(d => d.valor), m = d3.mean(v);
+    ssb += v.length * Math.pow(m - granMedia, 2);
+    ssw += d3.sum(v, x => Math.pow(x - m, 2));
+  }
+  const k = grupos.size, N = todos.length;
+  const d1 = k - 1, d2 = N - k;
+  const F = (ssb / d1) / (ssw / d2);
+  return { ssb, ssw, d1, d2, F, p: betaiF(d2 / 2, d1 / 2, d2 / (d2 + d1 * F)) };
+}
+```
+
+```{ojs}
+//| echo: false
+gammlnF = (x) => {
+  const cof = [76.18009172947146, -86.50532032941677, 24.01409824083091,
+               -1.231739572450155, 0.1208650973866179e-2, -0.5395239384953e-5];
+  let y = x, tmp = x + 5.5;
+  tmp -= (x + 0.5) * Math.log(tmp);
+  let ser = 1.000000000190015;
+  for (let j = 0; j < 6; j++) ser += cof[j] / ++y;
+  return -tmp + Math.log(2.5066282746310005 * ser / x);
+}
+```
+
+```{ojs}
+//| echo: false
+betacfF = (a, b, x) => {
+  const qab = a + b, qap = a + 1, qam = a - 1;
+  let c = 1, d = 1 - qab * x / qap;
+  if (Math.abs(d) < 1e-300) d = 1e-300;
+  d = 1 / d;
+  let h = d;
+  for (let m = 1; m <= 300; m++) {
+    const m2 = 2 * m;
+    let aa = m * (b - m) * x / ((qam + m2) * (a + m2));
+    d = 1 + aa * d; if (Math.abs(d) < 1e-300) d = 1e-300;
+    c = 1 + aa / c; if (Math.abs(c) < 1e-300) c = 1e-300;
+    d = 1 / d; h *= d * c;
+    aa = -(a + m) * (qab + m) * x / ((a + m2) * (qap + m2));
+    d = 1 + aa * d; if (Math.abs(d) < 1e-300) d = 1e-300;
+    c = 1 + aa / c; if (Math.abs(c) < 1e-300) c = 1e-300;
+    d = 1 / d;
+    const del = d * c; h *= del;
+    if (Math.abs(del - 1) < 1e-12) break;
+  }
+  return h;
+}
+```
+
+```{ojs}
+//| echo: false
+betaiF = (a, b, x) => {
+  if (x <= 0) return 0;
+  if (x >= 1) return 1;
+  const bt = Math.exp(gammlnF(a + b) - gammlnF(a) - gammlnF(b)
+             + a * Math.log(x) + b * Math.log(1 - x));
+  return x < (a + 1) / (a + b + 2)
+    ? bt * betacfF(a, b, x) / a
+    : 1 - bt * betacfF(b, a, 1 - x) / b;
+}
+```
+
+```{ojs}
+//| echo: false
+Plot.plot({
+  height: 260,
+  x: { label: "grupo" },
+  y: { label: "valor", domain: [4, 20] },
+  marks: [
+    Plot.dot(datosF, { x: "grupo", y: "valor", fill: "#1F4E79", fillOpacity: 0.4, r: 3,
+      dx: () => (Math.random() - 0.5) * 16 }),
+    Plot.tickY(datosF, Plot.groupX({ y: "mean" },
+      { x: "grupo", y: "valor", stroke: "#C0392B", strokeWidth: 3 })),
+    Plot.ruleY([d3.mean(datosF, d => d.valor)],
+      { stroke: "#888780", strokeDasharray: "4" })
+  ]
+})
+```
+
+```{ojs}
+//| echo: false
+md`SC entre = **${anovaF.ssb.toFixed(1)}** · SC dentro = **${anovaF.ssw.toFixed(1)}** · **F = ${anovaF.F.toFixed(2)}** · valor p = **${anovaF.p < 0.0001 ? "< 0.0001" : anovaF.p.toFixed(4)}** · ${anovaF.p < 0.05 ? "**se rechaza la igualdad de medias**" : "no se rechaza"}`
+```
+
+::: {.callout-note title="Interpreta"}
+Pon la separación en **0**: las tres rayas rojas (las medias) quedan casi sobre la línea gris (la media global), $F$ ronda 1 y el resultado casi nunca es significativo. Es el comportamiento esperado cuando $H_0$ es cierta.
+
+Ahora deja la separación en 1.5 y **sube el ruido** de 0.3 a 3: las medias siguen igual de separadas, pero $F$ se desploma. La misma diferencia real se vuelve indetectable cuando los grupos son muy dispersos. Y al revés: con poco ruido, una separación pequeña basta.
+
+Por último, sube el **n por grupo** manteniendo todo lo demás: $F$ crece. Más datos, más capacidad de detectar la misma diferencia.
+
+Ese cociente —señal contra ruido— es todo el ANOVA.
+:::
+
+## El ANOVA en R
+
+Volvamos a las galletas. Las hipótesis son:
+
+- $H_0: \mu_{\text{Oreo}} = \mu_{\text{Chokis}} = \mu_{\text{Lors}} = \mu_{\text{GreatValue}}$
+- $H_1$: al menos una media difiere de las demás
+
+```{r}
+#| label: anova-galletas
+modelo <- aov(agrado ~ marca, data = galletas)
+summary(modelo)
+```
+
+::: {.callout-note title="Interpreta"}
+La tabla de ANOVA se lee así: la fila `marca` es la variación **entre** grupos (3 grados de libertad, uno menos que el número de marcas) y `Residuals` es la variación **dentro** (96 grados de libertad). El cociente de sus cuadrados medios da $F \approx 19.1$, con un valor p del orden de $10^{-10}$.
+
+Conclusión: **rechazamos $H_0$**, las marcas no gustan por igual. Pero ojo con lo que **no** sabemos todavía: el ANOVA dice que *hay* diferencias, no *entre cuáles*. Para eso hacen falta las pruebas post-hoc.
+:::
+
+## Verificación de supuestos
+
+Antes de creerle al resultado hay que revisar tres supuestos. Este paso no es un trámite: es lo que distingue un análisis serio de uno decorativo.
+
+**1. Independencia.** Garantizada por el diseño: cada juez calificó de forma individual, sin comentarios en voz alta, y el orden se aleatorizó (@sec-cap5).
+
+**2. Normalidad de los residuos.** Se revisa con un Q-Q plot de los residuos del modelo, no de los datos crudos:
+
+```{r}
+#| label: fig-qq-anova
+#| fig-cap: "Q-Q plot de los residuos del modelo."
+#| fig-width: 4.6
+#| fig-height: 3.2
+residuos <- residuals(modelo)
+ggplot(data.frame(r = residuos), aes(sample = r)) +
+  stat_qq() + stat_qq_line(color = "#1F4E79") +
+  labs(x = "Cuantiles teóricos", y = "Residuos")
+```
+
+```{r}
+#| label: shapiro
+shapiro.test(residuos)
+```
+
+**3. Homogeneidad de varianzas.** Que la dispersión sea parecida en todos los grupos:
+
+```{r}
+#| label: bartlett
+bartlett.test(agrado ~ marca, data = galletas)
+```
+
+::: {.callout-important title="Qué hacer si un supuesto falla"}
+- **Normalidad**: con grupos de tamaño razonable el ANOVA es bastante robusto gracias al TCL. Si falla claramente, se puede transformar la variable (logaritmo, raíz) o usar la alternativa no paramétrica **Kruskal-Wallis** (`kruskal.test`).
+- **Homogeneidad de varianzas**: si Bartlett o Levene la rechazan, se usa el ANOVA de Welch (`oneway.test(..., var.equal = FALSE)`), que no la exige.
+- **Independencia**: no tiene arreglo estadístico. Si el diseño la violó —por ejemplo, si los jueces se copiaron—, los datos no sirven para esta prueba. Por eso el diseño va primero.
+:::
+
+## Pruebas post-hoc: ¿entre cuáles?
+
+Rechazar $H_0$ deja la pregunta interesante abierta. Las **pruebas post-hoc** comparan todos los pares **corrigiendo** por comparaciones múltiples, de modo que el error global se mantenga en 5 %. La más usada es la de **Tukey**:
+
+```{r}
+#| label: tukey
+TukeyHSD(modelo)
+```
+
+```{r}
+#| label: fig-tukey
+#| fig-cap: "Diferencias entre pares con sus intervalos de confianza ajustados."
+#| fig-width: 5.5
+#| fig-height: 3.6
+plot(TukeyHSD(modelo), las = 1)
+```
+
+::: {.callout-note title="Interpreta"}
+Cada renglón es una comparación con su intervalo de confianza **ajustado**: si el intervalo **no contiene al cero**, esa pareja difiere significativamente. El resultado dibuja dos gamas:
+
+- **Oreo (7.36) y Chokis (6.84)** no difieren significativamente entre sí.
+- **Lors (5.84) y Great Value (5.00)** tampoco difieren entre sí.
+- Pero **cualquier marca del primer grupo supera a cualquiera del segundo**.
+
+Redacción para el reporte del proyecto: *"El agrado difiere significativamente entre marcas (F(3,96) = 19.1, p < 0.001). Las comparaciones de Tukey identifican dos grupos homogéneos: Oreo y Chokis obtienen las calificaciones más altas, sin diferencia detectable entre ellas, mientras que Lors y Great Value quedan por debajo, también sin diferencia entre sí."*
+
+Esta conclusión es mucho más útil que un simple "las marcas difieren", y es justo lo que un cliente querría saber.
+:::
+
+## Un segundo caso: los sustratos
+
+El mismo análisis con los datos del cultivo de setas:
+
+```{r}
+#| label: anova-hongos
+modelo_h <- aov(eficiencia_biologica ~ sustrato, data = hongos)
+summary(modelo_h)
+bartlett.test(eficiencia_biologica ~ sustrato, data = hongos)
+```
+
+```{r}
+#| label: tukey-hongos
+TukeyHSD(modelo_h)$sustrato |> round(2)
+```
+
+::: {.callout-note title="Interpreta"}
+Aquí $F$ es enorme y el efecto del sustrato es contundente: la paja de trigo y la pulpa de café rinden mucho más que el olote y, sobre todo, que el aserrín. Bartlett no rechaza la igualdad de varianzas, así que el supuesto se sostiene.
+
+Un detalle honesto que vale la pena discutir en clase: el grupo del aserrín **parece** más variable que los demás (su desviación es la mayor). Sin embargo, Bartlett no lo detecta como significativo. Con 25 bolsas por grupo, la prueba no tiene suficiente **potencia** para distinguir esa diferencia de varianzas del azar. Es el mismo fenómeno del @sec-cap8: no rechazar no equivale a demostrar igualdad.
+:::
 
 ::: {.callout-tip title="¿Qué técnica uso?"}
-Tres o más grupos, una variable cuantitativa: ANOVA + prueba F; si hay diferencias, post-hoc (Tukey) para ver entre cuáles.
+Con **tres o más grupos** y una variable respuesta cuantitativa:
+
+| Paso | Herramienta en R |
+|---|---|
+| 1. Explorar | `boxplot` o `ggplot` con `geom_boxplot()` |
+| 2. Prueba global | `aov(y ~ grupo)` y `summary()` |
+| 3. Normalidad de residuos | Q-Q plot y `shapiro.test(residuals(m))` |
+| 4. Homogeneidad de varianzas | `bartlett.test(y ~ grupo)` |
+| 5. ¿Entre cuáles? | `TukeyHSD(m)` |
+| Si fallan los supuestos | `oneway.test(var.equal = FALSE)` o `kruskal.test` |
+
+**Nunca** hagas múltiples pruebas t sin corrección: infla el error tipo I.
 :::
+
+## Resumen
+
+Cuando hay tres o más grupos, comparar por pares infla el error tipo I; el **ANOVA** hace una sola prueba global comparando la variación **entre** grupos con la variación **dentro** de ellos, mediante el estadístico $F$. Rechazar $H_0$ significa que *alguna* media difiere, y las pruebas **post-hoc** —Tukey— revelan *entre cuáles*, corrigiendo por comparaciones múltiples. Los supuestos —independencia, normalidad de los residuos y homogeneidad de varianzas— deben verificarse siempre, y cada uno tiene su alternativa cuando falla. En el @sec-cap11 cerramos el curso volviendo a la regresión, ahora para hacerle inferencia.
 
 ## Ejercicios
 
-*Por desarrollar (banco de la Dra. Figueroa reorganizado + reactivos nuevos).*
+1. **Comparaciones múltiples.** Con 5 grupos, ¿cuántas comparaciones por pares hay? ¿Cuál es la probabilidad de al menos un falso positivo si se hacen todas a $\alpha = 0.05$?
+
+2. **Lee la tabla.** En la salida de `summary(modelo)` para las galletas, identifica: los grados de libertad de cada fuente, la suma de cuadrados entre grupos y el cuadrado medio residual. ¿Qué representa este último?
+
+3. **ANOVA completo.** Con `datos/hongos_sustrato.csv`, analiza si los **días a cosecha** difieren entre sustratos. Haz el ciclo completo: explorar, prueba global, supuestos y post-hoc.
+
+4. **Supuestos.** Verifica la normalidad de los residuos del modelo del ejercicio 3. Si fallara, ¿qué alternativa usarías?
+
+5. **Laboratorio.** En el @sec-lab-f, fija la separación en 1 y el ruido en 2. ¿Es significativo? Ahora sube el n por grupo hasta que lo sea de forma consistente. ¿Qué implica esto para planear un experimento?
+
+6. **Del ANOVA al post-hoc.** Un investigador reporta: *"el ANOVA fue significativo (p = 0.003), por lo tanto el tratamiento A es mejor que el B"*. ¿Qué error comete?
+
+7. **Conecta con el proyecto.** Con los datos de la cata, ¿por qué fue importante aleatorizar el orden en que cada juez probó las marcas? Relaciona tu respuesta con el supuesto que podría haberse violado.
+
+::: {.callout-tip title="Soluciones y retroalimentación" collapse="true"}
+**1.** Con 5 grupos hay $\binom{5}{2} = 10$ comparaciones. La probabilidad de al menos un falso positivo es $1 - 0.95^{10} \approx 0.40$, es decir **40 %**. *Con 10 grupos serían 45 comparaciones y la probabilidad superaría el 90 %: prácticamente garantizado encontrar algo "significativo" aunque no exista nada. Este es el argumento central para usar ANOVA.*
+
+**2.** Grados de libertad: 3 para `marca` (número de grupos menos uno) y 96 para `Residuals` ($N - k = 100 - 4$). La suma de cuadrados entre grupos es aproximadamente 82.8. El cuadrado medio residual (≈ 1.44) es la **estimación de la varianza dentro de los grupos**, es decir, del ruido: cuánto varían las calificaciones entre jueces que probaron la misma marca. *Su raíz cuadrada, ≈ 1.2 puntos, es la desviación estándar típica dentro de cada marca, y sirve para juzgar si una diferencia de medias es grande en términos prácticos.*
+
+**3.** El ciclo es: `ggplot(...) + geom_boxplot()`, luego `m <- aov(dias_cosecha ~ sustrato, hongos); summary(m)`, después `shapiro.test(residuals(m))` y `bartlett.test(dias_cosecha ~ sustrato, hongos)`, y finalmente `TukeyHSD(m)`. El resultado es contundente: los días a cosecha difieren entre sustratos, siendo la paja de trigo el más rápido (unos 21 días) y el aserrín el más lento (unos 30). *Nota que aquí "mejor" significa **menos** días: siempre hay que traducir la dirección del efecto al lenguaje del problema.*
+
+**4.** Los residuos deberían seguir razonablemente la recta del Q-Q plot. Si la normalidad fallara claramente, las alternativas son: transformar la variable (logaritmo si hay sesgo a la derecha), usar el **ANOVA de Welch** si el problema real son las varianzas, o recurrir a **Kruskal-Wallis** (`kruskal.test`), que es la versión no paramétrica y compara medianas basándose en rangos. *Con 25 observaciones por grupo, el ANOVA es bastante robusto ante desviaciones moderadas de la normalidad, gracias al TCL.*
+
+**5.** Con separación 1 y ruido 2, con $n = 5$ o 15 el resultado casi nunca es significativo; hacia $n = 30$ o 40 empieza a serlo de manera consistente. Implicación para el diseño: **el tamaño de muestra debe planearse antes**, en función de qué tan grande es el efecto que se quiere detectar y de cuánto ruido hay. *Un experimento con muestra insuficiente puede no detectar un efecto que sí existe (error tipo II), y desperdicia el trabajo de campo. Esto se llama cálculo de potencia y en R se hace con `power.anova.test()`.*
+
+**6.** El error es saltar del resultado **global** a una conclusión **particular**. El ANOVA solo dice que *alguna* media difiere; puede que la diferencia real esté entre C y D, y que A y B sean indistinguibles. Para afirmar algo sobre la pareja A–B hace falta una prueba **post-hoc** que además corrija por comparaciones múltiples. *Es exactamente lo que pasó con las galletas: el ANOVA salió significativo, pero Tukey mostró que Oreo y Chokis **no** difieren entre sí.*
+
+**7.** Aleatorizar el orden protege el supuesto de que las diferencias observadas se deban **solo a la marca**. Si todos hubieran catado en el mismo orden, el efecto de fatiga de paladar habría castigado siempre a la última marca, quedando **confundido** con el efecto de la marca: sería imposible saber si Great Value salió mal por su sabor o por probarse al final. *En términos del modelo, la aleatorización convierte esa fuente de variación sistemática en ruido aleatorio, que el ANOVA absorbe en los residuos en lugar de atribuirlo erróneamente al factor.*
+:::

@@ -28,12 +28,15 @@ book:
         - 05-experimentos.qmd
     - part: "III. Inferencia estadística"
       chapters:
+        - laboratorio-estandarizacion.qmd
         - 06-muestrales.qmd
         - 07-estimacion-pruebas.qmd
         - 08-dos-muestras.qmd
         - 09-enumerativos.qmd
         - 10-anova.qmd
         - 11-regresion.qmd
+    # Requiere la extensión quarto-live: ver INSTALAR_CELDAS_EJECUTABLES.md
+    # - laboratorio-r.qmd
     - references.qmd
 
 bibliography: references.bib

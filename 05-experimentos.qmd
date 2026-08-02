@@ -1,39 +1,157 @@
 # Producción de datos: diseño de experimentos {#sec-cap5}
 
-::: {.callout-important title="Plantilla en construcción"}
-Este capítulo corresponde a **Semana 5** del calendario y usa los datos de **galletas, hongos/sustrato**. La estructura de secciones ya está fijada; el contenido se desarrolla con el mismo formato del @sec-cap1: pregunta real, técnica, supuestos, cómputo en R e interpretación.
-:::
-
 ```{r}
-#| label: setup-sec-cap5
+#| label: setup-cap5
 #| include: false
 library(tidyverse)
+theme_set(theme_minimal(base_size = 12))
 ```
 
-## Unidad experimental, tratamientos, factores y niveles
+::: {.callout-tip title="Al terminar este capítulo podrás"}
+- Nombrar las piezas de un experimento: **unidad experimental, factor, niveles, tratamiento y respuesta**.
+- Aplicar los tres principios: **control, aleatorización y réplicas**.
+- Prevenir los sesgos típicos de experimentos con personas: **orden, cegado y contaminación**.
+- Armar un **plan de aleatorización** en R.
+:::
 
-*(En construcción.)*
+En el @sec-cap4 vimos una forma de producir datos: el muestreo, que observa sin intervenir. La otra es el **experimento**, donde el investigador **aplica tratamientos** y mide la respuesta. La diferencia es enorme: un experimento bien diseñado es lo único que permite hablar de **causa y efecto**. Este capítulo es el corazón del proyecto del curso: la cata de galletas.
 
-## Los tres principios: control, aleatorización y réplicas
+## Observar no basta: por qué experimentamos
 
-*(En construcción.)*
+Un estudio observacional puede mostrar que dos cosas van juntas, pero no cuál causa a cuál, ni si las une una tercera variable oculta (lo vimos con la correlación en el @sec-cap3). En un experimento **nosotros** decidimos qué tratamiento recibe cada unidad, y al hacerlo por azar rompemos el vínculo con esas variables ocultas. Por eso, para preguntas del tipo "¿la marca influye en el agrado?", diseñamos un experimento.
 
-## Sesgos en experimentos con personas: orden de prueba, cegado, contaminación entre jueces
+## El vocabulario del diseño
 
-*(En construcción.)*
+Todo experimento se describe con las mismas piezas. Veámoslas en nuestros dos contextos:
 
-## Ejemplos de diseños sencillos
+| Pieza | Cata de galletas | Cultivo de setas |
+|---|---|---|
+| **Unidad experimental** | Cada cata (un juez probando una galleta) | Cada bolsa de sustrato |
+| **Factor** | La marca | El sustrato |
+| **Niveles** | Oreo, Chokis, Lors, Great Value | Paja, pulpa de café, olote, aserrín |
+| **Tratamiento** | Probar una marca | Sembrar en un sustrato |
+| **Variable respuesta** | Agrado (escala 1–9) | Eficiencia biológica (%) |
 
-*(En construcción.)*
+Identificar bien estas piezas es el primer paso: define qué se compara (los niveles del factor) y qué se mide (la respuesta).
 
-## Diseño del experimento de galletas (sesión en clase)
+## Los tres principios del diseño
 
-*(En construcción.)*
+Un buen experimento descansa en tres ideas:
+
+- **Control.** Mantener constante todo lo demás para que las diferencias en la respuesta se deban al tratamiento y no a otra cosa. En la cata: misma cantidad de galleta, misma iluminación, mismo vaso de agua para limpiar el paladar, misma consigna.
+- **Aleatorización.** Asignar los tratamientos (o su orden) **al azar**. Es la defensa contra las variables ocultas: reparte de forma pareja, entre los tratamientos, cualquier factor que no controlamos.
+- **Réplicas.** Aplicar cada tratamiento a **varias** unidades. Sin réplicas no podemos distinguir el efecto del tratamiento de la variación natural entre unidades: una sola bolsa por sustrato no dice nada.
+
+::: {.callout-note title="Interpreta"}
+Los tres trabajan juntos. El **control** reduce el ruido, la **aleatorización** evita el sesgo y las **réplicas** nos dejan medir cuánta variación es "normal" —justo lo que el ANOVA del @sec-cap10 necesita para decidir si las diferencias entre marcas son reales—.
+:::
+
+## Sesgos en experimentos con personas
+
+Cuando quienes responden son personas, aparecen sesgos que hay que anticipar en el diseño. Son los que descubriremos en la sesión de la cata:
+
+- **Efecto de orden y fatiga de paladar.** La galleta que se prueba al final se juzga con el paladar cansado y la memoria de las anteriores (arrastre). Solución: **aleatorizar el orden** de cata para cada juez y limpiar el paladar entre marcas.
+- **Falta de cegado.** Si el juez sabe qué marca prueba, su expectativa contamina la calificación ("es Oreo, debe gustarme"). Solución: cata **a ciegas**; idealmente, que quien reparte tampoco sepa cuál es (doble ciego).
+- **Contaminación entre jueces.** Un gesto o un comentario en voz alta arrastra la opinión de los demás. Solución: catar en silencio, sin expresiones, y capturar cada quien su hoja.
 
 ::: {.callout-tip title="¿Qué técnica uso?"}
-¿Quieres hablar de causa y efecto? Necesitas un experimento con aleatorización y control, no solo observación.
+Antes de recolectar, revisa esta lista de diseño:
+
+1. ¿Cuál es la **unidad experimental**, el **factor**, sus **niveles** y la **respuesta**?
+2. ¿Qué mantengo **bajo control**?
+3. ¿Qué **aleatorizo** (tratamientos u orden)?
+4. ¿Cuántas **réplicas** por tratamiento?
+5. Si hay personas, ¿cómo aseguro **cegado** y evito **contaminación**?
+
+Si puedes responder las cinco, tu experimento está bien diseñado.
 :::
+
+## Armar el plan de aleatorización en R
+
+Aleatorizar no se hace "a ojo": se hace con el azar de la computadora, y se documenta. Para la cata, cada juez debe probar las cuatro marcas en un **orden distinto y al azar**. Así se genera el plan:
+
+```{r}
+#| label: plan-aleatorizacion
+set.seed(2026)
+marcas <- c("Oreo", "Chokis", "Lors", "GreatValue")
+
+plan <- lapply(1:6, function(j) {
+  data.frame(juez = j, orden = 1:4, marca = sample(marcas))
+})
+plan <- bind_rows(plan)
+head(plan, 8)
+```
+
+Cada juez recibe una permutación diferente de las marcas: nadie las prueba en el mismo orden, y así el efecto de orden se reparte parejo entre las cuatro marcas en lugar de perjudicar siempre a la misma.
+
+El experimento produce una tabla **ordenada**, con una fila por cata, lista para analizarse después:
+
+```{r}
+#| label: estructura-galletas
+galletas <- read.csv("datos/galletas.csv")
+head(galletas)
+```
+
+Aquí solo **diseñamos** y **recolectamos**. El análisis —¿difieren de verdad las marcas?— es un ANOVA de un factor, y lo haremos en el @sec-cap10 con estos mismos datos.
+
+## La sesión en clase
+
+::: {.callout-note title="Protocolo de la cata (actividad de la semana 5)"}
+**Antes:** se preparan las galletas en platos rotulados con códigos neutros (no la marca), agua para limpiar el paladar y una **hoja de cata** con una escala hedónica de 1 (me disgusta mucho) a 9 (me gusta mucho).
+
+**Diseño (en grupo):** antes de probar nada, la clase propone cómo hacer la cata justa. La idea es que *emerjan* de la discusión el orden aleatorizado, el cegado, el silencio y las réplicas —los principios de este capítulo—.
+
+**Ejecución:** la mitad del grupo cata (jueces), la otra mitad aplica y captura (experimentadores). Cada juez sigue su orden del plan de aleatorización y anota su agrado por marca.
+
+**Después:** se capturan los datos y se guardan para el análisis del @sec-cap10. Si no coincidieran con los del respaldo, mejor: se discute por qué.
+:::
+
+## Resumen
+
+El experimento es la forma de producir datos que permite hablar de **causa**. Se describe con unidad experimental, factor, niveles, tratamiento y respuesta, y descansa en tres principios: **control, aleatorización y réplicas**. Con personas, hay que blindar el diseño contra el **orden**, la falta de **cegado** y la **contaminación** entre participantes. Aleatorizar se hace con la computadora y se documenta. Con esto cierra la Parte II: ya sabemos producir datos por muestreo y por experimento. La Parte III nos enseña a **inferir** a partir de ellos.
 
 ## Ejercicios
 
-*Por desarrollar (banco de la Dra. Figueroa reorganizado + reactivos nuevos).*
+1. **Anatomía de un experimento.** Para el cultivo de setas (`datos/hongos_sustrato.csv`), identifica la unidad experimental, el factor, sus niveles, un tratamiento y la variable respuesta.
+
+2. **Observacional o experimental.** Clasifica cada estudio y di si permite concluir causa y efecto:
+   a. Un estudiante de medicina compara la mejoría de pacientes que *eligieron* tomar un suplemento contra los que no.
+   b. Se asignan al azar tres fertilizantes a parcelas de trigo y se compara el rendimiento.
+   c. Se registran las calificaciones de quienes asistieron o no, por decisión propia, a asesorías.
+
+3. **¿Qué principio falta?** En cada diseño defectuoso, di cuál de los tres principios se viola:
+   a. Se prueba un solo germinado por cada sustrato.
+   b. Todos los jueces prueban primero Oreo y al final Great Value.
+   c. Se compara la marca nueva medida hoy con la vieja medida el año pasado, en otro laboratorio.
+
+4. **¿Por qué aleatorizar el orden?** Explica, con el efecto de fatiga de paladar, qué problema evita que cada juez cate en un orden distinto.
+
+5. **Cegado.** Describe cómo harías una cata **doble ciego** de galletas y qué sesgo evita cada capa del cegado.
+
+6. **Aleatoriza en R.** Genera un plan de aleatorización para un experimento de setas con 4 sustratos y 5 réplicas por sustrato (20 bolsas), asignando al azar qué bolsa recibe cada sustrato.
+
+::: {.callout-tip title="Soluciones y retroalimentación" collapse="true"}
+**1.** Unidad experimental: **cada bolsa** de cultivo. Factor: el **sustrato**. Niveles: paja de trigo, pulpa de café, olote de maíz y aserrín. Un tratamiento: sembrar en pulpa de café. Variable respuesta: la **eficiencia biológica (%)**; `dias_cosecha` es una segunda respuesta y `contaminado` una respuesta categórica. *Un experimento puede tener varias variables respuesta; lo que lo define como de un factor es que se manipula una sola cosa.*
+
+**2.** (a) **Observacional**: los pacientes eligieron tomar el suplemento, así que los grupos pueden diferir en otras cosas (quien lo elige quizá cuida más su salud). No permite concluir causa. (b) **Experimental**: la asignación es aleatoria, sí permite concluir causa. (c) **Observacional**: la asistencia fue por decisión propia. *En (a) y (c) el fenómeno se llama **autoselección**, la fuente más común de confusión en estudios de salud y educación.*
+
+**3.** (a) Falla **réplicas**: con una sola bolsa no hay forma de estimar la variación natural entre bolsas del mismo sustrato. (b) Falla **aleatorización**: el orden fijo hace que la fatiga de paladar perjudique siempre a Great Value y favorezca a Oreo. (c) Falla **control**: las condiciones cambiaron entre mediciones (año y laboratorio distintos), así que la diferencia observada podría deberse a eso y no a la marca. *En (c) se dice que el efecto de la marca está **confundido** con el del laboratorio y el tiempo: no hay manera de separarlos.*
+
+**4.** Como el paladar se cansa y arrastra sabores, las últimas posiciones tienden a recibir calificaciones más bajas. Si todos los jueces catan en el mismo orden, ese castigo cae **siempre sobre la misma marca**, y no podríamos distinguir si esa marca gustó menos por su sabor o por su posición. Al aleatorizar, cada marca ocupa todas las posiciones aproximadamente por igual y el efecto se reparte parejo. *La aleatorización no elimina el efecto de orden: lo convierte en ruido en lugar de sesgo.*
+
+**5.** Cata doble ciego: (i) las galletas se sirven en platos con **códigos neutros** (por ejemplo, 3 dígitos al azar), de modo que el **juez** no sabe qué marca prueba —esto evita el sesgo de expectativa por la fama de la marca—; (ii) quien **reparte y recoge** las hojas tampoco sabe qué código corresponde a qué marca —esto evita que transmita pistas involuntarias con gestos, tonos o comentarios—. La correspondencia código–marca la guarda una persona ajena hasta el análisis. *La segunda capa es la que suele olvidarse y es justo la que protege del sesgo del experimentador.*
+
+**6.** Una solución en R:
+
+```r
+set.seed(2026)
+sustratos <- rep(c("paja_trigo", "pulpa_cafe", "olote_maiz", "aserrin"), each = 5)
+plan_setas <- data.frame(
+  bolsa    = 1:20,
+  sustrato = sample(sustratos)   # permuta la asignación al azar
+)
+plan_setas
+```
+
+La clave es `sample()`, que permuta las asignaciones: así, si las bolsas ocupan posiciones distintas en el invernadero (unas con más luz o humedad), esa variación no queda ligada sistemáticamente a un sustrato. *Documenta siempre la semilla (`set.seed`) para que el plan sea reproducible y auditable.*
+:::

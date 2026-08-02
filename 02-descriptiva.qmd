@@ -1,39 +1,245 @@
 # Análisis numérico de datos {#sec-cap2}
 
-::: {.callout-important title="Plantilla en construcción"}
-Este capítulo corresponde a **Semana 2** del calendario y usa los datos de **pingüinos, lagartijas**. La estructura de secciones ya está fijada; el contenido se desarrolla con el mismo formato del @sec-cap1: pregunta real, técnica, supuestos, cómputo en R e interpretación.
-:::
-
 ```{r}
-#| label: setup-sec-cap2
+#| label: setup-cap2
 #| include: false
 library(tidyverse)
+library(palmerpenguins)
+theme_set(theme_minimal(base_size = 12))
 ```
 
-## Medidas de localización: media, mediana, cuartiles
+::: {.callout-tip title="Al terminar este capítulo podrás"}
+- Resumir una variable cuantitativa con medidas de **localización** y de **dispersión**.
+- Elegir entre **media** y **mediana** según la forma de los datos.
+- Leer y comparar **diagramas de caja** entre grupos.
+- Evaluar si unos datos parecen **normales** con un **Q-Q plot**.
+- Producir **resúmenes por grupo** con `dplyr`.
+:::
 
-*(En construcción.)*
+En el @sec-cap1 aprendimos a *ver* la distribución de una variable con gráficas. Ahora la resumimos con **números**: un centro y una medida de qué tan dispersos están los datos alrededor de ese centro. Seguimos con los pingüinos y estrenamos las lagartijas.
 
-## Medidas de dispersión: rango, varianza, desviación estándar, RIC
+## Medidas de localización: ¿dónde está el centro?
 
-*(En construcción.)*
+Las dos medidas de centro más usadas son la **media** (el promedio) y la **mediana** (el valor que deja la mitad de los datos por debajo).
 
-## El diagrama de caja (boxplot) y la comparación entre grupos
+```{r}
+#| label: centro-penguins
+mean(penguins$body_mass_g, na.rm = TRUE)     # media
+median(penguins$body_mass_g, na.rm = TRUE)   # mediana
+```
 
-*(En construcción.)*
+::: {.callout-important title="Los datos faltantes (NA)"}
+Los pingüinos tienen algunas mediciones faltantes (`NA`). Si no le decimos a R qué hacer con ellas, `mean()` devuelve `NA`. Por eso usamos `na.rm = TRUE` ("remueve los NA"). Siempre pregúntate por qué faltan: no es lo mismo un dato perdido al azar que uno que falta por una razón sistemática.
+:::
 
-## Forma de una distribución y el Q-Q plot *(complemento para el examen de la MCD)*
+Los **cuartiles** parten los datos en cuatro: el primer cuartil (Q1) deja abajo el 25 %, el segundo es la mediana (50 %) y el tercero (Q3) el 75 %.
 
-*(En construcción.)*
+```{r}
+#| label: cuartiles
+quantile(penguins$body_mass_g, na.rm = TRUE)
+```
+
+**Media o mediana, ¿cuál reporto?** La media usa el valor exacto de cada dato, así que un valor extremo la jala hacia sí. La mediana solo mira la posición, por lo que es **robusta** ante valores atípicos y colas largas. Por eso los ingresos o los precios de casas —muy sesgados a la derecha— se resumen con la mediana.
+
+::: {.callout-note title="Interpreta"}
+En una distribución **sesgada a la derecha** (cola larga hacia los valores altos, como los salarios), la media queda **arriba** de la mediana. En una simétrica, coinciden. Comparar media y mediana ya te dice algo sobre la forma, sin graficar.
+:::
+
+### Laboratorio: por qué la mediana es robusta {#sec-lab-robustez}
+
+Aquí se ve la diferencia entre media y mediana mejor que en cualquier fórmula. Tenemos nueve datos fijos y **uno** que puedes mover con el deslizador. Observa qué le pasa a cada medida cuando ese dato se va lejos.
+
+```{ojs}
+//| panel: input
+//| echo: false
+viewof atipico = Inputs.range([10, 200], {value: 22, step: 1, label: "valor del dato móvil"})
+```
+
+```{ojs}
+//| echo: false
+fijos = [12, 14, 15, 16, 18, 19, 20, 21, 24]
+```
+
+```{ojs}
+//| echo: false
+datos = fijos.concat([atipico]).sort((a, b) => a - b)
+```
+
+```{ojs}
+//| echo: false
+media = datos.reduce((a, b) => a + b, 0) / datos.length
+```
+
+```{ojs}
+//| echo: false
+mediana = (datos[4] + datos[5]) / 2
+```
+
+```{ojs}
+//| echo: false
+Plot.plot({
+  height: 130,
+  x: { label: "valor", domain: [5, 205] },
+  y: { axis: null },
+  marks: [
+    Plot.dot(datos, { x: d => d, y: () => 0, r: 5, fill: "#888780" }),
+    Plot.dot([atipico], { x: d => d, y: () => 0, r: 6, fill: "#C0392B" }),
+    Plot.ruleX([media], { stroke: "#C0392B", strokeWidth: 2 }),
+    Plot.ruleX([mediana], { stroke: "#1F4E79", strokeWidth: 2, strokeDasharray: "4" }),
+    Plot.ruleY([0], { stroke: "#D3D1C7" })
+  ]
+})
+```
+
+```{ojs}
+//| echo: false
+md`Media (línea roja sólida) = **${media.toFixed(1)}** · Mediana (línea azul punteada) = **${mediana.toFixed(1)}**`
+```
+
+::: {.callout-note title="Interpreta"}
+Al arrastrar el dato hacia valores grandes, la **media** lo persigue sin límite: un solo dato extremo la arrastra. La **mediana** apenas se mueve y luego se queda quieta, porque solo le importa la *posición* de los datos, no su magnitud. Eso es ser **robusta**. Por eso, cuando alguien te reporte un promedio de salarios, de precios de vivienda o de tiempos de espera, la primera pregunta debe ser: *¿y la mediana?*
+:::
+
+## Medidas de dispersión: ¿qué tan esparcidos están?
+
+Dos grupos pueden tener el mismo centro y ser muy distintos. Lo que los diferencia es la **dispersión**:
+
+- **Rango**: máximo menos mínimo (sensible a un solo dato extremo).
+- **Varianza** y **desviación estándar**: qué tan lejos, en promedio, están los datos de la media. La desviación estándar (`sd`) está en las mismas unidades que los datos, así que es la más interpretable.
+- **Rango intercuartílico (RIC)**: `Q3 − Q1`, el ancho del 50 % central; robusto, como la mediana.
+
+```{r}
+#| label: dispersion
+sd(penguins$body_mass_g, na.rm = TRUE)    # desviación estándar (g)
+var(penguins$body_mass_g, na.rm = TRUE)   # varianza (g^2)
+IQR(penguins$body_mass_g, na.rm = TRUE)   # rango intercuartílico
+```
+
+Dos propiedades de la varianza son útiles (y salen en exámenes):
+
+```{r}
+#| label: props-varianza
+x <- c(2, 4, 6, 8)
+var(x)          # referencia
+var(x + 100)    # SUMAR una constante NO cambia la dispersión
+var(x * 2)      # MULTIPLICAR por k multiplica la varianza por k^2 (aquí, x4)
+```
+
+::: {.callout-tip title="¿Qué técnica uso?"}
+Para resumir **una variable cuantitativa**:
+
+| Si la distribución es… | Centro | Dispersión |
+|---|---|---|
+| Simétrica, sin atípicos | Media | Desviación estándar |
+| Sesgada o con atípicos | Mediana | RIC |
+
+Reporta siempre **centro y dispersión juntos**: un promedio sin su desviación cuenta media historia.
+:::
+
+## El diagrama de caja (boxplot)
+
+El boxplot resume una variable con cinco números: mínimo, Q1, mediana, Q3 y máximo. La caja abarca el 50 % central (su alto es el RIC), la línea de en medio es la mediana, y los puntos fuera de los "bigotes" son posibles **valores atípicos** (más allá de 1.5 × RIC).
+
+Su verdadero poder es **comparar grupos**. Veámoslo con las lagartijas: temperatura corporal en zona urbana vs. campo abierto.
+
+```{r}
+#| label: fig-boxplot-lagartijas
+#| fig-cap: "Temperatura corporal de lagartijas por hábitat."
+#| fig-width: 5
+#| fig-height: 3.4
+lagartijas <- read.csv("datos/lagartijas.csv")
+ggplot(lagartijas, aes(x = habitat, y = temp_corporal, fill = habitat)) +
+  geom_boxplot() +
+  labs(x = "Hábitat", y = "Temperatura corporal (°C)") +
+  theme(legend.position = "none")
+```
+
+::: {.callout-note title="Interpreta"}
+La caja urbana está claramente **más arriba**: las lagartijas de ciudad son más cálidas (isla de calor urbana). También parece un poco **más alta** (más dispersión). Esto es *descripción*: en el @sec-cap8 pondremos a prueba si esa diferencia es estadísticamente significativa. Un boxplot es el mejor preludio de una comparación de dos grupos.
+:::
+
+## Forma de una distribución y el Q-Q plot
+
+Además del centro y la dispersión, nos importa la **forma**: ¿simétrica?, ¿sesgada?, ¿acampanada? Muchas técnicas que veremos (pruebas t, ANOVA, regresión) suponen que los datos —o los residuos— son aproximadamente **normales**. El **Q-Q plot** ("cuantil-cuantil") es la herramienta para revisarlo: si los puntos caen cerca de la recta, los datos son compatibles con una normal.
+
+```{r}
+#| label: fig-qqplot
+#| fig-cap: "Q-Q plot del largo de la aleta de los pingüinos."
+#| fig-width: 4.6
+#| fig-height: 3.4
+ggplot(penguins, aes(sample = flipper_length_mm)) +
+  stat_qq() +
+  stat_qq_line(color = "#1F4E79") +
+  labs(x = "Cuantiles teóricos", y = "Cuantiles de los datos")
+```
+
+::: {.callout-note title="Interpreta"}
+Si los puntos siguen la recta, no hay evidencia contra la normalidad. Desviaciones sistemáticas en los extremos indican **colas** más pesadas o ligeras; una curvatura en forma de "S" o "C" delata **sesgo**. El Q-Q plot será nuestro chequeo de rutina antes de cualquier prueba que suponga normalidad.
+:::
 
 ## Resúmenes por grupo con `dplyr`
 
-*(En construcción.)*
+Casi siempre queremos resumir **por grupo**, no en bloque. El patrón de `dplyr` es `group_by()` seguido de `summarise()`, encadenados con el operador `|>`.
 
-::: {.callout-tip title="¿Qué técnica uso?"}
-Resumir una variable cuantitativa: ¿centro? → media/mediana; ¿dispersión? → desviación/RIC; ¿comparar grupos? → boxplot.
-:::
+```{r}
+#| label: resumen-por-grupo
+penguins |>
+  group_by(species) |>
+  summarise(
+    n       = n(),
+    media   = mean(body_mass_g, na.rm = TRUE),
+    de      = sd(body_mass_g,   na.rm = TRUE),
+    mediana = median(body_mass_g, na.rm = TRUE)
+  )
+```
+
+La misma receta compara las lagartijas por hábitat:
+
+```{r}
+#| label: resumen-lagartijas
+lagartijas |>
+  group_by(habitat) |>
+  summarise(
+    n          = n(),
+    temp_media = mean(temp_corporal),
+    temp_de    = sd(temp_corporal)
+  )
+```
+
+Este pequeño cuadro —medias y desviaciones lado a lado— es el resumen que acompañará a toda comparación de grupos en la Parte III.
+
+## Resumen
+
+Aprendimos a describir una variable cuantitativa con un **centro** (media o mediana) y una **dispersión** (desviación estándar o RIC), a elegir entre ellas según la forma, a **comparar grupos** con boxplots y a revisar la **normalidad** con un Q-Q plot. Con `dplyr` producimos resúmenes por grupo en dos líneas. Ya sabemos *ver* y *resumir* datos; en el @sec-cap3 estudiaremos la **relación entre dos variables**.
 
 ## Ejercicios
 
-*Por desarrollar (banco de la Dra. Figueroa reorganizado + reactivos nuevos).*
+1. **Traslación de la varianza.** Un conjunto de datos tiene varianza muestral 9. Si a cada valor se le suma 3, ¿cuánto vale la nueva varianza? Verifícalo en R con un vector de tu elección.
+
+2. **Escalamiento de la varianza.** Si a cada valor de un conjunto con varianza 16 se le multiplica por 2, ¿cuál es la nueva varianza? Justifica con la propiedad correspondiente.
+
+3. **Varianza cero.** Si un conjunto de datos tiene varianza igual a cero, ¿qué puede afirmarse sobre sus valores? Da un ejemplo.
+
+4. **Media, mediana y moda.** En una distribución de salarios sesgada a la derecha, ordena de menor a mayor la media, la mediana y la moda, y explica por qué.
+
+5. **Cuartiles en R.** Con `datos/lagartijas.csv`, calcula la mediana y el RIC de `masa_g` para cada hábitat usando `group_by()` + `summarise()`. ¿Cuál grupo es más disperso?
+
+6. **Boxplot e interpretación.** Haz un boxplot de `frec_cardiaca` por hábitat. Describe en dos frases lo que ves, como si se lo explicaras a una bióloga.
+
+7. **Normalidad.** Haz el Q-Q plot de `eficiencia_biologica` de `datos/hongos_sustrato.csv`. ¿Los datos parecen normales? ¿Cambia tu conclusión si lo haces por separado para el sustrato `aserrin`?
+
+::: {.callout-tip title="Soluciones y retroalimentación" collapse="true"}
+**1.** La nueva varianza sigue siendo **9**. Sumar una constante **desplaza** todos los datos por igual, sin cambiar sus distancias mutuas, y la varianza mide precisamente esas distancias. En R: `var(x)` y `var(x + 3)` dan lo mismo. *Regla: $\text{Var}(X + c) = \text{Var}(X)$.*
+
+**2.** La nueva varianza es **64**, es decir $16 \times 2^2$. Multiplicar por $k$ multiplica la varianza por $k^2$ (y la desviación estándar por $|k|$). *Regla: $\text{Var}(kX) = k^2\,\text{Var}(X)$. Error típico: contestar 32, olvidando que el factor va al cuadrado.*
+
+**3.** Varianza cero significa que **todos los valores son idénticos**: no hay dispersión alguna. Ejemplo: `c(7, 7, 7, 7)`. Geométricamente, todos los datos coinciden con la media, así que todas las desviaciones son cero. *Es el único caso en que la varianza puede valer cero: nunca es negativa.*
+
+**4.** El orden es **moda < mediana < media**. En un sesgo a la derecha, la cola larga de salarios altos jala la media hacia arriba; la mediana se mueve menos y la moda se queda en el pico de la distribución. *Truco para recordar: la media es la más "sensible" y siempre se va hacia la cola.*
+
+**5.** Con `group_by(habitat) |> summarise(mediana = median(masa_g), ric = IQR(masa_g))` se observa que el grupo **urbano** tiene mayor RIC: es el más disperso, además de tener mayor masa mediana. *Interpretación biológica: la ciudad ofrece condiciones más heterogéneas —zonas de sombra, calor, alimento variable—, lo que se refleja en mayor variabilidad.*
+
+**6.** Se observan cajas con centros distintos, la urbana por encima. Una redacción adecuada: *"Las lagartijas urbanas presentan una frecuencia cardiaca mediana mayor que las de campo abierto, y sus valores están algo más dispersos; ambos grupos se traslapan, así que la diferencia es de tendencia, no absoluta."* *Lo importante aquí es no afirmar que "todas" las urbanas superan a las de campo: los boxplots se traslapan.*
+
+**7.** El Q-Q plot del conjunto completo muestra desviaciones de la recta, porque los datos **mezclan cuatro sustratos con medias distintas** (no es una sola población). Al analizar solo `aserrin`, los puntos se alinean mucho mejor con la recta. *Lección clave para todo el curso: la normalidad se verifica **dentro de cada grupo** —o sobre los residuos del modelo—, no sobre la mezcla. Este es exactamente el chequeo que haremos antes del ANOVA en el @sec-cap10.*
+:::

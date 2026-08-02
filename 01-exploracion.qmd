@@ -165,6 +165,48 @@ ggplot(penguins, aes(x = body_mass_g, fill = species)) +
   labs(x = "Masa corporal (g)", y = "Cantidad", fill = "Especie")
 ```
 
+### Laboratorio: el ancho de clase cambia la historia {#sec-lab-bins}
+
+¿Cuántos intervalos debe tener un histograma? No hay una respuesta única, y la elección **importa**: con muy pocos se pierde el detalle, con demasiados solo se ve ruido. Mueve el deslizador y observa cuándo aparecen (o desaparecen) los dos montículos de la masa corporal.
+
+```{r}
+#| label: datos-ojs-cap1
+#| include: false
+peng_ojs <- penguins |>
+  filter(!is.na(body_mass_g)) |>
+  select(species, body_mass_g)
+ojs_define(peng_data = peng_ojs)
+```
+
+```{ojs}
+//| echo: false
+peng = transpose(peng_data)
+```
+
+```{ojs}
+//| panel: input
+//| echo: false
+viewof ancho = Inputs.range([50, 900], {value: 250, step: 25, label: "ancho de clase (g)"})
+```
+
+```{ojs}
+//| echo: false
+Plot.plot({
+  height: 240,
+  x: { label: "masa corporal (g)" },
+  y: { label: "cantidad" },
+  marks: [
+    Plot.rectY(peng, Plot.binX({y: "count"},
+      {x: "body_mass_g", thresholds: d3.range(2500, 6501, ancho), fill: "#1F4E79"})),
+    Plot.ruleY([0])
+  ]
+})
+```
+
+::: {.callout-note title="Interpreta"}
+Con un ancho muy grande (600 g o más) el histograma se aplana en una sola barra ancha y la estructura desaparece. Con uno muy pequeño (50 g) cada barra tiene poquísimos pingüinos y solo se ve ruido. En un rango intermedio —alrededor de 200 a 300 g— se distinguen con claridad **dos montículos**, la pista de que hay grupos mezclados. Moraleja: un histograma no es un dato objetivo, es una **decisión** de quien grafica; prueba varios anchos antes de concluir.
+:::
+
 ::: {.callout-tip title="¿Qué técnica uso?"}
 Primera entrada de nuestro **mapa de decisión**, según el tipo de variable a graficar:
 
@@ -197,3 +239,17 @@ Empezamos por lo más importante y lo más olvidado: **entender los datos antes 
 5. **Histograma y forma.** Grafica el histograma de `flipper_length_mm` de los pingüinos con `binwidth = 5`. Describe centro, dispersión y forma. ¿Ves indicios de más de un grupo?
 
 6. **Escala de medición (opción múltiple).** El nivel de agrado en una escala "bajo / medio / alto" es una variable de escala: (a) nominal, (b) ordinal, (c) intervalo, (d) razón. Justifica.
+
+::: {.callout-tip title="Soluciones y retroalimentación" collapse="true"}
+**1.** `species` e `island`: categóricas nominales (no hay orden natural entre especies). `sex`: categórica nominal. `bill_length_mm`, `body_mass_g`: cuantitativas de razón (el cero significa ausencia y las razones tienen sentido: 4000 g es el doble de 2000 g). `year`: es numérica, pero funciona como **intervalo** (no existe un "año cero" absoluto) y en la práctica se usa como categórica ordinal. *Cuidado con el reflejo de tratar todo número como cuantitativo: `year` es el ejemplo clásico de un número que no se promedia con sentido.*
+
+**2.** El individuo es **cada lagartija**. Variables: `id` (etiqueta, no es dato analizable), `habitat` (categórica nominal), `temp_corporal`, `masa_g`, `lhc_mm` (cuantitativas de razón) y `frec_cardiaca` (cuantitativa de razón, discreta). *Error típico: pensar que el individuo es el hábitat; el hábitat es una característica de cada lagartija, no la unidad.*
+
+**3.** (a) **Observacional**: solo se mide dónde ya vivían; no asignamos hábitat. (b) **Experimental**: nosotros asignamos al azar el orden de cata, es decir, intervenimos. (c) **Observacional**: los estudiantes decidieron por su cuenta asistir, no fueron asignados. *La clave siempre es la misma pregunta: ¿quién decidió el tratamiento, el investigador o el propio individuo?*
+
+**4.** Con `ggplot(hongos, aes(x = sustrato)) + geom_bar()` se ven **25 bolsas por sustrato**: el experimento está **balanceado** (mismo número de réplicas por tratamiento). El balance simplifica el análisis y da la misma precisión a cada comparación.
+
+**5.** El histograma de `flipper_length_mm` con `binwidth = 5` muestra un centro cerca de 197 mm, dispersión aproximada de 172 a 231 mm, y una forma claramente **bimodal**: dos montículos. Sí hay indicios de más de un grupo, y son las especies (los *Gentoo* tienen aletas notablemente más largas). *Este ejercicio es el mismo fenómeno del laboratorio del ancho de clase: la forma revela estructura oculta.*
+
+**6.** La respuesta es **(b) ordinal**. Hay un orden claro (bajo < medio < alto), pero las distancias entre niveles no están definidas: no podemos afirmar que la diferencia entre "bajo" y "medio" sea igual que entre "medio" y "alto". Por eso no tiene sentido promediar estas etiquetas directamente. *Nota práctica: la escala hedónica 1–9 de la cata de galletas sí se trata como cuantitativa por convención en análisis sensorial, aunque estrictamente sea ordinal; es una decisión que conviene hacer explícita.*
+:::

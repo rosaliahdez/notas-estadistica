@@ -70,6 +70,40 @@ quarto render      # genera _book/ sin publicar
 ## Cómo escribir un capítulo
 
 Sigue el patrón del Capítulo 1: **pregunta real → técnica → supuestos → cómputo en R →
-interpretación**. Usa los recuadros `::: {.callout-tip title="¿Qué técnica uso?"}` y
-`::: {.callout-note title="Interpreta"}`. Los datos se leen con, por ejemplo,
-`read.csv("datos/galletas.csv")`.
+interpretación**. Los datos se leen con, por ejemplo, `read.csv("datos/galletas.csv")`.
+
+Cada capítulo lleva cuatro elementos fijos:
+
+1. **Recuadros del mapa de decisión**: `::: {.callout-tip title="¿Qué técnica uso?"}`
+2. **Recuadros de interpretación**: `::: {.callout-note title="Interpreta"}`
+3. **Un laboratorio interactivo** donde ayude a entender (ver abajo).
+4. **Solucionario con retroalimentación** al final de los ejercicios:
+   `::: {.callout-tip title="Soluciones y retroalimentación" collapse="true"}`
+   Cada respuesta incluye el razonamiento y, en *cursiva*, el error típico a evitar.
+   El `collapse="true"` deja el bloque plegado: el estudiante lo abre cuando ya intentó.
+
+## Laboratorios interactivos (Observable JS)
+
+Los deslizadores usan **OJS**, que Quarto trae integrado y corre **en el navegador**:
+funcionan en el sitio publicado en GitHub Pages sin servidor ni Shiny. El patrón es:
+
+````markdown
+```{ojs}
+//| panel: input
+//| echo: false
+viewof n = Inputs.range([1, 100], {value: 30, step: 1, label: "tamaño n"})
+```
+
+```{ojs}
+//| echo: false
+Plot.plot({ marks: [ /* usa n aquí; se redibuja solo */ ] })
+```
+````
+
+`Plot` (Observable Plot), `d3` e `Inputs` están disponibles sin importarlos. Para pasar
+datos de R a OJS, en un chunk de R usa `ojs_define(mis_datos = df)` y en OJS
+`transpose(mis_datos)` (ver el Capítulo 1).
+
+Laboratorios ya escritos: ancho de clase (cap. 1), media vs. mediana (cap. 2),
+correlación (cap. 3), tamaño de muestra y sesgo (cap. 4), estandarización y TCL
+(Parte III).

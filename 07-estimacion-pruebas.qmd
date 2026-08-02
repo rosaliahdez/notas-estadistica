@@ -1,39 +1,313 @@
 # Estimación y prueba de hipótesis {#sec-cap7}
 
-::: {.callout-important title="Plantilla en construcción"}
-Este capítulo corresponde a **Semana 8-9** del calendario y usa los datos de **lagartijas, algoritmos**. La estructura de secciones ya está fijada; el contenido se desarrolla con el mismo formato del @sec-cap1: pregunta real, técnica, supuestos, cómputo en R e interpretación.
-:::
-
 ```{r}
-#| label: setup-sec-cap7
+#| label: setup-cap7
 #| include: false
 library(tidyverse)
+theme_set(theme_minimal(base_size = 12))
 ```
 
-## Estimación puntual y por intervalos de confianza
+::: {.callout-tip title="Al terminar este capítulo podrás"}
+- Construir e **interpretar correctamente** un intervalo de confianza para una media.
+- Plantear hipótesis y entender la **lógica** de una prueba estadística.
+- Leer un **valor p** sin caer en las interpretaciones equivocadas más comunes.
+- Distinguir **significancia estadística** de **relevancia práctica**, y reconocer el *p-hacking*.
+:::
 
-*(En construcción.)*
+Ya tenemos la pieza que faltaba: sabemos cómo varía un estadístico de muestra a muestra (@sec-cap6). Con eso podemos, por fin, responder las dos preguntas centrales de la inferencia: **¿cuánto vale el parámetro?** (estimación) y **¿es compatible con cierto valor?** (prueba de hipótesis).
 
-## Intervalo de confianza para una media
+## Estimación puntual
 
-*(En construcción.)*
+La **estimación puntual** es lo más simple: usar el estadístico de la muestra como estimación del parámetro. Si la media de nuestras lagartijas urbanas es 35.4 °C, esa es nuestra estimación puntual de $\mu$.
+
+```{r}
+#| label: estimacion-puntual
+lagartijas <- read.csv("datos/lagartijas.csv")
+urbanas <- filter(lagartijas, habitat == "urbana")
+mean(urbanas$temp_corporal)
+```
+
+El problema es evidente: un número solo, sin más, **no comunica incertidumbre**. Otra muestra habría dado otro valor. Necesitamos acompañarlo de un margen.
+
+## Intervalos de confianza
+
+Un **intervalo de confianza** es un rango de valores plausibles para el parámetro, construido de modo que el procedimiento acierte un porcentaje conocido de las veces. Para una media, con $\sigma$ desconocida (el caso real), es
+
+$$\bar{x} \pm t^* \cdot \frac{s}{\sqrt{n}}$$
+
+donde $s/\sqrt{n}$ es el **error estándar** que ya conocemos y $t^*$ es un valor crítico de la distribución $t$ de Student, que depende del nivel de confianza y de los grados de libertad ($n-1$). Usamos $t$ en lugar de la normal porque estamos estimando $\sigma$ con $s$, y eso agrega incertidumbre.
+
+En R, `t.test()` lo calcula:
+
+```{r}
+#| label: ic-media
+t.test(urbanas$temp_corporal, conf.level = 0.95)$conf.int
+```
+
+::: {.callout-important title="Qué significa (y qué NO significa) el 95 %"}
+La interpretación **correcta** es sobre el **procedimiento**: si repitiéramos el estudio muchas veces y construyéramos un intervalo cada vez, alrededor del 95 % de esos intervalos contendrían el verdadero $\mu$.
+
+Es **incorrecto** decir "hay 95 % de probabilidad de que $\mu$ esté en *este* intervalo". Una vez calculado, este intervalo concreto o contiene a $\mu$ o no lo contiene —no hay azar ya—; lo que tiene una tasa de éxito del 95 % es el método que lo produjo. El laboratorio siguiente vuelve tangible esta distinción.
+:::
+
+### Laboratorio: ¿qué significa "95 % de confianza"? {#sec-lab-ic}
+
+Cada línea horizontal es un intervalo construido a partir de una muestra distinta de la **misma** población, cuya media verdadera conocemos (la línea roja, $\mu = 100$). Los intervalos que **no** alcanzan a cubrirla aparecen en rojo. Cambia el nivel de confianza y el tamaño de muestra.
+
+```{ojs}
+//| panel: input
+//| echo: false
+viewof nivel = Inputs.select([90, 95, 99], {value: 95, label: "nivel de confianza (%)"})
+viewof nIC = Inputs.range([5, 100], {value: 25, step: 5, label: "tamaño de muestra n"})
+viewof semilla = Inputs.button("Nuevas muestras")
+```
+
+```{ojs}
+//| echo: false
+tcrit = ({90: 1.645, 95: 1.96, 99: 2.576})[nivel]
+```
+
+```{ojs}
+//| echo: false
+intervalos = {
+  semilla;                       // al presionar el botón se regeneran
+  const normal = d3.randomNormal(100, 15);
+  return Array.from({length: 60}, (_, k) => {
+    const x = Array.from({length: nIC}, normal);
+    const m = d3.mean(x), s = d3.deviation(x);
+    const e = tcrit * s / Math.sqrt(nIC);
+    return { k, bajo: m - e, alto: m + e, media: m, cubre: (m - e) <= 100 && 100 <= (m + e) };
+  });
+}
+```
+
+```{ojs}
+//| echo: false
+Plot.plot({
+  height: 300,
+  marginLeft: 30,
+  x: { label: "valor del parámetro", domain: [85, 115] },
+  y: { axis: null },
+  color: { legend: false },
+  marks: [
+    Plot.ruleY(intervalos, {
+      y: "k", x1: "bajo", x2: "alto",
+      stroke: d => d.cubre ? "#1F4E79" : "#C0392B", strokeWidth: 1.8
+    }),
+    Plot.dot(intervalos, { y: "k", x: "media", r: 2,
+      fill: d => d.cubre ? "#1F4E79" : "#C0392B" }),
+    Plot.ruleX([100], { stroke: "#C0392B", strokeWidth: 2 })
+  ]
+})
+```
+
+```{ojs}
+//| echo: false
+md`De estos **60** intervalos, **${intervalos.filter(d => d.cubre).length}** contienen el valor verdadero (µ = 100). Nivel nominal: **${nivel} %** → esperaríamos alrededor de **${Math.round(60 * nivel / 100)}**.`
+```
+
+::: {.callout-note title="Interpreta"}
+Fíjate en tres cosas. Primero, **algunos intervalos fallan**, y eso es normal, no un error: con 95 % de confianza, uno de cada veinte no cubre el parámetro. Segundo, al subir el nivel a 99 % los intervalos se **ensanchan** y fallan menos: más confianza cuesta menos precisión. Tercero, al aumentar $n$ todos se **angostan**, porque el error estándar $s/\sqrt{n}$ encoge.
+
+Y lo esencial: el "95 %" describe **cuántas veces acierta el método a la larga**, no la probabilidad de que un intervalo particular contenga a $\mu$.
+:::
 
 ## La lógica de la prueba de hipótesis
 
-*(En construcción.)*
+Una prueba de hipótesis responde a una pregunta distinta: ¿los datos son compatibles con cierta afirmación? Su razonamiento es el de una **reducción al absurdo probabilística**, en cuatro pasos:
+
+1. **Se plantea una hipótesis nula** $H_0$: la afirmación de "no hay efecto", "no hay diferencia", el statu quo. Y una **alternativa** $H_1$, lo que sospechamos.
+2. **Se supone que $H_0$ es cierta** y se calcula, bajo ese supuesto, la distribución del estadístico.
+3. **Se mide qué tan raro** sería observar unos datos como los nuestros —o más extremos— si $H_0$ fuera cierta. Esa probabilidad es el **valor p**.
+4. **Se decide**: si el valor p es muy pequeño, los datos son poco compatibles con $H_0$ y la rechazamos; si no, no hay evidencia suficiente para rechazarla.
+
+::: {.callout-important title="Dos precisiones de lenguaje que importan"}
+No decimos "aceptamos $H_0$", sino "**no la rechazamos**": la ausencia de evidencia no es evidencia de ausencia. Un valor p grande puede significar que no hay efecto… o que la muestra fue demasiado pequeña para detectarlo.
+
+Y el nivel de significancia $\alpha$ (típicamente 0.05) es un **umbral convencional**, no una ley de la naturaleza. Un p de 0.049 y uno de 0.051 dicen prácticamente lo mismo.
+:::
 
 ## Prueba de hipótesis para una media
 
-*(En construcción.)*
+Preguntemos si la temperatura media de las lagartijas urbanas difiere de 34 °C, un valor de referencia:
 
-## Usos y abusos de la inferencia: p-hacking, significancia vs. relevancia práctica
+- $H_0: \mu = 34$
+- $H_1: \mu \neq 34$ (prueba de dos colas)
 
-*(En construcción.)*
+```{r}
+#| label: prueba-una-media
+t.test(urbanas$temp_corporal, mu = 34)
+```
+
+La salida trae todo: el estadístico `t`, los grados de libertad, el **valor p** y, de regalo, el intervalo de confianza. El valor p resulta minúsculo, así que rechazamos $H_0$.
+
+::: {.callout-note title="Interpreta"}
+Redacción para un lector no técnico: *"La temperatura corporal media de las lagartijas urbanas (35.4 °C) es significativamente mayor que el valor de referencia de 34 °C ($p < 0.001$); con 95 % de confianza, la media real está entre los límites que reporta el intervalo."*
+
+Observa que **intervalo y prueba dan la misma información**: como el 34 queda fuera del intervalo de confianza del 95 %, sabíamos de antemano que la prueba a $\alpha = 0.05$ iba a rechazar. Son dos caras de la misma moneda; el intervalo suele ser más informativo porque además dice **cuánto** vale el parámetro.
+:::
+
+### Laboratorio: qué es realmente el valor p {#sec-lab-p}
+
+La curva es la distribución del estadístico **suponiendo que $H_0$ es cierta**. Mueve la media observada de tu muestra y observa cómo el área sombreada —el valor p— se encoge conforme tu resultado se aleja de lo que $H_0$ predice.
+
+```{ojs}
+//| panel: input
+//| echo: false
+viewof obs = Inputs.range([-4, 4], {value: 1.2, step: 0.05, label: "estadístico observado"})
+viewof alfa = Inputs.select([0.10, 0.05, 0.01], {value: 0.05, label: "nivel α"})
+viewof colas = Inputs.radio(["dos colas", "una cola"], {value: "dos colas", label: "tipo de prueba"})
+```
+
+```{ojs}
+//| echo: false
+dnorm2 = (x) => Math.exp(-0.5 * x * x) / Math.sqrt(2 * Math.PI)
+```
+
+```{ojs}
+//| echo: false
+erf = (x) => {
+  const s = x < 0 ? -1 : 1; x = Math.abs(x);
+  const t = 1 / (1 + 0.3275911 * x);
+  const y = 1 - ((((1.061405429 * t - 1.453152027) * t + 1.421413741) * t
+            - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x);
+  return s * y;
+}
+```
+
+```{ojs}
+//| echo: false
+pnorm2 = (x) => 0.5 * (1 + erf(x / Math.SQRT2))
+```
+
+```{ojs}
+//| echo: false
+valorP = colas === "dos colas" ? 2 * (1 - pnorm2(Math.abs(obs))) : 1 - pnorm2(obs)
+```
+
+```{ojs}
+//| echo: false
+rejilla = d3.range(-4.5, 4.51, 0.02)
+```
+
+```{ojs}
+//| echo: false
+cola = colas === "dos colas"
+  ? rejilla.filter(x => Math.abs(x) >= Math.abs(obs))
+  : rejilla.filter(x => x >= obs)
+```
+
+```{ojs}
+//| echo: false
+Plot.plot({
+  height: 250,
+  x: { label: "valor del estadístico si H₀ fuera cierta", domain: [-4.5, 4.5] },
+  y: { label: "densidad" },
+  marks: [
+    Plot.areaY(cola, { x: d => d, y: dnorm2, fill: "#C0392B", fillOpacity: 0.28 }),
+    Plot.lineY(rejilla, { x: d => d, y: dnorm2, stroke: "#1F4E79", strokeWidth: 2 }),
+    Plot.ruleX([obs], { stroke: "#C0392B", strokeWidth: 2 }),
+    Plot.ruleY([0])
+  ]
+})
+```
+
+```{ojs}
+//| echo: false
+md`Valor p = **${valorP.toFixed(4)}** · Decisión con α = ${alfa}: **${valorP < alfa ? "se rechaza H₀" : "no se rechaza H₀"}**`
+```
+
+::: {.callout-important title="Las tres lecturas equivocadas del valor p"}
+El valor p **es** la probabilidad de observar datos tan extremos como los nuestros *si $H_0$ fuera cierta*. En cambio, **no es**:
+
+1. **La probabilidad de que $H_0$ sea cierta.** El cálculo *supone* $H_0$; no puede a la vez medir su probabilidad.
+2. **La probabilidad de haberse equivocado** al rechazar.
+3. **Una medida del tamaño del efecto.** Un p diminuto puede corresponder a un efecto trivial si la muestra es enorme —el tema de la siguiente sección—.
+:::
+
+## Usos y abusos de la inferencia
+
+### Significancia estadística no es relevancia práctica
+
+Con una muestra suficientemente grande, **cualquier** diferencia por minúscula que sea se vuelve estadísticamente significativa. Que un medicamento baje la presión 0.3 mmHg puede tener $p < 0.001$ y no servirle a nadie.
+
+```{r}
+#| label: n-grande
+set.seed(2026)
+# Diferencia real ridícula (0.05) pero muestra enorme
+grande <- rnorm(50000, mean = 100.05, sd = 15)
+t.test(grande, mu = 100)$p.value
+```
+
+Por eso hay que reportar **siempre** el tamaño del efecto y su intervalo de confianza, no solo el valor p. La pregunta no es "¿es significativo?", sino "**¿es lo bastante grande como para importar?**".
+
+### El *p-hacking*
+
+Si uno prueba muchas hipótesis, algunas saldrán "significativas" por puro azar. Con $\alpha = 0.05$, una de cada veinte pruebas sobre datos sin ningún efecto real dará $p < 0.05$:
+
+```{r}
+#| label: p-hacking
+set.seed(2026)
+# 20 pruebas sobre datos SIN ningún efecto real
+p_valores <- replicate(20, t.test(rnorm(30), mu = 0)$p.value)
+round(p_valores, 3)
+sum(p_valores < 0.05)   # casi siempre sale alguna "significativa"
+```
+
+Buscar entre muchos análisis hasta encontrar uno significativo, y reportar solo ese, se llama **p-hacking**, y es una de las causas de la crisis de replicabilidad en varias ciencias. La defensa: decidir las hipótesis **antes** de ver los datos, reportar todos los análisis realizados y ajustar por comparaciones múltiples (lo veremos con las pruebas post-hoc en el @sec-cap10).
 
 ::: {.callout-tip title="¿Qué técnica uso?"}
-Una muestra, un parámetro: ¿estimarlo con margen? → intervalo de confianza; ¿contrastarlo con un valor? → prueba de hipótesis.
+Con **una muestra y un parámetro**:
+
+| Mi pregunta | Herramienta |
+|---|---|
+| ¿Cuánto vale $\mu$, con margen de error? | Intervalo de confianza para la media |
+| ¿Es $\mu$ compatible con un valor de referencia? | Prueba de hipótesis para una media (`t.test(x, mu = ...)`) |
+| ¿Cuál de las dos reporto? | Idealmente **ambas**: la prueba decide, el intervalo cuantifica |
+
+**Supuestos**: muestra aleatoria y, o bien población aproximadamente normal, o bien $n$ suficientemente grande para que aplique el TCL. Verifícalos con un boxplot y un Q-Q plot (@sec-cap2) antes de confiar en el resultado.
 :::
+
+## Resumen
+
+La **estimación puntual** da un número; el **intervalo de confianza** le agrega la incertidumbre, y su nivel describe la tasa de acierto del **procedimiento**, no la probabilidad de un intervalo concreto. La **prueba de hipótesis** supone $H_0$, mide qué tan raros serían nuestros datos bajo ese supuesto (el **valor p**) y decide. Un valor p pequeño indica incompatibilidad con $H_0$, pero no dice qué tan grande es el efecto ni qué probabilidad tiene $H_0$ de ser cierta. Con muestras grandes, lo trivial se vuelve significativo; con muchas pruebas, el azar fabrica significancia. Por eso el buen análisis reporta **efecto, intervalo y contexto**, no solo un p. En el @sec-cap8 llevaremos estas ideas a la comparación de **dos** grupos.
 
 ## Ejercicios
 
-*Por desarrollar (banco de la Dra. Figueroa reorganizado + reactivos nuevos).*
+1. **Intervalo en R.** Calcula el intervalo de confianza del 95 % para la temperatura media de las lagartijas **de campo** y escribe su interpretación correcta en una frase.
+
+2. **Efecto del nivel.** Para esos mismos datos, calcula los intervalos al 90 %, 95 % y 99 %. ¿Cuál es más ancho? ¿Por qué tiene sentido?
+
+3. **Interpretación correcta.** ¿Cuáles de estas afirmaciones sobre un IC del 95 % $(34.1,\ 34.7)$ son correctas?
+   a. Hay 95 % de probabilidad de que $\mu$ esté entre 34.1 y 34.7.
+   b. El 95 % de los datos están entre 34.1 y 34.7.
+   c. Si repitiéramos el estudio muchas veces, el 95 % de los intervalos así construidos contendrían a $\mu$.
+
+4. **Prueba de una media.** Con `datos/algoritmos_ab.csv`, prueba si el tiempo medio del entorno Mac difiere de 10 ms. Plantea $H_0$ y $H_1$, corre la prueba e interpreta.
+
+5. **Valor p.** Un estudio reporta $p = 0.03$. ¿Cuáles afirmaciones son incorrectas y por qué?
+   a. Hay 3 % de probabilidad de que $H_0$ sea cierta.
+   b. Si $H_0$ fuera cierta, datos así de extremos ocurrirían el 3 % de las veces.
+   c. El efecto encontrado es grande.
+
+6. **Significancia vs relevancia.** Una empresa prueba un cambio de diseño con 200 000 usuarios y encuentra que la tasa de clics sube de 4.00 % a 4.05 %, con $p < 0.001$. ¿Recomendarías implementar el cambio? ¿Qué información adicional pedirías?
+
+7. **Simula el p-hacking.** Modifica el código de p-hacking para hacer 200 pruebas en lugar de 20. ¿Cuántas resultan significativas? ¿Coincide con lo que esperabas?
+
+::: {.callout-tip title="Soluciones y retroalimentación" collapse="true"}
+**1.** Con `t.test(filter(lagartijas, habitat == "campo")$temp_corporal)$conf.int` se obtiene un intervalo alrededor de 34 °C. Interpretación correcta: *"Con 95 % de confianza, la temperatura corporal media de las lagartijas de campo abierto está entre los dos límites del intervalo"*, entendiendo que el 95 % se refiere a la tasa de acierto del procedimiento. *Evita redactar "hay 95 % de probabilidad de que la media esté en este intervalo".*
+
+**2.** El del **99 %** es el más ancho y el del **90 %** el más angosto. Tiene sentido: para estar más seguros de atrapar el parámetro hay que lanzar una red más grande. *Existe un intercambio inevitable entre **confianza** y **precisión**; la única forma de mejorar ambas a la vez es aumentar $n$, como se ve en el laboratorio del @sec-lab-ic.*
+
+**3.** Solo la **(c)** es correcta. La (a) es la interpretación equivocada más común: una vez calculado, el intervalo ya contiene o no contiene a $\mu$; la probabilidad describe al método. La (b) confunde el intervalo de confianza —que habla de **la media**— con la dispersión de **los datos individuales**; un IC es mucho más angosto que el rango de los datos. *Distinguir (b) de un intervalo de predicción es una confusión sutil que vale la pena señalar en clase.*
+
+**4.** $H_0: \mu = 10$ contra $H_1: \mu \neq 10$. Con
+`t.test(filter(ab, entorno == "Mac")$tiempo_ms, mu = 10)`
+se obtiene una media muestral cercana a **10.6 ms** y un valor p de alrededor de **0.02**, así que a $\alpha = 0.05$ se rechaza $H_0$: el tiempo medio de Mac difiere significativamente de 10 ms. *Nota que este caso es mucho menos contundente que el de las lagartijas ($p < 0.001$): un p de 0.02 es evidencia moderada, y conviene decirlo así en vez de tratar todo lo menor que 0.05 como un sí rotundo. Reporta también el intervalo —aproximadamente de 10.1 a 11.1 ms—: informa **cuánto** vale la media, no solo que difiere.*
+
+**5.** Las incorrectas son la **(a)** y la **(c)**. La (a) invierte el condicional: el valor p se calcula **suponiendo** $H_0$ cierta, así que no puede ser la probabilidad de $H_0$. La (c) confunde significancia con magnitud: el valor p depende tanto del tamaño del efecto como del tamaño de muestra. La **(b)** es la lectura correcta. *La confusión (a) tiene nombre: **falacia del condicional transpuesto**, y es el error más frecuente al leer resultados científicos en prensa.*
+
+**6.** Probablemente **no** solo por ese resultado. El efecto es de 0.05 puntos porcentuales: estadísticamente significativo gracias a los 200 000 usuarios, pero práctica y económicamente irrelevante en casi cualquier contexto. Información adicional que pediría: el **intervalo de confianza** de la diferencia (para saber si el efecto podría ser aún menor), el **costo** de implementar el cambio, si hay efectos secundarios en otras métricas, y si el experimento fue una prueba A/B bien aleatorizada. *Este es el ejemplo canónico de por qué reportar solo el valor p es insuficiente: significancia y relevancia son preguntas distintas.*
+
+**7.** Con 200 pruebas sobre datos sin efecto real, lo esperado es que alrededor de **10** resulten significativas ($200 \times 0.05$). El número exacto varía por azar, típicamente entre 5 y 16. *La moraleja: si alguien corre 200 análisis y reporta solo los 10 "hallazgos", está describiendo ruido con lenguaje de descubrimiento. Por eso importa preregistrar las hipótesis y reportar cuántas pruebas se hicieron en total.*
+:::

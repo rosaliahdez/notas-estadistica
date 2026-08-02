@@ -1,39 +1,376 @@
 # Producción de datos: muestreo {#sec-cap4}
 
-::: {.callout-important title="Plantilla en construcción"}
-Este capítulo corresponde a **Semana 4** del calendario y usa los datos de **rickettsiosis (marco poblacional)**. La estructura de secciones ya está fijada; el contenido se desarrolla con el mismo formato del @sec-cap1: pregunta real, técnica, supuestos, cómputo en R e interpretación.
-:::
-
 ```{r}
-#| label: setup-sec-cap4
+#| label: setup-cap4
 #| include: false
 library(tidyverse)
+theme_set(theme_minimal(base_size = 12))
 ```
+
+::: {.callout-tip title="Al terminar este capítulo podrás"}
+- Distinguir **población**, **muestra** y **unidad de muestreo**.
+- Reconocer **sesgos de selección y de medición**, y por qué una muestra grande no los corrige.
+- Separar el **error de muestreo** del **error no de muestreo**.
+- Elegir entre los métodos de **muestreo aleatorio** y simularlos en R.
+:::
+
+Empieza la Parte II. Las técnicas de inferencia que veremos después son tan buenas como los datos que las alimentan: **de dónde vienen los datos importa tanto como qué hacemos con ellos**. Este capítulo trata de cómo obtener una muestra que realmente represente a la población.
 
 ## Población, muestra y unidad de muestreo
 
-*(En construcción.)*
+- La **población** es el conjunto completo de individuos sobre los que queremos concluir.
+- La **muestra** es la parte de la población que efectivamente observamos.
+- La **unidad de muestreo** es cada individuo que puede ser seleccionado.
 
-## Sesgo de selección y sesgo de medición
+Casi nunca podemos medir a toda la población (un **censo** es caro y a veces imposible), así que tomamos una muestra y, a partir de ella, estimamos. Un valor calculado sobre la población es un **parámetro** (lo que quisiéramos conocer); el mismo valor calculado sobre la muestra es un **estadístico** (lo que sí podemos calcular). El arte del muestreo es que el estadístico se parezca al parámetro.
 
-*(En construcción.)*
+Para *ver* cómo funciona el muestreo haremos algo que en la vida real no podemos: tratar un conjunto de datos como si fuera **toda la población**. Usaremos el registro de rickettsiosis (420 personas) y, como lo tenemos completo, conocemos el "parámetro verdadero":
 
-## Margen de error; errores de muestreo y no de muestreo
+```{r}
+#| label: poblacion
+rick <- read.csv("datos/rickettsiosis.csv")
+p_pob <- mean(rick$resultado == "positivo")
+p_pob   # proporción verdadera de positivos en la población
+```
 
-*(En construcción.)*
+## Sesgos: cuando la muestra miente
 
-## Muestreo aleatorio simple, estratificado, por conglomerados, sistemático y multietápico
+Una muestra es **sesgada** cuando tiende, sistemáticamente, a dar valores alejados del parámetro. Hay dos fuentes principales:
 
-*(En construcción.)*
+- **Sesgo de selección**: la forma de elegir favorece a ciertos individuos. Encuestar solo a quien contesta el teléfono fijo deja fuera a los jóvenes.
+- **Sesgo de medición**: el instrumento o la pregunta distorsionan la respuesta. Una pregunta sugerente, una báscula descalibrada.
 
-## Simular muestreos en R y ver el efecto del sesgo
+Veamos el sesgo de selección en acción. Si por comodidad tomáramos la muestra solo de la zona urbana marginada (donde la positividad es más alta), sobreestimaríamos:
 
-*(En construcción.)*
+```{r}
+#| label: sesgo-seleccion
+set.seed(2026)
+sesgada <- rick |> filter(zona == "urbana_marginada") |> slice_sample(n = 40)
+mean(sesgada$resultado == "positivo")   # muy por encima del parámetro real
+```
+
+::: {.callout-important title="Una muestra grande NO corrige el sesgo"}
+Es el error más común. Si el método de selección está sesgado, tomar más individuos solo da una respuesta equivocada con más decimales. La famosa encuesta de 1936 que predijo (mal) la elección presidencial de EE. UU. tenía **millones** de respuestas: su problema no era el tamaño, era el sesgo de selección. Contra el sesgo, lo que sirve es la **aleatorización**, no el tamaño.
+:::
+
+## Error de muestreo y error no de muestreo
+
+Aunque el muestreo sea perfecto, dos muestras distintas dan resultados distintos: a eso se le llama **error de muestreo**, la variación natural de una muestra a otra. Es inevitable, pero **se reduce al aumentar el tamaño de la muestra** y se puede cuantificar (el **margen de error**, que formalizaremos en el @sec-cap7).
+
+El **error no de muestreo** es todo lo demás: sesgos, no-respuesta, errores de captura. No se arregla con más datos y suele ser el más peligroso porque no aparece en las fórmulas.
+
+Simulemos el error de muestreo. Tomemos muchas muestras aleatorias de tamaño 40 y veamos cómo varía la proporción estimada alrededor del parámetro real:
+
+```{r}
+#| label: fig-variabilidad
+#| fig-cap: "Proporción de positivos en 1000 muestras aleatorias de tamaño 40."
+#| fig-width: 5
+#| fig-height: 3.3
+set.seed(2026)
+estimaciones <- replicate(1000, {
+  m <- slice_sample(rick, n = 40)
+  mean(m$resultado == "positivo")
+})
+ggplot(data.frame(p = estimaciones), aes(x = p)) +
+  geom_histogram(binwidth = 0.025, fill = "#1F4E79", color = "white") +
+  geom_vline(xintercept = p_pob, color = "#C0392B", linewidth = 1) +
+  labs(x = "Proporción estimada", y = "Frecuencia")
+```
+
+```{r}
+#| label: media-estimaciones
+mean(estimaciones)   # el promedio de las estimaciones cae junto al parámetro real
+```
+
+::: {.callout-note title="Interpreta"}
+Las estimaciones se reparten **alrededor** del valor verdadero (línea roja): ninguna muestra da exactamente el parámetro, pero en promedio aciertan y la mayoría cae cerca. Eso es un muestreo **sin sesgo**: yerra por azar, no por sistema. Si repitieras el ejercicio con muestras de tamaño 150, el histograma sería más angosto —menos error de muestreo—. Esta idea es la semilla de las **distribuciones muestrales** del @sec-cap6.
+:::
+
+### Laboratorio: el tamaño de la muestra y el sesgo {#sec-lab-n}
+
+Este laboratorio junta las dos ideas centrales del capítulo. Con el primer deslizador cambias el **tamaño de muestra** y ves cómo se angosta la distribución de estimaciones. Con el segundo introduces un **sesgo** en el método de selección y ves algo incómodo: por más que aumentes la muestra, las estimaciones se apretujan alrededor del valor **equivocado**.
+
+```{ojs}
+//| panel: input
+//| echo: false
+viewof nmuestra = Inputs.range([10, 300], {value: 40, step: 10, label: "tamaño de muestra n"})
+viewof sesgo = Inputs.range([0, 0.20], {value: 0, step: 0.01, label: "sesgo del método"})
+```
+
+```{ojs}
+//| echo: false
+pReal = 0.25
+```
+
+```{ojs}
+//| echo: false
+simulaciones = {
+  const reps = 600;
+  const p = Math.min(0.99, pReal + sesgo);
+  const out = [];
+  for (let i = 0; i < reps; i++) {
+    let exitos = 0;
+    for (let j = 0; j < nmuestra; j++) if (Math.random() < p) exitos++;
+    out.push(exitos / nmuestra);
+  }
+  return out;
+}
+```
+
+```{ojs}
+//| echo: false
+Plot.plot({
+  height: 240,
+  x: { label: "proporción estimada", domain: [0, 0.6] },
+  y: { label: "frecuencia" },
+  marks: [
+    Plot.rectY(simulaciones, Plot.binX({y: "count"},
+      {x: d => d, thresholds: 40, fill: "#1F4E79"})),
+    Plot.ruleX([pReal], { stroke: "#C0392B", strokeWidth: 2 }),
+    Plot.ruleY([0])
+  ]
+})
+```
+
+```{ojs}
+//| echo: false
+md`Valor verdadero (línea roja) = **0.25** · Promedio de las estimaciones = **${(simulaciones.reduce((a,b)=>a+b,0)/simulaciones.length).toFixed(3)}**`
+```
+
+::: {.callout-note title="Interpreta"}
+Con **sesgo en cero**, aumentar $n$ angosta el histograma alrededor de la línea roja: más datos, más precisión. Ahora sube el sesgo a 0.10 y vuelve a subir $n$ hasta 300: el histograma se vuelve **angosto pero centrado en el lugar equivocado**. Ahí está, en una imagen, la lección del capítulo: el tamaño de muestra reduce el **error de muestreo**, nunca el **sesgo**. Una estimación sesgada con muestra grande es peligrosa justamente porque *parece* precisa.
+:::
+
+## Métodos de muestreo aleatorio
+
+La defensa contra el sesgo de selección es dejar que **el azar** elija. Hay varias formas:
+
+- **Aleatorio simple (MAS)**: cada individuo tiene la misma probabilidad de ser elegido, como sacar nombres de una urna.
+- **Estratificado**: se divide la población en **estratos** homogéneos (por zona, por sexo) y se muestrea dentro de cada uno. Asegura representación de todos los grupos y suele dar estimaciones más precisas.
+- **Sistemático**: se elige cada k-ésimo individuo de una lista (uno de cada diez). Simple, pero riesgoso si la lista tiene un patrón periódico.
+- **Por conglomerados**: la población se agrupa en conglomerados (colonias, escuelas), se eligen algunos **conglomerados completos** al azar y se mide a todos sus miembros. Barato cuando la población está dispersa.
+- **Multietápico**: combina los anteriores en etapas (elegir municipios, luego colonias, luego hogares). Es lo que usan las grandes encuestas nacionales.
+
+En R, el muestreo **aleatorio simple** es `slice_sample()`:
+
+```{r}
+#| label: mas
+set.seed(1)
+mas <- slice_sample(rick, n = 40)
+mean(mas$resultado == "positivo")
+```
+
+El **estratificado** por zona se logra agrupando antes de muestrear:
+
+```{r}
+#| label: estratificado
+set.seed(1)
+estratificada <- rick |>
+  group_by(zona) |>
+  slice_sample(prop = 0.10) |>   # 10 % de cada zona
+  ungroup()
+count(estratificada, zona)
+```
+
+Y el **sistemático**, tomando uno de cada `k` de la lista:
+
+```{r}
+#| label: sistematico
+k <- 10
+sistematica <- rick[seq(1, nrow(rick), by = k), ]
+nrow(sistematica)
+```
+
+### Laboratorio: los cuatro métodos, lado a lado {#sec-lab-metodos}
+
+Este campo tiene 96 lagartijas de tres especies, cada una ocupando **su propia zona** del terreno: la A la mitad izquierda (48 individuos, 50 %), la B la franja central (32, 33 %) y la C la orilla derecha (16, 17 %). Elige un método, cambia el tamaño de muestra y fíjate en dos cosas: **dónde** caen los individuos seleccionados y qué tan bien la **composición de la muestra** reproduce la de la población.
+
+```{ojs}
+//| panel: input
+//| echo: false
+viewof metodo = Inputs.radio(
+  ["aleatorio simple", "estratificado", "conglomerados", "sistemático"],
+  {value: "aleatorio simple", label: "método"})
+viewof nSim = Inputs.range([8, 48], {value: 24, step: 4, label: "tamaño de muestra"})
+```
+
+```{ojs}
+//| echo: false
+campo = {
+  const COLS = 12, ROWS = 8, out = [];
+  for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
+    const especie = c <= 5 ? "A" : (c <= 9 ? "B" : "C");   // cada especie en su zona
+    out.push({ i: r * COLS + c, r, c, especie,
+               parcela: Math.floor(r / 4) * 3 + Math.floor(c / 4) });
+  }
+  return out;
+}
+```
+
+```{ojs}
+//| echo: false
+revuelto = (arr) => {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+```
+
+```{ojs}
+//| echo: false
+seleccion = {
+  const N = campo.length, s = new Set();
+  if (metodo === "aleatorio simple") {
+    revuelto(campo).slice(0, nSim).forEach(d => s.add(d.i));
+  } else if (metodo === "estratificado") {
+    for (const e of ["A", "B", "C"]) {
+      const g = campo.filter(d => d.especie === e);
+      const cuota = Math.round(nSim * g.length / N);
+      revuelto(g).slice(0, cuota).forEach(d => s.add(d.i));
+    }
+  } else if (metodo === "conglomerados") {
+    const k = Math.max(1, Math.round(nSim / 16));
+    const elegidas = new Set(revuelto(d3.range(6)).slice(0, k));
+    campo.forEach(d => { if (elegidas.has(d.parcela)) s.add(d.i); });
+  } else {
+    const paso = Math.max(1, Math.floor(N / nSim));
+    const inicio = Math.floor(Math.random() * paso);
+    for (let i = inicio; i < N; i += paso) s.add(i);
+  }
+  return s;
+}
+```
+
+```{ojs}
+//| echo: false
+parcelas = d3.range(6).map(p => ({
+  x0: (p % 3) * 4 - 0.5, x1: (p % 3) * 4 + 3.5,
+  y0: Math.floor(p / 3) * 4 - 0.5, y1: Math.floor(p / 3) * 4 + 3.5
+}))
+```
+
+```{ojs}
+//| echo: false
+zonas = [
+  { especie: "A", x0: -0.5, x1: 5.5 },
+  { especie: "B", x0: 5.5,  x1: 9.5 },
+  { especie: "C", x0: 9.5,  x1: 11.5 }
+]
+```
+
+```{ojs}
+//| echo: false
+Plot.plot({
+  height: 250,
+  marginLeft: 20,
+  x: { axis: null }, y: { axis: null, reverse: true },
+  color: { legend: true, domain: ["A", "B", "C"],
+           range: ["#7F77DD", "#1D9E75", "#BA7517"], label: "especie" },
+  marks: [
+    Plot.rect(zonas, { x1: "x0", x2: "x1", y1: -0.6, y2: 7.6,
+      fill: "especie", fillOpacity: 0.07 }),
+    metodo === "conglomerados"
+      ? Plot.rect(parcelas, { x1: "x0", x2: "x1", y1: "y0", y2: "y1",
+          fill: "none", stroke: "#B4B2A9", strokeDasharray: "3" })
+      : null,
+    Plot.dot(campo.filter(d => !seleccion.has(d.i)),
+      { x: "c", y: "r", fill: "especie", r: 4, fillOpacity: 0.25 }),
+    Plot.dot(campo.filter(d => seleccion.has(d.i)),
+      { x: "c", y: "r", fill: "especie", r: 7, stroke: "especie", strokeWidth: 2 })
+  ].filter(m => m)
+})
+```
+
+```{ojs}
+//| echo: false
+comparacion = {
+  const muestra = campo.filter(d => seleccion.has(d.i));
+  return ["A", "B", "C"].map(e => ({
+    especie: e,
+    "en la población": (campo.filter(d => d.especie === e).length / campo.length * 100).toFixed(0) + " %",
+    "en la muestra": muestra.length
+      ? (muestra.filter(d => d.especie === e).length / muestra.length * 100).toFixed(0) + " %"
+      : "—"
+  }));
+}
+```
+
+```{ojs}
+//| echo: false
+Inputs.table(comparacion, {rows: 3, height: 110})
+```
+
+```{ojs}
+//| echo: false
+md`Seleccionados: **${seleccion.size}** de ${campo.length} individuos.`
+```
+
+::: {.callout-note title="Interpreta"}
+Con el **aleatorio simple**, los seleccionados caen por todo el campo, en las tres zonas, sin que nadie se lo indique: el azar solito tiende a repartirlos. La composición sale parecida a la real, con algo de variación.
+
+Con el **estratificado**, se toma una cuota de cada zona proporcional a su tamaño. Con $n = 24$ toca exactamente **12 de la A, 8 de la B y 4 de la C**, y las dos columnas de la tabla coinciden casi perfecto. Se muestrea **dentro de todas** las zonas.
+
+Con **conglomerados**, se eligen **parcelas completas** al azar (los recuadros punteados) y se mide todo lo que hay dentro. Es mucho más barato en campo —te desplazas a dos parcelas en vez de recorrer las 96 posiciones—, pero como cada parcela cae casi por completo dentro de una zona, la muestra puede quedar compuesta **casi de una sola especie**. Vuelve a elegir este método varias veces y observa saltar las barras.
+
+Con el **sistemático**, se recorre el campo en orden tomando uno de cada $k$; al avanzar por renglones va pasando por las tres zonas, así que representa bien. Sería riesgoso solo si el recorrido tuviera un patrón periódico que coincidiera con $k$.
+
+**La distinción que más se confunde**, y aquí se ve de golpe porque ambos métodos usan la misma partición del campo: en el **estratificado** se toman *algunos de cada grupo*; en **conglomerados** se toman *todos los de algunos grupos*. El estratificado busca **precisión**; los conglomerados buscan **economía**.
+:::
 
 ::: {.callout-tip title="¿Qué técnica uso?"}
-Antes de recolectar: ¿la muestra representa a la población? Un buen muestreo previene sesgos que ningún análisis posterior corrige.
+Para elegir un método de muestreo:
+
+| Situación | Método |
+|---|---|
+| Lista completa y sencilla de la población | Aleatorio simple |
+| Grupos claros que quieres representar bien | Estratificado |
+| Una lista ordenada, sin patrones periódicos | Sistemático |
+| Población dispersa; medir todo un grupo es barato | Por conglomerados |
+| Encuestas grandes a varias escalas | Multietápico |
+
+En **todos**, la clave es que interviene el azar: eso es lo que protege del sesgo de selección.
 :::
+
+## Resumen
+
+Antes de analizar, hay que **producir** bien los datos. Distinguimos población, muestra y unidad de muestreo, y vimos que el enemigo es el **sesgo** —de selección o de medición—, que ninguna cantidad de datos corrige. El **error de muestreo** es la variación natural entre muestras y se reduce con el tamaño; el **error no de muestreo** no. La aleatorización, en sus distintas formas (simple, estratificado, sistemático, por conglomerados, multietápico), es la herramienta que hace que una muestra represente a su población. En el @sec-cap5 veremos la otra forma de producir datos: los **experimentos**.
 
 ## Ejercicios
 
-*Por desarrollar (banco de la Dra. Figueroa reorganizado + reactivos nuevos).*
+1. **Identifica el método.** Para cada caso, di qué tipo de muestreo se usó:
+   a. Se numeran los 100 sucursales de una cadena y se eligen 8 al azar, encuestando a todos los clientes de esas 8.
+   b. De un padrón estudiantil se elige a una persona al azar cada 25 de la lista.
+   c. Se divide a la población por sexo y se toma una muestra aleatoria dentro de cada grupo.
+
+2. **Población y unidad.** En una encuesta de satisfacción a estudiantes de la LCC, identifica la población, la unidad de muestreo y un posible parámetro de interés.
+
+3. **Tipo de sesgo.** Clasifica cada situación como sesgo de selección o de medición y explica:
+   a. Una encuesta de ingresos aplicada solo en un centro comercial de lujo.
+   b. Preguntar "¿No es cierto que el nuevo sistema es excelente?".
+
+4. **El tamaño no salva.** Explica con tus palabras por qué una encuesta con un millón de respuestas puede ser peor que una de mil bien muestreada.
+
+5. **Simulación en R.** Repite la simulación de proporciones del capítulo pero con muestras de tamaño 150 en lugar de 40. Compara el ancho de los dos histogramas. ¿Qué error disminuyó: el de muestreo o el no de muestreo?
+
+6. **Diseña un muestreo.** Quieres estimar la preferencia por una nueva bebida entre los clientes de una cadena de cafeterías con 100 sucursales en la ciudad. Propón un método de muestreo, justifícalo y señala un sesgo que tu diseño ayude a evitar.
+
+7. **Experimenta con el simulador.** En el laboratorio del @sec-lab-metodos, fija el tamaño de muestra en 24 y vuelve a elegir **cinco veces** el muestreo por conglomerados, anotando cada vez el porcentaje de la especie C en la muestra. Repite con el estratificado. ¿Cuál de los dos da resultados más estables, y por qué? Relaciona tu respuesta con el hecho de que cada especie ocupa su propia zona del campo.
+
+::: {.callout-tip title="Soluciones y retroalimentación" collapse="true"}
+**1.** (a) **Por conglomerados**: los conglomerados son las sucursales; se eligen algunas completas y se mide a todos sus clientes. (b) **Sistemático**: se toma cada k-ésimo elemento de una lista. (c) **Estratificado**: se divide en estratos (sexo) y se muestrea dentro de cada uno. *Distinción clave: en el estratificado se muestrea **dentro de todos** los grupos; en conglomerados se eligen **algunos grupos completos**.*
+
+**2.** Población: todos los estudiantes inscritos en la LCC. Unidad de muestreo: cada estudiante. Parámetro de interés: por ejemplo, la **proporción** de estudiantes satisfechos con las actividades extracurriculares, o la **media** de una calificación de satisfacción del 1 al 10. *Recuerda: el parámetro se refiere siempre a la población, no a la muestra.*
+
+**3.** (a) **Sesgo de selección**: el lugar donde se aplica la encuesta favorece sistemáticamente a personas de mayores ingresos, que no representan a la población general. (b) **Sesgo de medición**: la redacción de la pregunta induce la respuesta; el instrumento distorsiona lo que se mide. *Truco para distinguirlos: pregúntate si el problema está en **a quién le pregunto** (selección) o en **cómo le pregunto** (medición).*
+
+**4.** Porque el tamaño solo reduce el error de muestreo, mientras que el sesgo es un error **sistemático** que no se promedia hacia cero. Con un método sesgado, un millón de respuestas dan una estimación muy precisa de un número equivocado, y encima la precisión aparente genera una falsa confianza. Mil respuestas bien aleatorizadas estiman el valor correcto con un margen de error honesto. *Puedes verlo tú misma en el laboratorio del @sec-lab-n subiendo el sesgo y luego n.*
+
+**5.** El histograma con $n = 150$ es visiblemente **más angosto** que el de $n = 40$, y sigue centrado en el mismo lugar. Disminuyó el **error de muestreo**; el error no de muestreo no se ve afectado por el tamaño (en esta simulación no hay sesgo, así que no hay error no de muestreo que reducir). *La regla precisa: la dispersión de las estimaciones se reduce en proporción a $1/\sqrt{n}$, así que cuadruplicar la muestra reduce el error a la mitad.*
+
+**6.** Una buena propuesta es un **muestreo por conglomerados o multietápico**: elegir al azar, digamos, 15 de las 100 sucursales y dentro de cada una encuestar a clientes seleccionados al azar durante distintos días y horarios. Justificación: recorrer las 100 sucursales es caro, y los conglomerados hacen el trabajo de campo viable. Sesgos que evita: al aleatorizar **sucursales** se evita el sesgo de elegir solo las de zonas céntricas o de mayor ingreso; al variar **días y horarios** se evita sobrerrepresentar a quienes van los fines de semana o por la mañana. *Una respuesta que solo diga "encuestar a los clientes de la sucursal más cercana" describe un muestreo por conveniencia, que es precisamente lo que queremos evitar.*
+
+**7.** El **estratificado** da resultados perfectamente estables: al fijar la cuota por especie (50 %, 33 % y 17 %), el porcentaje en la muestra reproduce el de la población en **todas** las corridas. El de **conglomerados** salta muchísimo, porque cada parcela cae casi por completo dentro de una sola zona: si el azar elige la parcela de la izquierda, la muestra queda compuesta casi solo de especie A y la C no aparece. *Este fenómeno se llama **efecto de diseño**: cuando los individuos de un mismo conglomerado se parecen entre sí, el conglomerado aporta menos información que el mismo número de individuos elegidos por separado, y la estimación pierde precisión. Por eso las encuestas por conglomerados requieren muestras más grandes para alcanzar la misma precisión que un aleatorio simple — el precio que se paga por el ahorro en trabajo de campo.*
+:::

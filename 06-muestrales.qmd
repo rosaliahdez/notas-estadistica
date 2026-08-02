@@ -1,43 +1,219 @@
 # Distribuciones muestrales y TCL {#sec-cap6}
 
-::: {.callout-important title="Plantilla en construcción"}
-Este capítulo corresponde a **Semana 7** del calendario y usa los datos de **simulación**. La estructura de secciones ya está fijada; el contenido se desarrolla con el mismo formato del @sec-cap1: pregunta real, técnica, supuestos, cómputo en R e interpretación.
-:::
-
 ```{r}
-#| label: setup-sec-cap6
+#| label: setup-cap6
 #| include: false
 library(tidyverse)
+theme_set(theme_minimal(base_size = 12))
 ```
+
+::: {.callout-tip title="Al terminar este capítulo podrás"}
+- Distinguir **parámetro** de **estadístico**.
+- Explicar qué es una **distribución muestral** y por qué es la pieza clave de la inferencia.
+- Enunciar y reconocer el **Teorema Central del Límite (TCL)**.
+- Describir la distribución muestral de la **media** y de una **proporción**.
+:::
+
+Empieza la Parte III. Ya sabemos explorar datos (Parte I) y producirlos bien (Parte II). Ahora viene la pregunta que da sentido a toda la estadística: **¿qué puedo decir sobre la población si solo vi una muestra?** La respuesta descansa en una sola idea, la de este capítulo.
 
 ## Parámetros y estadísticos
 
-*(En construcción.)*
+Un **parámetro** es un número que describe a la **población**: la proporción real de positivos, la masa media de todos los pingüinos. Casi nunca lo conocemos —es justo lo que queremos averiguar—.
 
-## El concepto de distribución muestral
+Un **estadístico** es el mismo número calculado sobre la **muestra**: la proporción de positivos *en mi muestra*, la masa media *de los pingüinos que medí*. Ese sí lo podemos calcular.
 
-*(En construcción.)*
+Por convención se usan letras distintas:
 
-## Distribución muestral de la media
+| Cantidad | Parámetro (población) | Estadístico (muestra) |
+|---|---|---|
+| Media | $\mu$ | $\bar{x}$ |
+| Desviación estándar | $\sigma$ | $s$ |
+| Proporción | $p$ | $\hat{p}$ |
 
-*(En construcción.)*
+Toda la inferencia consiste en usar el estadístico para decir algo sobre el parámetro. Y para eso necesitamos saber **cuánto varía** el estadístico de una muestra a otra.
 
-## Teorema Central del Límite
+## La distribución muestral
 
-*(En construcción.)*
+Ya vimos este fenómeno en el @sec-cap4: cada muestra da un resultado distinto. Si tomáramos todas las muestras posibles de tamaño $n$ y calculáramos el estadístico en cada una, la distribución de esos valores es la **distribución muestral** del estadístico.
 
-## Distribución muestral de una proporción
+Es una idea sutil, así que vale la pena decirla con cuidado: no es la distribución de **los datos**, sino la distribución de **un resumen de los datos** a lo largo de muchas muestras hipotéticas. Es lo que nos permite decir "mi estimación típicamente se aleja del valor real en tanto".
 
-*(En construcción.)*
+Simulémosla. Tomamos muchas muestras de tamaño 30 de una población normal y guardamos la media de cada una:
 
-## Ilustrar el TCL por simulación en R
+```{r}
+#| label: fig-dist-muestral
+#| fig-cap: "Distribución muestral de la media (1000 muestras de tamaño 30)."
+#| fig-width: 5
+#| fig-height: 3.2
+set.seed(2026)
+medias <- replicate(1000, mean(rnorm(30, mean = 100, sd = 15)))
+ggplot(data.frame(m = medias), aes(x = m)) +
+  geom_histogram(bins = 30, fill = "#1F4E79", color = "white") +
+  geom_vline(xintercept = 100, color = "#C0392B", linewidth = 1) +
+  labs(x = "Media muestral", y = "Frecuencia")
+```
 
-*(En construcción.)*
+```{r}
+#| label: resumen-dist-muestral
+mean(medias)   # se centra en mu = 100
+sd(medias)     # mucho menor que sigma = 15
+```
+
+## La distribución muestral de la media
+
+La simulación anterior ilustra un resultado exacto. Si tomamos muestras de tamaño $n$ de una población con media $\mu$ y desviación $\sigma$, la media muestral $\bar{X}$ cumple:
+
+- Su **media** es $\mu$. En promedio, la media muestral acierta: es un estimador **insesgado**.
+- Su **desviación estándar** es $\dfrac{\sigma}{\sqrt{n}}$, llamada **error estándar**.
+
+El error estándar es la fórmula que explica todo lo que vimos en el laboratorio del @sec-lab-n: la precisión mejora con $\sqrt{n}$, no con $n$. Para **duplicar** la precisión hay que **cuadruplicar** la muestra.
+
+```{r}
+#| label: error-estandar
+15 / sqrt(30)   # error estándar teórico
+sd(medias)      # el que salió de la simulación: casi idéntico
+```
+
+## El Teorema Central del Límite
+
+Lo anterior vale siempre. Pero, ¿de qué **forma** es la distribución muestral? Si la población es normal, $\bar{X}$ es normal exactamente. Lo asombroso es lo que ocurre cuando la población **no** es normal:
+
+::: {.callout-important title="Teorema Central del Límite"}
+Para muestras **suficientemente grandes**, la distribución muestral de la media es aproximadamente **normal**, sin importar la forma de la población de origen.
+:::
+
+Esto es lo que hace posible casi toda la inferencia del curso: aunque no sepamos cómo se distribuyen los datos, sí sabemos cómo se comporta su media. Como regla práctica, $n \geq 30$ suele bastar; con poblaciones muy sesgadas hace falta más.
+
+### Laboratorio: ver el TCL en acción {#sec-lab-tcl}
+
+Aquí el deslizador vale más que mil palabras. Elige una población **deliberadamente no normal** —sesgada, uniforme o bimodal— y luego aumenta $n$. Observa cómo la distribución de las medias se vuelve acampanada y se angosta, aunque la población de origen no tenga nada de campana.
+
+```{ojs}
+//| panel: input
+//| echo: false
+viewof forma = Inputs.select(
+  ["sesgada (exponencial)", "uniforme", "bimodal", "normal"],
+  {value: "sesgada (exponencial)", label: "forma de la población"})
+viewof nTcl = Inputs.range([1, 100], {value: 1, step: 1, label: "tamaño de muestra n"})
+```
+
+```{ojs}
+//| echo: false
+generar = {
+  const normal = d3.randomNormal(0, 1);
+  return function() {
+    if (forma === "sesgada (exponencial)") return -Math.log(1 - Math.random()) * 2;
+    if (forma === "uniforme") return Math.random() * 6;
+    if (forma === "bimodal") return Math.random() < 0.5 ? normal() * 0.6 + 1 : normal() * 0.6 + 5;
+    return normal() * 1.2 + 3;
+  };
+}
+```
+
+```{ojs}
+//| echo: false
+poblacion = Array.from({length: 3000}, generar)
+```
+
+```{ojs}
+//| echo: false
+mediasTcl = Array.from({length: 1200}, () => {
+  let s = 0;
+  for (let i = 0; i < nTcl; i++) s += generar();
+  return s / nTcl;
+})
+```
+
+```{ojs}
+//| echo: false
+Plot.plot({
+  height: 170,
+  marginTop: 24,
+  title: "La población (los datos individuales)",
+  x: { label: "valor", domain: [-1, 9] },
+  y: { label: "frecuencia" },
+  marks: [
+    Plot.rectY(poblacion, Plot.binX({y: "count"}, {x: d => d, thresholds: 45, fill: "#888780"})),
+    Plot.ruleY([0])
+  ]
+})
+```
+
+```{ojs}
+//| echo: false
+Plot.plot({
+  height: 190,
+  marginTop: 24,
+  title: `Distribución de la media muestral (n = ${nTcl})`,
+  x: { label: "media muestral", domain: [-1, 9] },
+  y: { label: "frecuencia" },
+  marks: [
+    Plot.rectY(mediasTcl, Plot.binX({y: "count"}, {x: d => d, thresholds: 45, fill: "#1F4E79"})),
+    Plot.ruleY([0])
+  ]
+})
+```
+
+::: {.callout-note title="Interpreta"}
+Con $n = 1$ las dos gráficas son iguales: una muestra de tamaño uno *es* un dato individual. Al subir a $n = 5$ la asimetría ya se suaviza; hacia $n = 30$ la distribución de las medias es prácticamente una campana simétrica, **aunque la población de arriba siga siendo sesgada o bimodal**. Nota también que la campana se va **angostando**: es el error estándar $\sigma/\sqrt{n}$ encogiéndose. Prueba con "bimodal", que es el caso más contraintuitivo: la población tiene dos jorobas y las medias forman una sola campana.
+:::
+
+## La distribución muestral de una proporción
+
+Cuando la variable es categórica, el estadístico natural es la **proporción muestral** $\hat{p}$. El mismo razonamiento aplica: si el muestreo es aleatorio, $\hat{p}$ se centra en $p$ y su error estándar es
+
+$$\sqrt{\frac{p(1-p)}{n}}$$
+
+y, por el TCL, para $n$ suficientemente grande su distribución es aproximadamente normal. La regla práctica usual es que $np \geq 10$ y $n(1-p) \geq 10$.
+
+```{r}
+#| label: dist-proporcion
+set.seed(2026)
+p <- 0.25; n <- 80
+props <- replicate(1000, mean(rbinom(n, 1, p)))
+sqrt(p * (1 - p) / n)   # error estándar teórico
+sd(props)               # simulado
+```
 
 ::: {.callout-tip title="¿Qué técnica uso?"}
-La distribución muestral es el puente entre una muestra y la población: nos dice cuánto varía un estadístico de muestra en muestra.
+La distribución muestral es el puente entre la muestra y la población:
+
+| Estadístico | Se centra en | Error estándar | Forma (n grande) |
+|---|---|---|---|
+| Media $\bar{x}$ | $\mu$ | $\sigma/\sqrt{n}$ | Normal (por el TCL) |
+| Proporción $\hat{p}$ | $p$ | $\sqrt{p(1-p)/n}$ | Normal (si $np \ge 10$ y $n(1-p) \ge 10$) |
+
+Todo lo que sigue en el curso —intervalos de confianza y pruebas de hipótesis— se construye sobre esta tabla.
 :::
+
+## Resumen
+
+Distinguimos **parámetro** (población, desconocido) de **estadístico** (muestra, calculable), y conocimos la **distribución muestral**: cómo varía un estadístico de una muestra a otra. Para la media, se centra en $\mu$ y tiene error estándar $\sigma/\sqrt{n}$; para la proporción, se centra en $p$ con error estándar $\sqrt{p(1-p)/n}$. El **Teorema Central del Límite** garantiza que, con muestras suficientemente grandes, ambas son aproximadamente normales aunque la población no lo sea. Con esta maquinaria ya podemos, en el @sec-cap7, construir **intervalos de confianza** y **pruebas de hipótesis**.
 
 ## Ejercicios
 
-*Por desarrollar (banco de la Dra. Figueroa reorganizado + reactivos nuevos).*
+1. **Parámetro o estadístico.** Clasifica cada cantidad: (a) la masa media de los 344 pingüinos medidos; (b) la proporción de positivos de todas las personas de Sonora; (c) la desviación estándar de la temperatura de las 32 lagartijas urbanas de nuestra base.
+
+2. **Error estándar.** Una población tiene $\sigma = 20$. Calcula el error estándar de la media para $n = 25$, $n = 100$ y $n = 400$. ¿Cuánto hay que aumentar la muestra para reducir el error estándar a la mitad?
+
+3. **¿TCL o no?** ¿En cuáles de estos casos puedes suponer que la media muestral es aproximadamente normal? (a) $n = 50$ de una población muy sesgada; (b) $n = 4$ de una población muy sesgada; (c) $n = 4$ de una población normal.
+
+4. **Simulación.** Repite la simulación de la media muestral con $n = 5$ y con $n = 80$, usando `rexp(n, rate = 1)` como población (exponencial, muy sesgada). Compara los histogramas y las desviaciones estándar.
+
+5. **Proporción.** En una población con $p = 0.4$ se toman muestras de $n = 100$. ¿Cuál es el error estándar de $\hat{p}$? ¿Se cumplen las condiciones para usar la aproximación normal?
+
+6. **Interpretación.** Explica en dos frases, para alguien que no sabe estadística, por qué una encuesta a 1000 personas puede describir a un país entero.
+
+::: {.callout-tip title="Soluciones y retroalimentación" collapse="true"}
+**1.** (a) **Estadístico**: se calculó sobre los pingüinos observados (la muestra). (b) **Parámetro**: describe a toda la población de Sonora. (c) **Estadístico**: se calculó sobre las lagartijas de nuestra base. *Regla rápida: si lo pudiste calcular con tus datos, es un estadístico; si te gustaría conocerlo pero no lo tienes, es un parámetro.*
+
+**2.** Error estándar $= \sigma/\sqrt{n}$: para $n=25$ es $20/5 = 4$; para $n=100$ es $20/10 = 2$; para $n=400$ es $20/20 = 1$. Hay que **cuadruplicar** la muestra para reducir el error a la mitad. *Esta es la consecuencia práctica más importante del capítulo: la precisión es cara, porque crece con $\sqrt{n}$ y no con $n$. Pasar de 400 a 800 encuestas mejora poco; para el doble de precisión harían falta 1600.*
+
+**3.** (a) **Sí**: con $n = 50$ el TCL ya suele funcionar bien incluso con sesgo. (b) **No**: con $n = 4$ y población sesgada, la media muestral hereda el sesgo. (c) **Sí**: si la población es normal, la media es normal **exactamente**, para cualquier $n$, sin necesidad del TCL. *El caso (c) es el que más se olvida: el TCL es para poblaciones no normales; si ya es normal, no hace falta.*
+
+**4.** Ambos histogramas se centran cerca de 1 (la media de una exponencial con `rate = 1`). Con $n = 5$ la distribución de medias sigue **notoriamente sesgada a la derecha**; con $n = 80$ es simétrica y acampanada. Las desviaciones estándar son aproximadamente $1/\sqrt{5} \approx 0.45$ y $1/\sqrt{80} \approx 0.11$. *Es el mismo fenómeno del laboratorio del @sec-lab-tcl, ahora hecho por ti en R.*
+
+**5.** Error estándar $= \sqrt{0.4 \times 0.6 / 100} = \sqrt{0.0024} \approx 0.049$. Condiciones: $np = 40 \geq 10$ y $n(1-p) = 60 \geq 10$; **sí se cumplen**, así que la aproximación normal es adecuada. *Cuando $p$ es muy cercana a 0 o a 1, estas condiciones fallan y hay que recurrir a métodos exactos.*
+
+**6.** Una redacción posible: *"Cada encuesta da un resultado ligeramente distinto, pero esos resultados se agrupan de manera predecible alrededor del valor real, y qué tan agrupados están depende del tamaño de la muestra, no del tamaño del país. Con 1000 personas bien elegidas al azar, el resultado típico se aleja del valor verdadero solo unos tres puntos porcentuales."* *Lo esencial es transmitir dos ideas: que lo que importa es el **tamaño de la muestra** y no la fracción de la población, y que la selección debe ser **aleatoria** —si no lo es, ni un millón de respuestas sirven, como vimos en el @sec-cap4—.*
+:::

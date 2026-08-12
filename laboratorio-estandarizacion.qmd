@@ -1,7 +1,7 @@
 # Laboratorio interactivo: la estandarización {#sec-lab-z}
 
 ::: {.callout-note title="Cómo funciona esto"}
-Los deslizadores de abajo corren **en el navegador** con Observable JS (OJS), que Quarto trae integrado. No necesitas Shiny ni un servidor: funciona tal cual en el sitio publicado en GitHub Pages. Para reusar este patrón en cualquier capítulo, copia los bloques ```` ```{ojs} ```` a tu `.qmd`.
+Los deslizadores de abajo corren **en el navegador** con Observable JS (OJS), que Quarto trae integrado. No se necesita Shiny ni un servidor: funciona tal cual en el sitio publicado en GitHub Pages. Para reusar este patrón en cualquier capítulo, copia los bloques ```` ```{ojs} ```` al `.qmd` correspondiente.
 :::
 
 Mueve la **media** $\mu$, la **desviación** $\sigma$ y un **valor** $x$. Observa dos cosas: cómo la campana se desplaza y se ensancha, y cómo el mismo valor $x$ se convierte en $z = \dfrac{x - \mu}{\sigma}$, su posición en la **normal estándar** $N(0,1)$ (la curva punteada). La estandarización no cambia la probabilidad: solo cambia la regla.
@@ -44,9 +44,9 @@ Plot.plot({
 
 ```{ojs}
 //| echo: false
-md`Con estos valores, **z = (x − μ) / σ = (${xval.toFixed(1)} − ${mu.toFixed(1)}) / ${sigma.toFixed(1)} = ${((xval - mu) / sigma).toFixed(2)}**. La línea punteada es la normal estándar N(0, 1); la sólida, tu N(μ, σ).`
+md`Con estos valores, **z = (x − μ) / σ = (${xval.toFixed(1)} − ${mu.toFixed(1)}) / ${sigma.toFixed(1)} = ${((xval - mu) / sigma).toFixed(2)}**. La línea punteada es la normal estándar N(0, 1); la sólida, la N(μ, σ) elegida.`
 ```
 
-::: {.callout-note title="Interpreta"}
-Al aumentar $\sigma$, la campana se aplana y se ensancha (más dispersión); al mover $\mu$, se desplaza sin cambiar de forma. El valor estandarizado $z$ te dice **a cuántas desviaciones estándar** está $x$ de la media: un $z = 2$ significa "dos desviaciones por encima del promedio", sin importar las unidades originales. Por eso la estandarización nos deja comparar cosas medidas en escalas distintas.
+::: {.callout-note title="Interpretación"}
+Al aumentar $\sigma$, la campana se aplana y se ensancha (más dispersión); al mover $\mu$, se desplaza sin cambiar de forma. El valor estandarizado $z$ nos dice **a cuántas desviaciones estándar** está $x$ de la media: un $z = 2$ significa "dos desviaciones por encima del promedio", sin importar las unidades originales. Por eso la estandarización nos deja comparar cosas medidas en escalas distintas.
 :::

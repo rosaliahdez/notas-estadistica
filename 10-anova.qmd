@@ -9,7 +9,7 @@ galletas <- read.csv("datos/galletas.csv")
 hongos <- read.csv("datos/hongos_sustrato.csv")
 ```
 
-::: {.callout-tip title="Al terminar este capítulo podrás"}
+::: {.callout-tip title="Objetivos del capítulo"}
 - Explicar por qué **no** se deben hacer muchas pruebas t para comparar varios grupos.
 - Entender el ANOVA como una comparación entre **variación entre grupos** y **dentro de grupos**.
 - Aplicar la **prueba F** y verificar sus **supuestos**.
@@ -62,7 +62,7 @@ Bajo $H_0$ (todas las medias iguales), $F$ ronda 1. Valores grandes son evidenci
 
 ### Laboratorio: entre grupos contra dentro de grupos {#sec-lab-f}
 
-Aquí se ve el corazón del ANOVA. Mueve la **separación entre las medias** y la **dispersión dentro de cada grupo**, y observa cómo responde $F$. Descubrirás que lo que importa no es la separación en sí, sino la separación **relativa al ruido**.
+Aquí se ve el corazón del ANOVA. Al mover la **separación entre las medias** y la **dispersión dentro de cada grupo** se observa cómo responde $F$. Se descubrirá que lo que importa no es la separación en sí, sino la separación **relativa al ruido**.
 
 ```{ojs}
 //| panel: input
@@ -180,12 +180,12 @@ Plot.plot({
 md`SC entre = **${anovaF.ssb.toFixed(1)}** · SC dentro = **${anovaF.ssw.toFixed(1)}** · **F = ${anovaF.F.toFixed(2)}** · valor p = **${anovaF.p < 0.0001 ? "< 0.0001" : anovaF.p.toFixed(4)}** · ${anovaF.p < 0.05 ? "**se rechaza la igualdad de medias**" : "no se rechaza"}`
 ```
 
-::: {.callout-note title="Interpreta"}
-Pon la separación en **0**: las tres rayas rojas (las medias) quedan casi sobre la línea gris (la media global), $F$ ronda 1 y el resultado casi nunca es significativo. Es el comportamiento esperado cuando $H_0$ es cierta.
+::: {.callout-note title="Interpretación"}
+Con la separación en **0**: las tres rayas rojas (las medias) quedan casi sobre la línea gris (la media global), $F$ ronda 1 y el resultado casi nunca es significativo. Es el comportamiento esperado cuando $H_0$ es cierta.
 
-Ahora deja la separación en 1.5 y **sube el ruido** de 0.3 a 3: las medias siguen igual de separadas, pero $F$ se desploma. La misma diferencia real se vuelve indetectable cuando los grupos son muy dispersos. Y al revés: con poco ruido, una separación pequeña basta.
+Si se deja la separación en 1.5 y se **sube el ruido** de 0.3 a 3: las medias siguen igual de separadas, pero $F$ se desploma. La misma diferencia real se vuelve indetectable cuando los grupos son muy dispersos. Y al revés: con poco ruido, una separación pequeña basta.
 
-Por último, sube el **n por grupo** manteniendo todo lo demás: $F$ crece. Más datos, más capacidad de detectar la misma diferencia.
+Por último, al subir el **n por grupo** manteniendo todo lo demás: $F$ crece. Más datos, más capacidad de detectar la misma diferencia.
 
 Ese cociente —señal contra ruido— es todo el ANOVA.
 :::
@@ -203,10 +203,73 @@ modelo <- aov(agrado ~ marca, data = galletas)
 summary(modelo)
 ```
 
-::: {.callout-note title="Interpreta"}
+::: {.callout-note title="Interpretación"}
 La tabla de ANOVA se lee así: la fila `marca` es la variación **entre** grupos (3 grados de libertad, uno menos que el número de marcas) y `Residuals` es la variación **dentro** (96 grados de libertad). El cociente de sus cuadrados medios da $F \approx 19.1$, con un valor p del orden de $10^{-10}$.
 
 Conclusión: **rechazamos $H_0$**, las marcas no gustan por igual. Pero ojo con lo que **no** sabemos todavía: el ANOVA dice que *hay* diferencias, no *entre cuáles*. Para eso hacen falta las pruebas post-hoc.
+:::
+
+### El mismo cálculo a mano {#sec-anova-mano}
+
+Un ANOVA completo con nueve datos cabe en media hoja, y hacerlo una vez muestra de dónde sale la tabla que imprime R. Tres tratamientos con tres observaciones cada uno:
+
+| Grupo | Datos | Media |
+|---|---|---|
+| A | 7, 8, 9 | 8 |
+| B | 5, 6, 7 | 6 |
+| C | 3, 4, 5 | 4 |
+
+La media general de los nueve datos es $\bar{x} = 6$.
+
+**Paso 1. Variación entre grupos.** Cuánto se apartan las medias de grupo de la media general, ponderando por el tamaño de cada grupo:
+
+$$SC_{\text{entre}} = \sum n_i(\bar{x}_i - \bar{x})^2 = 3(8-6)^2 + 3(6-6)^2 + 3(4-6)^2 = 12 + 0 + 12 = 24$$
+
+con $k - 1 = 2$ grados de libertad.
+
+**Paso 2. Variación dentro de grupos.** Cuánto se apartan los datos de la media de **su propio** grupo:
+
+$$SC_{\text{dentro}} = \underbrace{(7-8)^2 + (8-8)^2 + (9-8)^2}_{2} + \underbrace{2}_{\text{grupo B}} + \underbrace{2}_{\text{grupo C}} = 6$$
+
+con $N - k = 9 - 3 = 6$ grados de libertad.
+
+**Paso 3. Los cuadrados medios**, que son las sumas divididas entre sus grados de libertad:
+
+$$CM_{\text{entre}} = \frac{24}{2} = 12, \qquad CM_{\text{dentro}} = \frac{6}{6} = 1$$
+
+**Paso 4. El estadístico F**, su cociente:
+
+$$F = \frac{CM_{\text{entre}}}{CM_{\text{dentro}}} = \frac{12}{1} = 12$$
+
+**Paso 5. La decisión.** El valor crítico $F_{0.95}(2, 6)$ es 5.14. Como $12 > 5.14$, se rechaza la igualdad de medias.
+
+La tabla de ANOVA reúne todo lo anterior:
+
+| Fuente | SC | gl | CM | F |
+|---|---|---|---|---|
+| Entre grupos | 24 | 2 | 12 | 12 |
+| Dentro de grupos | 6 | 6 | 1 | |
+| **Total** | **30** | **8** | | |
+
+```{r}
+#| label: anova-mano
+datos <- data.frame(
+  y = c(7, 8, 9, 5, 6, 7, 3, 4, 5),
+  g = rep(c("A", "B", "C"), each = 3)
+)
+summary(aov(y ~ g, data = datos))
+```
+
+::: {.callout-note title="Interpretación"}
+La salida de R reproduce exactamente la tabla: 24 y 6 de sumas de cuadrados, 12 y 1 de cuadrados medios, $F = 12$ y $p = 0.008$.
+
+Tres cosas que este ejemplo deja ver con claridad:
+
+**Las sumas de cuadrados se reparten.** $SC_{\text{total}} = 30 = 24 + 6$, y los grados de libertad también: $8 = 2 + 6$. Toda la variación de los datos queda repartida entre lo que explica el factor y lo que queda como ruido. De ahí el nombre "análisis de varianza": se analiza la varianza descomponiéndola.
+
+**El cuadrado medio dentro es la varianza común.** Vale 1, que es exactamente la varianza de cada grupo por separado (los tres tienen datos consecutivos). Es la estimación del ruido de fondo contra la que se compara todo lo demás.
+
+**F es un cociente señal-ruido**, igual que el estadístico $t$: la variación explicada por el factor, medida en unidades de la variación no explicada. Un $F$ de 12 significa que las diferencias entre grupos son doce veces mayores de lo que cabría esperar por el ruido interno.
 :::
 
 ## Verificación de supuestos
@@ -263,7 +326,7 @@ TukeyHSD(modelo)
 plot(TukeyHSD(modelo), las = 1)
 ```
 
-::: {.callout-note title="Interpreta"}
+::: {.callout-note title="Interpretación"}
 Cada renglón es una comparación con su intervalo de confianza **ajustado**: si el intervalo **no contiene al cero**, esa pareja difiere significativamente. El resultado dibuja dos gamas:
 
 - **Oreo (7.36) y Chokis (6.84)** no difieren significativamente entre sí.
@@ -291,13 +354,13 @@ bartlett.test(eficiencia_biologica ~ sustrato, data = hongos)
 TukeyHSD(modelo_h)$sustrato |> round(2)
 ```
 
-::: {.callout-note title="Interpreta"}
+::: {.callout-note title="Interpretación"}
 Aquí $F$ es enorme y el efecto del sustrato es contundente: la paja de trigo y la pulpa de café rinden mucho más que el olote y, sobre todo, que el aserrín. Bartlett no rechaza la igualdad de varianzas, así que el supuesto se sostiene.
 
 Un detalle honesto que vale la pena discutir en clase: el grupo del aserrín **parece** más variable que los demás (su desviación es la mayor). Sin embargo, Bartlett no lo detecta como significativo. Con 25 bolsas por grupo, la prueba no tiene suficiente **potencia** para distinguir esa diferencia de varianzas del azar. Es el mismo fenómeno del @sec-cap8: no rechazar no equivale a demostrar igualdad.
 :::
 
-::: {.callout-tip title="¿Qué técnica uso?"}
+::: {.callout-tip title="¿Qué técnica usar?"}
 Con **tres o más grupos** y una variable respuesta cuantitativa:
 
 | Paso | Herramienta en R |
@@ -309,7 +372,7 @@ Con **tres o más grupos** y una variable respuesta cuantitativa:
 | 5. ¿Entre cuáles? | `TukeyHSD(m)` |
 | Si fallan los supuestos | `oneway.test(var.equal = FALSE)` o `kruskal.test` |
 
-**Nunca** hagas múltiples pruebas t sin corrección: infla el error tipo I.
+**Nunca** deben hacerse múltiples pruebas t sin corrección: infla el error tipo I.
 :::
 
 ## Resumen
@@ -320,24 +383,24 @@ Cuando hay tres o más grupos, comparar por pares infla el error tipo I; el **AN
 
 1. **Comparaciones múltiples.** Con 5 grupos, ¿cuántas comparaciones por pares hay? ¿Cuál es la probabilidad de al menos un falso positivo si se hacen todas a $\alpha = 0.05$?
 
-2. **Lee la tabla.** En la salida de `summary(modelo)` para las galletas, identifica: los grados de libertad de cada fuente, la suma de cuadrados entre grupos y el cuadrado medio residual. ¿Qué representa este último?
+2. **Lee la tabla.** En la salida de `summary(modelo)` para las galletas, identificar: los grados de libertad de cada fuente, la suma de cuadrados entre grupos y el cuadrado medio residual. ¿Qué representa este último?
 
-3. **ANOVA completo.** Con `datos/hongos_sustrato.csv`, analiza si los **días a cosecha** difieren entre sustratos. Haz el ciclo completo: explorar, prueba global, supuestos y post-hoc.
+3. **ANOVA completo.** Con `datos/hongos_sustrato.csv`, analiza si los **días a cosecha** difieren entre sustratos. Hacer el ciclo completo: explorar, prueba global, supuestos y post-hoc.
 
-4. **Supuestos.** Verifica la normalidad de los residuos del modelo del ejercicio 3. Si fallara, ¿qué alternativa usarías?
+4. **Supuestos.** Verificar la normalidad de los residuos del modelo del ejercicio 3. Si fallara, ¿qué alternativa usarías?
 
-5. **Laboratorio.** En el @sec-lab-f, fija la separación en 1 y el ruido en 2. ¿Es significativo? Ahora sube el n por grupo hasta que lo sea de forma consistente. ¿Qué implica esto para planear un experimento?
+5. **Laboratorio.** En el @sec-lab-f, fijar la separación en 1 y el ruido en 2. ¿Es significativo? Ahora sube el n por grupo hasta que lo sea de forma consistente. ¿Qué implica esto para planear un experimento?
 
 6. **Del ANOVA al post-hoc.** Un investigador reporta: *"el ANOVA fue significativo (p = 0.003), por lo tanto el tratamiento A es mejor que el B"*. ¿Qué error comete?
 
-7. **Conecta con el proyecto.** Con los datos de la cata, ¿por qué fue importante aleatorizar el orden en que cada juez probó las marcas? Relaciona tu respuesta con el supuesto que podría haberse violado.
+7. **Conecta con el proyecto.** Con los datos de la cata, ¿por qué fue importante aleatorizar el orden en que cada juez probó las marcas? Relacionar la respuesta con el supuesto que podría haberse violado.
 
 ::: {.callout-tip title="Soluciones y retroalimentación" collapse="true"}
 **1.** Con 5 grupos hay $\binom{5}{2} = 10$ comparaciones. La probabilidad de al menos un falso positivo es $1 - 0.95^{10} \approx 0.40$, es decir **40 %**. *Con 10 grupos serían 45 comparaciones y la probabilidad superaría el 90 %: prácticamente garantizado encontrar algo "significativo" aunque no exista nada. Este es el argumento central para usar ANOVA.*
 
 **2.** Grados de libertad: 3 para `marca` (número de grupos menos uno) y 96 para `Residuals` ($N - k = 100 - 4$). La suma de cuadrados entre grupos es aproximadamente 82.8. El cuadrado medio residual (≈ 1.44) es la **estimación de la varianza dentro de los grupos**, es decir, del ruido: cuánto varían las calificaciones entre jueces que probaron la misma marca. *Su raíz cuadrada, ≈ 1.2 puntos, es la desviación estándar típica dentro de cada marca, y sirve para juzgar si una diferencia de medias es grande en términos prácticos.*
 
-**3.** El ciclo es: `ggplot(...) + geom_boxplot()`, luego `m <- aov(dias_cosecha ~ sustrato, hongos); summary(m)`, después `shapiro.test(residuals(m))` y `bartlett.test(dias_cosecha ~ sustrato, hongos)`, y finalmente `TukeyHSD(m)`. El resultado es contundente: los días a cosecha difieren entre sustratos, siendo la paja de trigo el más rápido (unos 21 días) y el aserrín el más lento (unos 30). *Nota que aquí "mejor" significa **menos** días: siempre hay que traducir la dirección del efecto al lenguaje del problema.*
+**3.** El ciclo es: `ggplot(...) + geom_boxplot()`, luego `m <- aov(dias_cosecha ~ sustrato, hongos); summary(m)`, después `shapiro.test(residuals(m))` y `bartlett.test(dias_cosecha ~ sustrato, hongos)`, y finalmente `TukeyHSD(m)`. El resultado es contundente: los días a cosecha difieren entre sustratos, siendo la paja de trigo el más rápido (unos 21 días) y el aserrín el más lento (unos 30). *Nótese que aquí "mejor" significa **menos** días: siempre hay que traducir la dirección del efecto al lenguaje del problema.*
 
 **4.** Los residuos deberían seguir razonablemente la recta del Q-Q plot. Si la normalidad fallara claramente, las alternativas son: transformar la variable (logaritmo si hay sesgo a la derecha), usar el **ANOVA de Welch** si el problema real son las varianzas, o recurrir a **Kruskal-Wallis** (`kruskal.test`), que es la versión no paramétrica y compara medianas basándose en rangos. *Con 25 observaciones por grupo, el ANOVA es bastante robusto ante desviaciones moderadas de la normalidad, gracias al TCL.*
 

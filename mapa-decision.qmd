@@ -1,0 +1,29 @@
+# Mapa de decisión {#sec-mapa .unnumbered}
+
+A lo largo del libro se fue armando, recuadro a recuadro, una guía para elegir la técnica correcta. Aquí está completa. Es la respuesta a la pregunta que abre todo análisis: **¿qué hacer con estos datos?**
+
+
+| Mi pregunta | Tipo de datos | Técnica | Capítulo |
+|---|---|---|---|
+| ¿Cómo se ve esta variable? | 1 categórica | Barras, tabla de frecuencias | @sec-cap1 |
+| ¿Cómo se distribuye? | 1 cuantitativa | Histograma, boxplot, Q-Q plot | @sec-cap1, @sec-cap2 |
+| ¿Cuál es su centro y dispersión? | 1 cuantitativa | Media/mediana, desviación/RIC | @sec-cap2 |
+| ¿Cómo se relacionan dos variables? | 2 cuantitativas | Dispersión, correlación, recta | @sec-cap3 |
+| ¿Cómo obtengo datos representativos? | — | Muestreo aleatorio (simple, estratificado…) | @sec-cap4 |
+| ¿Cómo pruebo causa y efecto? | — | Experimento: control, aleatorización, réplicas | @sec-cap5 |
+| ¿Cuánto vale un parámetro? | 1 muestra | Intervalo de confianza | @sec-cap7 |
+| ¿Difiere de un valor de referencia? | 1 muestra | `t.test(x, mu = ...)` | @sec-cap7 |
+| ¿Difieren dos grupos independientes? | Cuantitativa por 2 grupos | `t.test(y ~ grupo)` | @sec-cap8 |
+| ¿Difieren dos medidas del mismo sujeto? | Datos pareados | `t.test(x, y, paired = TRUE)` | @sec-cap8 |
+| ¿Difieren dos varianzas? | Cuantitativa por 2 grupos | `var.test(y ~ grupo)` | @sec-cap8 |
+| ¿Cuánto vale una proporción? | 1 categórica binaria | `prop.test(x, n)` | @sec-cap9 |
+| ¿Difieren dos proporciones? | Binaria por 2 grupos | `prop.test(c(x1,x2), c(n1,n2))` | @sec-cap9 |
+| ¿Están asociadas dos categóricas? | Tabla de contingencia | `chisq.test(tabla)` | @sec-cap9 |
+| ¿Difieren tres o más grupos? | Cuantitativa por k grupos | `aov()` + `TukeyHSD()` | @sec-cap10 |
+| ¿La relación entre X e Y es real? | 2 cuantitativas | `lm()` y prueba sobre la pendiente | @sec-cap11 |
+
+Tres reglas que valen para todas las filas de esa tabla:
+
+1. **Mirar los datos antes de calcular.** Una gráfica nos dice si la técnica tiene sentido.
+2. **Verificar los supuestos.** Un valor p calculado sobre supuestos rotos no significa nada.
+3. **Interpretar en el lenguaje del problema.** Fuera de esta clase, a nadie le interesa el estadístico $t$: les interesa saber si las galletas gustan distinto, si el tratamiento sirve, cuánto tarda el algoritmo.

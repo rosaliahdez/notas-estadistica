@@ -7,7 +7,7 @@ library(tidyverse)
 theme_set(theme_minimal(base_size = 12))
 ```
 
-::: {.callout-tip title="Al terminar este capítulo podrás"}
+::: {.callout-tip title="Objetivos del capítulo"}
 - Distinguir **parámetro** de **estadístico**.
 - Explicar qué es una **distribución muestral** y por qué es la pieza clave de la inferencia.
 - Enunciar y reconocer el **Teorema Central del Límite (TCL)**.
@@ -86,7 +86,7 @@ Esto es lo que hace posible casi toda la inferencia del curso: aunque no sepamos
 
 ### Laboratorio: ver el TCL en acción {#sec-lab-tcl}
 
-Aquí el deslizador vale más que mil palabras. Elige una población **deliberadamente no normal** —sesgada, uniforme o bimodal— y luego aumenta $n$. Observa cómo la distribución de las medias se vuelve acampanada y se angosta, aunque la población de origen no tenga nada de campana.
+Aquí el deslizador vale más que mil palabras. Conviene elegir una población **deliberadamente no normal** —sesgada, uniforme o bimodal— y luego aumentar $n$. Se observa cómo la distribución de las medias se vuelve acampanada y se angosta, aunque la población de origen no tenga nada de campana.
 
 ```{ojs}
 //| panel: input
@@ -154,9 +154,52 @@ Plot.plot({
 })
 ```
 
-::: {.callout-note title="Interpreta"}
-Con $n = 1$ las dos gráficas son iguales: una muestra de tamaño uno *es* un dato individual. Al subir a $n = 5$ la asimetría ya se suaviza; hacia $n = 30$ la distribución de las medias es prácticamente una campana simétrica, **aunque la población de arriba siga siendo sesgada o bimodal**. Nota también que la campana se va **angostando**: es el error estándar $\sigma/\sqrt{n}$ encogiéndose. Prueba con "bimodal", que es el caso más contraintuitivo: la población tiene dos jorobas y las medias forman una sola campana.
+::: {.callout-note title="Interpretación"}
+Con $n = 1$ las dos gráficas son iguales: una muestra de tamaño uno *es* un dato individual. Al subir a $n = 5$ la asimetría ya se suaviza; hacia $n = 30$ la distribución de las medias es prácticamente una campana simétrica, **aunque la población de arriba siga siendo sesgada o bimodal**. Nótese también que la campana se va **angostando**: es el error estándar $\sigma/\sqrt{n}$ encogiéndose. Vale la pena el caso más contraintuitivo, "bimodal": la población tiene dos jorobas y las medias forman una sola campana.
 :::
+
+## Trabajar con la normal: probabilidades y cuantiles
+
+Como la normal aparecerá en todo lo que sigue, conviene tener a la mano las dos operaciones que se hacen con ella, que son **inversas** entre sí.
+
+**De un valor a una probabilidad.** ¿Qué proporción de individuos queda por debajo de cierto valor? Se estandariza con $z = \dfrac{x - \mu}{\sigma}$ (@sec-lab-z) y se consulta la normal estándar. En R, `pnorm()`:
+
+```{r}
+#| label: pnorm-ejemplo
+# Girasoles con media 185 cm y desviación 17 cm:
+# ¿qué proporción mide menos de 200 cm?
+pnorm(200, mean = 185, sd = 17)
+
+# ¿qué proporción supera los 200 cm?
+1 - pnorm(200, mean = 185, sd = 17)
+```
+
+**De una probabilidad a un valor.** La pregunta inversa: ¿qué valor deja por debajo cierta proporción? Ese valor es un **cuantil** (o percentil), y en R se obtiene con `qnorm()`:
+
+```{r}
+#| label: qnorm-ejemplo
+# ¿Qué altura es superada por el 10 % de los girasoles?
+# Es el cuantil que deja el 90 % por debajo.
+qnorm(0.90, mean = 185, sd = 17)
+```
+
+::: {.callout-note title="Interpretación"}
+La respuesta ronda los 207 cm. La clave para no equivocarse es traducir bien el enunciado: *"superada por el 10 %"* significa que el 10 % está **por encima**, es decir el 90 % **por debajo**, así que el cuantil que se busca es el 0.90 y no el 0.10.
+
+Sin computadora, este cálculo se hace en dos pasos con una tabla de la normal estándar: primero se busca el valor $z$ que deja el 90 % por debajo ($z \approx 1.282$) y luego se deshace la estandarización, $x = \mu + z\sigma = 185 + 1.282 \times 17 \approx 206.8$ cm. Conviene practicar ambas vías, porque en un examen sin computadora solo se dispone de la tabla.
+:::
+
+Los cuantiles de la normal estándar que más se repiten son estos, y vale la pena reconocerlos:
+
+| Proporción por debajo | $z$ |
+|---|---|
+| 0.90 | 1.282 |
+| 0.95 | 1.645 |
+| 0.975 | 1.960 |
+| 0.99 | 2.326 |
+| 0.995 | 2.576 |
+
+Los dos últimos renglones reaparecerán en el @sec-cap7 como los valores críticos de los intervalos de confianza al 95 % y al 99 %.
 
 ## La distribución muestral de una proporción
 
@@ -175,7 +218,7 @@ sqrt(p * (1 - p) / n)   # error estándar teórico
 sd(props)               # simulado
 ```
 
-::: {.callout-tip title="¿Qué técnica uso?"}
+::: {.callout-tip title="¿Qué técnica usar?"}
 La distribución muestral es el puente entre la muestra y la población:
 
 | Estadístico | Se centra en | Error estándar | Forma (n grande) |
@@ -192,26 +235,26 @@ Distinguimos **parámetro** (población, desconocido) de **estadístico** (muest
 
 ## Ejercicios
 
-1. **Parámetro o estadístico.** Clasifica cada cantidad: (a) la masa media de los 344 pingüinos medidos; (b) la proporción de positivos de todas las personas de Sonora; (c) la desviación estándar de la temperatura de las 32 lagartijas urbanas de nuestra base.
+1. **Parámetro o estadístico.** Clasificar cada cantidad: (a) la masa media de los 344 pingüinos medidos; (b) la proporción de positivos de todas las personas de Sonora; (c) la desviación estándar de la temperatura de las 32 lagartijas urbanas de nuestra base.
 
-2. **Error estándar.** Una población tiene $\sigma = 20$. Calcula el error estándar de la media para $n = 25$, $n = 100$ y $n = 400$. ¿Cuánto hay que aumentar la muestra para reducir el error estándar a la mitad?
+2. **Error estándar.** Una población tiene $\sigma = 20$. Calcular el error estándar de la media para $n = 25$, $n = 100$ y $n = 400$. ¿Cuánto hay que aumentar la muestra para reducir el error estándar a la mitad?
 
-3. **¿TCL o no?** ¿En cuáles de estos casos puedes suponer que la media muestral es aproximadamente normal? (a) $n = 50$ de una población muy sesgada; (b) $n = 4$ de una población muy sesgada; (c) $n = 4$ de una población normal.
+3. **¿TCL o no?** ¿En cuáles de estos casos se puede suponer que la media muestral es aproximadamente normal? (a) $n = 50$ de una población muy sesgada; (b) $n = 4$ de una población muy sesgada; (c) $n = 4$ de una población normal.
 
-4. **Simulación.** Repite la simulación de la media muestral con $n = 5$ y con $n = 80$, usando `rexp(n, rate = 1)` como población (exponencial, muy sesgada). Compara los histogramas y las desviaciones estándar.
+4. **Simulación.** Repetir la simulación de la media muestral con $n = 5$ y con $n = 80$, usando `rexp(n, rate = 1)` como población (exponencial, muy sesgada). Comparar los histogramas y las desviaciones estándar.
 
 5. **Proporción.** En una población con $p = 0.4$ se toman muestras de $n = 100$. ¿Cuál es el error estándar de $\hat{p}$? ¿Se cumplen las condiciones para usar la aproximación normal?
 
-6. **Interpretación.** Explica en dos frases, para alguien que no sabe estadística, por qué una encuesta a 1000 personas puede describir a un país entero.
+6. **Interpretación.** Explicar en dos frases, para alguien que no sabe estadística, por qué una encuesta a 1000 personas puede describir a un país entero.
 
 ::: {.callout-tip title="Soluciones y retroalimentación" collapse="true"}
-**1.** (a) **Estadístico**: se calculó sobre los pingüinos observados (la muestra). (b) **Parámetro**: describe a toda la población de Sonora. (c) **Estadístico**: se calculó sobre las lagartijas de nuestra base. *Regla rápida: si lo pudiste calcular con tus datos, es un estadístico; si te gustaría conocerlo pero no lo tienes, es un parámetro.*
+**1.** (a) **Estadístico**: se calculó sobre los pingüinos observados (la muestra). (b) **Parámetro**: describe a toda la población de Sonora. (c) **Estadístico**: se calculó sobre las lagartijas de nuestra base. *Regla rápida: si lo pudiste calcular con los datos, es un estadístico; si te gustaría conocerlo pero no lo se tiene, es un parámetro.*
 
 **2.** Error estándar $= \sigma/\sqrt{n}$: para $n=25$ es $20/5 = 4$; para $n=100$ es $20/10 = 2$; para $n=400$ es $20/20 = 1$. Hay que **cuadruplicar** la muestra para reducir el error a la mitad. *Esta es la consecuencia práctica más importante del capítulo: la precisión es cara, porque crece con $\sqrt{n}$ y no con $n$. Pasar de 400 a 800 encuestas mejora poco; para el doble de precisión harían falta 1600.*
 
 **3.** (a) **Sí**: con $n = 50$ el TCL ya suele funcionar bien incluso con sesgo. (b) **No**: con $n = 4$ y población sesgada, la media muestral hereda el sesgo. (c) **Sí**: si la población es normal, la media es normal **exactamente**, para cualquier $n$, sin necesidad del TCL. *El caso (c) es el que más se olvida: el TCL es para poblaciones no normales; si ya es normal, no hace falta.*
 
-**4.** Ambos histogramas se centran cerca de 1 (la media de una exponencial con `rate = 1`). Con $n = 5$ la distribución de medias sigue **notoriamente sesgada a la derecha**; con $n = 80$ es simétrica y acampanada. Las desviaciones estándar son aproximadamente $1/\sqrt{5} \approx 0.45$ y $1/\sqrt{80} \approx 0.11$. *Es el mismo fenómeno del laboratorio del @sec-lab-tcl, ahora hecho por ti en R.*
+**4.** Ambos histogramas se centran cerca de 1 (la media de una exponencial con `rate = 1`). Con $n = 5$ la distribución de medias sigue **notoriamente sesgada a la derecha**; con $n = 80$ es simétrica y acampanada. Las desviaciones estándar son aproximadamente $1/\sqrt{5} \approx 0.45$ y $1/\sqrt{80} \approx 0.11$. *Es el mismo fenómeno del laboratorio del @sec-lab-tcl, ahora reproducido en R.*
 
 **5.** Error estándar $= \sqrt{0.4 \times 0.6 / 100} = \sqrt{0.0024} \approx 0.049$. Condiciones: $np = 40 \geq 10$ y $n(1-p) = 60 \geq 10$; **sí se cumplen**, así que la aproximación normal es adecuada. *Cuando $p$ es muy cercana a 0 o a 1, estas condiciones fallan y hay que recurrir a métodos exactos.*
 

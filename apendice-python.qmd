@@ -1,0 +1,160 @@
+# R y Python, lado a lado {#sec-python .unnumbered}
+
+El curso usa **R**, pero muchos estudiantes de la licenciatura llegan con más experiencia en **Python**. Este apéndice pone las dos versiones del mismo cálculo una junto a la otra.
+
+::: {.callout-note title="Para qué sirve esta tabla"}
+No para trabajar en Python durante el curso —las prácticas y el proyecto se entregan en R—, sino para que quien ya conoce Python reconozca lo que está viendo y para que quede claro que **las técnicas son las mismas**: lo que cambia es la sintaxis.
+
+En Python los equivalentes viven en tres bibliotecas: `pandas` para manipular datos, `scipy.stats` para las pruebas y `statsmodels` para modelos.
+:::
+
+## Preparar el entorno {.unnumbered}
+
+::: {.panel-tabset}
+## R
+
+```r
+library(tidyverse)
+library(palmerpenguins)
+
+datos <- read.csv("datos/galletas.csv")
+```
+
+## Python
+
+```python
+import pandas as pd
+import numpy as np
+from scipy import stats
+import statsmodels.api as sm
+import statsmodels.formula.api as smf
+
+datos = pd.read_csv("datos/galletas.csv")
+```
+:::
+
+## Explorar y describir {.unnumbered}
+
+| Qué se quiere | R | Python |
+|---|---|---|
+| Primeras filas | `head(datos)` | `datos.head()` |
+| Estructura | `glimpse(datos)` | `datos.info()` |
+| Resumen general | `summary(datos)` | `datos.describe()` |
+| Media | `mean(x)` | `x.mean()` |
+| Mediana | `median(x)` | `x.median()` |
+| Desviación estándar | `sd(x)` | `x.std()` |
+| Varianza | `var(x)` | `x.var()` |
+| Cuartiles | `quantile(x)` | `x.quantile([0,.25,.5,.75,1])` |
+| Rango intercuartílico | `IQR(x)` | `x.quantile(.75) - x.quantile(.25)` |
+| Tabla de frecuencias | `table(g)` | `g.value_counts()` |
+| Tabla de contingencia | `table(a, b)` | `pd.crosstab(a, b)` |
+| Resumen por grupo | `group_by(g) \|> summarise(...)` | `datos.groupby("g").agg(...)` |
+| Correlación | `cor(x, y)` | `x.corr(y)` |
+| Matriz de correlación | `cor(df)` | `df.corr()` |
+
+> Nótese una diferencia de estilo: en R las funciones reciben el objeto (`mean(x)`), y en Python el objeto lleva el método (`x.mean()`). Es la distinción entre programación funcional y orientada a objetos, y explica casi toda la diferencia visual entre ambos lenguajes.
+
+## Gráficas {.unnumbered}
+
+| Qué se quiere | R (`ggplot2`) | Python (`matplotlib` / `seaborn`) |
+|---|---|---|
+| Barras | `ggplot(d, aes(g)) + geom_bar()` | `sns.countplot(data=d, x="g")` |
+| Histograma | `+ geom_histogram(binwidth=250)` | `sns.histplot(d.x, binwidth=250)` |
+| Diagrama de caja | `+ geom_boxplot()` | `sns.boxplot(data=d, x="g", y="y")` |
+| Dispersión | `+ geom_point()` | `sns.scatterplot(data=d, x="x", y="y")` |
+| Q-Q plot | `stat_qq() + stat_qq_line()` | `stats.probplot(x, plot=plt)` |
+
+## Distribuciones {.unnumbered}
+
+| Qué se quiere | R | Python (`scipy.stats`) |
+|---|---|---|
+| $P(X \leq x)$ en la normal | `pnorm(x, mu, sigma)` | `stats.norm.cdf(x, mu, sigma)` |
+| Cuantil de la normal | `qnorm(q, mu, sigma)` | `stats.norm.ppf(q, mu, sigma)` |
+| Densidad normal | `dnorm(x, mu, sigma)` | `stats.norm.pdf(x, mu, sigma)` |
+| Simular normales | `rnorm(n, mu, sigma)` | `stats.norm.rvs(mu, sigma, size=n)` |
+| Binomial puntual | `dbinom(x, n, p)` | `stats.binom.pmf(x, n, p)` |
+| Cuantil de la $t$ | `qt(q, gl)` | `stats.t.ppf(q, gl)` |
+| Cuantil de $\chi^2$ | `qchisq(q, gl)` | `stats.chi2.ppf(q, gl)` |
+| Cuantil de la $F$ | `qf(q, gl1, gl2)` | `stats.f.ppf(q, gl1, gl2)` |
+
+## Inferencia {.unnumbered}
+
+| Técnica | R | Python |
+|---|---|---|
+| Prueba $t$ para una media | `t.test(x, mu = m0)` | `stats.ttest_1samp(x, m0)` |
+| Dos muestras independientes | `t.test(y ~ g)` | `stats.ttest_ind(a, b, equal_var=False)` |
+| Datos pareados | `t.test(x, y, paired = TRUE)` | `stats.ttest_rel(x, y)` |
+| Una proporción | `prop.test(x, n, p = p0)` | `proportions_ztest(x, n, p0)` (de `statsmodels`) |
+| Dos proporciones | `prop.test(c(x1,x2), c(n1,n2))` | `proportions_ztest([x1,x2], [n1,n2])` |
+| Ji-cuadrada | `chisq.test(tabla)` | `stats.chi2_contingency(tabla)` |
+| Prueba exacta de Fisher | `fisher.test(tabla)` | `stats.fisher_exact(tabla)` |
+| Cociente de varianzas | `var.test(y ~ g)` | `stats.f_oneway` no aplica; se calcula a mano |
+| ANOVA de un factor | `aov(y ~ g)` | `stats.f_oneway(g1, g2, g3)` |
+| ANOVA (tabla completa) | `summary(aov(y ~ g))` | `sm.stats.anova_lm(smf.ols("y ~ g", d).fit())` |
+| Post-hoc de Tukey | `TukeyHSD(modelo)` | `pairwise_tukeyhsd(d.y, d.g)` |
+| Normalidad (Shapiro) | `shapiro.test(x)` | `stats.shapiro(x)` |
+| Homogeneidad (Bartlett) | `bartlett.test(y ~ g)` | `stats.bartlett(g1, g2, g3)` |
+| Levene | `leveneTest(y ~ g)` (paquete `car`) | `stats.levene(g1, g2, g3)` |
+| Regresión lineal | `lm(y ~ x)` | `smf.ols("y ~ x", data=d).fit()` |
+| Resumen del modelo | `summary(modelo)` | `modelo.summary()` |
+| Intervalos de los coeficientes | `confint(modelo)` | `modelo.conf_int()` |
+| Predicción | `predict(modelo, newdata)` | `modelo.predict(nuevos)` |
+| Potencia de una prueba | `power.t.test(...)` | `TTestPower().power(...)` (de `statsmodels`) |
+
+## Un ejemplo completo, en los dos lenguajes {.unnumbered}
+
+La misma pregunta —¿difiere el agrado entre las marcas de galletas?— resuelta de las dos formas:
+
+::: {.panel-tabset}
+## R
+
+```r
+library(tidyverse)
+galletas <- read.csv("datos/galletas.csv")
+
+# descripción
+galletas |>
+  group_by(marca) |>
+  summarise(n = n(), media = mean(agrado), de = sd(agrado))
+
+# ANOVA y post-hoc
+modelo <- aov(agrado ~ marca, data = galletas)
+summary(modelo)
+TukeyHSD(modelo)
+
+# supuestos
+shapiro.test(residuals(modelo))
+bartlett.test(agrado ~ marca, data = galletas)
+```
+
+## Python
+
+```python
+import pandas as pd
+from scipy import stats
+import statsmodels.api as sm
+import statsmodels.formula.api as smf
+from statsmodels.stats.multicomp import pairwise_tukeyhsd
+
+galletas = pd.read_csv("datos/galletas.csv")
+
+# descripción
+print(galletas.groupby("marca")["agrado"].agg(["count", "mean", "std"]))
+
+# ANOVA y post-hoc
+modelo = smf.ols("agrado ~ C(marca)", data=galletas).fit()
+print(sm.stats.anova_lm(modelo, typ=2))
+print(pairwise_tukeyhsd(galletas.agrado, galletas.marca))
+
+# supuestos
+print(stats.shapiro(modelo.resid))
+grupos = [g["agrado"].values for _, g in galletas.groupby("marca")]
+print(stats.bartlett(*grupos))
+```
+:::
+
+::: {.callout-tip title="La conclusión de fondo"}
+Los dos bloques hacen exactamente lo mismo y dan exactamente los mismos números. La estadística no cambia con el lenguaje.
+
+Lo que se aprende en este curso —qué técnica corresponde, qué supuestos verificar, cómo interpretar el resultado— es transferible a cualquier herramienta. La sintaxis se consulta; el criterio, no.
+:::

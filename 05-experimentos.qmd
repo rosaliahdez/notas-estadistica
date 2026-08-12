@@ -7,7 +7,7 @@ library(tidyverse)
 theme_set(theme_minimal(base_size = 12))
 ```
 
-::: {.callout-tip title="Al terminar este capítulo podrás"}
+::: {.callout-tip title="Objetivos del capítulo"}
 - Nombrar las piezas de un experimento: **unidad experimental, factor, niveles, tratamiento y respuesta**.
 - Aplicar los tres principios: **control, aleatorización y réplicas**.
 - Prevenir los sesgos típicos de experimentos con personas: **orden, cegado y contaminación**.
@@ -42,7 +42,7 @@ Un buen experimento descansa en tres ideas:
 - **Aleatorización.** Asignar los tratamientos (o su orden) **al azar**. Es la defensa contra las variables ocultas: reparte de forma pareja, entre los tratamientos, cualquier factor que no controlamos.
 - **Réplicas.** Aplicar cada tratamiento a **varias** unidades. Sin réplicas no podemos distinguir el efecto del tratamiento de la variación natural entre unidades: una sola bolsa por sustrato no dice nada.
 
-::: {.callout-note title="Interpreta"}
+::: {.callout-note title="Interpretación"}
 Los tres trabajan juntos. El **control** reduce el ruido, la **aleatorización** evita el sesgo y las **réplicas** nos dejan medir cuánta variación es "normal" —justo lo que el ANOVA del @sec-cap10 necesita para decidir si las diferencias entre marcas son reales—.
 :::
 
@@ -54,8 +54,8 @@ Cuando quienes responden son personas, aparecen sesgos que hay que anticipar en 
 - **Falta de cegado.** Si el juez sabe qué marca prueba, su expectativa contamina la calificación ("es Oreo, debe gustarme"). Solución: cata **a ciegas**; idealmente, que quien reparte tampoco sepa cuál es (doble ciego).
 - **Contaminación entre jueces.** Un gesto o un comentario en voz alta arrastra la opinión de los demás. Solución: catar en silencio, sin expresiones, y capturar cada quien su hoja.
 
-::: {.callout-tip title="¿Qué técnica uso?"}
-Antes de recolectar, revisa esta lista de diseño:
+::: {.callout-tip title="¿Qué técnica usar?"}
+Antes de recolectar, conviene revisar esta lista de diseño:
 
 1. ¿Cuál es la **unidad experimental**, el **factor**, sus **niveles** y la **respuesta**?
 2. ¿Qué mantengo **bajo control**?
@@ -63,7 +63,7 @@ Antes de recolectar, revisa esta lista de diseño:
 4. ¿Cuántas **réplicas** por tratamiento?
 5. Si hay personas, ¿cómo aseguro **cegado** y evito **contaminación**?
 
-Si puedes responder las cinco, tu experimento está bien diseñado.
+Si se puede responder las cinco, el experimento está bien diseñado.
 :::
 
 ## Armar el plan de aleatorización en R
@@ -112,9 +112,9 @@ El experimento es la forma de producir datos que permite hablar de **causa**. Se
 
 ## Ejercicios
 
-1. **Anatomía de un experimento.** Para el cultivo de setas (`datos/hongos_sustrato.csv`), identifica la unidad experimental, el factor, sus niveles, un tratamiento y la variable respuesta.
+1. **Anatomía de un experimento.** Para el cultivo de setas (`datos/hongos_sustrato.csv`), identificar la unidad experimental, el factor, sus niveles, un tratamiento y la variable respuesta.
 
-2. **Observacional o experimental.** Clasifica cada estudio y di si permite concluir causa y efecto:
+2. **Observacional o experimental.** Clasificar cada estudio y di si permite concluir causa y efecto:
    a. Un estudiante de medicina compara la mejoría de pacientes que *eligieron* tomar un suplemento contra los que no.
    b. Se asignan al azar tres fertilizantes a parcelas de trigo y se compara el rendimiento.
    c. Se registran las calificaciones de quienes asistieron o no, por decisión propia, a asesorías.
@@ -124,11 +124,11 @@ El experimento es la forma de producir datos que permite hablar de **causa**. Se
    b. Todos los jueces prueban primero Oreo y al final Great Value.
    c. Se compara la marca nueva medida hoy con la vieja medida el año pasado, en otro laboratorio.
 
-4. **¿Por qué aleatorizar el orden?** Explica, con el efecto de fatiga de paladar, qué problema evita que cada juez cate en un orden distinto.
+4. **¿Por qué aleatorizar el orden?** Explicar, con el efecto de fatiga de paladar, qué problema evita que cada juez cate en un orden distinto.
 
-5. **Cegado.** Describe cómo harías una cata **doble ciego** de galletas y qué sesgo evita cada capa del cegado.
+5. **Cegado.** Describir cómo se haría una cata **doble ciego** de galletas y qué sesgo evita cada capa del cegado.
 
-6. **Aleatoriza en R.** Genera un plan de aleatorización para un experimento de setas con 4 sustratos y 5 réplicas por sustrato (20 bolsas), asignando al azar qué bolsa recibe cada sustrato.
+6. **Aleatoriza en R.** Generar un plan de aleatorización para un experimento de setas con 4 sustratos y 5 réplicas por sustrato (20 bolsas), asignando al azar qué bolsa recibe cada sustrato.
 
 ::: {.callout-tip title="Soluciones y retroalimentación" collapse="true"}
 **1.** Unidad experimental: **cada bolsa** de cultivo. Factor: el **sustrato**. Niveles: paja de trigo, pulpa de café, olote de maíz y aserrín. Un tratamiento: sembrar en pulpa de café. Variable respuesta: la **eficiencia biológica (%)**; `dias_cosecha` es una segunda respuesta y `contaminado` una respuesta categórica. *Un experimento puede tener varias variables respuesta; lo que lo define como de un factor es que se manipula una sola cosa.*

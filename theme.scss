@@ -17,3 +17,20 @@ div.callout-tip.callout {
 
 /* Bloque de "Interpretación" más cálido */
 div.callout-note.callout { border-left-color: #2E7D5B; }
+
+/* ---- Impresión: pensado sobre todo para el formulario ---- */
+@media print {
+  /* fuera todo lo que no es contenido */
+  #quarto-sidebar, #quarto-margin-sidebar, .nav-page, #quarto-header,
+  footer, .toc-actions, #quarto-back-to-top, .callout-note { display: none !important; }
+  #quarto-content, main { margin: 0 !important; padding: 0 !important; max-width: 100% !important; }
+  body { font-size: 10.5pt; }
+  h1 { font-size: 15pt; page-break-before: auto; }
+  h2 { font-size: 12.5pt; page-break-after: avoid; }
+  h1, h2, h3 { color: #000 !important; }
+  /* que las fórmulas y sus tablas no se partan a media página */
+  table, .katex-display, mjx-container { page-break-inside: avoid; }
+  th { background: #E8E8E8 !important; color: #000 !important; }
+  a { text-decoration: none; color: #000; }
+  code { background: #F0F0F0 !important; padding: 1px 3px; }
+}

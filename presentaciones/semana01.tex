@@ -1,0 +1,1174 @@
+% ============================================================
+%  Estadística · LCC · Universidad de Sonora
+%  Semana 1 — Presentación del curso y Unidad 1
+%  Compilar en Overleaf con pdfLaTeX
+% ============================================================
+\documentclass[aspectratio=169,10pt]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot,es-noquoting]{babel}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage{graphicx}
+\graphicspath{{figuras/}}
+% ------------------------------------------------------------
+%  ILUSTRACIONES DE palmerpenguins
+%  Ejecutar una vez  presentaciones/copiar-figuras.R  para obtenerlas.
+%  Si no están presentes, las diapositivas compilan igual usando los
+%  dibujos en TikZ definidos más abajo.
+%  Crédito obligatorio: Artwork by @allison_horst
+% ------------------------------------------------------------
+\newcommand{\creditoHorst}{{\tiny\color{grisT} Ilustración: \textit{Artwork by @allison\_horst}}}
+% ---------- Tema y colores ----------
+\usetheme{default}
+\setbeamertemplate{navigation symbols}{}
+\definecolor{azulUS}{HTML}{1F4E79}
+\definecolor{azulClaro}{HTML}{DCE6F1}
+\definecolor{grisT}{HTML}{5F5E5A}
+\definecolor{negroP}{HTML}{2B2B2B}
+\definecolor{picoNaranja}{HTML}{E8871E}
+\definecolor{rosaK}{HTML}{F4A6B8}
+\definecolor{verdeOk}{HTML}{1D9E75}
+\definecolor{rojoAc}{HTML}{C0392B}
+\definecolor{grisR}{HTML}{9A9A9A}
+\definecolor{azulR}{HTML}{2266B3}
+\setbeamercolor{structure}{fg=azulUS}
+\setbeamercolor{frametitle}{fg=white,bg=azulUS}
+\setbeamercolor{title}{fg=azulUS}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip
+  \begin{beamercolorbox}[wd=\paperwidth,ht=2.6ex,dp=1.2ex,leftskip=0.3cm]{frametitle}
+    \usebeamerfont{frametitle}\insertframetitle
+  \end{beamercolorbox}}
+\setbeamertemplate{footline}{%
+  \hfill\textcolor{grisT}{\tiny Estadística · LCC · Unison \quad
+  \insertframenumber/\inserttotalframenumber}\hspace{0.3cm}\vspace{0.15cm}}
+\setbeamertemplate{itemize item}{\textcolor{azulUS}{\raisebox{0.15ex}{\tiny$\blacksquare$}}}
+\setbeamertemplate{itemize subitem}{\textcolor{grisT}{\raisebox{0.15ex}{\tiny$\bullet$}}}
+% ---------- Estilo para código de R ----------
+\lstdefinestyle{Rstyle}{
+  language=R, basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{azulUS}\bfseries, commentstyle=\color{grisT}\itshape,
+  stringstyle=\color{verdeOk}, showstringspaces=false, breaklines=true,
+  frame=single, rulecolor=\color{azulClaro}, backgroundcolor=\color{azulClaro!35},
+  numbers=none, aboveskip=6pt, belowskip=4pt}
+\lstset{style=Rstyle}
+% ---------- Comandos de R dentro del texto ----------
+%  Mismo aspecto que el código en línea del libro: fondo gris y letra morada.
+%  Los valores vienen del tema del libro (--bs-code-color: #7D12BA). El gris se
+%  oscureció un poco respecto al de la web (#F8F9FA) para que se vea proyectado.
+\definecolor{codigoTexto}{HTML}{7D12BA}
+\definecolor{codigoFondo}{HTML}{EFF0F2}
+\newcommand{\Rc}[1]{{\setlength{\fboxsep}{1.6pt}%
+  \colorbox{codigoFondo}{\textcolor{codigoTexto}{\texttt{#1}}}}}
+% ---------- Caja auxiliar para destacar ideas ----------
+\newcommand{\destaca}[1]{%
+  \par\vspace{3pt}\noindent
+  \colorbox{azulClaro}{%
+    \parbox{\dimexpr\linewidth-2\fboxsep\relax}{\vspace{3pt}#1\vspace{3pt}}}%
+  \par\vspace{3pt}}
+% ============================================================
+%  PINGÜINOS EN TIKZ  (estilo kawaii)
+%  Solo se usan como respaldo: si están las ilustraciones de Horst en
+%  figuras/, esas tienen prioridad y estos dibujos no aparecen.
+% ============================================================
+% Cuerpo común. Argumento: color de pico y patas.
+\newcommand{\cuerpoPing}[1]{%
+  \fill[negroP] (-0.88,0.18) ellipse (0.17 and 0.5);      % ala izquierda
+  \fill[negroP] (0.88,0.18) ellipse (0.17 and 0.5);       % ala derecha
+  \fill[#1] (-0.28,-1.12) ellipse (0.19 and 0.085);       % pata izquierda
+  \fill[#1] (0.28,-1.12) ellipse (0.19 and 0.085);        % pata derecha
+  \fill[negroP] (0,0) ellipse (0.82 and 1.1);             % cuerpo
+  \fill[white] (0,-0.16) ellipse (0.53 and 0.82);         % vientre
+}
+% Ojos grandes con brillo y rubor
+\newcommand{\ojosPing}{%
+  \fill[white] (-0.22,1.3) circle (0.155);
+  \fill[white] (0.22,1.3) circle (0.155);
+  \fill[negroP] (-0.20,1.28) circle (0.085);
+  \fill[negroP] (0.24,1.28) circle (0.085);
+  \fill[white] (-0.235,1.315) circle (0.032);
+  \fill[white] (0.205,1.315) circle (0.032);
+  \fill[rosaK,opacity=0.55] (-0.44,1.10) circle (0.085);
+  \fill[rosaK,opacity=0.55] (0.44,1.10) circle (0.085);
+}
+\newcommand{\picoPing}[1]{%
+  \fill[#1] (-0.10,1.13) -- (0.10,1.13) -- (0,0.94) -- cycle;
+}
+% --- Adelaida (Adelie): cabeza negra, anillo blanco alrededor del ojo
+\newcommand{\pingAdelie}{%
+  \begin{scope}
+    \cuerpoPing{picoNaranja}
+    \fill[negroP] (0,1.22) circle (0.6);
+    \fill[white] (-0.22,1.3) circle (0.20);
+    \fill[white] (0.22,1.3) circle (0.20);
+    \ojosPing
+    \picoPing{picoNaranja}
+  \end{scope}}
+% --- Barbijo (Chinstrap): cara blanca con una franja negra bajo el mentón
+\newcommand{\pingChinstrap}{%
+  \begin{scope}
+    \cuerpoPing{picoNaranja}
+    \fill[negroP] (0,1.22) circle (0.6);
+    \fill[white] (0,1.26) ellipse (0.5 and 0.5);
+    \draw[negroP,line width=1.6pt] (-0.44,1.02) arc (205:335:0.48);
+    \ojosPing
+    \picoPing{negroP}
+  \end{scope}}
+% --- Juanito (Gentoo): parche blanco sobre los ojos y pico naranja
+\newcommand{\pingGentoo}{%
+  \begin{scope}
+    \cuerpoPing{picoNaranja}
+    \fill[negroP] (0,1.22) circle (0.6);
+    \fill[white] (-0.26,1.5) ellipse (0.21 and 0.13);
+    \fill[white] (0.26,1.5) ellipse (0.21 and 0.13);
+    \fill[white] (0,1.56) ellipse (0.3 and 0.075);
+    \ojosPing
+    \picoPing{picoNaranja}
+  \end{scope}}
+% ============================================================
+%  ICONOS DE R Y RSTUDIO
+%  Aproximaciones estilizadas hechas en TikZ. Si se prefieren los
+%  logotipos oficiales, están disponibles en r-project.org (CC-BY-SA)
+%  y en posit.co; bastaría guardarlos en figuras/ e incluirlos.
+% ============================================================
+\newcommand{\iconoR}{%
+  \begin{scope}
+    \fill[grisR] (0,0) ellipse (0.72 and 0.50);
+    \fill[white] (0,0) ellipse (0.50 and 0.31);
+    \node[azulR,font=\bfseries\large] at (0.02,0.02) {R};
+  \end{scope}}
+\newcommand{\iconoRStudio}{%
+  \begin{scope}
+    \fill[azulR] (0,0) circle (0.52);
+    \fill[white] (0,0) circle (0.40);
+    \node[azulR,font=\bfseries] at (0,0.02) {R};
+    \draw[azulR,line width=1.3pt] (-0.20,-0.26) -- (0.28,-0.26);
+  \end{scope}}
+% ============================================================
+\title{\LARGE\textbf{Estadística}}
+\subtitle{Licenciatura en Ciencias de la Computación}
+\author{Prof. Rosalía Gpe. Hernández Amador}
+\institute{Departamento de Matemáticas · Universidad de Sonora}
+\date{Semestre 2026-2}
+\begin{document}
+% ============================================================
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+% ============================================================
+\section{Presentación del curso}
+\begin{frame}{Medios de contacto}
+\begin{itemize}
+    \item \textbf{Prof. Rosalía Gpe. Hernández Amador}\\
+      {\small Correo institucional: rosalia.hernandez@unison.mx}\\
+      {\small Ubicación: Edificio 3K2, Módulo 9, Cubículo 1}
+      \vspace{0.25cm}
+    \item \textbf{Teams}: avisos, recordatorios y material del curso
+      \vspace{0.25cm}
+    \item \textbf{Ramanujan} (Moodle): cuestionarios y entregas
+      \vspace{0.25cm}
+    \item \textbf{Libro del curso}:
+      {\small \url{https://rosaliahdez.github.io/notas-estadistica/}}
+\end{itemize}
+      \vspace{0.2cm}
+\end{frame}
+% ============================================================
+\begin{frame}{¿De qué trata la Estadística?}
+  La Estadística consiste en \textbf{obtener conocimiento a partir de datos}, por medio de tres acciones clave:
+  \vspace{0.5cm}
+  \begin{columns}[T]
+    \begin{column}{0.32\textwidth}
+      \destaca{\centering\textbf{Analizar}\\[3pt]
+      {\small Organizar, resumir y visualizar lo que ya tenemos}}
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \destaca{\centering\textbf{Producir datos}\\[3pt]
+      {\small De dónde vienen los datos importa tanto como lo que hacemos con ellos}}
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \destaca{\centering\textbf{Inferir}\\[3pt]
+      {\small Decir algo sobre el todo habiendo visto solo una parte}}
+    \end{column}
+  \end{columns}
+\vspace{5mm}
+La Probabilidad es el \textbf{fundamento teórico} en el que se basan las técnicas estadísticas. Por esta razón, el curso de probabilidad antecede a éste.
+\end{frame}
+% ============================================================
+\begin{frame}{Estructura del temario del curso}
+  \begin{center}
+  \begin{tikzpicture}[scale=1]
+    \node[fill=azulClaro,rounded corners,text width=3.4cm,align=center,minimum height=2.1cm] (a) at (-4.2,0)
+      {\textbf{I. Exploración}\\[3pt]{\scriptsize Unidades 1--3}\\[3pt]{\scriptsize Mirar y resumir datos}};
+    \node[fill=azulClaro,rounded corners,text width=3.4cm,align=center,minimum height=2.1cm] (b) at (0,0)
+      {\textbf{II. Producción}\\[3pt]{\scriptsize Unidades 4--5}\\[3pt]{\scriptsize Muestreo y experimentos}};
+    \node[fill=azulClaro,rounded corners,text width=3.4cm,align=center,minimum height=2.1cm] (c) at (4.2,0)
+      {\textbf{III. Inferencia}\\[3pt]{\scriptsize Unidades 6--11}\\[3pt]{\scriptsize De la muestra a la población}};
+    \draw[->,azulUS,very thick] (a) -- (b);
+    \draw[->,azulUS,very thick] (b) -- (c);
+  \end{tikzpicture}
+  \end{center}
+  \vspace{0.8cm}
+  \raggedright
+
+  El temario oficial del curso puede consultarse en la página del
+  programa de la licenciatura:\\
+  \href{https://cc.unison.mx/plan-de-estudios/}{\texttt{lcc.unison.mx/plan-de-estudios}}
+\end{frame}
+% ============================================================
+\begin{frame}{Objetivos del curso}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \textcolor{rojoAc}{\textbf{NO se busca}}
+      \begin{itemize}
+        \item Que memoricen fórmulas
+        \item Que apliquen procedimientos sin saber por qué
+        \item Que reporten un valor $p$ y se sientan satisfechos
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \textcolor{verdeOk}{\textbf{Lo que SÍ se busca}}
+      \begin{itemize}
+        \item Que sepan \textbf{qué técnica} corresponde a cada pregunta
+        \item Que \textbf{verifiquen los supuestos} antes de confiar en un resultado
+        \item Que sepan \textbf{interpretar} y explicárselo a alguien que no es estadístico
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+% ============================================================
+\begin{frame}{Libro de texto}
+  Existe mucha literatura de Estadística, y toda buena fuente sirve para consultar. Sin embargo, este curso se basa en:
+  \destaca{Las \textbf{Notas de Estadística} de la Dra.~Gudelia Figueroa Preciado y el
+  M.C.~Marco Antonio Valencia Arvizu, material referente de esta asignatura en nuestro  Departamento de Matemáticas.}
+  Esas notas fueron la base para crear el \textbf{libro digital} de acceso abierto que usaremos en el curso:
+\begin{center}
+\href{https://rosaliahdez.github.io/notas-estadistica/}{\texttt{rosaliahdez.github.io/notas-estadistica}}
+\end{center}
+que conserva la organización de las notas mencionadas, pero a las cuales se les ha agregado:
+  \begin{itemize}
+    \item Todo el cómputo en \textbf{R}, con el código explícito
+    \item \textbf{Gráficos interactivos} para mover parámetros y analizar su efecto
+    \item Ejercicios \textbf{con soluciones explicadas}
+    \item Un \textbf{mapa de decisión} para orientar sobre la técnica adecuada en cada escenario
+    \item Un \textbf{formulario} con todas las fórmulas del curso
+  \end{itemize}
+\end{frame}
+% ============================================================
+\begin{frame}{Sobre el mapa de decisión}
+  Cada tema aportará una fila a esta tabla, que nombraremos \textbf{mapa de decisión} y que iremos armando a lo largo del curso:
+  \vspace{0.35cm}
+  \centering
+  {\small
+  \begin{tabular}{@{}p{5.1cm}p{3.6cm}p{4.1cm}@{}}
+    \toprule
+    \textbf{Mi pregunta} & \textbf{Tipo de datos} & \textbf{Técnica} \\
+    \midrule
+    ¿Cómo se distribuye esta variable? & 1 cuantitativa & Histograma, caja, Q-Q plot \\
+    ¿Difieren dos grupos? & Cuantitativa por 2 grupos & Prueba $t$ \\
+    ¿Difieren tres o más grupos? & Cuantitativa por $k$ grupos & ANOVA y post-hoc \\
+    ¿Están asociadas dos categóricas? & Tabla de contingencia & Ji-cuadrada \\
+    \multicolumn{3}{c}{\textcolor{grisT}{\textit{... y doce filas más}}} \\
+    \bottomrule
+  \end{tabular}}
+  \vspace{0.5cm}
+  \raggedright
+  \destaca{La pregunta importante en el curso no será \textit{``¿cuál es la fórmula?''},
+  sino \textit{``¿qué técnica corresponde a esta pregunta y a estos datos?''}}
+\end{frame}
+\begin{frame}{Sobre el formulario}
+  También, conforme avancemos en el curso, se irá construyendo un formulario (que se utilizará durante los exámenes). Se presenta un pequeño extracto del formulario:
+  \vspace{0.3cm}
+    \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      {\footnotesize \textbf{Media y varianza muestrales}}
+      \vspace{-0.15cm}
+      \begin{align*}
+        \bar{x} &= \frac{\sum_{i=1}^{n} x_i}{n} \\[4pt]
+        s^2 &= \frac{1}{n-1}\left[\sum_{i=1}^{n} x_i^2 - n\bar{x}^2\right]
+      \end{align*}
+      {\color{grisT}\small En R:}~\Rc{mean(x)}~~\Rc{var(x)}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \raggedright
+      {\footnotesize \textbf{Prueba para una media}}
+      \vspace{-0.15cm}
+      \begin{align*}
+        t_c &= \frac{\bar{x} - \mu_0}{s/\sqrt{n}}, \qquad \text{gl} = n-1
+      \end{align*}
+      {\color{grisT}\small En R:}~\Rc{t.test(x, mu = mu0)}
+    \end{column}
+  \end{columns}
+  \vspace{0.4cm}
+      \destaca{ Cada fórmula aparece acompañada de su correspondiente comando en R. El formulario completo se encuentra en los apéndices del libro y se puede imprimir.}
+\end{frame}
+% ============================================================
+\begin{frame}{Con qué datos vamos a trabajar}
+  Para no cambiar de contexto en cada ejemplo (como se suele hacer en libros aplicados de Estadística) usaremos \textbf{pocos conjuntos de datos muchas veces}.
+  \vspace{0.4cm}
+
+  \centering
+  {\small
+  \begin{tabular}{@{}p{3.5cm}p{8.5cm}@{}}
+    \toprule
+    \textbf{Conjunto} & \textbf{Qué es} \\
+    \midrule
+    \textbf{Pingüinos} & %344 pingüinos de la Antártida.
+    Datos reales y limpios. El dataset base para nuestras prácticas \\
+    \textbf{Galletas} & Cata a ciegas diseñada y ejecutada por los estudiantes del curso \\
+    \textbf{Lagartijas} & Fisiología de ejemplares de ciudad contra campo abierto \\
+    \textbf{Salud regional} & Factores asociados a un resultado de laboratorio \\
+    \textbf{Algoritmos} & Tiempos de ejecución según el tamaño de la entrada \\
+    \bottomrule
+  \end{tabular}}
+  \vspace{0.5cm}
+  \raggedright
+
+ \destaca{Se trabajarán a lo largo del curso, aplicando las técnicas correspondientes al tipo de datos y a las preguntas que se buscan resolver.
+\vspace{2mm}
+  Primero describiremos los datos, luego entenderemos cómo se produjeron (expositores invitados), y al final se harán inferencias.}
+\end{frame}
+% ============================================================
+\begin{frame}{El proyecto final del curso: una cata a ciegas}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      Vamos a diseñar y ejecutar un \textbf{experimento real}: evaluar si cuatro
+      marcas de galletas gustan por igual.
+      \vspace{0.3cm}
+      \begin{itemize}
+        \item Ustedes diseñan el experimento
+        \item Lo ejecutamos en grupo
+        \item Lo analizamos con ANOVA
+        \item Lo reportan y lo presentan
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \destaca{\small Preguntas que tendrán que resolver ustedes:
+      \vspace{0.2cm}
+
+      ¿En qué orden prueba cada juez? ¿Deben saber qué marca están probando? ¿Cuántas personas hacen falta?}
+    \end{column}
+  \end{columns}
+  \vspace{0.4cm}
+   \destaca{Al final del curso tendrán un estudio propio, de principio a fin, ejemplificando así el \textbf{ciclo completo de un estudio estadístico}.}
+\end{frame}
+% ============================================================
+\begin{frame}{Criterios de evaluación}
+  \centering
+  {\small
+  \begin{tabular}{@{}p{5.4cm}c p{5.4cm}@{}}
+    \toprule
+    \textbf{Instrumento} & \textbf{Valor} & \textbf{Notas} \\
+    \midrule
+    Exámenes parciales (3-4) & 45\,\% & En papel, con formulario \\
+    Proyecto de la cata & 25\,\% & Diseño, ejecución, reporte y presentación \\
+    Cuestionarios por unidad & 20\,\% & En Moodle, con varios intentos \\
+    Prácticas en R & 10\,\% & Actividades cortas en clase y/o casa \\
+    \midrule
+    \textbf{Total} & \textbf{100\,\%} & \\
+    \bottomrule
+  \end{tabular}}
+  \vspace{0.5cm}
+  \raggedright
+  \destaca{Los exámenes se aplican con formulario. No se evalúa memorización, sino que sepan \textbf{elegir la técnica}, verificar supuestos, \textbf{calcular} sobre conjuntos pequeños de datos, \textbf{interpretar salidas de R}, y \textbf{explicar} la conclusión en lenguaje simple, entendible por alguien que no es estadístico.}
+\vspace{0.3cm}
+  Para tener derecho a evaluación ordinaria se requiere al menos el \textbf{75 \%  de asistencia}, conforme al Artículo 70 del Reglamento Escolar de la Universidad de Sonora.
+\end{frame}
+% ============================================================
+\begin{frame}{Software principal: R · Interfaz: RStudio}
+  \begin{columns}[T]
+    \begin{column}{0.5\textwidth}
+      \textbf{¿Por qué R y no Python?}
+      \begin{itemize}
+        \item Se usa en biología, salud, economía y ciencias sociales:
+          áreas donde probablemente les toque colaborar
+        \item Se pueden crear libretas reproducibles en lenguaje Markdown
+        \item Se integra con Quarto para escribir reportes vistosos, dashboards, presentaciones \dots
+      \end{itemize}
+      \vspace{0.2cm}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \textbf{¿Y RStudio?}
+      \begin{itemize}
+        \item Es el \textbf{entorno de trabajo} donde se usa R. La interfaz de RStudio tiene a la mano consola, editor,
+        gráficas y gestor de archivos en una sola ventana
+        \item R es el motor de RStudio.
+      \end{itemize}
+      \raggedright
+    \end{column}
+  \end{columns}
+      \destaca{ El objetivo no es aprender a programar en R, sino aprender a utilizarlos comandos estadísticos básicos de R para analizar datos y hacer inferencia.}
+  \vspace{0.3cm}
+  {\footnotesize Para quien venga de Python: en los apéndices del libro hay una tabla de
+  equivalencias entre los comandos centrales de R y sus contrapartes en Python.}
+\end{frame}
+\begin{frame}{Formas de usar R}
+  \centering
+  {\small
+  \begin{tabular}{@{}p{3.1cm}p{4.7cm}p{4.4cm}@{}}
+    \toprule
+    \textbf{Opción} & \textbf{Cuándo conviene} & \textbf{Qué requiere} \\
+    \midrule
+    \textbf{El libro del curso} & Para corridas rápidas, incluso desde el celular &
+      No ocupa instalación, se ejecuta en el navegador \\
+    \textbf{R en la terminal} & Si nos sentimos cómodos trabajando desde la terminal &
+      Instalar R \\
+    \textbf{R + RStudio} & Cuando queremos escribir código, ver gráficas y administrar archivos en una sola ventana &
+    Instalar R y luego RStudio \\
+          \textbf{Posit Cloud} & Trabajar sin instalar, desde cualquier máquina &
+      Crear una cuenta gratuita \\
+    \bottomrule
+  \end{tabular}}
+\end{frame}
+% ============================================================
+\begin{frame}[fragile]{Tarea}
+  \textbf{1. Instalar R y luego RStudio}, en ese orden:
+  \begin{itemize}
+    \item R: \texttt{https://cran.r-project.org}
+    \item RStudio Desktop: \texttt{https://posit.co/download/rstudio-desktop}
+  \end{itemize}
+  \vspace{0.3cm}
+  \textbf{2. Instalar los paquetes} que usaremos. Copiar esto en la consola de RStudio:
+\begin{lstlisting}
+install.packages(c("tidyverse", "palmerpenguins"))
+\end{lstlisting}
+  \vspace{0.2cm}
+  \textbf{3. Comprobar que funciona:}
+\begin{lstlisting}
+library(palmerpenguins)
+head(penguins)
+\end{lstlisting}
+\end{frame}
+% ============================================================
+\begin{frame}{Los pingüinos de Palmer}
+  \begin{center}
+  \IfFileExists{figuras/lter_penguins.png}{%
+    \includegraphics[height=0.52\textheight]{lter_penguins.png}\\[2pt]
+    \creditoHorst
+  }{%
+    \begin{tikzpicture}[scale=0.8]
+      \begin{scope}[shift={(-4.2,0)}]  \pingAdelie   \end{scope}
+      \begin{scope}[shift={(0,0)}]     \pingChinstrap\end{scope}
+      \begin{scope}[shift={(4.2,0)}]   \pingGentoo   \end{scope}
+      \node[align=center] at (-4.2,-1.7) {\textbf{Adelia}};
+      \node[align=center] at (0,-1.7)    {\textbf{Barbijo}};
+      \node[align=center] at (4.2,-1.7)  {\textbf{Juanito}};
+    \end{tikzpicture}
+  }
+  \vspace{0.25cm}
+  {\small
+  \begin{tabular}{@{}lll@{}}
+    \textbf{Barbijo} \textit{(P. antarcticus)} & \textbf{Juanito} \textit{(P. papua)} & \textbf{Adelia} \textit{(P. adeliae)}   \\
+    {\scriptsize franja negra bajo el mentón} &  {\scriptsize parche blanco sobre los ojos} & {\scriptsize anillo blanco en el ojo}\\
+    {\scriptsize 68 individuos}  & {\scriptsize 124 individuos} & {\scriptsize 152 individuos}  \\
+  \end{tabular}}
+  \end{center}
+
+  \vspace{0.2cm}
+  {\footnotesize Tres especies, tres islas, cuatro medidas por individuo. Un conjunto pequeño, pero que nos ayudará a ilustrar los conceptos de casi todo el curso.}
+\end{frame}
+% ============================================================
+\begin{frame}{¿Qué es exactamente lo que se mide?}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \centering
+      \IfFileExists{figuras/culmen_depth.png}{%
+        \includegraphics[width=\textwidth]{culmen_depth.png}\\[2pt]
+        \creditoHorst
+      }{%
+        {\color{grisT}\small[Figura de las dimensiones del pico]}
+      }
+    \end{column}
+    \begin{column}{0.44\textwidth}
+      \vspace{0.4cm}
+      Cada pingüino aporta cuatro medidas:
+      \begin{itemize}
+        \item Largo del pico (mm)
+        \item Profundidad del pico (mm)
+        \item Largo de la aleta (mm)
+        \item Masa corporal (g)
+      \end{itemize}
+      \vspace{0.3cm}
+      \destaca{\small Detalle importante: definir \emph{cómo} se mide una variable
+      es parte del trabajo estadístico. Si dos personas miden el pico de forma distinta,
+      los datos no son comparables.}
+    \end{column}
+  \end{columns}
+\end{frame}
+% ============================================================
+\begin{frame}{¿De dónde salieron estos datos?}
+  % Prioridad de imágenes:
+  %  1) fig1-palmer.png  = Figura 1 del artículo original (CC-BY, ver notas al final)
+  %  2) r-mapa-palmer.png = mapa generado en R con las coordenadas publicadas
+  %  3) mensaje de respaldo
+  \centering
+  \IfFileExists{figuras/fig1-palmer.png}{%
+    \includegraphics[height=0.66\textheight]{fig1-palmer.png}\\[2pt]
+    {\tiny\color{grisT} Gorman KB, Williams TD, Fraser WR (2014), PLoS ONE 9(3):e90081, Fig.~1.
+    Reproducida bajo licencia CC-BY.}
+  }{%
+    \IfFileExists{figuras/r-mapa-palmer.png}{%
+      \includegraphics[height=0.66\textheight]{r-mapa-palmer.png}\\[2pt]
+      {\tiny\color{grisT}\color{grisT}\small Mapa del archipiélago Palmer}
+    }{%
+      {\color{grisT}\small[Mapa del archipiélago Palmer]}
+    }%
+  }
+  \vspace{0.15cm}
+  {\footnotesize Archipiélago Palmer, al oeste de la Península Antártica.\\ Las tres islas
+  de estudio están a pocos kilómetros de la estación Palmer, en la isla Anvers.}
+\end{frame}
+\begin{frame}{La estación Palmer}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      Estación de investigación de Estados Unidos en la \textbf{isla Anvers}
+      ($64^\circ 46'$S, $64^\circ 03'$O), al oeste de la Península Antártica.
+      \vspace{0.3cm}
+      \begin{itemize}
+        \item Forma parte de la red \textbf{LTER} (\textit{Long Term Ecological Research}):
+          proyectos de monitoreo que duran décadas
+        \item Los datos se tomaron en tres \textbf{temporadas de campo}: 2007/08, 2008/09 y 2009/10.
+          Se escriben con dos años porque el verano austral va de noviembre a febrero, es decir,
+          cruza el fin de año
+        \item Investigación de la Dra.~Kristen Gorman, con permisos del Acta de Conservación
+          Antártica y de comités de cuidado animal
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \destaca{\small Tres veranos de trabajo de campo en la Antártida para obtener
+      \textbf{344 renglones} de datos.
+
+      \vspace{0.25cm}
+      Vale la pena tenerlo presente cada vez que abramos este archivo: detrás de cada
+      fila hubo alguien en el hielo, con un calibrador en la mano.}
+    \end{column}
+  \end{columns}
+\end{frame}
+% ============================================================
+\begin{frame}{Extracto del archivo real}
+  \centering
+  {\scriptsize
+  \begin{tabular}{@{}rlllrrrrl@{}}
+    \toprule
+    & \textbf{species} & \textbf{island} & \textbf{sex} & \textbf{bill\_length} & \textbf{bill\_depth} & \textbf{flipper} & \textbf{body\_mass} & \textbf{year} \\
+    & & & & {\tiny\color{grisT}mm} & {\tiny\color{grisT}mm} & {\tiny\color{grisT}mm} & {\tiny\color{grisT}gramos} & \\
+    \midrule
+    1 & Adelie & Torgersen & male   & 39.1 & 18.7 & 181 & 3750 & 2007 \\
+    2 & Adelie & Torgersen & female & 39.5 & 17.4 & 186 & 3800 & 2007 \\
+    3 & Adelie & Torgersen & female & 40.3 & 18.0 & 195 & 3250 & 2007 \\
+    4 & Adelie & Torgersen & \textcolor{rojoAc}{NA} & \textcolor{rojoAc}{NA} & \textcolor{rojoAc}{NA} & \textcolor{rojoAc}{NA} & \textcolor{rojoAc}{NA} & 2007 \\
+    5 & Adelie & Torgersen & female & 36.7 & 19.3 & 193 & 3450 & 2007 \\
+    6 & Adelie & Torgersen & male   & 39.3 & 20.6 & 190 & 3650 & 2007 \\
+    \multicolumn{9}{c}{\textcolor{grisT}{\textit{... 338 filas más}}} \\
+    \bottomrule
+  \end{tabular}}
+
+  \vspace{0.45cm}
+  \raggedright
+  \destaca{Contiene 344 renglones y 8 columnas. Los nombres están en inglés porque así vienen
+  en el paquete, y así los vamos a escribir en R. Las tres medidas de longitud están en
+  \textbf{milímetros} y la masa en \textbf{gramos}.
+
+  \vspace{0.2cm}
+  Nótese el renglón 4: casi todo \textcolor{rojoAc}{\texttt{NA}}. Ese pingüino se registró
+  pero no se le pudo medir. Más adelante veremos por qué, y qué hacer con esos casos.}
+\end{frame}
+% ============================================================
+\begin{frame}{Diccionario del conjunto de datos}
+  Todo conjunto de datos serio viene con su \textbf{diccionario}: qué significa cada
+  columna, de qué tipo es y en qué unidades está medida.
+  \vspace{0.3cm}
+  \centering
+  {\scriptsize
+  \begin{tabular}{@{}llllc@{}}
+    \toprule
+    \textbf{Variable} & \textbf{Significado} & \textbf{Tipo} & \textbf{Valores o unidad} & \textbf{Faltantes} \\
+    \midrule
+    \texttt{species}    & Especie del pingüino & Categórica nominal & Adelie, Chinstrap, Gentoo & 0 \\
+    \texttt{island}     & Isla donde se observó & Categórica nominal & Biscoe, Dream, Torgersen & 0 \\
+    \texttt{bill\_length\_mm} & Largo del culmen (pico) & Cuantitativa continua & milímetros & 2 \\
+    \texttt{bill\_depth\_mm}  & Profundidad del culmen & Cuantitativa continua & milímetros & 2 \\
+    \texttt{flipper\_length\_mm} & Largo de la aleta derecha & Cuantitativa discreta & milímetros & 2 \\
+    \texttt{body\_mass\_g}    & Masa corporal & Cuantitativa discreta & gramos & 2 \\
+    \texttt{sex}        & Sexo, determinado por ADN & Categórica nominal & female, male & 11 \\
+    \texttt{year}       & Temporada de estudio & Categórica ordinal & 2007, 2008, 2009 & 0 \\
+    \bottomrule
+  \end{tabular}}
+  \vspace{0.4cm}
+  \raggedright
+  \destaca{\small Nótese que \texttt{year} es un número pero funciona como \textbf{etiqueta}:
+  promediar años no tiene sentido. Y que hay más faltantes en \texttt{sex} (11) que en las
+  medidas (2): a esos once no se les pudo determinar el sexo en el laboratorio.
+  \vspace{0.2cm}
+  El diccionario completo del conjunto está en el libro, junto con los de los otros
+  conjuntos del curso. Consultarlo es el \textbf{primer paso} de cualquier análisis.}
+\end{frame}
+% ============================================================
+\begin{frame}{¿Qué preguntas motivaron todo este trabajo?}
+  Nadie va tres veranos a la Antártida sin una pregunta. Las del estudio original fueron:
+  \vspace{0.35cm}
+  \begin{enumerate}
+    \item ¿Existe \textbf{dimorfismo sexual} en el tamaño corporal de estas tres especies?
+      Es decir, ¿machos y hembras difieren en tamaño, y en cuál especie más?
+      \vspace{0.2cm}
+    \item ¿Se puede \textbf{determinar el sexo} de un pingüino a partir de sus medidas
+      corporales, sin necesidad de análisis de ADN?
+      \vspace{0.2cm}
+    \item ¿Está relacionada la variabilidad ambiental —el \textbf{hielo marino} de cada
+      invierno— con las diferencias de alimentación entre machos y hembras?
+  \end{enumerate}
+  \vspace{0.2cm}
+  \destaca{\small Las preguntas explican cada decisión del diseño: por eso se midió a
+  \textbf{los dos} miembros de cada pareja (para comparar sexos), por eso se determinó el
+  sexo por \textbf{ADN} (para tener la respuesta correcta con la que comparar), y por eso
+  se midieron \textbf{cuatro dimensiones} corporales (para ver cuáles predicen el sexo).
+
+  En el dataset original sí aparece información sobre la alimentación, medida mediante isótopos estables en muestras de sangre e incluye además datos satelitales de hielo marino. De este modo, nosotros no podemos responder la tercer pregunta con el dataset de $344\times 8$ que usaremos en el curso. \textbf{qué preguntas se pueden responder depende de qué variables se midieron,} no de qué técnica se conoce. Si la variable no está en la tabla, ninguna técnica la inventa.}
+\end{frame}
+% ============================================================
+\begin{frame}{¿Qué más le podemos preguntar a estos datos?}
+  \centering
+  {\small
+  \begin{tabular}{@{}p{7.2cm}p{4.8cm}@{}}
+    \toprule
+    \textbf{Pregunta} & \textbf{Técnica o medida que la resuelve} \\
+    \midrule
+    \textcolor[HTML]{1F4E79}{$\bullet$} ¿Cuánto pesa un pingüino típico? ¿Qué tan parecidos son entre sí? &
+      Media, mediana, desviación estándar {\scriptsize\color{grisT}(unidades 1--2)} \\
+    \textcolor[HTML]{1F4E79}{$\bullet$} ¿Los pingüinos con aletas más largas pesan más? &
+      Coeficiente de correlación y recta de regresión {\scriptsize\color{grisT}(unidad 3)} \\
+    \textcolor[HTML]{1F4E79}{$\bullet$} Los Juanito de esta muestra pesaron más que los Adelia. ¿Pasa lo mismo en \emph{toda} la población, o fue casualidad de estos 344? &
+      Intervalo de confianza y prueba $t$ para dos medias {\scriptsize\color{grisT}(unidades 7--8)} \\
+    \textcolor[HTML]{1F4E79}{$\bullet$} ¿Difieren las \emph{tres} especies en el largo del pico, o solo alguna? &
+      ANOVA y comparaciones post-hoc {\scriptsize\color{grisT}(unidad 10)} \\
+    \textcolor[HTML]{1F4E79}{$\bullet$} ¿Difiere la proporción de machos entre especies? &
+      Prueba ji-cuadrada en tabla de contingencia {\scriptsize\color{grisT}(unidad 9)} \\
+    \textcolor[HTML]{1F4E79}{$\bullet$} ¿Se puede predecir la masa a partir de la aleta, y con cuánto error? &
+      Regresión lineal, $R^2$ e intervalos de predicción {\scriptsize\color{grisT}(unidad 11)} \\
+    \bottomrule
+  \end{tabular}}
+  \vspace{2mm}
+  \destaca{\small Cada tipo de pregunta necesita una técnica distinta, de eso trata el curso: \textbf{describir
+  lo que vemos}, y hacer \textbf{inferencias, es decir afirmar algo sobre toda la población habiendo visto solo una muestra, y decir con cuánta confianza lo afirmamos.}}
+\end{frame}
+% ============================================================
+\begin{frame}{El diseño del estudio observacional}
+  \destaca{Las acciones llevadas a cabo por los investigadores para registrar los datos no fueron improvisadas. Los nidos se marcaron \textbf{antes} de que las hembras pusieran el primer huevo, y se monitorearon de forma constante. Esto es, \textbf{había un plan antes de obtener los datos}.}
+  \vspace{0.4cm}
+  \centering
+  {\small
+  \begin{tabular}{@{}lccc@{}}
+    \toprule
+    \textbf{Especie} & \textbf{Nidos por temporada} & \textbf{Islas} & \textbf{Distribución} \\
+    \midrule
+    Adelia  & 30 & Biscoe, Dream y Torgersen & 10 nidos en cada isla \\
+    Juanito & 30 & Biscoe & todos en la misma isla \\
+    Barbijo & 15 & Dream & todos en la misma isla \\
+    \bottomrule
+  \end{tabular}}
+
+  \vspace{0.5cm}
+  \raggedright
+  {\footnotesize ¿Por qué los Barbijo son la mitad? Porque en las colonias de Dream
+  anidaban menos individuos. El tamaño de muestra no siempre lo decide quien investiga:
+  a veces lo decide la naturaleza.}
+\end{frame}
+% ============================================================
+\begin{frame}{El protocolo de medición}
+  Cada vez que un nido llegaba a la etapa de \textbf{un huevo}, se capturaba a
+  \textbf{los dos adultos} de la pareja y se registraba:
+    \vspace{0.35cm}
+
+    \centering
+    {\small
+  \begin{tabular}{@{}lll@{}}
+    \toprule
+    \textbf{Medida} & \textbf{Instrumento} & \textbf{Precisión} \\
+    \midrule
+    Largo y profundidad del pico & Calibrador de carátula & $\pm 0.1$ mm \\
+    Largo de la aleta derecha & Regla & $\pm 1$ mm \\
+    Masa corporal & Balanza de resorte y bolsa & $\pm 25$ o $\pm 50$ g \\
+    Sexo & Análisis de ADN (PCR) & --- \\
+    \bottomrule
+  \end{tabular}}
+
+  \vspace{0.5cm}
+  \raggedright
+  \destaca{Tres cosas que un estadístico nota de inmediato:
+  \vspace{0.2cm}
+  \textbf{Siempre la aleta derecha}, nunca ``una aleta''. El instrumento y su precisión
+  están \textbf{escritos en el protocolo}. Y el sexo se determinó por \textbf{ADN}, no
+  a simple vista.}
+\end{frame}
+% ============================================================
+\begin{frame}{Los controles del diseño}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \textbf{Todos en la misma etapa}\\[3pt]
+      {\small Se midió a todos los adultos exactamente en la etapa de \emph{un huevo}.
+      La masa de un pingüino cambia muchísimo a lo largo de la reproducción, medirlos
+      en momentos distintos habría hecho incomparables los datos.}
+      \vspace{0.35cm}
+      \textbf{La pareja completa}\\[3pt]
+      {\small De cada nido se midió al macho \emph{y} a la hembra. Los datos vienen
+      \textbf{en parejas}, lo cual permite comparaciones más finas
+      %(unidad 8)
+      .}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \textbf{Seguimiento posterior}\\[3pt]
+      {\small Después de manipularlos, se siguió vigilando cada nido para confirmar
+      que la pareja completara su nidada de dos huevos.}
+      \vspace{0.35cm}
+      \destaca{\small Esto es \textbf{control} en el sentido técnico: mantener constante
+      todo lo que no se está estudiando, para que las diferencias observadas se deban
+      a lo que sí interesa.% (unidad 5).
+ }
+    \end{column}
+  \end{columns}
+\end{frame}
+% ============================================================
+\begin{frame}{Los datos faltantes: \texttt{NA}}
+  Del plan original no todo se pudo cumplir:
+  \vspace{0.35cm}
+  \begin{itemize}
+    \item Hubo días en que \textbf{el clima impidió llegar} a las colonias. Algunos nidos
+      no se muestrearon porque, al volver, la pareja ya había completado la nidada.
+    \item Algunas parejas se \textbf{excluyeron del análisis} porque nunca se observó el
+      segundo huevo, probablemente depredado por la \textbf{skúa café}. Sin ese dato no
+      había certeza de que los adultos estuvieran exactamente en la etapa de un huevo.
+  \end{itemize}
+
+  \vspace{0.4cm}
+  \destaca{Por eso el archivo tiene celdas vacías (\texttt{NA}) y por eso los tamaños
+  finales quedaron desiguales: \textbf{152} Adelia, \textbf{124} Juanito y \textbf{68} Barbijo.
+
+  \vspace{0.25cm}
+  Los datos faltantes casi nunca faltan al azar: \textbf{tienen una causa}. Aquí fueron
+  el clima y un ave depredadora. Preguntar por qué falta un dato es parte del análisis, así como tomar la decisión de \textbf{qué hacer} con dichos faltantes.}
+\end{frame}
+% ============================================================
+\begin{frame}{Entender el contexto del problema y el origen de los datos IMPORTA}
+  Al contar cuántos pingüinos de cada especie hay en cada isla, resulta esta tabla
+  (una \textbf{tabla de contingencia}):
+
+  \vspace{0.2cm}
+  \centering
+  {\small
+  \begin{tabular}{@{}lrrrr@{}}
+    \toprule
+    & \textbf{Biscoe} & \textbf{Dream} & \textbf{Torgersen} & \textbf{Total} \\
+    \midrule
+    Adelia  & 44 & 56 & 52 & 152 \\
+    Barbijo & 0  & 68 & 0  & 68 \\
+    Juanito & 124 & 0 & 0  & 124 \\
+    \midrule
+    \textbf{Total} & 168 & 124 & 52 & 344 \\
+    \bottomrule
+  \end{tabular}}
+
+  \vspace{0.3cm}
+  \raggedright
+  En la unidad 9 veremos una prueba para decidir si dos variables categóricas están
+  \textbf{asociadas}. Aplicada aquí, saldría una \textbf{asociación fuerte}: los ceros hacen que \texttt{especie} e \texttt{isla} ``parezcan`` íntimamente ligadas. Sin embargo, concluir ``\emph{descubrimos que la especie depende de la isla}'' \textbf{¡sería un error!}. Esos ceros no son un hallazgo sobre la naturaleza: son consecuencia
+  del \textbf{diseño del muestreo}. Los Juanito se buscaron únicamente en Biscoe y los
+  Barbijo únicamente en Dream, porque ahí están sus colonias.
+
+  \vspace{0.2cm}
+  \destaca{\small
+  Por esto \textbf{es muy importante entender el contexto del problema} aunque no seamos del área,  \textbf{y comprender cómo se recolectaron los datos}.}
+\end{frame}
+% ============================================================
+\begin{frame}{Actividad: capturemos nuestros propios datos}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      Cada quien recibe un \textbf{pingüino de pan}. Antes de comerlo, hay que medirlo.
+      \vspace{0.3cm}
+      \begin{enumerate}
+        \item Acordar \textbf{en grupo} cómo se mide cada variable. ¿El largo desde dónde
+          hasta dónde? ¿Con qué instrumento?
+        \item Registrar los datos de los 20 individuos en una tabla común
+        \item Anotar cualquier \texttt{NA} y \textbf{por qué} faltó
+      \end{enumerate}
+    \end{column}
+    \begin{column}{0.44\textwidth}
+      \centering
+      {\small
+      \begin{tabular}{@{}cccc@{}}
+        \toprule
+        \textbf{id} & \textbf{largo} & \textbf{ancho} & \textbf{masa} \\
+        \midrule
+        1 & & & \\
+        2 & & & \\
+        3 & & & \\
+        \multicolumn{4}{c}{\textcolor{grisT}{\textit{...}}} \\
+        20 & & & \\
+        \bottomrule
+      \end{tabular}}
+    \end{column}
+  \end{columns}
+  \vspace{0.4cm}
+  \destaca{\small Al terminar tendremos un conjunto de datos \textbf{propio}, capturado
+  con nuestro protocolo, con nuestras discusiones sobre cómo medir y con nuestros datos
+  faltantes. Lo usaremos en la siguiente sesión.
+  \vspace{0.2cm}
+  Es exactamente lo que hizo el equipo de la estación Palmer. Aquí el experimento es en pequeño, y con pan.}
+\end{frame}
+% ============================================================
+\section{Unidad 1: Exploración de los datos}
+\begin{frame}[plain]
+  \centering
+  \vspace{1.2cm}
+  {\Large\bfseries\color{azulUS} Unidad 1}\\[6pt]
+  {\large\color{azulUS} Exploración de los datos}\\[14pt]
+  \IfFileExists{figuras/lter_penguins.png}{%
+    \includegraphics[height=0.32\textheight]{lter_penguins.png}
+  }{%
+    \begin{tikzpicture}[scale=0.55]
+      \begin{scope}[shift={(-2,0)}] \pingAdelie \end{scope}
+      \begin{scope}[shift={(0,0)}] \pingChinstrap \end{scope}
+      \begin{scope}[shift={(2,0)}] \pingGentoo \end{scope}
+    \end{tikzpicture}
+  }\\[10pt]
+  {\small\color{grisT} Aprender a mirar los datos antes de tocarlos}
+\end{frame}
+\begin{frame}{Todo empieza con una tabla}
+  \centering
+  {\footnotesize
+  \begin{tabular}{@{}lllccc@{}}
+    \toprule
+    \textbf{especie} & \textbf{isla} & \textbf{sexo} & \textbf{pico (mm)} & \textbf{aleta (mm)} & \textbf{masa (g)} \\
+    \midrule
+    Adelia & Torgersen & macho & 39.1 & 181 & 3750 \\
+    Adelia & Torgersen & hembra & 39.5 & 186 & 3800 \\
+    Juanito & Biscoe & hembra & 46.1 & 211 & 4500 \\
+    Barbijo & Dream & macho & 50.0 & 196 & 3900 \\
+    \multicolumn{6}{c}{\textcolor{grisT}{\textit{... 340 filas más}}} \\
+    \bottomrule
+  \end{tabular}}
+  \vspace{0.7cm}
+  \raggedright
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \destaca{\textbf{Individuos} (las filas)\\[3pt]
+      {\small Cada fila es \emph{un pingüino}: la unidad que observamos}}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \destaca{\textbf{Variables} (las columnas)\\[3pt]
+      {\small Cada columna es \emph{algo que medimos} de cada pingüino}}
+    \end{column}
+  \end{columns}
+\end{frame}
+\begin{frame}{Confundir esto es el error número uno}
+  \destaca{\textbf{Pregunta.} En los datos de la cata de galletas, ¿qué es un individuo:
+  una marca de galleta o la calificación de un juez?}
+  \vspace{0.8cm}
+  \pause
+  Es \textbf{cada calificación}: una fila por juez y por marca.
+  \vspace{0.4cm}
+  \centering
+  {\footnotesize
+  \begin{tabular}{@{}cccc@{}}
+    \toprule
+    \textbf{juez} & \textbf{orden} & \textbf{marca} & \textbf{agrado} \\
+    \midrule
+    1 & 1 & Oreo & 8 \\
+    1 & 2 & Chokis & 7 \\
+    1 & 3 & Lors & 5 \\
+    2 & 1 & Lors & 6 \\
+    \bottomrule
+  \end{tabular}}
+  \vspace{0.5cm}
+  \raggedright
+  {\footnotesize Si la tabla estuviera armada con una fila por marca, no podríamos
+  analizar nada: perderíamos la información de quién calificó qué.}
+\end{frame}
+\begin{frame}{Tipos de variables}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \destaca{\textbf{Categóricas} (cualitativas)\\[4pt]
+      {\small Clasifican al individuo en grupos\\[4pt]
+      \textit{especie, isla, sexo, marca de galleta}}}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \destaca{\textbf{Cuantitativas} (numéricas)\\[4pt]
+      {\small Miden una cantidad\\[4pt]
+      \textit{masa, largo de la aleta, tiempo de ejecución}}}
+    \end{column}
+  \end{columns}
+  \vspace{0.7cm}
+  \destaca{\textbf{Cuidado.} No todo número es cuantitativo. El \emph{año} de observación
+  es un número, pero promediar años rara vez tiene sentido. Y un código de muestra
+  como \texttt{G134} es una etiqueta, no una cantidad.}
+\end{frame}
+\begin{frame}{Escalas de medición}
+  \centering
+  {\small
+  \begin{tabular}{@{}llp{5.2cm}@{}}
+    \toprule
+    \textbf{Escala} & \textbf{Permite} & \textbf{Ejemplo} \\
+    \midrule
+    \textbf{Nominal}   & Solo distinguir categorías & Especie, isla, marca \\
+    \textbf{Ordinal}   & Ordenar, sin distancias definidas & Nivel de agrado: bajo, medio, alto \\
+    \textbf{Intervalo} & Orden y distancias, sin cero absoluto & Temperatura en $^\circ$C \\
+    \textbf{Razón}     & Orden, distancias y cero absoluto & Masa, longitud, tiempo \\
+    \bottomrule
+  \end{tabular}}
+  \vspace{0.6cm}
+  \raggedright
+  \destaca{La escala decide qué operaciones tienen sentido. Promediar temperaturas
+  corporales es válido; ``promediar'' especies, no.
+  \vspace{0.2cm}
+  ¿Y la escala hedónica de la cata, de 1 a 7? Estrictamente es \textbf{ordinal}, pero
+  en análisis sensorial se trata como cuantitativa por convención. Es una decisión
+  que conviene hacer explícita, no esconder.}
+\end{frame}
+\begin{frame}{Ejercicio rápido: clasifiquen conmigo}
+  \centering
+  {\small
+  \begin{tabular}{@{}lcc@{}}
+    \toprule
+    \textbf{Variable} & \textbf{¿Tipo?} & \textbf{¿Escala?} \\
+    \midrule
+    Especie del pingüino & & \\[6pt]
+    Masa corporal en gramos & & \\[6pt]
+    Nivel de dulzor preferido (poco / medio / muy) & & \\[6pt]
+    Código de la muestra (\texttt{G134}) & & \\[6pt]
+    Número de galletas consumidas al mes & & \\
+    \bottomrule
+  \end{tabular}}
+  \vspace{0.7cm}
+  \raggedright
+  {\footnotesize Se resuelve en voz alta. La última tiene trampa: es cuantitativa
+  \emph{discreta} y de razón.}
+\end{frame}
+\begin{frame}{¿De dónde vienen los datos? Dos mundos distintos}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \destaca{\textbf{Estudio observacional}\\[4pt]
+      {\small Medimos \textbf{sin intervenir}.\\[4pt]
+      \textit{Comparar la temperatura de lagartijas de ciudad y de campo:
+      nadie decidió dónde vive cada una.}}}
+      \vspace{0.3cm}
+      \centering\textcolor{rojoAc}{\small Permite hablar de \textbf{asociación}}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \destaca{\textbf{Experimento}\\[4pt]
+      {\small \textbf{Aplicamos tratamientos} y medimos la respuesta.\\[4pt]
+      \textit{Decidir al azar en qué orden cata cada juez las cuatro marcas.}}}
+      \vspace{0.3cm}
+      \centering\textcolor{verdeOk}{\small Permite hablar de \textbf{causa y efecto}}
+    \end{column}
+  \end{columns}
+  \vspace{0.6cm}
+  \destaca{Un titular como \textit{``quienes toman café viven más''} viene de un estudio
+  \textbf{observacional}. Quizá quienes toman café comparten otros hábitos, y esos
+  explican la diferencia. Por eso el titular no autoriza a concluir que el café alargue la vida.}
+\end{frame}
+% ============================================================
+%  Este frame estaba antes en la presentación del curso. Se movió aquí, justo
+%  después de definir observacional y experimento, para no adelantar los términos
+%  tratamiento, azar, causa y efecto en la primera media hora de clase.
+% ============================================================
+\begin{frame}{Nuestros dos conjuntos, uno de cada tipo}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \destaca{\textbf{Un estudio bien diseñado}\\[4pt]
+      {\small El de los pingüinos. Se planeó todo con cuidado: qué medir, con qué
+      instrumento, en qué etapa, cuántos nidos por isla.
+      \vspace{0.2cm}
+      Pero nadie \emph{asignó} la especie ni el sexo de cada pingüino: eso ya venía dado.}}
+      \vspace{0.25cm}
+      \centering\textcolor{rojoAc}{\small Sigue siendo \textbf{observacional}}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \destaca{\textbf{Un experimento}\\[4pt]
+      {\small La cata de galletas. Nosotros decidiremos, \emph{al azar}, en qué orden
+      prueba cada juez cada marca.
+      \vspace{0.2cm}
+      Al asignar nosotros los tratamientos, podremos hablar de causa.}}
+      \vspace{0.25cm}
+      \centering\textcolor{verdeOk}{\small Es un \textbf{experimento}}
+    \end{column}
+  \end{columns}
+  \vspace{0.45cm}
+  \destaca{Conviene no confundir \emph{planear bien la recolección} con \emph{hacer un
+  experimento}. El estudio de los pingüinos es un ejemplo excelente de lo primero, y de
+  ahí salieron respuestas válidas a sus preguntas. Pero solo la asignación al azar de
+  tratamientos —lo que haremos con las galletas— autoriza a hablar de \textbf{causa y efecto}.}
+\end{frame}
+\begin{frame}{Tres formas de obtener datos}
+  \vspace{0.2cm}
+  \centering
+  \begin{tikzpicture}[scale=0.95]
+    \node[fill=azulClaro,rounded corners,text width=3.3cm,align=center,minimum height=1.9cm] at (-4.2,0)
+      {\textbf{Censo}\\[3pt]{\scriptsize Se mide \emph{toda} la población}\\[3pt]{\scriptsize Caro, a veces imposible}};
+    \node[fill=azulClaro,rounded corners,text width=3.3cm,align=center,minimum height=1.9cm] at (0,0)
+      {\textbf{Muestra}\\[3pt]{\scriptsize Se mide una \emph{parte} bien elegida}\\[3pt]{\scriptsize Unidad 4}};
+    \node[fill=azulClaro,rounded corners,text width=3.3cm,align=center,minimum height=1.9cm] at (4.2,0)
+      {\textbf{Experimento}\\[3pt]{\scriptsize Se \emph{producen} datos nuevos}\\[3pt]{\scriptsize Unidad 5}};
+  \end{tikzpicture}
+  \vspace{0.7cm}
+  \raggedright
+  \destaca{Hay encuestas con \textbf{millones} de respuestas que han fallado en predecir
+  una elección. El problema no fue el tamaño, sino \emph{cómo} se eligió a quién preguntar.
+  Es el tema de la unidad 4.}
+\end{frame}
+% ============================================================
+\begin{frame}{Gráficas: una para cada tipo de variable}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \textbf{Variable categórica}\\[4pt]
+      La pregunta es \emph{¿cuántos hay de cada categoría?}\\[6pt]
+      \centering
+      \IfFileExists{figuras/r-barras-especie.png}{%
+        \includegraphics[width=0.95\textwidth]{r-barras-especie.png}%
+      }{%
+        \begin{tikzpicture}[scale=0.72]
+          \draw[grisT,->] (0,0) -- (0,3.3);
+          \draw[grisT,->] (0,0) -- (4.6,0);
+          \fill[azulUS] (0.5,0) rectangle (1.3,3.0);
+          \fill[azulUS] (1.7,0) rectangle (2.5,1.5);
+          \fill[azulUS] (2.9,0) rectangle (3.7,2.2);
+          \node[below,font=\tiny] at (0.9,0) {Adelia};
+          \node[below,font=\tiny] at (2.1,0) {Barbijo};
+          \node[below,font=\tiny] at (3.3,0) {Juanito};
+          \node[left,font=\tiny] at (0,3.0) {152};
+          \node[left,font=\tiny] at (0,1.5) {68};
+        \end{tikzpicture}%
+      }\\[3pt]
+      {\scriptsize Diagrama de barras}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \textbf{Variable cuantitativa}\\[4pt]
+      La pregunta es \emph{¿cómo se distribuyen los valores?}\\[6pt]
+      \centering
+      \IfFileExists{figuras/r-histograma-masa.png}{%
+        \includegraphics[width=0.95\textwidth]{r-histograma-masa.png}%
+      }{%
+        \begin{tikzpicture}[scale=0.72]
+          \draw[grisT,->] (0,0) -- (0,3.3);
+          \draw[grisT,->] (0,0) -- (4.6,0);
+          \fill[azulUS] (0.3,0) rectangle (0.75,0.8);
+          \fill[azulUS] (0.75,0) rectangle (1.2,2.1);
+          \fill[azulUS] (1.2,0) rectangle (1.65,2.7);
+          \fill[azulUS] (1.65,0) rectangle (2.1,1.6);
+          \fill[azulUS] (2.1,0) rectangle (2.55,0.9);
+          \fill[azulUS] (2.55,0) rectangle (3.0,1.7);
+          \fill[azulUS] (3.0,0) rectangle (3.45,2.3);
+          \fill[azulUS] (3.45,0) rectangle (3.9,1.1);
+          \fill[azulUS] (3.9,0) rectangle (4.35,0.4);
+          \node[below,font=\tiny] at (2.3,0) {masa corporal (g)};
+        \end{tikzpicture}%
+      }\\[3pt]
+      {\scriptsize Histograma}
+    \end{column}
+  \end{columns}
+  \vspace{0.4cm}
+  \destaca{\small ¿Notan algo raro en el histograma? Tiene \textbf{dos montículos}.
+  Eso casi siempre significa que hay grupos distintos mezclados.}
+\end{frame}
+\begin{frame}{Al leer un histograma, tres preguntas}
+  \begin{columns}[T]
+    \begin{column}{0.3\textwidth}
+      \destaca{\centering\textbf{Centro}\\[3pt]{\small ¿Alrededor de qué valor se acumulan?}}
+    \end{column}
+    \begin{column}{0.3\textwidth}
+      \destaca{\centering\textbf{Dispersión}\\[3pt]{\small ¿Qué tan esparcidos están?}}
+    \end{column}
+    \begin{column}{0.3\textwidth}
+      \destaca{\centering\textbf{Forma}\\[3pt]{\small ¿Simétrica? ¿Sesgada? ¿Uno o varios picos?}}
+    \end{column}
+  \end{columns}
+  \vspace{0.8cm}
+  \destaca{Y una advertencia importante: el \textbf{ancho de clase} que se elige
+  cambia la historia que cuenta el histograma. Con intervalos muy anchos desaparece
+  la estructura; con intervalos muy angostos solo se ve ruido.
+  \vspace{0.25cm}
+  En el libro hay un laboratorio interactivo para moverlo y verlo. Un histograma
+  no es un dato objetivo: es una \textbf{decisión} de quien grafica.}
+\end{frame}
+\begin{frame}{De dónde venían los dos montículos}
+  \centering
+  \IfFileExists{figuras/r-histograma-especie.png}{%
+    \includegraphics[width=0.78\textwidth]{r-histograma-especie.png}
+  }{%
+    {\color{grisT}\small[Histograma de la masa separado por especie]}
+  }
+  \vspace{0.3cm}
+  \raggedright
+  \destaca{Al separar por especie, el misterio se resuelve: los Juanito son
+  notablemente más pesados. Los ``dos montículos'' eran \textbf{dos poblaciones
+  mezcladas}.
+  \vspace{0.2cm}
+  Moraleja para todo el curso: cuando una distribución se ve rara, casi siempre hay
+  una \textbf{variable escondida} que la explica. Buscarla es parte del análisis.}
+\end{frame}
+\begin{frame}{El ancho de clase no es un detalle}
+  \centering
+  \IfFileExists{figuras/r-ancho-100.png}{%
+    \includegraphics[width=0.32\textwidth]{r-ancho-100.png}\hfill
+    \includegraphics[width=0.32\textwidth]{r-ancho-250.png}\hfill
+    \includegraphics[width=0.32\textwidth]{r-ancho-800.png}
+  }{%
+    {\color{grisT}\small[Tres histogramas de los mismos datos con anchos de clase distintos]}
+  }
+  \vspace{0.35cm}
+  \raggedright
+  \destaca{Los \textbf{mismos datos}, tres decisiones distintas. Con intervalos muy
+  angostos solo se ve ruido; con intervalos muy anchos desaparece la estructura; en
+  medio se distinguen los dos grupos.
+  \vspace{0.2cm}
+  Un histograma no es un dato objetivo: es una \textbf{decisión} de quien grafica.
+  En el libro hay un laboratorio para moverlo y verlo en vivo.}
+\end{frame}
+% ============================================================
+\begin{frame}{Cierre}
+  \textbf{Lo que vimos}
+  \begin{itemize}
+    \item Individuos y variables: siempre identificarlos antes de calcular
+    \item Tipos de variables y escalas de medición
+    \item Observacional contra experimental, y por qué solo el segundo permite hablar de causa
+    \item La gráfica adecuada según el tipo de variable
+  \end{itemize}
+  \vspace{0.4cm}
+  \textbf{Para la próxima sesión}
+  \begin{itemize}
+    \item Tener R y RStudio instalados, con los dos paquetes
+    \item Leer el capítulo 1 del libro y resolver los ejercicios 1 a 3
+    \item Primer cuestionario en Moodle
+  \end{itemize}
+  \vspace{0.5cm}
+  \destaca{\small Las soluciones de los ejercicios están en el libro, explicadas.
+  Intentarlos primero y luego compararlas: así sirven.}
+\end{frame}
+\begin{frame}[plain]
+  \centering
+  \vspace{1.0cm}
+  \IfFileExists{figuras/lter_penguins.png}{%
+    \includegraphics[height=0.36\textheight]{lter_penguins.png}\\[2pt]
+    \creditoHorst
+  }{%
+    \begin{tikzpicture}[scale=0.8]
+      \begin{scope}[shift={(-2.4,0)}] \pingAdelie \end{scope}
+      \begin{scope}[shift={(0,0)}] \pingChinstrap \end{scope}
+      \begin{scope}[shift={(2.4,0)}] \pingGentoo \end{scope}
+    \end{tikzpicture}
+  }
+  \vspace{0.6cm}
+  {\Large\color{azulUS} ¿Preguntas?}\\[10pt]
+  {\small\color{grisT} \url{https://rosaliahdez.github.io/notas-estadistica/} \\
+  Comunicación por Teams · Cuestionarios en Moodle}
+  \vspace{0.7cm}
+  {\tiny\color{grisT}
+  Datos: Horst A, Hill A, Gorman K (2020). \textit{palmerpenguins} (CC-0). ---
+  Estudio original: Gorman KB, Williams TD, Fraser WR (2014).
+  \textit{Ecological sexual dimorphism and environmental variability within a community
+  of Antarctic penguins (genus Pygoscelis)}. PLoS ONE 9(3):e90081. ---
+  Ilustraciones: \textit{Artwork by @allison\_horst}.}
+\end{frame}
+\end{document}

@@ -1,0 +1,459 @@
+# Formulario {#sec-formulario .unnumbered}
+
+Referencia completa del curso. Reúne las fórmulas de los once capítulos, cada una con la función de R que la calcula y las condiciones bajo las que es válida.
+
+Está pensado para consultarse durante el curso y después de él: quien termine Estadística debería poder resolver aquí cualquier duda de "¿cómo era la fórmula?" sin volver a buscar en los capítulos.
+
+::: {.callout-note title="Cómo está organizado"}
+Cada sección indica el capítulo del que proviene. Al final hay dos tablas de referencia rápida: los **valores críticos** más usados y una **guía de selección** que remite al @sec-mapa.
+
+Las fórmulas no están para memorizarse. Están para reconocer la **estructura** de cada procedimiento —casi todos son una señal dividida entre su error estándar— y para poder calcular sin computadora cuando haga falta.
+:::
+
+::: {.callout-tip title="Para imprimir"}
+Esta página está preparada para imprimirse. Con **Ctrl + P** (o **Cmd + P**) se obtiene una versión limpia, sin menús ni barras de navegación, y con las fórmulas y tablas ajustadas para que no se corten entre páginas. Desde ese mismo diálogo puede guardarse como PDF.
+
+Es el formulario que se entrega durante los exámenes.
+:::
+
+---
+
+# Estadística descriptiva {.unnumbered}
+
+*Capítulos 1 y 2*
+
+## Medidas de localización {.unnumbered}
+
+**Media muestral**
+
+$$\bar{x} = \frac{\sum_{i=1}^{n} x_i}{n}$$
+
+En R: `mean(x)`
+
+**Mediana.** Con los datos ordenados: el valor central si $n$ es impar, o el promedio de los dos centrales si es par.
+
+En R: `median(x)`
+
+**Moda.** El valor más frecuente; es la única medida de centro aplicable a variables categóricas.
+
+En R: `names(which.max(table(x)))`
+
+**Posición de los cuartiles** (en los datos ordenados)
+
+$$\text{Pos}(q_1) = \frac{n+1}{4}, \qquad \text{Pos}(q_2) = \frac{n+1}{2}, \qquad \text{Pos}(q_3) = \frac{3(n+1)}{4}$$
+
+En R: `quantile(x)`
+
+Si la posición no es entera, se interpola entre los dos datos vecinos.
+
+**Percentil $k$.** Posición $\dfrac{k(n+1)}{100}$.
+
+En R: `quantile(x, k/100)`
+
+## Medidas de dispersión {.unnumbered}
+
+**Varianza y desviación estándar muestrales**
+
+$$s^2 = \frac{1}{n-1}\sum_{i=1}^{n}(x_i - \bar{x})^2 = \frac{1}{n-1}\left[\sum_{i=1}^{n} x_i^2 - n\bar{x}^2\right]$$
+
+En R: `var(x)`
+
+$$s = \sqrt{s^2}$$
+
+En R: `sd(x)`
+
+La segunda expresión es la **fórmula de cálculo**: solo requiere acumular $\sum x_i$ y $\sum x_i^2$, y es la que conviene con calculadora.
+
+**Rango y rango intercuartílico**
+
+$$\text{Rango} = x_{\max} - x_{\min}, \qquad RI = q_3 - q_1$$
+
+En R: `range(x)` · `IQR(x)`
+
+**Coeficiente de variación** (dispersión relativa, sin unidades)
+
+$$CV = \frac{s}{\bar{x}} \times 100\,\%$$
+
+**Propiedades de la varianza.** Para constantes $a$ y $k$:
+
+$$\text{Var}(X + a) = \text{Var}(X), \qquad \text{Var}(kX) = k^2\,\text{Var}(X)$$
+
+Sumar una constante no cambia la dispersión; multiplicar por $k$ multiplica la varianza por $k^2$ y la desviación por $|k|$.
+
+## Diagrama de caja {.unnumbered}
+
+**Barreras**
+
+$$f_1 = q_1 - 1.5\,RI, \qquad f_3 = q_3 + 1.5\,RI \qquad \text{(valores atípicos)}$$
+$$F_1 = q_1 - 3\,RI, \qquad F_3 = q_3 + 3\,RI \qquad \text{(atípicos extremos)}$$
+
+**Valor estandarizado** (para comparar observaciones de escalas distintas)
+
+$$z_i = \frac{x_i - \bar{x}}{s}$$
+
+En R: `scale(x)`
+
+---
+
+# Relación entre dos variables {.unnumbered}
+
+*Capítulos 3 y 11*
+
+## Cantidades básicas {.unnumbered}
+
+$$S_{xx} = \sum x_i^2 - \frac{\left(\sum x_i\right)^2}{n}, \qquad S_{yy} = \sum y_i^2 - \frac{\left(\sum y_i\right)^2}{n}$$
+
+$$S_{xy} = \sum x_i y_i - \frac{\left(\sum x_i\right)\left(\sum y_i\right)}{n}$$
+
+**Covarianza muestral**
+
+$$s_{xy} = \frac{S_{xy}}{n-1}$$
+
+En R: `cov(x, y)`
+
+## Correlación y regresión {.unnumbered}
+
+**Coeficiente de correlación de Pearson**
+
+$$r = \frac{S_{xy}}{\sqrt{S_{xx}\,S_{yy}}}, \qquad -1 \leq r \leq 1$$
+
+En R: `cor(x, y)`
+
+**Recta de mínimos cuadrados**
+
+$$\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x, \qquad \hat{\beta}_1 = \frac{S_{xy}}{S_{xx}}, \qquad \hat{\beta}_0 = \bar{y} - \hat{\beta}_1\bar{x}$$
+
+En R: `lm(y ~ x)`
+
+La recta siempre pasa por el punto $(\bar{x}, \bar{y})$.
+
+**Residuos y suma de cuadrados del error**
+
+$$e_i = y_i - \hat{y}_i, \qquad SCE = \sum e_i^2, \qquad s^2 = \frac{SCE}{n-2}$$
+
+En R: `resid(modelo)`
+
+**Coeficiente de determinación**
+
+$$R^2 = r^2 = 1 - \frac{SCE}{S_{yy}}$$
+
+En R: `summary(modelo)$r.squared`
+
+Proporción de la variabilidad de $y$ explicada por su relación lineal con $x$.
+
+## Inferencia en regresión {.unnumbered}
+
+**Error estándar de la pendiente**
+
+$$s_{\hat{\beta}_1} = \sqrt{\frac{s^2}{S_{xx}}}$$
+
+En R: `summary(modelo)`
+
+**Prueba sobre la pendiente**, $H_0: \beta_1 = 0$
+
+$$t_c = \frac{\hat{\beta}_1}{s_{\hat{\beta}_1}}, \qquad \text{gl} = n-2$$
+
+**Intervalo de confianza para la pendiente**
+
+$$\hat{\beta}_1 \pm t_{1-\alpha/2,\,n-2}\cdot s_{\hat{\beta}_1}$$
+
+En R: `confint(modelo)`
+
+**Prueba sobre la correlación**, $H_0: \rho = 0$ (equivalente a la anterior)
+
+$$t_c = \frac{r\sqrt{n-2}}{\sqrt{1-r^2}}, \qquad \text{gl} = n-2$$
+
+En R: `cor.test(x, y)`
+
+**Supuestos del modelo:** linealidad, independencia de los errores, varianza constante y normalidad de los errores. Se verifican con `plot(modelo)`.
+
+---
+
+# Distribuciones {.unnumbered}
+
+*Capítulo 6*
+
+## Normal {.unnumbered}
+
+**Estandarización.** Si $X \sim N(\mu, \sigma^2)$:
+
+$$Z = \frac{X - \mu}{\sigma} \sim N(0,1)$$
+
+En R: `pnorm(x, mu, sigma)`
+
+**Cuantil.** El valor que deja una proporción $q$ por debajo:
+
+$$x_q = \mu + z_q\,\sigma$$
+
+En R: `qnorm(q, mu, sigma)`
+
+> Cuidado con el enunciado: *"el valor superado por el 10 %"* es el cuantil 0.90, no el 0.10.
+
+## Binomial {.unnumbered}
+
+Si $X \sim B(n, p)$:
+
+$$P(X = x) = \binom{n}{x} p^x (1-p)^{n-x}, \qquad x = 0, 1, \dots, n$$
+
+En R: `dbinom(x, n, p)`
+
+$$E(X) = np, \qquad \text{Var}(X) = np(1-p)$$
+
+**Aproximación normal a la binomial.** Válida si $np \geq 10$ y $n(1-p) \geq 10$:
+
+$$X \approx N\big(np,\ np(1-p)\big)$$
+
+## Distribuciones muestrales {.unnumbered}
+
+**De la media.** Si la población tiene media $\mu$ y desviación $\sigma$:
+
+$$E(\bar{X}) = \mu, \qquad \text{EE}(\bar{X}) = \frac{\sigma}{\sqrt{n}}$$
+
+**Teorema Central del Límite.** Para $n$ suficientemente grande (regla práctica: $n \geq 30$), $\bar{X}$ es aproximadamente normal, cualquiera que sea la forma de la población.
+
+**De una proporción**
+
+$$E(\hat{p}) = p, \qquad \text{EE}(\hat{p}) = \sqrt{\frac{p(1-p)}{n}}$$
+
+**De la varianza.** Si la población es normal:
+
+$$\frac{(n-1)s^2}{\sigma^2} \sim \chi^2_{n-1}$$
+
+**Del cociente de varianzas.** Con dos poblaciones normales independientes:
+
+$$\frac{s_1^2/\sigma_1^2}{s_2^2/\sigma_2^2} \sim F_{n_1-1,\ n_2-1}$$
+
+---
+
+# Inferencia para una muestra {.unnumbered}
+
+*Capítulo 7*
+
+## Intervalos de confianza {.unnumbered}
+
+**Para la media**, $\sigma$ desconocida
+
+$$\bar{x} \pm t_{1-\alpha/2,\,n-1}\cdot\frac{s}{\sqrt{n}}$$
+
+En R: `t.test(x)$conf.int`
+
+**Para la media**, $\sigma$ conocida
+
+$$\bar{x} \pm z_{1-\alpha/2}\cdot\frac{\sigma}{\sqrt{n}}$$
+
+**Para una proporción**
+
+$$\hat{p} \pm z_{1-\alpha/2}\sqrt{\frac{\hat{p}(1-\hat{p})}{n}}$$
+
+En R: `prop.test(x, n)$conf.int`
+
+**Tamaño de muestra** para un margen de error $E$ dado:
+
+$$n = \left(\frac{z_{1-\alpha/2}\,\sigma}{E}\right)^2 \qquad\qquad n = \frac{z_{1-\alpha/2}^2\ \hat{p}(1-\hat{p})}{E^2}$$
+
+Si no se conoce $\hat{p}$, se usa 0.5, que da el tamaño más conservador.
+
+## Pruebas de hipótesis {.unnumbered}
+
+**Para la media**
+
+$$t_c = \frac{\bar{x} - \mu_0}{s/\sqrt{n}}, \qquad \text{gl} = n-1$$
+
+En R: `t.test(x, mu = mu0)`
+
+**Para una proporción** ($n$ grande)
+
+$$z_c = \frac{\hat{p} - p_0}{\sqrt{\dfrac{p_0(1-p_0)}{n}}}$$
+
+En R: `prop.test(x, n, p = p0)`
+
+**Para la varianza**, población normal
+
+$$\chi^2_c = \frac{(n-1)s^2}{\sigma_0^2}, \qquad \text{gl} = n-1$$
+
+**Regla de decisión**
+
+| $H_1$ | Se rechaza $H_0$ si | En R |
+|---|---|---|
+| $\theta > \theta_0$ | $z_c > z_{1-\alpha}$ | `alternative = "greater"` |
+| $\theta < \theta_0$ | $z_c < -z_{1-\alpha}$ | `alternative = "less"` |
+| $\theta \neq \theta_0$ | $\lvert z_c \rvert > z_{1-\alpha/2}$ | (por omisión) |
+
+La dirección de $H_1$ se fija **desde la pregunta de investigación**, nunca después de ver los datos.
+
+## Errores y potencia {.unnumbered}
+
+|  | $H_0$ cierta | $H_0$ falsa |
+|---|---|---|
+| **Se rechaza $H_0$** | Error tipo I ($\alpha$) | Correcto ($1-\beta$, potencia) |
+| **No se rechaza $H_0$** | Correcto | Error tipo II ($\beta$) |
+
+- Error tipo I: falso positivo. Su probabilidad es el nivel $\alpha$ elegido.
+- Error tipo II: falso negativo. Depende del tamaño del efecto, la variabilidad y $n$.
+- Potencia $= 1 - \beta$: probabilidad de detectar un efecto que existe. `power.t.test()`
+
+Bajar $\alpha$ reduce el error tipo I pero aumenta el tipo II. Solo aumentar $n$ reduce ambos.
+
+---
+
+# Inferencia para dos muestras {.unnumbered}
+
+*Capítulo 8*
+
+**Diferencia de medias, muestras independientes** (Welch, no exige varianzas iguales)
+
+$$t_c = \frac{(\bar{x}_1 - \bar{x}_2) - \delta_0}{\sqrt{\dfrac{s_1^2}{n_1} + \dfrac{s_2^2}{n_2}}}$$
+
+En R: `t.test(y ~ grupo)`
+
+**Intervalo para la diferencia de medias**
+
+$$(\bar{x}_1 - \bar{x}_2) \pm t_{1-\alpha/2,\,\nu}\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}$$
+
+**Datos pareados.** Se calcula $d_i = x_i - y_i$ en cada par y se aplica la prueba de una muestra con $H_0: \mu_d = 0$:
+
+$$t_c = \frac{\bar{d}}{s_d/\sqrt{n}}, \qquad \text{gl} = n-1$$
+
+En R: `t.test(x, y, paired = TRUE)`
+
+**Diferencia de proporciones**
+
+$$z_c = \frac{\hat{p}_1 - \hat{p}_2}{\sqrt{\hat{p}(1-\hat{p})\left(\dfrac{1}{n_1}+\dfrac{1}{n_2}\right)}}, \qquad \hat{p} = \frac{x_1 + x_2}{n_1 + n_2}$$
+
+$$$$
+
+En R: `prop.test(c(x1, x2), c(n1, n2))`
+
+**Intervalo para la diferencia de proporciones**
+
+$$(\hat{p}_1 - \hat{p}_2) \pm z_{1-\alpha/2}\sqrt{\frac{\hat{p}_1(1-\hat{p}_1)}{n_1} + \frac{\hat{p}_2(1-\hat{p}_2)}{n_2}}$$
+
+**Cociente de varianzas**, $H_0: \sigma_1^2 = \sigma_2^2$
+
+$$F_c = \frac{s_1^2}{s_2^2}, \qquad \text{gl} = (n_1-1,\ n_2-1)$$
+
+En R: `var.test(y ~ grupo)`
+
+Muy sensible a la no normalidad; con datos no normales conviene la prueba de Levene.
+
+---
+
+# Datos categóricos {.unnumbered}
+
+*Capítulo 9*
+
+**Frecuencia esperada** bajo independencia
+
+$$e_{ij} = \frac{(\text{total del renglón } i)(\text{total de la columna } j)}{n}$$
+
+**Estadístico ji-cuadrada**
+
+$$\chi^2 = \sum_{i,j} \frac{(o_{ij} - e_{ij})^2}{e_{ij}}, \qquad \text{gl} = (f-1)(c-1)$$
+
+En R: `chisq.test(tabla)`
+
+Sirve para tres pruebas distintas con la misma mecánica:
+
+| Prueba | Pregunta | Grados de libertad |
+|---|---|---|
+| Independencia | ¿Están asociadas dos variables categóricas? | $(f-1)(c-1)$ |
+| Homogeneidad | ¿Varias poblaciones tienen la misma distribución? | $(f-1)(c-1)$ |
+| Bondad de ajuste | ¿Los datos siguen una distribución dada? | $k - 1 - m$ |
+
+donde $k$ es el número de categorías y $m$ el de parámetros estimados.
+
+**Condición de validez:** todas las frecuencias esperadas deben ser al menos 5. Si falla, se usa la prueba exacta de Fisher (`fisher.test`).
+
+---
+
+# Análisis de varianza {.unnumbered}
+
+*Capítulo 10*
+
+Con $k$ grupos, $n_i$ observaciones en el grupo $i$ y $N = \sum n_i$:
+
+**Sumas de cuadrados**
+
+$$SC_{\text{entre}} = \sum_{i=1}^{k} n_i (\bar{x}_i - \bar{x})^2, \qquad \text{gl} = k-1$$
+
+$$SC_{\text{dentro}} = \sum_{i=1}^{k}\sum_{j=1}^{n_i} (x_{ij} - \bar{x}_i)^2, \qquad \text{gl} = N-k$$
+
+$$SC_{\text{total}} = SC_{\text{entre}} + SC_{\text{dentro}}, \qquad \text{gl} = N-1$$
+
+**Tabla de ANOVA**
+
+| Fuente | SC | gl | CM | F |
+|---|---|---|---|---|
+| Entre grupos | $SC_{\text{entre}}$ | $k-1$ | $SC_{\text{entre}}/(k-1)$ | $CM_{\text{entre}}/CM_{\text{dentro}}$ |
+| Dentro de grupos | $SC_{\text{dentro}}$ | $N-k$ | $SC_{\text{dentro}}/(N-k)$ | |
+| Total | $SC_{\text{total}}$ | $N-1$ | | |
+
+$$F = \frac{CM_{\text{entre}}}{CM_{\text{dentro}}}$$
+
+En R: `aov(y ~ grupo)`
+
+**Supuestos:** independencia, normalidad de los residuos y homogeneidad de varianzas.
+
+| Supuesto | Cómo se verifica | Alternativa si falla |
+|---|---|---|
+| Normalidad de residuos | Q-Q plot, `shapiro.test(residuals(m))` | Transformar, o `kruskal.test` |
+| Homogeneidad de varianzas | `bartlett.test`, `leveneTest` | `oneway.test(var.equal = FALSE)` |
+| Independencia | Por diseño | No tiene arreglo estadístico |
+
+**Comparaciones post-hoc.** Tras rechazar $H_0$, identifican entre cuáles grupos está la diferencia, corrigiendo por comparaciones múltiples: `TukeyHSD(modelo)`.
+
+**Probabilidad de al menos un falso positivo** al hacer $m$ pruebas independientes al nivel $\alpha$:
+
+$$1 - (1-\alpha)^m$$
+
+Con seis comparaciones a $\alpha = 0.05$ ya supera el 26 %. Ese es el motivo de usar ANOVA en vez de múltiples pruebas t.
+
+---
+
+# Referencia rápida {.unnumbered}
+
+## Valores críticos más usados {.unnumbered}
+
+**Normal estándar**
+
+| $1-\alpha$ | $z_{1-\alpha}$ (una cola) | $z_{1-\alpha/2}$ (dos colas) |
+|---|---|---|
+| 0.90 | 1.282 | 1.645 |
+| 0.95 | 1.645 | 1.960 |
+| 0.99 | 2.326 | 2.576 |
+
+**t de Student**, valores bilaterales al 5 %
+
+| gl | 3 | 5 | 10 | 15 | 20 | 30 | 60 | $\infty$ |
+|---|---|---|---|---|---|---|---|---|
+| $t_{0.975}$ | 3.182 | 2.571 | 2.228 | 2.131 | 2.086 | 2.042 | 2.000 | 1.960 |
+
+Conforme crecen los grados de libertad, la $t$ se acerca a la normal.
+
+**Ji-cuadrada**, cola superior al 5 %
+
+| gl | 1 | 2 | 3 | 4 | 5 | 6 |
+|---|---|---|---|---|---|---|
+| $\chi^2_{0.95}$ | 3.841 | 5.991 | 7.815 | 9.488 | 11.070 | 12.592 |
+
+En R: `qnorm(0.975)`, `qt(0.975, gl)`, `qchisq(0.95, gl)`, `qf(0.95, gl1, gl2)`.
+
+## La estructura común {.unnumbered}
+
+Casi todos los estadísticos de prueba del curso tienen la misma forma:
+
+$$\text{estadístico} = \frac{\text{estimador} - \text{valor bajo } H_0}{\text{error estándar del estimador}}$$
+
+| Técnica | Estimador | Error estándar |
+|---|---|---|
+| Una media | $\bar{x}$ | $s/\sqrt{n}$ |
+| Una proporción | $\hat{p}$ | $\sqrt{p_0(1-p_0)/n}$ |
+| Dos medias | $\bar{x}_1 - \bar{x}_2$ | $\sqrt{s_1^2/n_1 + s_2^2/n_2}$ |
+| Datos pareados | $\bar{d}$ | $s_d/\sqrt{n}$ |
+| Pendiente | $\hat{\beta}_1$ | $\sqrt{s^2/S_{xx}}$ |
+
+Reconocer este patrón vale más que memorizar cada variante: explica por qué más diferencia, menos dispersión o más muestra aumentan siempre la significancia.
+
+## Guía de selección {.unnumbered}
+
+La pregunta importante nunca es "¿cuál es la fórmula?", sino **"¿qué técnica corresponde a esta pregunta y a estos datos?"**. El mapa de decisión completo, con las dieciséis situaciones típicas del curso, está al final del @sec-cap11.

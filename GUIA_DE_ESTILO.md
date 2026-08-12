@@ -1,69 +1,85 @@
 # Guía de estilo del libro
 
-Bitácora de decisiones sobre voz, vocabulario y notación. Sirve para que el libro
-suene parejo de principio a fin, y para que las presentaciones Beamer salgan con el
-mismo tono.
+Bitácora de decisiones sobre voz, vocabulario y notación. Sirve para que el libro suene parejo de principio a fin, y para que las presentaciones Beamer salgan con el mismo tono.
 
-**Cómo usarla:** ve anotando aquí lo que decidas mientras revisas. No hace falta que
-sea prolijo; con una línea basta.
+**Cómo usarla:** ir anotando aquí lo que se decida durante la revisión. No hace falta que sea prolijo; con una línea basta.
 
 ---
 
-## Trato al lector
+## Decisiones ya aplicadas
 
-Actualmente el libro tutea al estudiante ("mueve el deslizador", "fíjate en").
+### Trato al lector: impersonal ✔
 
-- [ ] Mantener el tuteo
-- [ ] Cambiar a impersonal ("se mueve el deslizador", "obsérvese")
-- [ ] Otro:
+Todo el libro está en registro **impersonal**. Se eliminó el tuteo por completo (verificado con búsqueda exhaustiva). Las formas adoptadas:
 
-## Vocabulario: mis preferencias
+| En vez de | Se usa |
+|---|---|
+| "Mueve el deslizador y observa…" | "Al mover el deslizador se observa…" |
+| "Fíjate en que…" | "Nótese que…" / "Obsérvese que…" |
+| "Calcula la media" (ejercicios) | "Calcular la media" (infinitivo) |
+| "Puedes ver" | "Puede verse" |
+| "Recuerda que" | "Conviene recordar que" |
+| "tu muestra", "tus datos" | "la muestra", "los datos" |
+| "¿Ves algún patrón?" | "¿Se observa algún patrón?" |
 
-Palabras donde prefiero una forma sobre otra. Ejemplos del tipo de decisión:
+**Se conservó el "nosotros" de autor** ("ya sabemos explorar datos", "usaremos el registro"), porque es la norma en textos matemáticos en español y no constituye tuteo. Si se prefiere eliminarlo también, se puede hacer en una segunda pasada.
 
-| Uso actual en el libro | Prefiero |
+### Títulos de los recuadros ✔
+
+| Antes | Ahora |
+|---|---|
+| "Al terminar este capítulo podrás" | **"Objetivos del capítulo"** |
+| "Interpreta" | **"Interpretación"** |
+| "¿Qué técnica uso?" | **"¿Qué técnica usar?"** |
+| "Experimenta" | **"Experimento sugerido"** |
+
+Sin cambio: "Soluciones y retroalimentación".
+
+### Sin referencias a estudios de posgrado ✔
+
+Se eliminaron todas las menciones explícitas a la Maestría en Ciencia de Datos y a cursos posteriores concretos. Los temas complementarios se presentan por su propio valor:
+
+- "Complemento para el examen de la MCD" → **"Tema complementario"**, justificado por su uso en la práctica.
+- "que se verá en la Maestría en Ciencia de Datos" → "que queda fuera del alcance de este curso".
+- "Cuando en su curso de Aprendizaje Automático evalúen un modelo" → "Al evaluar cualquier modelo predictivo".
+
+### Software y datos ✔
+
+- El software eje es **R**; Python aparece solo como material complementario.
+- Los datos aplicados son **simulados** y así se declara en el diccionario de datos.
+- Estructura de cada tema: pregunta real → técnica → supuestos → cómputo en R → interpretación.
+
+---
+
+## Pendiente de decidir
+
+### Vocabulario
+
+Anotar aquí las preferencias que surjan durante la lectura:
+
+| Uso actual en el libro | Se prefiere |
 |---|---|
 | "valor p" | |
 | "diagrama de caja" / "boxplot" | |
-| "gráfica" / "gráfico" | |
-| "gráfica de dispersión" | |
-| "conjunto de datos" / "base de datos" | |
-| "gama" (marcas de galletas) | |
+| "gráfica" | |
+| "conjunto de datos" | |
+| "recuadro" | |
 | | |
 
-## Notación matemática
+### Notación matemática
 
-- ¿Cuánto formalismo? El libro actual enuncia fórmulas clave pero evita demostraciones.
-- ¿Uso de $\bar{x}$ vs $\hat{\mu}$?
-- ¿Escribir $H_0$ o $H_{0}$? ¿"hipótesis nula" en cursivas?
+- Nivel actual: se enuncian las fórmulas clave, sin demostraciones.
+- ¿$\bar{x}$ o $\hat{\mu}$?
 - Notas:
 
-## Nivel de detalle
+### Nivel de detalle
 
-- [ ] Los capítulos están bien de extensión
-- [ ] Prefiero más concisión
-- [ ] Prefiero más desarrollo en (indicar temas):
+- [ ] La extensión de los capítulos está bien
+- [ ] Se prefiere más concisión
+- [ ] Se prefiere más desarrollo en (indicar temas):
 
-## Recuadros
+### Pasajes por reescribir
 
-El libro usa cuatro tipos: "Al terminar este capítulo podrás", "¿Qué técnica uso?",
-"Interpreta" y "Soluciones y retroalimentación".
-
-- ¿Los títulos me gustan o los cambio?
-- Notas:
-
-## Cosas que quiero decir con mis palabras
-
-Frases o explicaciones que prefiero redactar yo. Anota aquí la sección y ya las
-respeto tal cual:
+Marcar en el `.qmd` con `<!-- REVISAR: … -->` y anotar aquí si se quiere dejar constancia:
 
 -
-
-## Decisiones ya tomadas
-
-*(Se irán registrando aquí conforme avancemos, para no volver sobre lo mismo.)*
-
-- El software eje es **R**; Python aparece solo como material complementario.
-- Los datos aplicados son **simulados** y se declara explícitamente en el diccionario.
-- Las fuentes de los capítulos siguen el orden: pregunta real → técnica → supuestos →
-  cómputo en R → interpretación.

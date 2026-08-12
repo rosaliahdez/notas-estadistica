@@ -4,19 +4,20 @@ engine: knitr
 
 {{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
 
-# Practica R sin instalar nada {#sec-lab-r}
+
+# Practicar R sin instalar nada {#sec-lab-r}
 
 ::: {.callout-note title="Cómo funciona esta página"}
-Las celdas de abajo ejecutan **R de verdad, dentro de tu navegador**, gracias a WebR. Puedes modificar el código y volver a correrlo cuantas veces quieras. No necesitas instalar nada ni tener sesión.
+Las celdas de abajo ejecutan **R de verdad, dentro del navegador**, gracias a WebR. El código puede modificarse y volver a ejecutarse cuantas veces se quiera. No hace falta instalar nada ni iniciar sesión.
 
-La primera celda tarda unos segundos en arrancar, porque el navegador está descargando R. Ten paciencia esa primera vez.
+La primera celda tarda unos segundos en arrancar, porque el navegador está descargando R.
 
-Esto sirve para practicar y experimentar. Para el **proyecto del curso** sí necesitarás R y RStudio instalados, porque el reporte final se entrega como documento reproducible.
+Esta página sirve para practicar y experimentar. Para el **proyecto del curso** se requiere R y RStudio instalados, porque el reporte final se entrega como documento reproducible.
 :::
 
-## Tu primera línea de R
+## La primera línea de R
 
-R es, antes que nada, una calculadora. Corre esto y luego cámbialo:
+R es, antes que nada, una calculadora. Conviene ejecutar esto y luego modificarlo:
 
 ```{webr}
 2 + 2
@@ -30,19 +31,19 @@ agrado
 mean(agrado)
 ```
 
-::: {.callout-tip title="Experimenta"}
-Cambia un valor por `20` y vuelve a correr. ¿Qué le pasa a la media? Compárala con `median(agrado)`. Estás reproduciendo, con tus manos, el laboratorio de robustez del @sec-lab-robustez.
+::: {.callout-tip title="Experimento sugerido"}
+Al cambiar un valor por `20` y volver a ejecutar, ¿qué le pasa a la media? Conviene compararla con `median(agrado)`. Es el mismo fenómeno del laboratorio de robustez del @sec-lab-robustez, ahora hecho a mano.
 :::
 
 ## Ejercicio guiado: medidas de resumen
 
-Calcula la **media**, la **mediana** y la **desviación estándar** del vector `temperaturas`.
+Calcular la **media**, la **mediana** y la **desviación estándar** del vector `temperaturas`.
 
 ```{webr}
 #| exercise: resumen
 temperaturas <- c(35.1, 34.8, 36.2, 35.9, 33.7, 35.4, 34.2)
 
-# Escribe aquí tus tres cálculos
+# Escribir aquí los tres cálculos
 ______
 ```
 
@@ -59,19 +60,19 @@ median(temperaturas)
 sd(temperaturas)
 ```
 
-La media y la mediana salen muy parecidas, señal de una distribución bastante simétrica. La desviación estándar indica cuánto se apartan las temperaturas de su promedio, en grados.
+La media y la mediana resultan muy parecidas, señal de una distribución bastante simétrica. La desviación estándar indica cuánto se apartan las temperaturas de su promedio, en grados.
 :::
 
 ## Ejercicio guiado: una prueba de hipótesis
 
-Estas son las temperaturas de una muestra de lagartijas urbanas. Prueba si su media difiere de **34 °C** usando `t.test()`, e interpreta el valor p.
+Las siguientes son temperaturas de una muestra de lagartijas urbanas. Probar si su media difiere de **34 °C** con `t.test()`, e interpretar el valor p.
 
 ```{webr}
 #| exercise: prueba
 urbanas <- c(35.1, 36.4, 36.3, 34.9, 35.8, 34.2, 37.1, 35.5,
              36.0, 34.6, 35.9, 36.8, 34.4, 35.2, 36.6)
 
-# Completa la prueba
+# Completar la prueba
 t.test(______, mu = ______)
 ```
 
@@ -87,24 +88,24 @@ urbanas <- c(35.1, 36.4, 36.3, 34.9, 35.8, 34.2, 37.1, 35.5,
 t.test(urbanas, mu = 34)
 ```
 
-El valor p resulta muy pequeño, así que se rechaza $H_0$: la temperatura media de estas lagartijas difiere significativamente de 34 °C. Fíjate además en el intervalo de confianza que reporta la salida: no contiene al 34, lo cual es coherente con haber rechazado. Repasa el @sec-cap7 para la interpretación completa.
+El valor p resulta muy pequeño, así que se rechaza $H_0$: la temperatura media de estas lagartijas difiere significativamente de 34 °C. Conviene observar también el intervalo de confianza que reporta la salida: no contiene al 34, lo cual es coherente con haber rechazado. La interpretación completa está en el @sec-cap7.
 :::
 
 ## Ejercicio guiado: comparar dos grupos
 
-Compara las temperaturas de lagartijas urbanas y de campo. ¿Difieren sus medias?
+Comparar las temperaturas de lagartijas urbanas y de campo. ¿Difieren sus medias?
 
 ```{webr}
 #| exercise: dosgrupos
 urbana <- c(35.1, 36.4, 36.3, 34.9, 35.8, 34.2, 37.1, 35.5, 36.0, 34.6)
 campo  <- c(33.8, 34.2, 33.1, 34.9, 33.5, 32.9, 34.4, 33.7, 34.0, 33.2)
 
-# Compara los dos grupos
+# Comparar los dos grupos
 ______
 ```
 
 ::: { .hint exercise="dosgrupos"}
-Con dos vectores separados, la prueba se escribe `t.test(grupo1, grupo2)`. Antes de correrla, puedes mirar los datos con `boxplot(urbana, campo)`.
+Con dos vectores separados, la prueba se escribe `t.test(grupo1, grupo2)`. Antes de ejecutarla conviene mirar los datos con `boxplot(urbana, campo)`.
 :::
 
 ::: { .solution exercise="dosgrupos"}
@@ -118,18 +119,18 @@ boxplot(urbana, campo, names = c("urbana", "campo"),
 t.test(urbana, campo)
 ```
 
-Las cajas están claramente separadas y el valor p es muy pequeño: las lagartijas urbanas son significativamente más cálidas. Recuerda del @sec-cap8 que reportar el **intervalo de la diferencia** es más informativo que reportar solo el valor p.
+Las cajas están claramente separadas y el valor p es muy pequeño: las lagartijas urbanas son significativamente más cálidas. Como se vio en el @sec-cap8, reportar el **intervalo de la diferencia** es más informativo que reportar solo el valor p.
 :::
 
 ## Espacio libre
 
-Usa esta celda para lo que quieras: prueba funciones, calcula, equivócate. Equivocarse aquí no cuesta nada.
+Esta celda queda disponible para lo que se quiera: probar funciones, calcular, equivocarse. Equivocarse aquí no cuesta nada.
 
 ```{webr}
-# Tu código aquí
+# Escribir el código aquí
 
 ```
 
 ::: {.callout-note title="Para seguir"}
-Cuando quieras trabajar con los datos completos del curso, con gráficas de `ggplot2` y reportes reproducibles, instala R y RStudio siguiendo las indicaciones de la @sec-preparacion. Esta página es para practicar la sintaxis; el trabajo serio del curso se hace en tu computadora.
+Para trabajar con los datos completos del curso, con gráficas de `ggplot2` y reportes reproducibles, hay que instalar R y RStudio siguiendo las indicaciones de la @sec-preparacion. Esta página sirve para practicar la sintaxis; el trabajo del curso se hace en la propia computadora.
 :::

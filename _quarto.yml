@@ -1,6 +1,8 @@
 project:
   type: book
   output-dir: _book
+  resources:
+    - cata/**
 
 lang: es
 
@@ -35,14 +37,17 @@ book:
         - 09-enumerativos.qmd
         - 10-anova.qmd
         - 11-regresion.qmd
-    # Requiere la extensión quarto-live: ver INSTALAR_CELDAS_EJECUTABLES.md
-    # - laboratorio-r.qmd
     - references.qmd
+  appendices:
+    - mapa-decision.qmd
+    - formulario.qmd
+    - apendice-python.qmd
+    - laboratorio-r.qmd
 
 bibliography: references.bib
 
 format:
-  html:
+  live-html:
     theme:
       - cosmo
       - theme.scss

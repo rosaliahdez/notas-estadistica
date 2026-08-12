@@ -8,7 +8,7 @@ theme_set(theme_minimal(base_size = 12))
 rick <- read.csv("datos/rickettsiosis.csv")
 ```
 
-::: {.callout-tip title="Al terminar este capítulo podrás"}
+::: {.callout-tip title="Objetivos del capítulo"}
 - Estimar y probar hipótesis sobre **una proporción**.
 - Comparar **dos proporciones** con un intervalo y una prueba.
 - Construir e interpretar **tablas de contingencia**.
@@ -44,7 +44,7 @@ c(positivos = positivos, n = n, proporcion = positivos / n)
 prop.test(positivos, n)
 ```
 
-::: {.callout-note title="Interpreta"}
+::: {.callout-note title="Interpretación"}
 La proporción estimada de positivos es del **25 %**, con un intervalo de confianza del 95 % que va aproximadamente de **21 % a 29 %**. Redacción para la autoridad sanitaria: *"En la población evaluada, uno de cada cuatro resultados fue positivo; con 95 % de confianza, la proporción real está entre el 21 % y el 29 %."*
 
 Ese ancho de ±4 puntos es el **margen de error** del que hablamos en el @sec-cap4. Si se quisiera reducir a la mitad habría que cuadruplicar la muestra.
@@ -62,10 +62,10 @@ tabla_perro
 prop.test(tabla_perro[, "positivo"], rowSums(tabla_perro))
 ```
 
-::: {.callout-note title="Interpreta"}
+::: {.callout-note title="Interpretación"}
 La positividad es del **33.3 %** entre quienes tienen contacto con perros y del **9.0 %** entre quienes no: una diferencia de **24 puntos porcentuales**, con un intervalo de confianza aproximado de **17 a 32 puntos** y un valor p minúsculo.
 
-Fíjate en que el intervalo está lejos del cero, y que reportar la **diferencia con su intervalo** dice mucho más que el solo "es significativo". Una advertencia importante: estos son datos **observacionales** (@sec-cap5), así que hablamos de **asociación**, no de causa. El contacto con perros probablemente sea un indicador de exposición a garrapatas, que son el vector real de la enfermedad.
+Nótese que el intervalo está lejos del cero, y que reportar la **diferencia con su intervalo** dice mucho más que el solo "es significativo". Una advertencia importante: estos son datos **observacionales** (@sec-cap5), así que hablamos de **asociación**, no de causa. El contacto con perros probablemente sea un indicador de exposición a garrapatas, que son el vector real de la enfermedad.
 :::
 
 ## Tablas de contingencia y la prueba ji-cuadrada
@@ -89,7 +89,7 @@ prueba
 prueba$expected   # lo que esperaríamos si NO hubiera asociación
 ```
 
-::: {.callout-note title="Interpreta"}
+::: {.callout-note title="Interpretación"}
 Se esperarían 36 positivos entre quienes no tienen contacto con perros, pero solo se observaron 13; y se esperaban 69 entre quienes sí, pero se observaron 92. Esas desviaciones producen $\chi^2 \approx 29.8$ con 1 grado de libertad y un valor p del orden de $10^{-8}$: se rechaza la independencia. **Hay asociación** entre el contacto con perros y el resultado.
 
 Los **grados de libertad** de una tabla son $(\text{filas}-1)\times(\text{columnas}-1)$: aquí $(2-1)(2-1) = 1$.
@@ -101,7 +101,7 @@ La aproximación exige que **todas las frecuencias esperadas sean al menos 5** (
 
 ### Laboratorio: observado contra esperado {#sec-lab-chi}
 
-Mueve las cuatro celdas de la tabla y observa cómo cambian las frecuencias **esperadas bajo independencia**, cada contribución al estadístico y el valor p. Intenta primero lograr un $\chi^2$ casi nulo (proporciones parecidas entre filas) y luego una asociación fuerte.
+Al mover las cuatro celdas de la tabla se observa cómo cambian las frecuencias **esperadas bajo independencia**, cada contribución al estadístico y el valor p. Conviene intentar primero lograr un $\chi^2$ casi nulo (proporciones parecidas entre filas) y luego una asociación fuerte.
 
 ```{ojs}
 //| panel: input
@@ -189,10 +189,68 @@ Plot.plot({
 md`χ² = **${chi.X2.toFixed(2)}** (gl = 1) · valor p = **${chi.p < 0.0001 ? "< 0.0001" : chi.p.toFixed(4)}** · ${chi.p < 0.05 ? "**se rechaza la independencia**" : "no se rechaza la independencia"}`
 ```
 
-::: {.callout-note title="Interpreta"}
-Prueba a poner 50, 150, 50, 150: las dos filas tienen exactamente la misma proporción de positivos, las frecuencias observadas coinciden con las esperadas y $\chi^2$ vale casi cero. Ahora sube los "expuestos y positivos": las barras azules se despegan de las grises y el estadístico crece.
+::: {.callout-note title="Interpretación"}
+Al poner 50, 150, 50, 150: las dos filas tienen exactamente la misma proporción de positivos, las frecuencias observadas coinciden con las esperadas y $\chi^2$ vale casi cero. Al subir los "expuestos y positivos": las barras azules se despegan de las grises y el estadístico crece.
 
 Dos observaciones importantes. Primera: lo que importa no son las **cantidades** sino las **proporciones dentro de cada fila**; 10 de 20 y 100 de 200 son la misma proporción. Segunda: si multiplicas las cuatro celdas por 10 conservando las proporciones, el $\chi^2$ también se multiplica por 10 —la misma asociación, medida con más datos, se vuelve más significativa—. Es, otra vez, la lección de que el valor p depende del tamaño de muestra tanto como del efecto.
+:::
+
+## El mismo cálculo a mano {#sec-categoricos-mano}
+
+Las dos técnicas de este capítulo se calculan con facilidad en papel, y conviene hacerlo una vez.
+
+### Una proporción
+
+En una muestra de 150 personas, 45 resultaron positivas. ¿Es compatible con una proporción de referencia del 25 %?
+
+Con $H_0: p = 0.25$ contra $H_1: p \neq 0.25$ y $\hat{p} = 45/150 = 0.30$:
+
+$$z_c = \frac{\hat{p} - p_0}{\sqrt{\dfrac{p_0(1-p_0)}{n}}} = \frac{0.30 - 0.25}{\sqrt{\dfrac{(0.25)(0.75)}{150}}} = \frac{0.05}{0.03536} = 1.414$$
+
+Como $|1.414| < 1.96$, **no se rechaza** $H_0$: la diferencia de cinco puntos porcentuales es compatible con el azar.
+
+```{r}
+#| label: prop-mano
+prop.test(45, 150, p = 0.25, correct = FALSE)
+```
+
+### Una tabla de contingencia
+
+Consideremos esta tabla de 100 personas:
+
+|  | Positivos | Negativos | Total |
+|---|---|---|---|
+| **Expuestos** | 30 | 20 | 50 |
+| **No expuestos** | 10 | 40 | 50 |
+| **Total** | 40 | 60 | 100 |
+
+**Paso 1. Las frecuencias esperadas** bajo independencia. Cada una es el producto de sus totales marginales entre el total general:
+
+$$e_{11} = \frac{50 \times 40}{100} = 20, \qquad e_{12} = \frac{50 \times 60}{100} = 30$$
+$$e_{21} = \frac{50 \times 40}{100} = 20, \qquad e_{22} = \frac{50 \times 60}{100} = 30$$
+
+**Paso 2. La contribución de cada celda**, $(o - e)^2/e$:
+
+$$\frac{(30-20)^2}{20} = 5.00, \qquad \frac{(20-30)^2}{30} = 3.33, \qquad \frac{(10-20)^2}{20} = 5.00, \qquad \frac{(40-30)^2}{30} = 3.33$$
+
+**Paso 3. El estadístico** es su suma:
+
+$$\chi^2 = 5.00 + 3.33 + 5.00 + 3.33 = 16.67$$
+
+Con $(2-1)(2-1) = 1$ grado de libertad, el valor crítico al 5 % es 3.841. Como $16.67 > 3.841$, se rechaza la independencia.
+
+```{r}
+#| label: chi-mano
+tabla <- matrix(c(30, 20, 10, 40), nrow = 2, byrow = TRUE)
+chisq.test(tabla, correct = FALSE)
+```
+
+::: {.callout-note title="Interpretación"}
+Coinciden ambos: $z = 1.414$ y $\chi^2 = 16.67$.
+
+Dos observaciones. Primera, sobre las **frecuencias esperadas**: la regla "renglón por columna entre el total" no es un truco, es la definición de independencia traducida a conteos. Si el 40 % del total es positivo y la exposición no influye, entonces se esperaría que el 40 % de cada grupo lo fuera: $0.40 \times 50 = 20$. Entender eso hace innecesario memorizar la fórmula.
+
+Segunda, sobre el argumento `correct = FALSE`: por omisión R aplica la **corrección de continuidad de Yates** en tablas de 2×2, que ajusta ligeramente el estadístico. Es más conservadora y suele preferirse, pero produce un número distinto del calculado a mano. Se desactiva solo para verificar la coincidencia; en el trabajo real conviene dejar el valor por omisión.
 :::
 
 ## Una asociación que NO es significativa
@@ -210,10 +268,10 @@ chisq.test(tabla_zona)
 ::: {.callout-important title="Cuidado con leer tendencias en el ruido"}
 A simple vista parece haber un patrón: 28.9 % de positivos en zona urbana marginada, 25.0 % en rural y 20.0 % en urbana. Es tentador construir una explicación. Pero la prueba da $\chi^2 \approx 3.3$ con 2 grados de libertad y un valor p de **0.19**: esas diferencias son perfectamente compatibles con el azar.
 
-Este es uno de los hábitos más valiosos que puede dejar el curso: **antes de explicar un patrón, verifica que el patrón exista**. Con muestras de este tamaño, diferencias de varios puntos porcentuales aparecen solas.
+Este es uno de los hábitos más valiosos que puede dejar el curso: **antes de explicar un patrón, hay que verificar que el patrón exista**. Con muestras de este tamaño, diferencias de varios puntos porcentuales aparecen solas.
 :::
 
-::: {.callout-tip title="¿Qué técnica uso?"}
+::: {.callout-tip title="¿Qué técnica usar?"}
 Con **variables categóricas**:
 
 | Mi pregunta | Técnica en R |
@@ -224,7 +282,7 @@ Con **variables categóricas**:
 | Tabla con celdas muy pequeñas (esperadas < 5) | `fisher.test(tabla)` |
 | Proporción muy cercana a 0 o 1 | `binom.test(x, n)` (exacta) |
 
-**Verifica siempre** las condiciones: al menos 10 casos por categoría para proporciones, y frecuencias esperadas de al menos 5 para ji-cuadrada.
+**Conviene verificar siempre** las condiciones: al menos 10 casos por categoría para proporciones, y frecuencias esperadas de al menos 5 para ji-cuadrada.
 :::
 
 ## Resumen
@@ -233,32 +291,42 @@ Para datos categóricos, el parámetro es una **proporción**. Su estimación vi
 
 ## Ejercicios
 
-1. **Una proporción.** ¿Qué proporción de las personas del registro tuvo contacto con garrapatas? Calcula su intervalo de confianza del 95 % e interprétalo.
+1. **Una proporción.** ¿Qué proporción de las personas del registro tuvo contacto con garrapatas? Calcular su intervalo de confianza del 95 % e interprétalo.
 
-2. **Dos proporciones.** Compara la positividad entre quienes tuvieron garrapatas y quienes no. Reporta la diferencia con su intervalo e interpreta.
+2. **Dos proporciones.** Comparar la positividad entre quienes tuvieron garrapatas y quienes no. Reportar la diferencia con su intervalo e interpretar.
 
-3. **Condiciones.** Para la tabla de `garrapatas` contra `resultado`, verifica con `chisq.test(...)$expected` que se cumple la condición de frecuencias esperadas. ¿Qué harías si no se cumpliera?
+3. **Condiciones.** Para la tabla de `garrapatas` contra `resultado`, verificar con `chisq.test(...)$expected` que se cumple la condición de frecuencias esperadas. ¿Qué hacer si no se cumpliera?
 
 4. **Grados de libertad.** ¿Cuántos grados de libertad tiene la prueba ji-cuadrada para una tabla de 3 zonas × 2 resultados? ¿Y para una de 4 sustratos × 2 estados de contaminación?
 
-5. **Hongos.** Con `datos/hongos_sustrato.csv`, prueba si la contaminación está asociada al sustrato. Interpreta el resultado para el responsable del laboratorio.
+5. **Hongos.** Con `datos/hongos_sustrato.csv`, prueba si la contaminación está asociada al sustrato. Interpretar el resultado para el responsable del laboratorio.
 
-6. **Interpretación cuidadosa.** Un compañero concluye: *"la prueba demuestra que el contacto con perros causa rickettsiosis"*. ¿Qué está mal en esa afirmación? Escribe una versión correcta.
+6. **Interpretación cuidadosa.** Un compañero concluye: *"la prueba demuestra que el contacto con perros causa rickettsiosis"*. ¿Qué está mal en esa afirmación? Escribir una versión correcta.
 
-7. **Efecto del tamaño de muestra.** En el @sec-lab-chi, pon las celdas en 20, 30, 10, 40 y anota el valor p. Ahora multiplica las cuatro por 5 (100, 150, 50, 200) y vuelve a anotarlo. ¿Cambiaron las proporciones? ¿Cambió el valor p? Explica.
+7. **Efecto del tamaño de muestra.** En el @sec-lab-chi, poner las celdas en 20, 30, 10, 40 y anotar el valor p; después multiplicar las cuatro por 5 (100, 150, 50, 200) y anotarlo de nuevo. ¿Cambiaron las proporciones? ¿Cambió el valor p? Explicar el resultado.
+
+8. **Prueba unilateral para una proporción.** Un laboratorio afirma que su nueva tableta produce efectos secundarios en una proporción **menor** que el 12 % del medicamento actual. En una muestra aleatoria de 1000 pacientes, 100 presentaron efectos secundarios.
+   a. Plantear $H_0$ y $H_1$. ¿La prueba es uni o bilateral?
+   b. Verificar las condiciones para la aproximación normal.
+   c. Efectuar la prueba con $\alpha = 0.05$ e interpretar el resultado en el contexto del problema.
+   d. Repetir el cálculo a mano con el estadístico $z_c = \dfrac{\hat{p} - p_0}{\sqrt{p_0(1-p_0)/n}}$ y comparar con la salida de R.
 
 ::: {.callout-tip title="Soluciones y retroalimentación" collapse="true"}
-**1.** Con `prop.test(sum(rick$garrapatas == "si"), nrow(rick))` se obtiene una proporción cercana al **42 %**, con un intervalo aproximado de 38 % a 47 %. Interpretación: *"Con 95 % de confianza, entre el 38 % y el 47 % de la población evaluada tuvo contacto con garrapatas."* *Recuerda que el nivel de confianza describe la tasa de acierto del procedimiento, no la probabilidad de este intervalo concreto (@sec-cap7).*
+**1.** Con `prop.test(sum(rick$garrapatas == "si"), nrow(rick))` se obtiene una proporción cercana al **42 %**, con un intervalo aproximado de 38 % a 47 %. Interpretación: *"Con 95 % de confianza, entre el 38 % y el 47 % de la población evaluada tuvo contacto con garrapatas."* *Conviene recordar que el nivel de confianza describe la tasa de acierto del procedimiento, no la probabilidad de este intervalo concreto (@sec-cap7).*
 
 **2.** La positividad es del **38.2 %** con garrapatas contra **15.3 %** sin ellas: una diferencia cercana a **23 puntos porcentuales**, con valor p del orden de $10^{-8}$. Interpretación: *"Las personas con contacto con garrapatas presentaron una positividad más de dos veces mayor."* *Este resultado es coherente con la biología de la enfermedad: la garrapata es el vector. Aun así, sigue siendo un estudio observacional, así que la palabra correcta es asociación.*
 
 **3.** Las frecuencias esperadas son todas superiores a 20, muy por encima del mínimo de 5, así que la aproximación es válida. Si alguna esperada fuera menor que 5 —por ejemplo con una enfermedad muy rara o una muestra pequeña—, la alternativa correcta es la **prueba exacta de Fisher** (`fisher.test`), que no depende de aproximaciones. *Otra opción, cuando tiene sentido sustantivo, es agrupar categorías poco frecuentes; pero eso debe decidirse antes de ver los resultados, no después.*
 
-**4.** Para 3 × 2: $(3-1)(2-1) = 2$ grados de libertad. Para 4 × 2: $(4-1)(2-1) = 3$. *Los grados de libertad reflejan cuántas celdas puedes llenar libremente antes de que los totales marginales determinen el resto; por eso dependen de la forma de la tabla y no del tamaño de muestra.*
+**4.** Para 3 × 2: $(3-1)(2-1) = 2$ grados de libertad. Para 4 × 2: $(4-1)(2-1) = 3$. *Los grados de libertad reflejan cuántas celdas se puede llenar libremente antes de que los totales marginales determinen el resto; por eso dependen de la forma de la tabla y no del tamaño de muestra.*
 
-**5.** Con `chisq.test(table(hongos$sustrato, hongos$contaminado))` se obtiene $\chi^2 \approx 13.6$ con 3 grados de libertad y $p \approx 0.004$: **sí hay asociación** entre el sustrato y la contaminación. El aserrín se contamina bastante más que la paja de trigo. Interpretación para el laboratorio: *"El tipo de sustrato está asociado al riesgo de contaminación; el aserrín presenta la tasa más alta y la paja de trigo la más baja, por lo que conviene revisar su manejo o su esterilización."* *Nota que aquí el estudio **sí** es experimental —el sustrato se asignó a las bolsas—, así que en este caso la interpretación causal es defendible, a diferencia del caso de la rickettsiosis.*
+**5.** Con `chisq.test(table(hongos$sustrato, hongos$contaminado))` se obtiene $\chi^2 \approx 13.6$ con 3 grados de libertad y $p \approx 0.004$: **sí hay asociación** entre el sustrato y la contaminación. El aserrín se contamina bastante más que la paja de trigo. Interpretación para el laboratorio: *"El tipo de sustrato está asociado al riesgo de contaminación; el aserrín presenta la tasa más alta y la paja de trigo la más baja, por lo que conviene revisar su manejo o su esterilización."* *Nótese que aquí el estudio **sí** es experimental —el sustrato se asignó a las bolsas—, así que en este caso la interpretación causal es defendible, a diferencia del caso de la rickettsiosis.*
 
 **6.** El error es saltar de **asociación** a **causa** con datos observacionales. Nadie asignó al azar quién convive con perros; las personas que lo hacen pueden diferir sistemáticamente en otras cosas (viven en zonas con más garrapatas, pasan más tiempo al aire libre), y el perro puede ser simplemente un **indicador de exposición** al verdadero vector. Versión correcta: *"Se encontró una asociación estadísticamente significativa entre el contacto con perros y un resultado positivo; el contacto con perros podría estar actuando como indicador de exposición a garrapatas."* *La única forma de establecer causa sería un experimento aleatorizado, que aquí sería imposible y poco ético; en epidemiología se recurre entonces a criterios adicionales y al control de variables de confusión.*
 
 **7.** Las **proporciones no cambian** (en ambos casos 40 % y 20 % de positivos por fila), pero el **valor p sí baja** drásticamente: al multiplicar por 5, el estadístico $\chi^2$ también se multiplica por 5. La conclusión es la misma que en el @sec-cap7: la significancia estadística mezcla el **tamaño del efecto** con el **tamaño de la muestra**. Con pocos datos, una asociación real puede pasar inadvertida; con muchos, una asociación trivial se vuelve significativa. *Por eso conviene acompañar la prueba con una medida del tamaño de la asociación —como la diferencia de proporciones y su intervalo— y no reportar solo el valor p.*
+**8.** (a) $H_0: p = 0.12$ contra $H_1: p < 0.12$, prueba **unilateral izquierda**, porque la afirmación es que la proporción es *menor*. (b) Las condiciones se cumplen holgadamente: $np_0 = 120$ y $n(1-p_0) = 880$, ambos muy por encima de 10. (c) Con `prop.test(100, 1000, p = 0.12, alternative = "less")` se obtiene $\hat{p} = 0.10$ y un valor p cercano a **0.026**, menor que 0.05: se **rechaza** $H_0$. Interpretación: *"Los datos aportan evidencia de que la nueva tableta produce efectos secundarios en una proporción menor que el 12 % del medicamento actual."* (d) A mano:
+$$z_c = \frac{0.10 - 0.12}{\sqrt{0.12 \times 0.88 / 1000}} \approx -1.95$$
+Como $-1.95 < -1.645$, se rechaza $H_0$, misma conclusión. *Dos observaciones para la interpretación. Primera: si la prueba se hubiera planteado bilateral, el valor p sería aproximadamente 0.052 y **no** se habría rechazado —de ahí la importancia de fijar la dirección desde la pregunta, y no después de ver los datos—. Segunda: la reducción estimada es de 12 % a 10 %, es decir dos puntos porcentuales; conviene preguntarse si esa diferencia es clínicamente relevante y no solo estadísticamente significativa.*
+
 :::

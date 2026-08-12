@@ -8,7 +8,7 @@ library(palmerpenguins)
 theme_set(theme_minimal(base_size = 12))
 ```
 
-::: {.callout-tip title="Al terminar este capítulo podrás"}
+::: {.callout-tip title="Objetivos del capítulo"}
 - Distinguir **individuos** y **variables** en una tabla de datos.
 - Clasificar una variable por su **tipo** y su **escala de medición**.
 - Diferenciar un **estudio observacional** de un **experimento**.
@@ -41,8 +41,18 @@ glimpse(penguins)
 
 Cada fila es **un pingüino** (el individuo); cada columna es una **variable**: su especie, la isla donde se le observó, medidas de su pico y aleta, su masa corporal, su sexo y el año. Una tabla así, con un individuo por fila y una variable por columna, se llama **datos ordenados** (*tidy data*), y es la forma en que R espera recibirlos.
 
-::: {.callout-note title="Interpreta"}
-Antes de calcular nada, responde: en tu tabla, ¿qué es un individuo y qué es cada variable? Confundir esto es la fuente número uno de errores. En los datos de **galletas** del curso, por ejemplo, ¿el individuo es una marca o una calificación de un juez? (Es cada *calificación*: una fila por juez y marca.)
+::: {.callout-note title="De dónde vienen estos datos"}
+Los recolectó la Dra. Kristen Gorman en la **estación Palmer**, en el archipiélago Palmer de la Antártida, durante tres veranos australes (2007 a 2010). Los nidos se marcaron antes de la puesta del primer huevo y se midió a los dos adultos de cada pareja: largo y profundidad del pico con calibrador ($\pm 0.1$ mm), largo de la aleta derecha con regla ($\pm 1$ mm) y masa con balanza de resorte.
+
+Vale la pena tenerlo presente: detrás de cada renglón de esta tabla hubo alguien en el hielo con un calibrador en la mano. Y las celdas vacías (`NA`) también tienen causa —días en que el clima impidió llegar a las colonias—, no son un descuido.
+:::
+
+![Las medidas del pico. El *culmen* es la cresta superior del pico; en los datos aparece como `bill_length_mm` y `bill_depth_mm`. Ilustración: *Artwork by \@allison_horst*.](figuras/culmen_depth.png){width=58% fig-align="center"}
+
+Definir **cómo** se mide una variable es parte del trabajo estadístico: si dos personas midieran el pico de forma distinta, los datos no serían comparables. Por eso el protocolo especifica el instrumento, su precisión y hasta cuál de las dos aletas se mide.
+
+::: {.callout-note title="Interpretación"}
+Antes de calcular nada, responde: en la tabla, ¿qué es un individuo y qué es cada variable? Confundir esto es la fuente número uno de errores. En los datos de **galletas** del curso, por ejemplo, ¿el individuo es una marca o una calificación de un juez? (Es cada *calificación*: una fila por juez y marca.)
 :::
 
 ## Tipos de variables y escalas de medición
@@ -65,8 +75,8 @@ Con más detalle, cada variable vive en una de cuatro **escalas de medición**:
 
 La escala importa porque decide qué operaciones tienen sentido. Promediar temperaturas corporales (razón) es válido; "promediar" especies (nominal) no lo es.
 
-::: {.callout-tip title="¿Qué técnica uso?"}
-El **tipo de variable** decide casi todo lo que sigue en el curso: qué gráfica hacer, qué resumen numérico calcular y, más adelante, qué prueba aplicar. Antes de cualquier análisis, clasifica tus variables.
+::: {.callout-tip title="¿Qué técnica usar?"}
+El **tipo de variable** decide casi todo lo que sigue en el curso: qué gráfica hacer, qué resumen numérico calcular y, más adelante, qué prueba aplicar. Antes de cualquier análisis, clasifica las variables.
 :::
 
 ## Tipos de estudio: ¿de dónde vienen los datos?
@@ -74,14 +84,14 @@ El **tipo de variable** decide casi todo lo que sigue en el curso: qué gráfica
 Aunque este capítulo trata del análisis, conviene desde ya distinguir **cómo se producen** los datos, porque cambia lo que podemos concluir.
 
 - En un **estudio observacional** medimos a los individuos **sin intervenir**. Comparar la temperatura de lagartijas urbanas y de campo es observacional: no asignamos nosotros dónde vive cada lagartija.
-- En un **experimento** el investigador **aplica tratamientos** y observa la respuesta. La cata de galletas es un experimento: nosotros decidimos qué marca prueba cada juez y en qué orden.
+- En un **experimento** el investigador **aplica tratamientos**  y se observa la respuesta. La cata de galletas es un experimento: nosotros decidimos qué marca prueba cada juez y en qué orden.
 
 La diferencia es enorme para la interpretación: un experimento bien diseñado permite hablar de **causa y efecto**; un estudio observacional, en general, solo de **asociación**. Volveremos a esto en la Parte II.
 
 También conviene separar tres formas de obtener datos: un **censo** mide a *toda* la población; una **muestra** mide solo a una parte (bien elegida, para representar al todo); un **experimento** produce datos nuevos bajo condiciones controladas.
 
-::: {.callout-note title="Interpreta"}
-Si un titular dice "las personas que toman café viven más", pregúntate: ¿fue un experimento o un estudio observacional? Casi siempre es observacional, así que no podemos concluir que el café *cause* mayor longevidad: quizá quienes toman café tienen otros hábitos en común.
+::: {.callout-note title="Interpretación"}
+Si un titular dice "las personas que toman café viven más", conviene preguntarse: ¿fue un experimento o un estudio observacional? Casi siempre es observacional, así que no podemos concluir que el café *cause* mayor longevidad: quizá quienes toman café tienen otros hábitos en común.
 :::
 
 ## Primer contacto con R y con nuestros datos
@@ -101,7 +111,7 @@ Para conocer una tabla nueva, tres funciones bastan al inicio: `glimpse()` (un v
 summary(galletas)
 ```
 
-Fíjate que R trató `agrado` como numérica (correcto: es una calificación en escala 1–9) y `marca` como texto. Muchas veces querremos decirle a R que una columna es **categórica**; en R eso se llama *factor*:
+Nótese que R trató `agrado` como numérica (correcto: es una calificación en escala 1–9) y `marca` como texto. Muchas veces querremos decirle a R que una columna es **categórica**; en R eso se llama *factor*:
 
 ```{r}
 #| label: factor-marca
@@ -135,7 +145,7 @@ ggplot(penguins, aes(x = island, fill = species)) +
   labs(x = "Isla", y = "Cantidad", fill = "Especie")
 ```
 
-::: {.callout-note title="Interpreta"}
+::: {.callout-note title="Interpretación"}
 La segunda gráfica ya cuenta una historia: la especie *Gentoo* solo aparece en Biscoe y *Chinstrap* solo en Dream, mientras que *Adelie* está en las tres islas. Una gráfica bien hecha responde una pregunta de un vistazo.
 :::
 
@@ -167,7 +177,7 @@ ggplot(penguins, aes(x = body_mass_g, fill = species)) +
 
 ### Laboratorio: el ancho de clase cambia la historia {#sec-lab-bins}
 
-¿Cuántos intervalos debe tener un histograma? No hay una respuesta única, y la elección **importa**: con muy pocos se pierde el detalle, con demasiados solo se ve ruido. Mueve el deslizador y observa cuándo aparecen (o desaparecen) los dos montículos de la masa corporal.
+¿Cuántos intervalos debe tener un histograma? No hay una respuesta única, y la elección **importa**: con muy pocos se pierde el detalle, con demasiados solo se ve ruido. Mueve el deslizador  y se observa cuándo aparecen (o desaparecen) los dos montículos de la masa corporal.
 
 ```{r}
 #| label: datos-ojs-cap1
@@ -203,11 +213,11 @@ Plot.plot({
 })
 ```
 
-::: {.callout-note title="Interpreta"}
-Con un ancho muy grande (600 g o más) el histograma se aplana en una sola barra ancha y la estructura desaparece. Con uno muy pequeño (50 g) cada barra tiene poquísimos pingüinos y solo se ve ruido. En un rango intermedio —alrededor de 200 a 300 g— se distinguen con claridad **dos montículos**, la pista de que hay grupos mezclados. Moraleja: un histograma no es un dato objetivo, es una **decisión** de quien grafica; prueba varios anchos antes de concluir.
+::: {.callout-note title="Interpretación"}
+Con un ancho muy grande (600 g o más) el histograma se aplana en una sola barra ancha y la estructura desaparece. Con uno muy pequeño (50 g) cada barra tiene poquísimos pingüinos y solo se ve ruido. En un rango intermedio —alrededor de 200 a 300 g— se distinguen con claridad **dos montículos**, la pista de que hay grupos mezclados. Moraleja: un histograma no es un dato objetivo, es una **decisión** de quien grafica; conviene probar varios anchos antes de concluir.
 :::
 
-::: {.callout-tip title="¿Qué técnica uso?"}
+::: {.callout-tip title="¿Qué técnica usar?"}
 Primera entrada de nuestro **mapa de decisión**, según el tipo de variable a graficar:
 
 | Quiero ver… | Tipo de variable | Gráfica |
@@ -221,24 +231,24 @@ En el próximo capítulo agregaremos los **resúmenes numéricos** (media, media
 
 ## Resumen
 
-Empezamos por lo más importante y lo más olvidado: **entender los datos antes de tocarlos**. Identificamos individuos y variables, clasificamos cada variable por su tipo y escala, distinguimos estudios observacionales de experimentos, y elegimos la gráfica según el tipo de variable. Todo lo demás en el curso se apoya en esto: si clasificas bien tus variables, casi siempre sabrás qué hacer con ellas.
+Empezamos por lo más importante y lo más olvidado: **entender los datos antes de tocarlos**. Identificamos individuos y variables, clasificamos cada variable por su tipo y escala, distinguimos estudios observacionales de experimentos, y elegimos la gráfica según el tipo de variable. Todo lo demás en el curso se apoya en esto: si clasificas bien las variables, casi siempre sabrás qué hacer con ellas.
 
 ## Ejercicios
 
 1. **Tipos y escalas.** Para cada variable de `penguins` (`species`, `island`, `bill_length_mm`, `body_mass_g`, `sex`, `year`), indica si es categórica o cuantitativa y en qué escala de medición vive.
 
-2. **Individuos y variables.** Abre `datos/lagartijas.csv` con `read.csv()`. ¿Qué es un individuo en esa tabla? Lista sus variables y clasifícalas.
+2. **Individuos y variables.** Abrir `datos/lagartijas.csv` con `read.csv()`. ¿Qué es un individuo en esa tabla? Lista sus variables y clasifícalas.
 
-3. **Observacional o experimental.** Clasifica cada estudio y justifica en una frase:
+3. **Observacional o experimental.** Clasificar cada estudio y justificar en una frase:
    a. Se registra la temperatura corporal de lagartijas encontradas en la ciudad y en el campo.
    b. Se asigna al azar a cada juez un orden para probar cuatro marcas de galletas y se mide su agrado.
    c. Se comparan las calificaciones de estudiantes que asistieron a asesorías contra las de quienes no.
 
-4. **Barras.** Con los datos de `hongos_sustrato.csv`, haz un diagrama de barras del número de bolsas por `sustrato`. ¿Está balanceado el experimento?
+4. **Barras.** Con los datos de `hongos_sustrato.csv`, hacer un diagrama de barras del número de bolsas por `sustrato`. ¿Está balanceado el experimento?
 
-5. **Histograma y forma.** Grafica el histograma de `flipper_length_mm` de los pingüinos con `binwidth = 5`. Describe centro, dispersión y forma. ¿Ves indicios de más de un grupo?
+5. **Histograma y forma.** Graficar el histograma de `flipper_length_mm` de los pingüinos con `binwidth = 5`. Describir centro, dispersión y forma. ¿Se observan indicios de más de un grupo?
 
-6. **Escala de medición (opción múltiple).** El nivel de agrado en una escala "bajo / medio / alto" es una variable de escala: (a) nominal, (b) ordinal, (c) intervalo, (d) razón. Justifica.
+6. **Escala de medición (opción múltiple).** El nivel de agrado en una escala "bajo / medio / alto" es una variable de escala: (a) nominal, (b) ordinal, (c) intervalo, (d) razón. Justificar.
 
 ::: {.callout-tip title="Soluciones y retroalimentación" collapse="true"}
 **1.** `species` e `island`: categóricas nominales (no hay orden natural entre especies). `sex`: categórica nominal. `bill_length_mm`, `body_mass_g`: cuantitativas de razón (el cero significa ausencia y las razones tienen sentido: 4000 g es el doble de 2000 g). `year`: es numérica, pero funciona como **intervalo** (no existe un "año cero" absoluto) y en la práctica se usa como categórica ordinal. *Cuidado con el reflejo de tratar todo número como cuantitativo: `year` es el ejemplo clásico de un número que no se promedia con sentido.*

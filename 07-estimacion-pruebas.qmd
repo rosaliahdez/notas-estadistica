@@ -7,7 +7,7 @@ library(tidyverse)
 theme_set(theme_minimal(base_size = 12))
 ```
 
-::: {.callout-tip title="Al terminar este capítulo podrás"}
+::: {.callout-tip title="Objetivos del capítulo"}
 - Construir e **interpretar correctamente** un intervalo de confianza para una media.
 - Plantear hipótesis y entender la **lógica** de una prueba estadística.
 - Leer un **valor p** sin caer en las interpretaciones equivocadas más comunes.
@@ -52,7 +52,7 @@ Es **incorrecto** decir "hay 95 % de probabilidad de que $\mu$ esté en *este* i
 
 ### Laboratorio: ¿qué significa "95 % de confianza"? {#sec-lab-ic}
 
-Cada línea horizontal es un intervalo construido a partir de una muestra distinta de la **misma** población, cuya media verdadera conocemos (la línea roja, $\mu = 100$). Los intervalos que **no** alcanzan a cubrirla aparecen en rojo. Cambia el nivel de confianza y el tamaño de muestra.
+Cada línea horizontal es un intervalo construido a partir de una muestra distinta de la **misma** población, cuya media verdadera conocemos (la línea roja, $\mu = 100$). Los intervalos que **no** alcanzan a cubrirla aparecen en rojo. Los controles permiten cambiar el nivel de confianza y el tamaño de muestra.
 
 ```{ojs}
 //| panel: input
@@ -106,8 +106,8 @@ Plot.plot({
 md`De estos **60** intervalos, **${intervalos.filter(d => d.cubre).length}** contienen el valor verdadero (µ = 100). Nivel nominal: **${nivel} %** → esperaríamos alrededor de **${Math.round(60 * nivel / 100)}**.`
 ```
 
-::: {.callout-note title="Interpreta"}
-Fíjate en tres cosas. Primero, **algunos intervalos fallan**, y eso es normal, no un error: con 95 % de confianza, uno de cada veinte no cubre el parámetro. Segundo, al subir el nivel a 99 % los intervalos se **ensanchan** y fallan menos: más confianza cuesta menos precisión. Tercero, al aumentar $n$ todos se **angostan**, porque el error estándar $s/\sqrt{n}$ encoge.
+::: {.callout-note title="Interpretación"}
+Conviene observar tres cosas. Primero, **algunos intervalos fallan**, y eso es normal, no un error: con 95 % de confianza, uno de cada veinte no cubre el parámetro. Segundo, al subir el nivel a 99 % los intervalos se **ensanchan** y fallan menos: más confianza cuesta menos precisión. Tercero, al aumentar $n$ todos se **angostan**, porque el error estándar $s/\sqrt{n}$ encoge.
 
 Y lo esencial: el "95 %" describe **cuántas veces acierta el método a la larga**, no la probabilidad de que un intervalo particular contenga a $\mu$.
 :::
@@ -127,6 +127,63 @@ No decimos "aceptamos $H_0$", sino "**no la rechazamos**": la ausencia de eviden
 Y el nivel de significancia $\alpha$ (típicamente 0.05) es un **umbral convencional**, no una ley de la naturaleza. Un p de 0.049 y uno de 0.051 dicen prácticamente lo mismo.
 :::
 
+## Hipótesis de una y de dos colas
+
+La forma de $H_1$ depende de la pregunta, y hay que fijarla **antes** de ver los datos:
+
+| Pregunta | $H_1$ | Tipo de prueba |
+|---|---|---|
+| ¿El parámetro **difiere** del valor de referencia? | $\mu \neq \mu_0$ | Dos colas (bilateral) |
+| ¿Es **mayor** que el valor de referencia? | $\mu > \mu_0$ | Una cola (unilateral derecha) |
+| ¿Es **menor** que el valor de referencia? | $\mu < \mu_0$ | Una cola (unilateral izquierda) |
+
+La diferencia práctica es dónde se mide la rareza de los datos. En una prueba bilateral cuentan como "extremos" los resultados alejados en **cualquiera** de las dos direcciones, así que el valor p suma las dos colas; en una unilateral solo cuenta la dirección de interés.
+
+En R se indica con el argumento `alternative`:
+
+```{r}
+#| label: una-cola-ejemplo
+#| eval: false
+t.test(x, mu = 34)                            # bilateral (por omisión)
+t.test(x, mu = 34, alternative = "greater")   # H1: mu > 34
+t.test(x, mu = 34, alternative = "less")      # H1: mu < 34
+```
+
+::: {.callout-important title="La regla de oro de las pruebas unilaterales"}
+La dirección de $H_1$ debe surgir de la **pregunta de investigación**, nunca de haber mirado los datos. Elegir la cola después de ver hacia dónde apuntan los resultados es una forma de *p-hacking*: duplica artificialmente la evidencia aparente, porque un valor p bilateral de 0.08 se convierte en 0.04 unilateral con solo cambiar la hipótesis a posteriori.
+
+Regla útil: si la pregunta es "¿mejoró?", "¿es menor que?", "¿superó el estándar?", la prueba es unilateral. Si es "¿son distintos?", es bilateral.
+:::
+
+## Los dos tipos de error
+
+Toda decisión estadística puede equivocarse, y hay **dos formas distintas** de hacerlo:
+
+|  | $H_0$ es cierta | $H_0$ es falsa |
+|---|---|---|
+| **Se rechaza $H_0$** | Error tipo I (probabilidad $\alpha$) | Decisión correcta (probabilidad $1-\beta$) |
+| **No se rechaza $H_0$** | Decisión correcta | Error tipo II (probabilidad $\beta$) |
+
+- El **error tipo I** es un *falso positivo*: declarar un efecto que no existe. Su probabilidad es exactamente el nivel de significancia $\alpha$ que elegimos, típicamente 0.05.
+- El **error tipo II** es un *falso negativo*: no detectar un efecto que sí existe. Su probabilidad se denota $\beta$ y no la fijamos directamente: depende del tamaño real del efecto, de la variabilidad y del tamaño de muestra.
+- La **potencia** de la prueba es $1 - \beta$: la probabilidad de detectar un efecto cuando de verdad lo hay.
+
+::: {.callout-note title="Interpretación"}
+Una analogía útil es un juicio. $H_0$ es "la persona es inocente". El **error tipo I** es condenar a un inocente; el **tipo II**, absolver a un culpable. Bajar $\alpha$ (exigir más evidencia para condenar) reduce el primero pero aumenta el segundo: los dos errores se compensan entre sí.
+
+Lo único que reduce **ambos** a la vez es aumentar el tamaño de muestra, que es como conseguir más pruebas antes de juzgar. Por eso el tamaño de muestra debe planearse **antes** de recolectar: un estudio con muestra insuficiente tiene poca potencia y puede no detectar un efecto real.
+
+Y aquí está el vínculo con lo dicho antes: cuando no rechazamos $H_0$, no sabemos si es porque no hay efecto o porque nos faltó potencia. Ese es exactamente el error tipo II, y es la razón de que no digamos "aceptamos $H_0$".
+:::
+
+En R, la potencia de una prueba para una media se calcula así:
+
+```{r}
+#| label: potencia
+# ¿Qué potencia tiene detectar una diferencia de 0.5 desviaciones con n = 30?
+power.t.test(n = 30, delta = 0.5, sd = 1, sig.level = 0.05, type = "one.sample")
+```
+
 ## Prueba de hipótesis para una media
 
 Preguntemos si la temperatura media de las lagartijas urbanas difiere de 34 °C, un valor de referencia:
@@ -141,15 +198,59 @@ t.test(urbanas$temp_corporal, mu = 34)
 
 La salida trae todo: el estadístico `t`, los grados de libertad, el **valor p** y, de regalo, el intervalo de confianza. El valor p resulta minúsculo, así que rechazamos $H_0$.
 
-::: {.callout-note title="Interpreta"}
+### El mismo cálculo a mano {#sec-t-mano}
+
+Conviene hacer una vez con lápiz y papel lo que R acaba de hacer, para ver que no hay magia. Tomemos solo las **ocho primeras** lagartijas urbanas:
+
+$$34.0,\; 36.4,\; 36.3,\; 34.1,\; 37.3,\; 35.8,\; 36.1,\; 34.4$$
+
+**Paso 1. La media.** $\displaystyle \bar{x} = \frac{\sum x_i}{n} = \frac{284.4}{8} = 35.55$
+
+**Paso 2. La desviación estándar**, con la fórmula de cálculo directo:
+
+$$s^2 = \frac{1}{n-1}\left[\sum x_i^2 - n\bar{x}^2\right] = \frac{10120.96 - 8(35.55)^2}{7} = 1.5057$$
+
+de donde $s = \sqrt{1.5057} = 1.2271$.
+
+**Paso 3. El error estándar.** $\displaystyle \frac{s}{\sqrt{n}} = \frac{1.2271}{\sqrt{8}} = 0.4338$
+
+**Paso 4. El estadístico.** Aquí está la idea central, y vale la pena leerla despacio:
+
+$$t = \frac{\bar{x} - \mu_0}{s/\sqrt{n}} = \frac{35.55 - 34}{0.4338} = 3.573$$
+
+**Paso 5. La decisión.** Con $n - 1 = 7$ grados de libertad, el valor crítico bilateral al 5 % es $t_{0.975,\,7} = 2.365$. Como $3.573 > 2.365$, se rechaza $H_0$.
+
+Comprobación con R sobre esos mismos ocho datos:
+
+```{r}
+#| label: t-mano
+ocho <- head(urbanas$temp_corporal, 8)
+t.test(ocho, mu = 34)
+```
+
+::: {.callout-note title="Interpretación"}
+Los números coinciden: $t = 3.573$, 7 grados de libertad, $p \approx 0.009$ y un intervalo de aproximadamente $(34.52,\ 36.58)$.
+
+Pero lo que importa no es la coincidencia, sino **leer la fórmula**. El estadístico $t$ es un cociente entre la **señal** (qué tan lejos está la media muestral del valor de referencia) y el **ruido** (el error estándar). Eso explica de un vistazo tres cosas que ya sabíamos por separado:
+
+- Si la diferencia crece, $t$ crece: más señal.
+- Si los datos son más dispersos, $s$ crece y $t$ se encoge: más ruido.
+- Si $n$ crece, el error estándar $s/\sqrt{n}$ se encoge y $t$ crece: por eso con muestras grandes hasta diferencias triviales resultan significativas.
+
+Los tres fenómenos son **la misma fórmula** vista desde distintos ángulos. Ese es el motivo para calcularlo a mano una vez.
+:::
+
+Volviendo a la muestra completa:
+
+::: {.callout-note title="Interpretación"}
 Redacción para un lector no técnico: *"La temperatura corporal media de las lagartijas urbanas (35.4 °C) es significativamente mayor que el valor de referencia de 34 °C ($p < 0.001$); con 95 % de confianza, la media real está entre los límites que reporta el intervalo."*
 
-Observa que **intervalo y prueba dan la misma información**: como el 34 queda fuera del intervalo de confianza del 95 %, sabíamos de antemano que la prueba a $\alpha = 0.05$ iba a rechazar. Son dos caras de la misma moneda; el intervalo suele ser más informativo porque además dice **cuánto** vale el parámetro.
+Obsérvese que **intervalo y prueba dan la misma información**: como el 34 queda fuera del intervalo de confianza del 95 %, sabíamos de antemano que la prueba a $\alpha = 0.05$ iba a rechazar. Son dos caras de la misma moneda; el intervalo suele ser más informativo porque además dice **cuánto** vale el parámetro.
 :::
 
 ### Laboratorio: qué es realmente el valor p {#sec-lab-p}
 
-La curva es la distribución del estadístico **suponiendo que $H_0$ es cierta**. Mueve la media observada de tu muestra y observa cómo el área sombreada —el valor p— se encoge conforme tu resultado se aleja de lo que $H_0$ predice.
+La curva es la distribución del estadístico **suponiendo que $H_0$ es cierta**. Al mover la media observada de la muestra se observa cómo el área sombreada —el valor p— se encoge conforme el resultado se aleja de lo que $H_0$ predice.
 
 ```{ojs}
 //| panel: input
@@ -256,7 +357,7 @@ sum(p_valores < 0.05)   # casi siempre sale alguna "significativa"
 
 Buscar entre muchos análisis hasta encontrar uno significativo, y reportar solo ese, se llama **p-hacking**, y es una de las causas de la crisis de replicabilidad en varias ciencias. La defensa: decidir las hipótesis **antes** de ver los datos, reportar todos los análisis realizados y ajustar por comparaciones múltiples (lo veremos con las pruebas post-hoc en el @sec-cap10).
 
-::: {.callout-tip title="¿Qué técnica uso?"}
+::: {.callout-tip title="¿Qué técnica usar?"}
 Con **una muestra y un parámetro**:
 
 | Mi pregunta | Herramienta |
@@ -274,16 +375,16 @@ La **estimación puntual** da un número; el **intervalo de confianza** le agreg
 
 ## Ejercicios
 
-1. **Intervalo en R.** Calcula el intervalo de confianza del 95 % para la temperatura media de las lagartijas **de campo** y escribe su interpretación correcta en una frase.
+1. **Intervalo en R.** Calcular el intervalo de confianza del 95 % para la temperatura media de las lagartijas **de campo** y escribir su interpretación correcta en una frase.
 
-2. **Efecto del nivel.** Para esos mismos datos, calcula los intervalos al 90 %, 95 % y 99 %. ¿Cuál es más ancho? ¿Por qué tiene sentido?
+2. **Efecto del nivel.** Para esos mismos datos, calcular los intervalos al 90 %, 95 % y 99 %. ¿Cuál es más ancho? ¿Por qué tiene sentido?
 
 3. **Interpretación correcta.** ¿Cuáles de estas afirmaciones sobre un IC del 95 % $(34.1,\ 34.7)$ son correctas?
    a. Hay 95 % de probabilidad de que $\mu$ esté entre 34.1 y 34.7.
    b. El 95 % de los datos están entre 34.1 y 34.7.
    c. Si repitiéramos el estudio muchas veces, el 95 % de los intervalos así construidos contendrían a $\mu$.
 
-4. **Prueba de una media.** Con `datos/algoritmos_ab.csv`, prueba si el tiempo medio del entorno Mac difiere de 10 ms. Plantea $H_0$ y $H_1$, corre la prueba e interpreta.
+4. **Prueba de una media.** Con `datos/algoritmos_ab.csv`, prueba si el tiempo medio del entorno Mac difiere de 10 ms. Plantear $H_0$ y $H_1$, correr la prueba e interpretar.
 
 5. **Valor p.** Un estudio reporta $p = 0.03$. ¿Cuáles afirmaciones son incorrectas y por qué?
    a. Hay 3 % de probabilidad de que $H_0$ sea cierta.
@@ -292,10 +393,25 @@ La **estimación puntual** da un número; el **intervalo de confianza** le agreg
 
 6. **Significancia vs relevancia.** Una empresa prueba un cambio de diseño con 200 000 usuarios y encuentra que la tasa de clics sube de 4.00 % a 4.05 %, con $p < 0.001$. ¿Recomendarías implementar el cambio? ¿Qué información adicional pedirías?
 
-7. **Simula el p-hacking.** Modifica el código de p-hacking para hacer 200 pruebas en lugar de 20. ¿Cuántas resultan significativas? ¿Coincide con lo que esperabas?
+7. **Simula el p-hacking.** Modificar el código de p-hacking para hacer 200 pruebas en lugar de 20. ¿Cuántas resultan significativas? ¿Coincide con lo esperado?
+
+8. **Tipos de error.** Se contrasta $H_0: \mu = 3$ contra $H_1: \mu > 3$, y se decide rechazar $H_0$ cuando la media muestral supera 3.4. En ese contexto, ¿cuál de las siguientes describe el **error tipo II**?
+   a. Rechazar $H_0$ cuando en realidad $\mu = 3$.
+   b. No rechazar $H_0$ cuando en realidad $\mu > 3$.
+   c. Rechazar $H_0$ cuando en realidad $\mu > 3$.
+   d. No rechazar $H_0$ cuando en realidad $\mu = 3$.
+
+9. **Una o dos colas.** Plantear $H_0$ y $H_1$ para cada situación, indicando si la prueba es uni o bilateral:
+   a. Un laboratorio afirma que su nueva presentación produce **menos** efectos secundarios que el 12 % del medicamento actual.
+   b. Se quiere saber si la temperatura media de un proceso **difiere** del valor nominal de 80 °C.
+   c. Un fabricante sostiene que sus focos duran **más** de 8000 horas.
+
+10. **Elegir el nivel de significancia.** Una empresa desea obtener evidencia a favor de su afirmación y puede escoger entre $\alpha = 0.05$ y $\alpha = 0.01$. ¿Cuál le conviene y por qué? ¿Qué riesgo asume al elegirlo?
+
+11. **Potencia.** Con `power.t.test()`, calcular la potencia para detectar una diferencia de 0.5 desviaciones estándar con $n = 30$, y después con $n = 100$. ¿Cuántas observaciones harían falta para alcanzar una potencia de 0.90?
 
 ::: {.callout-tip title="Soluciones y retroalimentación" collapse="true"}
-**1.** Con `t.test(filter(lagartijas, habitat == "campo")$temp_corporal)$conf.int` se obtiene un intervalo alrededor de 34 °C. Interpretación correcta: *"Con 95 % de confianza, la temperatura corporal media de las lagartijas de campo abierto está entre los dos límites del intervalo"*, entendiendo que el 95 % se refiere a la tasa de acierto del procedimiento. *Evita redactar "hay 95 % de probabilidad de que la media esté en este intervalo".*
+**1.** Con `t.test(filter(lagartijas, habitat == "campo")$temp_corporal)$conf.int` se obtiene un intervalo alrededor de 34 °C. Interpretación correcta: *"Con 95 % de confianza, la temperatura corporal media de las lagartijas de campo abierto está entre los dos límites del intervalo"*, entendiendo que el 95 % se refiere a la tasa de acierto del procedimiento. *Conviene evitar la redacción "hay 95 % de probabilidad de que la media esté en este intervalo".*
 
 **2.** El del **99 %** es el más ancho y el del **90 %** el más angosto. Tiene sentido: para estar más seguros de atrapar el parámetro hay que lanzar una red más grande. *Existe un intercambio inevitable entre **confianza** y **precisión**; la única forma de mejorar ambas a la vez es aumentar $n$, como se ve en el laboratorio del @sec-lab-ic.*
 
@@ -303,11 +419,19 @@ La **estimación puntual** da un número; el **intervalo de confianza** le agreg
 
 **4.** $H_0: \mu = 10$ contra $H_1: \mu \neq 10$. Con
 `t.test(filter(ab, entorno == "Mac")$tiempo_ms, mu = 10)`
-se obtiene una media muestral cercana a **10.6 ms** y un valor p de alrededor de **0.02**, así que a $\alpha = 0.05$ se rechaza $H_0$: el tiempo medio de Mac difiere significativamente de 10 ms. *Nota que este caso es mucho menos contundente que el de las lagartijas ($p < 0.001$): un p de 0.02 es evidencia moderada, y conviene decirlo así en vez de tratar todo lo menor que 0.05 como un sí rotundo. Reporta también el intervalo —aproximadamente de 10.1 a 11.1 ms—: informa **cuánto** vale la media, no solo que difiere.*
+se obtiene una media muestral cercana a **10.6 ms** y un valor p de alrededor de **0.02**, así que a $\alpha = 0.05$ se rechaza $H_0$: el tiempo medio de Mac difiere significativamente de 10 ms. *Nótese que este caso es mucho menos contundente que el de las lagartijas ($p < 0.001$): un p de 0.02 es evidencia moderada, y conviene decirlo así en vez de tratar todo lo menor que 0.05 como un sí rotundo. Reportar también el intervalo —aproximadamente de 10.1 a 11.1 ms—: informa **cuánto** vale la media, no solo que difiere.*
 
 **5.** Las incorrectas son la **(a)** y la **(c)**. La (a) invierte el condicional: el valor p se calcula **suponiendo** $H_0$ cierta, así que no puede ser la probabilidad de $H_0$. La (c) confunde significancia con magnitud: el valor p depende tanto del tamaño del efecto como del tamaño de muestra. La **(b)** es la lectura correcta. *La confusión (a) tiene nombre: **falacia del condicional transpuesto**, y es el error más frecuente al leer resultados científicos en prensa.*
 
 **6.** Probablemente **no** solo por ese resultado. El efecto es de 0.05 puntos porcentuales: estadísticamente significativo gracias a los 200 000 usuarios, pero práctica y económicamente irrelevante en casi cualquier contexto. Información adicional que pediría: el **intervalo de confianza** de la diferencia (para saber si el efecto podría ser aún menor), el **costo** de implementar el cambio, si hay efectos secundarios en otras métricas, y si el experimento fue una prueba A/B bien aleatorizada. *Este es el ejemplo canónico de por qué reportar solo el valor p es insuficiente: significancia y relevancia son preguntas distintas.*
 
 **7.** Con 200 pruebas sobre datos sin efecto real, lo esperado es que alrededor de **10** resulten significativas ($200 \times 0.05$). El número exacto varía por azar, típicamente entre 5 y 16. *La moraleja: si alguien corre 200 análisis y reporta solo los 10 "hallazgos", está describiendo ruido con lenguaje de descubrimiento. Por eso importa preregistrar las hipótesis y reportar cuántas pruebas se hicieron en total.*
+
+**8.** La respuesta es la **(b)**: no rechazar $H_0$ cuando en realidad $\mu > 3$. El error tipo II consiste en **no detectar un efecto que sí existe**, es decir, quedarse con la hipótesis nula siendo falsa. La opción (a) describe el error tipo I; las opciones (c) y (d) describen **decisiones correctas**. *Truco para no confundirlos: el tipo I se comete al **rechazar** (falso positivo) y el tipo II al **no rechazar** (falso negativo). Basta con fijarse en qué decisión se tomó y compararla con la realidad.*
+
+**9.** (a) $H_0: p = 0.12$ contra $H_1: p < 0.12$, **unilateral izquierda**: la afirmación es que produce *menos* efectos. (b) $H_0: \mu = 80$ contra $H_1: \mu \neq 80$, **bilateral**: interesa cualquier desviación del valor nominal. (c) $H_0: \mu = 8000$ contra $H_1: \mu > 8000$, **unilateral derecha**. *Nótese que la hipótesis nula siempre lleva la igualdad, y que la dirección de $H_1$ la dicta la pregunta —no los datos—.*
+
+**10.** Le conviene $\alpha = 0.05$. Un nivel de significancia más alto hace **más fácil rechazar** $H_0$ y, por tanto, más probable obtener evidencia a favor de su afirmación. El riesgo que asume es un mayor **error tipo I**: cinco de cada cien veces declararía un efecto inexistente, contra una de cada cien con $\alpha = 0.01$. *Vale la pena discutir la tensión ética: quien tiene interés comercial en el resultado prefiere el umbral laxo, y por eso los niveles se fijan por convención de la disciplina y no los elige quien financia el estudio. En contextos donde un falso positivo es costoso —aprobar un fármaco inseguro— se usa $\alpha = 0.01$ o menor.*
+
+**11.** Con `power.t.test(n = 30, delta = 0.5, sd = 1, type = "one.sample")` la potencia es aproximadamente **0.75**; con $n = 100$ supera **0.99**. Para una potencia de 0.90 se necesitan alrededor de **44** observaciones, que se obtienen con `power.t.test(power = 0.90, delta = 0.5, sd = 1, type = "one.sample")`. *Esta función es la herramienta para planear el tamaño de muestra antes de recolectar datos: se fija el efecto mínimo que interesa detectar y la potencia deseada, y devuelve la $n$ necesaria. Hacerlo al revés —recolectar primero y calcular la potencia después— no sirve de nada.*
 :::

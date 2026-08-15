@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+<question type="category">
+  <category><text>$course$/top/Estadística LCC 2026-2/U1 Exploración de datos</text></category>
+  <info format="html"><text><![CDATA[<p>Individuos y variables, tipos y escalas de medición, estudio observacional contra experimento, y lectura de gráficas. Corresponde a la Unidad 1 del curso. Los cuatro reactivos heredados se conservaron en contenido, con el enunciado acortado y con retroalimentación agregada.</p>]]></text></info>
+</question>
+<question type="gapselect">
+  <name><text>U1-01 Escalas de medición en un estudio de mercado</text></name>
+  <questiontext format="html"><text><![CDATA[<p>En una encuesta a clientes se registraron cuatro variables. Indicar la escala de medición de cada una.</p><ul><li><strong>Edad</strong> del comprador, en años cumplidos: [[1]]</li><li><strong>Satisfacción</strong> con el producto, de <em>muy baja</em> a <em>muy alta</em>: [[2]]</li><li><strong>Método de pago</strong> (efectivo, tarjeta, transferencia): [[3]]</li><li><strong>Temperatura</strong> del local en grados Celsius: [[4]]</li></ul>]]></text></questiontext>
+  <generalfeedback format="html"><text><![CDATA[<p>La escala decide qué operaciones tienen sentido.</p><ul><li><strong>Nominal</strong>, solo distingue categorías. No hay orden.</li><li><strong>Ordinal</strong>, hay orden pero las distancias no están definidas. Entre <em>baja</em> y <em>media</em> no hay la misma distancia garantizada que entre <em>media</em> y <em>alta</em>.</li><li><strong>Intervalo</strong>, hay orden y distancias, pero el cero es convencional. 0 °C no es ausencia de temperatura, y por eso 20 °C no es el doble de calor que 10 °C.</li><li><strong>Razón</strong>, hay orden, distancias y cero absoluto. Alguien de 40 años sí tiene el doble de edad que alguien de 20.</li></ul><p>La edad es de razón y no de intervalo justamente por el cero.</p>]]></text></generalfeedback>
+  <defaultgrade>1.0000000</defaultgrade>
+  <penalty>0.0000000</penalty>
+  <hidden>0</hidden>
+  <shuffleanswers>1</shuffleanswers>
+  <correctfeedback format="html"><text><![CDATA[<p>Correcto en todas.</p>]]></text></correctfeedback>
+  <partiallycorrectfeedback format="html"><text><![CDATA[<p>Hay algunas bien y algunas mal. Conviene revisar cuáles antes de reintentar.</p>]]></text></partiallycorrectfeedback>
+  <incorrectfeedback format="html"><text><![CDATA[<p>No es correcto. La explicación de abajo ordena los cuatro casos.</p>]]></text></incorrectfeedback>
+  <selectoption><text>Razón</text><group>1</group></selectoption>
+  <selectoption><text>Ordinal</text><group>1</group></selectoption>
+  <selectoption><text>Nominal</text><group>1</group></selectoption>
+  <selectoption><text>Intervalo</text><group>1</group></selectoption>
+</question>
+<question type="gapselect">
+  <name><text>U1-02 Tipos de variable en una encuesta</text></name>
+  <questiontext format="html"><text><![CDATA[<p>Una encuesta en un centro comercial incluye estas cuatro preguntas. Indicar de qué tipo es cada respuesta.</p><ul><li>¿Cuántos minutos duró su visita? [[1]]</li><li>¿En qué piso entró al centro comercial? [[2]]</li><li>¿Cuánto gastó hoy, en pesos? [[3]]</li><li>¿Usó alguna promoción? (sí o no) [[4]]</li></ul>]]></text></questiontext>
+  <generalfeedback format="html"><text><![CDATA[<p>El criterio no es si la respuesta se escribe con números, sino si esos números <strong>miden una cantidad</strong>.</p><p>El piso se anota con un número, pero funciona como <strong>etiqueta</strong>. Promediar pisos no significa nada, igual que promediar el año de observación en los pingüinos.</p><p>Los minutos y el gasto sí son cantidades, así que son <strong>cuantitativas</strong>. El uso de promoción tiene dos categorías, así que es <strong>categórica binaria</strong>.</p>]]></text></generalfeedback>
+  <defaultgrade>1.0000000</defaultgrade>
+  <penalty>0.0000000</penalty>
+  <hidden>0</hidden>
+  <shuffleanswers>1</shuffleanswers>
+  <correctfeedback format="html"><text><![CDATA[<p>Correcto en todas.</p>]]></text></correctfeedback>
+  <partiallycorrectfeedback format="html"><text><![CDATA[<p>Hay algunas bien y algunas mal. Conviene revisar cuáles antes de reintentar.</p>]]></text></partiallycorrectfeedback>
+  <incorrectfeedback format="html"><text><![CDATA[<p>No es correcto. La explicación de abajo ordena los cuatro casos.</p>]]></text></incorrectfeedback>
+  <selectoption><text>Cuantitativa</text><group>1</group></selectoption>
+  <selectoption><text>Categórica</text><group>1</group></selectoption>
+  <selectoption><text>Cuantitativa</text><group>1</group></selectoption>
+  <selectoption><text>Categórica</text><group>1</group></selectoption>
+</question>
+<question type="multichoice">
+  <name><text>U1-03 Qué se hace en un análisis exploratorio</text></name>
+  <questiontext format="html"><text><![CDATA[<p>¿Cuál de estas actividades forma parte de un <strong>análisis exploratorio de datos</strong>?</p>]]></text></questiontext>
+  <generalfeedback format="html"><text><![CDATA[<p>Explorar es <strong>mirar</strong> antes de concluir. Se resume, se grafica, se buscan valores raros y datos faltantes, y se detectan grupos escondidos. Todavía no se afirma nada sobre la población.</p><p>Afirmar algo sobre la población a partir de una muestra es <strong>inferencia</strong>, y llega hasta la unidad 6. Explorar primero no es un trámite: es lo que permite saber si la técnica que se piensa usar después tiene sentido.</p>]]></text></generalfeedback>
+  <defaultgrade>1.0000000</defaultgrade>
+  <penalty>0.0000000</penalty>
+  <hidden>0</hidden>
+  <single>true</single>
+  <shuffleanswers>true</shuffleanswers>
+  <answernumbering>abc</answernumbering>
+  <correctfeedback format="html"><text><![CDATA[<p>Correcto.</p>]]></text></correctfeedback>
+  <partiallycorrectfeedback format="html"><text><![CDATA[<p>Parcialmente correcto: hay más de una opción válida y falta alguna.</p>]]></text></partiallycorrectfeedback>
+  <incorrectfeedback format="html"><text><![CDATA[<p>No es correcto. Vale la pena leer la explicación de abajo y volver a intentar.</p>]]></text></incorrectfeedback>
+  <answer fraction="100" format="html"><text><![CDATA[Graficar la distribución de cada variable para detectar patrones, valores raros y datos faltantes]]></text><feedback format="html"><text><![CDATA[<p>Correcto. Y muchas veces ahí aparece lo importante, como los dos montículos del histograma de masa.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Calcular un valor p para decidir si dos grupos difieren]]></text><feedback format="html"><text><![CDATA[<p>Eso es inferencia, no exploración. Llega hasta la unidad 7, y se apoya en lo que la exploración haya revelado.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Estimar el error de un modelo con datos de prueba]]></text><feedback format="html"><text><![CDATA[<p>Eso pertenece a la evaluación de modelos predictivos, que queda fuera de este curso.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Elegir el tamaño de muestra necesario para el estudio]]></text><feedback format="html"><text><![CDATA[<p>Eso se decide <strong>antes</strong> de tener los datos, y es tema de las unidades 4 y 7.</p>]]></text></feedback></answer>
+</question>
+<question type="matching">
+  <name><text>U1-04 Observacional o experimental</text></name>
+  <questiontext format="html"><text><![CDATA[<p>Clasificar cada estudio.</p>]]></text></questiontext>
+  <generalfeedback format="html"><text><![CDATA[<p>La pregunta que decide es una sola. <strong>¿Quién asignó el tratamiento?</strong> Si lo asignó el investigador, y además al azar, es un <strong>experimento</strong> y se puede hablar de causa. Si el grupo ya venía dado, es <strong>observacional</strong> y solo se puede hablar de asociación.</p><p>Cuidado con confundir <em>planear bien la recolección</em> con <em>hacer un experimento</em>. El estudio de los pingüinos de Palmer se planeó con enorme cuidado y aun así es observacional, porque nadie asignó la especie ni el sexo de cada pingüino.</p>]]></text></generalfeedback>
+  <defaultgrade>1.0000000</defaultgrade>
+  <penalty>0.0000000</penalty>
+  <hidden>0</hidden>
+  <shuffleanswers>true</shuffleanswers>
+  <correctfeedback format="html"><text><![CDATA[<p>Correcto.</p>]]></text></correctfeedback>
+  <partiallycorrectfeedback format="html"><text><![CDATA[<p>Hay algunas bien y algunas mal. Conviene revisar cuáles.</p>]]></text></partiallycorrectfeedback>
+  <incorrectfeedback format="html"><text><![CDATA[<p>No es correcto. La explicación de abajo ordena las cinco.</p>]]></text></incorrectfeedback>
+  <subquestion format="html"><text><![CDATA[Se asigna al azar a los pacientes al medicamento nuevo o a un placebo, y después se mide la presión arterial]]></text><answer><text>Experimental</text></answer></subquestion>
+  <subquestion format="html"><text><![CDATA[Se compara la temperatura corporal de lagartijas de ciudad y de campo, tal como se encuentran]]></text><answer><text>Observacional</text></answer></subquestion>
+  <subquestion format="html"><text><![CDATA[Se registran las horas de estudio y la calificación de un grupo de estudiantes, sin intervenir]]></text><answer><text>Observacional</text></answer></subquestion>
+  <subquestion format="html"><text><![CDATA[Se sortea qué bolsas de sustrato reciben cada mezcla y se mide el rendimiento del cultivo]]></text><answer><text>Experimental</text></answer></subquestion>
+</question>
+<question type="multichoice">
+  <name><text>U1-05 Qué es un individuo en la tabla de la cata</text></name>
+  <questiontext format="html"><text><![CDATA[<p>En la cata de galletas, cada juez califica cuatro marcas. ¿Qué es un <strong>individuo</strong> en esa tabla de datos?</p>]]></text></questiontext>
+  <generalfeedback format="html"><text><![CDATA[<p>El individuo es la unidad de la que se toma <strong>una</strong> medición, y aquí cada medición es una calificación. Por eso la tabla lleva un renglón por juez y por marca, no un renglón por marca.</p><p>Si se armara con un renglón por marca, se perdería quién calificó qué, y con eso se pierde la posibilidad de analizar nada. Confundir el individuo con el grupo es el error número uno de todo el curso.</p>]]></text></generalfeedback>
+  <defaultgrade>1.0000000</defaultgrade>
+  <penalty>0.0000000</penalty>
+  <hidden>0</hidden>
+  <single>true</single>
+  <shuffleanswers>true</shuffleanswers>
+  <answernumbering>abc</answernumbering>
+  <correctfeedback format="html"><text><![CDATA[<p>Correcto.</p>]]></text></correctfeedback>
+  <partiallycorrectfeedback format="html"><text><![CDATA[<p>Parcialmente correcto: hay más de una opción válida y falta alguna.</p>]]></text></partiallycorrectfeedback>
+  <incorrectfeedback format="html"><text><![CDATA[<p>No es correcto. Vale la pena leer la explicación de abajo y volver a intentar.</p>]]></text></incorrectfeedback>
+  <answer fraction="100" format="html"><text><![CDATA[Cada calificación, es decir, un renglón por juez y por marca]]></text><feedback format="html"><text><![CDATA[<p>Correcto. Con 20 jueces y 4 marcas, la tabla tendría 80 renglones.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Cada marca de galleta]]></text><feedback format="html"><text><![CDATA[<p>La marca es el <strong>tratamiento</strong>, no el individuo. Es una columna de la tabla, no un renglón.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Cada juez]]></text><feedback format="html"><text><![CDATA[<p>El juez tampoco, porque cada juez aporta cuatro calificaciones, no una.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[La calificación promedio de cada marca]]></text><feedback format="html"><text><![CDATA[<p>Ese es un <strong>resumen</strong> que se calcula después. Los datos originales tienen que guardar cada calificación por separado.</p>]]></text></feedback></answer>
+</question>
+<question type="multichoice">
+  <name><text>U1-06 Un número que no es una cantidad</text></name>
+  <questiontext format="html"><text><![CDATA[<p>En la tabla <code>penguins</code>, la columna <code>year</code> guarda 2007, 2008 o 2009. ¿De qué tipo es esa variable?</p>]]></text></questiontext>
+  <generalfeedback format="html"><text><![CDATA[<p>Se escribe con números, pero funciona como <strong>etiqueta</strong>. Promediar años de observación no significa nada, y esa es la prueba práctica para distinguirlas.</p><p>Es ordinal y no nominal porque los años sí tienen un orden natural: 2007 va antes que 2008. El mismo criterio aplica a un código de muestra como <code>G134</code>, que es nominal.</p>]]></text></generalfeedback>
+  <defaultgrade>1.0000000</defaultgrade>
+  <penalty>0.0000000</penalty>
+  <hidden>0</hidden>
+  <single>true</single>
+  <shuffleanswers>true</shuffleanswers>
+  <answernumbering>abc</answernumbering>
+  <correctfeedback format="html"><text><![CDATA[<p>Correcto.</p>]]></text></correctfeedback>
+  <partiallycorrectfeedback format="html"><text><![CDATA[<p>Parcialmente correcto: hay más de una opción válida y falta alguna.</p>]]></text></partiallycorrectfeedback>
+  <incorrectfeedback format="html"><text><![CDATA[<p>No es correcto. Vale la pena leer la explicación de abajo y volver a intentar.</p>]]></text></incorrectfeedback>
+  <answer fraction="100" format="html"><text><![CDATA[Categórica ordinal, porque es una etiqueta que además tiene orden]]></text><feedback format="html"><text><![CDATA[<p>Correcto. Y por eso en R conviene tratarla como <code>factor</code> y no como número.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Cuantitativa discreta, porque toma valores enteros]]></text><feedback format="html"><text><![CDATA[<p>Ser entero no basta. La prueba es si promediar tiene sentido, y el promedio de los años de observación no significa nada.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Cuantitativa continua]]></text><feedback format="html"><text><![CDATA[<p>No hay valores intermedios posibles ni la variable mide una cantidad.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Categórica nominal, porque es una etiqueta sin orden]]></text><feedback format="html"><text><![CDATA[<p>Es etiqueta, sí, pero los años están ordenados. Nominal sería el código de la muestra o la isla.</p>]]></text></feedback></answer>
+</question>
+<question type="multichoice">
+  <name><text>U1-07 La escala de agrado de la cata</text></name>
+  <questiontext format="html"><text><![CDATA[<p>En la cata, el agrado se califica de 1 a 9, donde 1 es <em>me disgusta muchísimo</em> y 9 es <em>me gusta muchísimo</em>. ¿Cómo conviene describir esa variable?</p>]]></text></questiontext>
+  <generalfeedback format="html"><text><![CDATA[<p>Estrictamente es <strong>ordinal</strong>, porque no hay garantía de que la distancia entre 3 y 4 sea la misma que entre 8 y 9. Aun así, en análisis sensorial se trata como cuantitativa por convención, y por eso más adelante se le podrá calcular un promedio y aplicarle un ANOVA.</p><p>Lo que no se vale es esconder la decisión. Conviene decir en el reporte que se tomó, porque un lector podría no estar de acuerdo y tiene derecho a saberlo.</p>]]></text></generalfeedback>
+  <defaultgrade>1.0000000</defaultgrade>
+  <penalty>0.0000000</penalty>
+  <hidden>0</hidden>
+  <single>true</single>
+  <shuffleanswers>true</shuffleanswers>
+  <answernumbering>abc</answernumbering>
+  <correctfeedback format="html"><text><![CDATA[<p>Correcto.</p>]]></text></correctfeedback>
+  <partiallycorrectfeedback format="html"><text><![CDATA[<p>Parcialmente correcto: hay más de una opción válida y falta alguna.</p>]]></text></partiallycorrectfeedback>
+  <incorrectfeedback format="html"><text><![CDATA[<p>No es correcto. Vale la pena leer la explicación de abajo y volver a intentar.</p>]]></text></incorrectfeedback>
+  <answer fraction="100" format="html"><text><![CDATA[Es ordinal, aunque por convención se trate como cuantitativa, y conviene decirlo]]></text><feedback format="html"><text><![CDATA[<p>Correcto. Hacer explícita una decisión discutible es parte del oficio.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Es cuantitativa, porque son números del 1 al 9]]></text><feedback format="html"><text><![CDATA[<p>Los números son etiquetas ordenadas. Nada garantiza que las distancias entre niveles consecutivos sean iguales.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Es nominal, porque son categorías de opinión]]></text><feedback format="html"><text><![CDATA[<p>Son categorías, pero están claramente ordenadas de menor a mayor agrado.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Es cuantitativa continua, porque se puede promediar]]></text><feedback format="html"><text><![CDATA[<p>Que se pueda calcular un promedio no vuelve continua a una variable. Entre 4 y 5 no hay valores posibles.</p>]]></text></feedback></answer>
+</question>
+<question type="multichoice">
+  <name><text>U1-08 Ceros que no son un hallazgo</text></name>
+  <questiontext format="html"><text><![CDATA[<p>Al contar pingüinos por especie e isla aparecen varios ceros. Los Juanito solo están en Biscoe y los Barbijo solo en Dream. ¿Qué se puede concluir?</p>]]></text></questiontext>
+  <generalfeedback format="html"><text><![CDATA[<p>Los ceros no son un descubrimiento sobre la naturaleza sino una consecuencia del <strong>diseño del muestreo</strong>. A los Juanito se los buscó únicamente en Biscoe y a los Barbijo únicamente en Dream, porque ahí están sus colonias.</p><p>Una prueba estadística aplicada a esa tabla daría una asociación fuertísima, y aun así la conclusión sería falsa. Ninguna técnica avisa de esto. Solo avisa conocer el contexto y saber cómo se recolectaron los datos.</p>]]></text></generalfeedback>
+  <defaultgrade>1.0000000</defaultgrade>
+  <penalty>0.0000000</penalty>
+  <hidden>0</hidden>
+  <single>true</single>
+  <shuffleanswers>true</shuffleanswers>
+  <answernumbering>abc</answernumbering>
+  <correctfeedback format="html"><text><![CDATA[<p>Correcto.</p>]]></text></correctfeedback>
+  <partiallycorrectfeedback format="html"><text><![CDATA[<p>Parcialmente correcto: hay más de una opción válida y falta alguna.</p>]]></text></partiallycorrectfeedback>
+  <incorrectfeedback format="html"><text><![CDATA[<p>No es correcto. Vale la pena leer la explicación de abajo y volver a intentar.</p>]]></text></incorrectfeedback>
+  <answer fraction="100" format="html"><text><![CDATA[Nada sobre la naturaleza. Los ceros vienen de dónde se buscó a cada especie]]></text><feedback format="html"><text><![CDATA[<p>Correcto. Es el mejor argumento del curso para leer siempre cómo se produjeron los datos.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Que la especie depende de la isla, y la prueba lo confirmaría]]></text><feedback format="html"><text><![CDATA[<p>La prueba sí saldría significativa, y precisamente por eso el ejemplo es peligroso. Un resultado estadístico correcto puede sostener una conclusión falsa si se ignora el diseño.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Que la muestra es demasiado pequeña para concluir]]></text><feedback format="html"><text><![CDATA[<p>El problema no es el tamaño. Con diez veces más datos recolectados igual, los ceros seguirían ahí.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Que hay un error de captura en la tabla]]></text><feedback format="html"><text><![CDATA[<p>Los datos están bien capturados. Reflejan fielmente dónde se buscó.</p>]]></text></feedback></answer>
+</question>
+<question type="multichoice">
+  <name><text>U1-09 Lo que limita las preguntas</text></name>
+  <questiontext format="html"><text><![CDATA[<p>El estudio de Palmer quería saber si el hielo marino de cada invierno se relaciona con la alimentación de los pingüinos. Con las ocho columnas de <code>penguins</code>, ¿se puede responder?</p>]]></text></questiontext>
+  <generalfeedback format="html"><text><![CDATA[<p>No, y la razón no es la técnica sino los <strong>datos</strong>. La alimentación se midió con isótopos estables en muestras de sangre, y el hielo marino con datos satelitales. Ninguna de esas variables está en nuestra tabla de 344 por 8.</p><p>La regla vale para todo el curso. Qué preguntas se pueden responder depende de qué variables se midieron, no de qué técnicas se conocen. Si la variable no está en la tabla, ninguna técnica la inventa.</p>]]></text></generalfeedback>
+  <defaultgrade>1.0000000</defaultgrade>
+  <penalty>0.0000000</penalty>
+  <hidden>0</hidden>
+  <single>true</single>
+  <shuffleanswers>true</shuffleanswers>
+  <answernumbering>abc</answernumbering>
+  <correctfeedback format="html"><text><![CDATA[<p>Correcto.</p>]]></text></correctfeedback>
+  <partiallycorrectfeedback format="html"><text><![CDATA[<p>Parcialmente correcto: hay más de una opción válida y falta alguna.</p>]]></text></partiallycorrectfeedback>
+  <incorrectfeedback format="html"><text><![CDATA[<p>No es correcto. Vale la pena leer la explicación de abajo y volver a intentar.</p>]]></text></incorrectfeedback>
+  <answer fraction="100" format="html"><text><![CDATA[No, porque ni la alimentación ni el hielo marino están entre las variables medidas]]></text><feedback format="html"><text><![CDATA[<p>Correcto. Y conviene notar que sí están en la versión completa del conjunto, <code>penguins_raw</code>.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Sí, con una prueba de correlación entre año y masa corporal]]></text><feedback format="html"><text><![CDATA[<p>El año no mide el hielo, y la masa no mide la alimentación. Sería sustituir las variables de la pregunta por otras que no significan lo mismo.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Sí, comparando las tres temporadas con un ANOVA]]></text><feedback format="html"><text><![CDATA[<p>Eso compararía las temporadas entre sí, que no es la pregunta. Además no habría ninguna medida de alimentación que comparar.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[No, porque la muestra de 344 pingüinos es insuficiente]]></text><feedback format="html"><text><![CDATA[<p>El tamaño no es el obstáculo. Con 3 000 pingüinos y las mismas ocho columnas, la pregunta seguiría sin poder responderse.</p>]]></text></feedback></answer>
+</question>
+<question type="multichoice">
+  <name><text>U1-10 Un histograma con dos montículos</text></name>
+  <questiontext format="html"><text><![CDATA[<p>El histograma de la masa corporal de los 344 pingüinos muestra <strong>dos montículos</strong> en lugar de uno. ¿Qué conviene hacer?</p>]]></text></questiontext>
+  <generalfeedback format="html"><text><![CDATA[<p>Dos montículos casi siempre significan que hay <strong>grupos distintos mezclados</strong>. Al separar por especie, el misterio se resuelve: los Juanito son bastante más pesados que las otras dos especies.</p><p>La moraleja sirve para todo el curso. Cuando una distribución se ve rara, casi siempre hay una variable escondida que la explica, y buscarla es parte del análisis, no un paso opcional.</p>]]></text></generalfeedback>
+  <defaultgrade>1.0000000</defaultgrade>
+  <penalty>0.0000000</penalty>
+  <hidden>0</hidden>
+  <single>true</single>
+  <shuffleanswers>true</shuffleanswers>
+  <answernumbering>abc</answernumbering>
+  <correctfeedback format="html"><text><![CDATA[<p>Correcto.</p>]]></text></correctfeedback>
+  <partiallycorrectfeedback format="html"><text><![CDATA[<p>Parcialmente correcto: hay más de una opción válida y falta alguna.</p>]]></text></partiallycorrectfeedback>
+  <incorrectfeedback format="html"><text><![CDATA[<p>No es correcto. Vale la pena leer la explicación de abajo y volver a intentar.</p>]]></text></incorrectfeedback>
+  <answer fraction="100" format="html"><text><![CDATA[Sospechar que hay grupos mezclados y volver a graficar separando por alguna variable categórica]]></text><feedback format="html"><text><![CDATA[<p>Correcto. Aquí la variable escondida era la especie.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Descartar los datos del segundo montículo por atípicos]]></text><feedback format="html"><text><![CDATA[<p>No son errores ni casos raros: son 124 pingüinos Juanito. Descartarlos sería tirar un tercio de los datos por no entenderlos.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Calcular la media, que resume la distribución de todos modos]]></text><feedback format="html"><text><![CDATA[<p>La media caería en el valle entre los dos montículos, donde casi no hay pingüinos. Sería un resumen que no describe a nadie.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Aumentar el ancho de clase hasta que se vea un solo montículo]]></text><feedback format="html"><text><![CDATA[<p>Eso esconde la estructura en lugar de explicarla. El histograma se vería más limpio y diría menos.</p>]]></text></feedback></answer>
+</question>
+<question type="truefalse">
+  <name><text>U1-11 El ancho de clase</text></name>
+  <questiontext format="html"><text><![CDATA[<p>Dos personas grafican el histograma de los <strong>mismos</strong> datos y obtienen figuras de forma distinta. Necesariamente una de las dos se equivocó.</p>]]></text></questiontext>
+  <generalfeedback format="html"><text><![CDATA[<p>No necesariamente. El <strong>ancho de clase</strong> lo elige quien grafica, y cambia la historia que cuenta el histograma. Con intervalos muy angostos solo se ve ruido; con intervalos muy anchos desaparece la estructura, incluidos los dos montículos.</p><p>Un histograma no es un dato objetivo sino una <strong>decisión</strong>. Por eso conviene probar varios anchos antes de quedarse con uno.</p>]]></text></generalfeedback>
+  <defaultgrade>1.0000000</defaultgrade>
+  <penalty>0.0000000</penalty>
+  <hidden>0</hidden>
+  <answer fraction="0" format="moodle_auto_format"><text>true</text><feedback format="html"><text><![CDATA[<p>No. Las dos pueden estar bien hechas y verse distintas, porque el ancho de clase es una decisión de quien grafica.</p>]]></text></feedback></answer>
+  <answer fraction="100" format="moodle_auto_format"><text>false</text><feedback format="html"><text><![CDATA[<p>Correcto. Y por eso vale la pena mirar el mismo histograma con dos o tres anchos antes de concluir.</p>]]></text></feedback></answer>
+</question>
+<question type="matching">
+  <name><text>U1-12 Tres formas de obtener datos</text></name>
+  <questiontext format="html"><text><![CDATA[<p>Relacionar cada situación con la forma de obtener datos que le corresponde.</p>]]></text></questiontext>
+  <generalfeedback format="html"><text><![CDATA[<p>El <strong>censo</strong> mide a toda la población, y suele ser caro o imposible. La <strong>muestra</strong> mide una parte bien elegida, y es el tema de la unidad 4. El <strong>experimento</strong> produce datos nuevos aplicando tratamientos, y es el de la unidad 5.</p><p>Conviene recordar que hay encuestas con millones de respuestas que han fallado en predecir una elección. El problema no fue el tamaño sino cómo se eligió a quién preguntar.</p>]]></text></generalfeedback>
+  <defaultgrade>1.0000000</defaultgrade>
+  <penalty>0.0000000</penalty>
+  <hidden>0</hidden>
+  <shuffleanswers>true</shuffleanswers>
+  <correctfeedback format="html"><text><![CDATA[<p>Correcto.</p>]]></text></correctfeedback>
+  <partiallycorrectfeedback format="html"><text><![CDATA[<p>Hay algunas bien y algunas mal. Conviene revisar cuáles.</p>]]></text></partiallycorrectfeedback>
+  <incorrectfeedback format="html"><text><![CDATA[<p>No es correcto. La explicación de abajo ordena las cinco.</p>]]></text></incorrectfeedback>
+  <subquestion format="html"><text><![CDATA[Se pregunta a todos los estudiantes inscritos en la licenciatura]]></text><answer><text>Censo</text></answer></subquestion>
+  <subquestion format="html"><text><![CDATA[Se eligen al azar 60 estudiantes de la licenciatura y se les pregunta]]></text><answer><text>Muestra</text></answer></subquestion>
+  <subquestion format="html"><text><![CDATA[Se sortea qué estudiantes usan cada versión del sitio y se miden sus tiempos]]></text><answer><text>Experimento</text></answer></subquestion>
+  <subquestion format="html"><text><![CDATA[Se revisan los expedientes completos de las cuatro generaciones egresadas]]></text><answer><text>Censo</text></answer></subquestion>
+</question>
+</quiz>

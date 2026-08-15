@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+<question type="category">
+  <category><text>$course$/top/Estadística LCC 2026-2/U0 Herramientas: R y RStudio</text></category>
+  <info format="html"><text><![CDATA[<p>Reactivos sobre el uso de R y RStudio: la interfaz, cargar paquetes y datos, tipos de datos, subconjuntos de una tabla y resúmenes por grupo. Corresponden al bloque de herramientas, antes de entrar a la Unidad 1. Pensados para intentos ilimitados y peso bajo: sirven para practicar, no para filtrar.</p>]]></text></info>
+</question>
+<question type="multichoice">
+  <name><text>U0-01 Dónde se escribe el análisis</text></name>
+  <questiontext format="html"><text><![CDATA[<p>En este curso, ¿dónde conviene escribir el análisis?</p>]]></text></questiontext>
+  <generalfeedback format="html"><text><![CDATA[<p>La consola sirve para probar; el <em>script</em> es donde se trabaja. Un análisis que solo existe en la consola no se guarda: no se puede repetir ni revisar después. Eso es lo que significa que un análisis sea <strong>reproducible</strong>.</p>]]></text></generalfeedback>
+  <defaultgrade>1.0000000</defaultgrade>
+  <penalty>0.0000000</penalty>
+  <hidden>0</hidden>
+  <single>true</single>
+  <shuffleanswers>true</shuffleanswers>
+  <answernumbering>abc</answernumbering>
+  <correctfeedback format="html"><text><![CDATA[<p>Correcto.</p>]]></text></correctfeedback>
+  <partiallycorrectfeedback format="html"><text><![CDATA[<p>Parcialmente correcto: hay más de una opción válida y falta alguna.</p>]]></text></partiallycorrectfeedback>
+  <incorrectfeedback format="html"><text><![CDATA[<p>No es correcto. Vale la pena leer la explicación de abajo y volver a intentar.</p>]]></text></incorrectfeedback>
+  <answer fraction="100" format="html"><text><![CDATA[En un <em>script</em> (archivo <code>.R</code>), ejecutando cada línea con Ctrl + Enter]]></text><feedback format="html"><text><![CDATA[<p>Correcto. Y al guardarlo queda el registro completo de lo que se hizo, en orden.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Directamente en la consola, que para eso está]]></text><feedback format="html"><text><![CDATA[<p>La consola es útil para probar algo rápido, pero lo que se teclea ahí no queda guardado.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[En la pestaña Terminal]]></text><feedback format="html"><text><![CDATA[<p>Esa pestaña no es R: es la línea de comandos del sistema operativo.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[En la ventana Environment]]></text><feedback format="html"><text><![CDATA[<p>Esa ventana solo <em>muestra</em> los objetos que existen; no se escribe código ahí.</p>]]></text></feedback></answer>
+</question>
+<question type="multichoice">
+  <name><text>U0-02 install.packages contra library</text></name>
+  <questiontext format="html"><text><![CDATA[<p>La semana pasada se instaló <code>palmerpenguins</code> en la computadora. Hoy se abre RStudio de nuevo y se quiere usar la tabla <code>penguins</code>. ¿Qué hay que hacer?</p>]]></text></questiontext>
+  <generalfeedback format="html"><text><![CDATA[<p>Son dos acciones distintas: <code>install.packages()</code> <strong>baja e instala</strong> el paquete, y se hace <strong>una sola vez</strong>. <code>library()</code> lo <strong>carga en la sesión actual</strong>, y se hace <strong>cada vez</strong> que se abre R. Esta distinción explica buena parte de los errores de las primeras semanas.</p>]]></text></generalfeedback>
+  <defaultgrade>1.0000000</defaultgrade>
+  <penalty>0.0000000</penalty>
+  <hidden>0</hidden>
+  <single>true</single>
+  <shuffleanswers>true</shuffleanswers>
+  <answernumbering>abc</answernumbering>
+  <correctfeedback format="html"><text><![CDATA[<p>Correcto.</p>]]></text></correctfeedback>
+  <partiallycorrectfeedback format="html"><text><![CDATA[<p>Parcialmente correcto: hay más de una opción válida y falta alguna.</p>]]></text></partiallycorrectfeedback>
+  <incorrectfeedback format="html"><text><![CDATA[<p>No es correcto. Vale la pena leer la explicación de abajo y volver a intentar.</p>]]></text></incorrectfeedback>
+  <answer fraction="100" format="html"><text><![CDATA[Solo <code>library(palmerpenguins)</code>]]></text><feedback format="html"><text><![CDATA[<p>Correcto. Ya está instalado; falta cargarlo en esta sesión.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Volver a correr <code>install.packages("palmerpenguins")</code>]]></text><feedback format="html"><text><![CDATA[<p>No hace falta, y tarda. Instalar es una vez; cargar es cada sesión.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Nada: si ya se instaló, queda disponible siempre]]></text><feedback format="html"><text><![CDATA[<p>Instalado sí queda, pero cada sesión nueva arranca sin paquetes cargados.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Primero <code>install.packages()</code> y luego <code>library()</code>, siempre en ese orden]]></text><feedback format="html"><text><![CDATA[<p>Ese es el orden la <em>primera</em> vez. Después basta con <code>library()</code>.</p>]]></text></feedback></answer>
+</question>
+<question type="multichoice">
+  <name><text>U0-03 NA se contagia</text></name>
+  <questiontext format="html"><text><![CDATA[<p>¿Qué devuelve <code>mean(c(3750, NA, 3250))</code>?</p>]]></text></questiontext>
+  <generalfeedback format="html"><text><![CDATA[<p><code>NA</code> significa <em>no se sabe</em>. Si uno de los valores es desconocido, el promedio también lo es: por eso R contesta <code>NA</code> en lugar de ignorar el faltante en silencio. Para pedirle explícitamente que lo omita se escribe <code>mean(x, na.rm = TRUE)</code>. Obliga a que la decisión sea consciente.</p>]]></text></generalfeedback>
+  <defaultgrade>1.0000000</defaultgrade>
+  <penalty>0.0000000</penalty>
+  <hidden>0</hidden>
+  <single>true</single>
+  <shuffleanswers>true</shuffleanswers>
+  <answernumbering>abc</answernumbering>
+  <correctfeedback format="html"><text><![CDATA[<p>Correcto.</p>]]></text></correctfeedback>
+  <partiallycorrectfeedback format="html"><text><![CDATA[<p>Parcialmente correcto: hay más de una opción válida y falta alguna.</p>]]></text></partiallycorrectfeedback>
+  <incorrectfeedback format="html"><text><![CDATA[<p>No es correcto. Vale la pena leer la explicación de abajo y volver a intentar.</p>]]></text></incorrectfeedback>
+  <answer fraction="100" format="html"><text><![CDATA[<code>NA</code>]]></text><feedback format="html"><text><![CDATA[<p>Correcto. R no decide por nosotros qué hacer con lo que falta.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[3500, porque promedia los dos valores que sí existen]]></text><feedback format="html"><text><![CDATA[<p>Eso ocurre solo si se agrega <code>na.rm = TRUE</code>. Sin eso, el resultado es <code>NA</code>.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[2333.33, tomando el <code>NA</code> como cero]]></text><feedback format="html"><text><![CDATA[<p>R nunca convierte un faltante en cero: son cosas distintas. Un dato desconocido no es un dato igual a cero.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Un mensaje de error]]></text><feedback format="html"><text><![CDATA[<p>No hay error: la operación es válida y su resultado, legítimamente, es desconocido.</p>]]></text></feedback></answer>
+</question>
+<question type="multichoice">
+  <name><text>U0-04 Sintaxis del corchete</text></name>
+  <questiontext format="html"><text><![CDATA[<p>¿Qué extrae <code>penguins[1:5, c("species", "body_mass_g")]</code>?</p>]]></text></questiontext>
+  <generalfeedback format="html"><text><![CDATA[<p>La regla es <strong>corchete, renglones, coma, columnas, corchete</strong>. Antes de la coma van los renglones; después, las columnas. Dejar un lado vacío significa <em>todos</em>: <code>penguins[ , 1]</code> es la columna 1 completa y <code>penguins[1, ]</code> es el renglón 1 completo.</p>]]></text></generalfeedback>
+  <defaultgrade>1.0000000</defaultgrade>
+  <penalty>0.0000000</penalty>
+  <hidden>0</hidden>
+  <single>true</single>
+  <shuffleanswers>true</shuffleanswers>
+  <answernumbering>abc</answernumbering>
+  <correctfeedback format="html"><text><![CDATA[<p>Correcto.</p>]]></text></correctfeedback>
+  <partiallycorrectfeedback format="html"><text><![CDATA[<p>Parcialmente correcto: hay más de una opción válida y falta alguna.</p>]]></text></partiallycorrectfeedback>
+  <incorrectfeedback format="html"><text><![CDATA[<p>No es correcto. Vale la pena leer la explicación de abajo y volver a intentar.</p>]]></text></incorrectfeedback>
+  <answer fraction="100" format="html"><text><![CDATA[Los primeros 5 renglones, y de ellos solo esas dos columnas]]></text><feedback format="html"><text><![CDATA[<p>Correcto. Cinco renglones por dos columnas.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Las columnas 1 a 5 de las variables mencionadas]]></text><feedback format="html"><text><![CDATA[<p>El <code>1:5</code> está antes de la coma, así que se refiere a renglones, no a columnas.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Los renglones donde <code>species</code> vale entre 1 y 5]]></text><feedback format="html"><text><![CDATA[<p>El corchete no filtra por valor así. Para filtrar se usa una condición, como <code>penguins[penguins$species == "Gentoo", ]</code>.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Un error, porque no se pueden mezclar números y nombres]]></text><feedback format="html"><text><![CDATA[<p>Sí se puede: los renglones por número y las columnas por nombre.</p>]]></text></feedback></answer>
+</question>
+<question type="truefalse">
+  <name><text>U0-05 La pestaña Terminal</text></name>
+  <questiontext format="html"><text><![CDATA[<p>La pestaña <strong>Terminal</strong> de RStudio es otra consola de R, igual a la primera.</p>]]></text></questiontext>
+  <generalfeedback format="html"><text><![CDATA[<p>La <strong>consola</strong> es el intérprete de R. La <strong>Terminal</strong> es la línea de comandos del <strong>sistema operativo</strong>: ahí se usa <code>git</code>, se navega entre carpetas o se arranca R sin RStudio escribiendo <code>R</code>. Están una junto a la otra, pero no son lo mismo.</p>]]></text></generalfeedback>
+  <defaultgrade>1.0000000</defaultgrade>
+  <penalty>0.0000000</penalty>
+  <hidden>0</hidden>
+  <answer fraction="0" format="moodle_auto_format"><text>true</text><feedback format="html"><text><![CDATA[<p>No: si se escribe <code>mean(1:10)</code> en la Terminal, no va a funcionar, porque ahí no está R esperando.</p>]]></text></feedback></answer>
+  <answer fraction="100" format="moodle_auto_format"><text>false</text><feedback format="html"><text><![CDATA[<p>Correcto. Son dos intérpretes distintos que comparten vecindario en la ventana.</p>]]></text></feedback></answer>
+</question>
+<question type="multichoice">
+  <name><text>U0-06 tapply y dplyr contestan lo mismo</text></name>
+  <questiontext format="html"><text><![CDATA[<p>¿Cuál de estos pares de instrucciones contesta <strong>la misma</strong> pregunta?</p>]]></text></questiontext>
+  <generalfeedback format="html"><text><![CDATA[<p>Las dos calculan la masa promedio <strong>por especie</strong>. <code>tapply()</code> es el camino de R base; <code>group_by()</code> con <code>summarise()</code> es el de <code>dplyr</code>. El resultado es el mismo: cambia la forma de escribirlo, no la estadística. En el curso usaremos <code>dplyr</code> porque se lee mejor cuando hay varios pasos encadenados.</p>]]></text></generalfeedback>
+  <defaultgrade>1.0000000</defaultgrade>
+  <penalty>0.0000000</penalty>
+  <hidden>0</hidden>
+  <single>true</single>
+  <shuffleanswers>true</shuffleanswers>
+  <answernumbering>abc</answernumbering>
+  <correctfeedback format="html"><text><![CDATA[<p>Correcto.</p>]]></text></correctfeedback>
+  <partiallycorrectfeedback format="html"><text><![CDATA[<p>Parcialmente correcto: hay más de una opción válida y falta alguna.</p>]]></text></partiallycorrectfeedback>
+  <incorrectfeedback format="html"><text><![CDATA[<p>No es correcto. Vale la pena leer la explicación de abajo y volver a intentar.</p>]]></text></incorrectfeedback>
+  <answer fraction="100" format="html"><text><![CDATA[<code>tapply(penguins$body_mass_g, penguins$species, mean)</code> &nbsp;y&nbsp; <code>penguins |&gt; group_by(species) |&gt; summarise(mean(body_mass_g))</code>]]></text><feedback format="html"><text><![CDATA[<p>Correcto. Mismo número, dos escrituras.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[<code>mean(penguins$body_mass_g)</code> &nbsp;y&nbsp; <code>penguins |&gt; group_by(species) |&gt; summarise(mean(body_mass_g))</code>]]></text><feedback format="html"><text><![CDATA[<p>La primera da <strong>un</strong> promedio general; la segunda da <strong>uno por especie</strong>. No es la misma pregunta.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[<code>dim(penguins)</code> &nbsp;y&nbsp; <code>summary(penguins)</code>]]></text><feedback format="html"><text><![CDATA[<p><code>dim()</code> da el tamaño de la tabla; <code>summary()</code> resume cada columna. Son distintas.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[<code>table(penguins$species)</code> &nbsp;y&nbsp; <code>tapply(penguins$body_mass_g, penguins$species, mean)</code>]]></text><feedback format="html"><text><![CDATA[<p>La primera <em>cuenta</em> cuántos hay de cada especie; la segunda <em>promedia</em> la masa. Distinto.</p>]]></text></feedback></answer>
+</question>
+<question type="multichoice">
+  <name><text>U0-07 No such file or directory</text></name>
+  <questiontext format="html"><text><![CDATA[<p>Al leer un archivo, R contesta:</p><pre>Error in file(file, "rt") : cannot open file 'datos/mis-datos.csv': No such file or directory</pre><p>El archivo existe y el nombre está bien escrito. ¿Cuál es la causa más probable?</p>]]></text></questiontext>
+  <generalfeedback format="html"><text><![CDATA[<p>R busca los archivos a partir de <strong>una</strong> carpeta: el directorio de trabajo. Se consulta con <code>getwd()</code> y se ve su contenido con <code>list.files()</code>. La forma recomendable de evitar este error es trabajar dentro de un <strong>Proyecto</strong> de RStudio y usar rutas relativas.</p>]]></text></generalfeedback>
+  <defaultgrade>1.0000000</defaultgrade>
+  <penalty>0.0000000</penalty>
+  <hidden>0</hidden>
+  <single>true</single>
+  <shuffleanswers>true</shuffleanswers>
+  <answernumbering>abc</answernumbering>
+  <correctfeedback format="html"><text><![CDATA[<p>Correcto.</p>]]></text></correctfeedback>
+  <partiallycorrectfeedback format="html"><text><![CDATA[<p>Parcialmente correcto: hay más de una opción válida y falta alguna.</p>]]></text></partiallycorrectfeedback>
+  <incorrectfeedback format="html"><text><![CDATA[<p>No es correcto. Vale la pena leer la explicación de abajo y volver a intentar.</p>]]></text></incorrectfeedback>
+  <answer fraction="100" format="html"><text><![CDATA[R está mirando otra carpeta: hay que revisar <code>getwd()</code>]]></text><feedback format="html"><text><![CDATA[<p>Correcto. El mensaje dice que <em>desde donde R está parado</em> ese archivo no existe.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[El archivo está dañado]]></text><feedback format="html"><text><![CDATA[<p>Si estuviera dañado, R lo abriría y fallaría al interpretarlo. Aquí no logra ni abrirlo.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Falta instalar un paquete para leer CSV]]></text><feedback format="html"><text><![CDATA[<p><code>read.csv()</code> viene en R base, no hace falta instalar nada.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[El CSV tiene acentos y R no los soporta]]></text><feedback format="html"><text><![CDATA[<p>Los acentos pueden verse mal, pero eso es otro problema y otro mensaje.</p>]]></text></feedback></answer>
+</question>
+<question type="multichoice">
+  <name><text>U0-08 Qué es un factor</text></name>
+  <questiontext format="html"><text><![CDATA[<p>En R, ¿qué es un <strong>factor</strong>?</p>]]></text></questiontext>
+  <generalfeedback format="html"><text><![CDATA[<p>Un factor es el tipo con el que R representa una variable <strong>categórica</strong>: guarda los valores y además la lista de <strong>niveles</strong> posibles, incluso los que no aparecen en los datos. Por eso <code>table()</code> puede mostrar una categoría con cero casos, lo que resulta útil para no perder de vista lo que se esperaba observar.</p>]]></text></generalfeedback>
+  <defaultgrade>1.0000000</defaultgrade>
+  <penalty>0.0000000</penalty>
+  <hidden>0</hidden>
+  <single>true</single>
+  <shuffleanswers>true</shuffleanswers>
+  <answernumbering>abc</answernumbering>
+  <correctfeedback format="html"><text><![CDATA[<p>Correcto.</p>]]></text></correctfeedback>
+  <partiallycorrectfeedback format="html"><text><![CDATA[<p>Parcialmente correcto: hay más de una opción válida y falta alguna.</p>]]></text></partiallycorrectfeedback>
+  <incorrectfeedback format="html"><text><![CDATA[<p>No es correcto. Vale la pena leer la explicación de abajo y volver a intentar.</p>]]></text></incorrectfeedback>
+  <answer fraction="100" format="html"><text><![CDATA[Una variable categórica que además guarda la lista de categorías posibles]]></text><feedback format="html"><text><![CDATA[<p>Correcto. Los valores y los niveles, juntos.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Cualquier vector de texto]]></text><feedback format="html"><text><![CDATA[<p>Un vector de texto es de tipo <code>character</code>. El factor es distinto: tiene niveles declarados.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Un número con decimales]]></text><feedback format="html"><text><![CDATA[<p>Eso es <code>numeric</code>.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Una tabla de dos dimensiones]]></text><feedback format="html"><text><![CDATA[<p>Eso sería un <code>data.frame</code> o una matriz.</p>]]></text></feedback></answer>
+</question>
+<question type="matching">
+  <name><text>U0-09 Qué hace cada instrucción</text></name>
+  <questiontext format="html"><text><![CDATA[<p>Relacionar cada instrucción con lo que hace.</p>]]></text></questiontext>
+  <generalfeedback format="html"><text><![CDATA[<p>Estas cinco son el primer contacto con cualquier tabla, y conviene correrlas <strong>antes</strong> de calcular nada: cuántos renglones hay, cómo se llaman las columnas, de qué tipo es cada una, cuántos faltantes tiene y en qué carpeta está trabajando R.</p>]]></text></generalfeedback>
+  <defaultgrade>1.0000000</defaultgrade>
+  <penalty>0.0000000</penalty>
+  <hidden>0</hidden>
+  <shuffleanswers>true</shuffleanswers>
+  <correctfeedback format="html"><text><![CDATA[<p>Correcto.</p>]]></text></correctfeedback>
+  <partiallycorrectfeedback format="html"><text><![CDATA[<p>Hay algunas bien y algunas mal. Conviene revisar cuáles.</p>]]></text></partiallycorrectfeedback>
+  <incorrectfeedback format="html"><text><![CDATA[<p>No es correcto. La explicación de abajo ordena las cinco.</p>]]></text></incorrectfeedback>
+  <subquestion format="html"><text><![CDATA[<code>dim(penguins)</code>]]></text><answer><text>Cuántos renglones y cuántas columnas tiene la tabla</text></answer></subquestion>
+  <subquestion format="html"><text><![CDATA[<code>str(penguins)</code>]]></text><answer><text>El tipo de cada columna y sus primeros valores</text></answer></subquestion>
+  <subquestion format="html"><text><![CDATA[<code>summary(penguins)</code>]]></text><answer><text>Un resumen numérico de cada columna, con los faltantes contados</text></answer></subquestion>
+  <subquestion format="html"><text><![CDATA[<code>table(penguins$species)</code>]]></text><answer><text>Cuántos casos hay de cada categoría</text></answer></subquestion>
+  <subquestion format="html"><text><![CDATA[<code>getwd()</code>]]></text><answer><text>En qué carpeta está trabajando R</text></answer></subquestion>
+</question>
+<question type="multichoice">
+  <name><text>U0-10 Aritmética de punto flotante</text></name>
+  <questiontext format="html"><text><![CDATA[<p>En la consola, <code>0.1 + 0.2 == 0.3</code> devuelve <code>FALSE</code>. ¿Por qué?</p>]]></text></questiontext>
+  <generalfeedback format="html"><text><![CDATA[<p>No es un defecto de R: es <strong>aritmética de punto flotante</strong>, y ocurre igual en C, Python o Java. El número 0.1 no tiene representación exacta en binario, así que la suma queda 0.30000000000000004. La consecuencia práctica para todo el curso: <strong>no comparar con <code>==</code> el resultado de un cálculo</strong>. Se usa <code>all.equal()</code> o se compara la diferencia contra una tolerancia.</p>]]></text></generalfeedback>
+  <defaultgrade>1.0000000</defaultgrade>
+  <penalty>0.0000000</penalty>
+  <hidden>0</hidden>
+  <single>true</single>
+  <shuffleanswers>true</shuffleanswers>
+  <answernumbering>abc</answernumbering>
+  <correctfeedback format="html"><text><![CDATA[<p>Correcto.</p>]]></text></correctfeedback>
+  <partiallycorrectfeedback format="html"><text><![CDATA[<p>Parcialmente correcto: hay más de una opción válida y falta alguna.</p>]]></text></partiallycorrectfeedback>
+  <incorrectfeedback format="html"><text><![CDATA[<p>No es correcto. Vale la pena leer la explicación de abajo y volver a intentar.</p>]]></text></incorrectfeedback>
+  <answer fraction="100" format="html"><text><![CDATA[Porque los decimales se guardan en binario y 0.1 no tiene representación exacta]]></text><feedback format="html"><text><![CDATA[<p>Correcto. Y por eso conviene usar <code>all.equal(0.1 + 0.2, 0.3)</code>, que sí devuelve <code>TRUE</code>.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Porque R tiene un error de programación en la suma]]></text><feedback format="html"><text><![CDATA[<p>No: cualquier lenguaje que use punto flotante da lo mismo. Es una limitación de la representación, no un error.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Porque debe usarse <code>=</code> en lugar de <code>==</code>]]></text><feedback format="html"><text><![CDATA[<p><code>=</code> asigna y <code>==</code> compara. El operador está bien elegido.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Porque falta redondear con <code>round()</code>]]></text><feedback format="html"><text><![CDATA[<p>Redondear disimula el síntoma. La comparación exacta de decimales sigue siendo mala práctica.</p>]]></text></feedback></answer>
+</question>
+<question type="truefalse">
+  <name><text>U0-11 Los índices empiezan en 1</text></name>
+  <questiontext format="html"><text><![CDATA[<p>En R, el primer elemento de un vector <code>x</code> se obtiene con <code>x[0]</code>.</p>]]></text></questiontext>
+  <generalfeedback format="html"><text><![CDATA[<p>En R los índices <strong>empiezan en 1</strong>: el primer elemento es <code>x[1]</code>. Es una diferencia con C, Java o Python, donde empiezan en 0. <code>x[0]</code> no da error: devuelve un vector vacío, que es más difícil de detectar que un error.</p>]]></text></generalfeedback>
+  <defaultgrade>1.0000000</defaultgrade>
+  <penalty>0.0000000</penalty>
+  <hidden>0</hidden>
+  <answer fraction="0" format="moodle_auto_format"><text>true</text><feedback format="html"><text><![CDATA[<p>No. <code>x[0]</code> devuelve un vector vacío. El primer elemento es <code>x[1]</code>.</p>]]></text></feedback></answer>
+  <answer fraction="100" format="moodle_auto_format"><text>false</text><feedback format="html"><text><![CDATA[<p>Correcto. En R se cuenta desde 1, y <code>x[0]</code> devuelve un vector vacío en silencio.</p>]]></text></feedback></answer>
+</question>
+<question type="multichoice">
+  <name><text>U0-12 Leer una instrucción anidada de R base</text></name>
+  <questiontext format="html"><text><![CDATA[<p>En R base, esta instrucción se lee <strong>de adentro hacia afuera</strong>:</p><pre>nrow(penguins[penguins$body_mass_g &gt; mean(penguins$body_mass_g, na.rm = TRUE), ])</pre><p>¿Qué hace?</p>]]></text></questiontext>
+  <generalfeedback format="html"><text><![CDATA[<p>Se lee empezando por el paréntesis más interno. Primero <code>mean(...)</code> calcula el promedio general de la masa. Después el <strong>corchete</strong> se queda con los renglones cuya masa supera ese promedio. Y al final <code>nrow(...)</code> cuenta cuántos quedaron.</p><p>Tres pasos que ocurren en un orden, pero escritos en el orden contrario. Esa distancia entre cómo se escribe y cómo se piensa es justamente lo que resuelve la tubería.</p>]]></text></generalfeedback>
+  <defaultgrade>1.0000000</defaultgrade>
+  <penalty>0.0000000</penalty>
+  <hidden>0</hidden>
+  <single>true</single>
+  <shuffleanswers>true</shuffleanswers>
+  <answernumbering>abc</answernumbering>
+  <correctfeedback format="html"><text><![CDATA[<p>Correcto.</p>]]></text></correctfeedback>
+  <partiallycorrectfeedback format="html"><text><![CDATA[<p>Parcialmente correcto: hay más de una opción válida y falta alguna.</p>]]></text></partiallycorrectfeedback>
+  <incorrectfeedback format="html"><text><![CDATA[<p>No es correcto. Vale la pena leer la explicación de abajo y volver a intentar.</p>]]></text></incorrectfeedback>
+  <answer fraction="100" format="html"><text><![CDATA[Cuenta cuántos pingüinos pesan más que el promedio general]]></text><feedback format="html"><text><![CDATA[<p>Correcto. Y nótese que hubo que leerla de adentro hacia afuera para descubrirlo.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Calcula el promedio de la masa de los pingüinos más pesados]]></text><feedback format="html"><text><![CDATA[<p>El promedio se calcula, pero solo como paso intermedio para poder comparar. El resultado final es un conteo, porque la función de más afuera es <code>nrow()</code>.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Devuelve la masa del pingüino más pesado]]></text><feedback format="html"><text><![CDATA[<p>Eso sería <code>max(penguins$body_mass_g, na.rm = TRUE)</code>. Aquí no aparece ningún máximo.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Cuenta cuántos pingüinos tienen la masa faltante]]></text><feedback format="html"><text><![CDATA[<p>Eso sería <code>sum(is.na(penguins$body_mass_g))</code>. El <code>na.rm = TRUE</code> de aquí solo sirve para que el promedio se pueda calcular.</p>]]></text></feedback></answer>
+</question>
+<question type="multichoice">
+  <name><text>U0-13 La misma instrucción, con dplyr</text></name>
+  <questiontext format="html"><text><![CDATA[<p>Esta instrucción de R base cuenta cuántos pingüinos pesan más que el promedio general:</p><pre>nrow(penguins[penguins$body_mass_g &gt; mean(penguins$body_mass_g, na.rm = TRUE), ])</pre><p>¿Cuál de estas tuberías hace lo mismo?</p>]]></text></questiontext>
+  <generalfeedback format="html"><text><![CDATA[<p>La tubería se lee <strong>en el orden en que ocurren los pasos</strong>. Toma <code>penguins</code>, <em>y luego</em> quédate con los que superan el promedio, <em>y luego</em> cuéntalos. La versión de R base dice exactamente lo mismo, pero hay que descifrarla de adentro hacia afuera.</p><p>No es que una sea más rápida ni más potente. Es que una se lee como una secuencia de pasos y la otra como una composición de funciones.</p>]]></text></generalfeedback>
+  <defaultgrade>1.0000000</defaultgrade>
+  <penalty>0.0000000</penalty>
+  <hidden>0</hidden>
+  <single>true</single>
+  <shuffleanswers>true</shuffleanswers>
+  <answernumbering>abc</answernumbering>
+  <correctfeedback format="html"><text><![CDATA[<p>Correcto.</p>]]></text></correctfeedback>
+  <partiallycorrectfeedback format="html"><text><![CDATA[<p>Parcialmente correcto: hay más de una opción válida y falta alguna.</p>]]></text></partiallycorrectfeedback>
+  <incorrectfeedback format="html"><text><![CDATA[<p>No es correcto. Vale la pena leer la explicación de abajo y volver a intentar.</p>]]></text></incorrectfeedback>
+  <answer fraction="100" format="html"><text><![CDATA[<pre>penguins |&gt;
+  filter(body_mass_g &gt; mean(body_mass_g, na.rm = TRUE)) |&gt;
+  nrow()</pre>]]></text><feedback format="html"><text><![CDATA[<p>Correcto. Dentro de <code>filter()</code> ya no hace falta escribir <code>penguins$</code>, porque la tubería ya entregó la tabla.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[<pre>penguins |&gt;
+  filter(body_mass_g &gt; mean(body_mass_g)) |&gt;
+  nrow()</pre>]]></text><feedback format="html"><text><![CDATA[<p>Casi. Sin <code>na.rm = TRUE</code>, el promedio vale <code>NA</code>, toda comparación contra <code>NA</code> vale <code>NA</code>, y <code>filter()</code> descarta esos renglones. El resultado sería <strong>0</strong>. Es el error más común de la semana.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[<pre>penguins |&gt;
+  summarise(mean(body_mass_g, na.rm = TRUE)) |&gt;
+  nrow()</pre>]]></text><feedback format="html"><text><![CDATA[<p>Esto devuelve <strong>1</strong>, porque <code>summarise()</code> deja una tabla de un solo renglón con el promedio. Se cuenta el resumen, no los pingüinos.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[<pre>penguins |&gt;
+  arrange(desc(body_mass_g)) |&gt;
+  nrow()</pre>]]></text><feedback format="html"><text><![CDATA[<p>Ordenar no descarta a nadie, así que esto devuelve los 344 pingüinos.</p>]]></text></feedback></answer>
+</question>
+<question type="multichoice">
+  <name><text>U0-14 Composición contra secuencia</text></name>
+  <questiontext format="html"><text><![CDATA[<p>La expresión anidada <code>f(g(h(x)))</code> y la tubería <code>x |&gt; h() |&gt; g() |&gt; f()</code> dan el mismo resultado. ¿Cuál es entonces la diferencia entre las dos?</p>]]></text></questiontext>
+  <generalfeedback format="html"><text><![CDATA[<p>La diferencia es de <strong>lectura</strong>, no de resultado ni de velocidad. La expresión anidada es una <em>composición de funciones</em>, y se descifra de adentro hacia afuera, al revés de como se piensa. La tubería es una <em>secuencia de pasos</em> en el orden en que ocurren.</p><p>Por eso el curso usa <code>dplyr</code>. No porque sea más corto, sino porque cuando hay cuatro o cinco pasos encadenados, uno se entiende al leerlo y el otro hay que reconstruirlo.</p>]]></text></generalfeedback>
+  <defaultgrade>1.0000000</defaultgrade>
+  <penalty>0.0000000</penalty>
+  <hidden>0</hidden>
+  <single>true</single>
+  <shuffleanswers>true</shuffleanswers>
+  <answernumbering>abc</answernumbering>
+  <correctfeedback format="html"><text><![CDATA[<p>Correcto.</p>]]></text></correctfeedback>
+  <partiallycorrectfeedback format="html"><text><![CDATA[<p>Parcialmente correcto: hay más de una opción válida y falta alguna.</p>]]></text></partiallycorrectfeedback>
+  <incorrectfeedback format="html"><text><![CDATA[<p>No es correcto. Vale la pena leer la explicación de abajo y volver a intentar.</p>]]></text></incorrectfeedback>
+  <answer fraction="100" format="html"><text><![CDATA[La tubería se lee en el mismo orden en que ocurren los pasos, de izquierda a derecha]]></text><feedback format="html"><text><![CDATA[<p>Correcto. Y esa ventaja crece con el número de pasos: con uno solo da igual, con cinco no.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[La tubería se ejecuta más rápido]]></text><feedback format="html"><text><![CDATA[<p>El costo es prácticamente el mismo. La ventaja es de legibilidad, no de rendimiento.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[La expresión anidada no admite argumentos adicionales]]></text><feedback format="html"><text><![CDATA[<p>Sí los admite. En el ejemplo de esta serie, <code>na.rm = TRUE</code> va dentro de una función anidada sin problema.</p>]]></text></feedback></answer>
+  <answer fraction="0" format="html"><text><![CDATA[La tubería <code>|&gt;</code> solo funciona con paquetes del <em>tidyverse</em>]]></text><feedback format="html"><text><![CDATA[<p>No. El operador <code>|&gt;</code> es parte de <strong>R base</strong> desde la versión 4.1, y funciona con cualquier función. Lo que sí viene del <em>tidyverse</em> es el operador <code>%&gt;%</code>, que es anterior y muy parecido.</p>]]></text></feedback></answer>
+</question>
+</quiz>

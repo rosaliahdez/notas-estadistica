@@ -119,7 +119,7 @@ boxplot(urbana, campo, names = c("urbana", "campo"),
 t.test(urbana, campo)
 ```
 
-Las cajas están claramente separadas y el valor p es muy pequeño: las lagartijas urbanas son significativamente más cálidas. Como se vio en el @sec-cap8, reportar el **intervalo de la diferencia** es más informativo que reportar solo el valor p.
+Las cajas están claramente separadas y el valor p es muy pequeño. Las lagartijas urbanas son significativamente más cálidas. Como se vio en el @sec-cap8, reportar el **intervalo de la diferencia** es más informativo que reportar solo el valor p.
 :::
 
 ## Espacio libre

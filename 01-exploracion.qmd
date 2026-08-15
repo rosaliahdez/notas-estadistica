@@ -17,19 +17,19 @@ theme_set(theme_minimal(base_size = 12))
 
 ## ¿Qué es la estadística?
 
-Usamos la palabra *estadística* todos los días —"las estadísticas del equipo", "según las estadísticas"— casi siempre para referirnos a números sueltos. Pero la estadística es más que eso: es la ciencia (y el arte) de **obtener conocimiento a partir de datos**. Nos permite decir algo sobre un conjunto grande cuando solo hemos observado una parte.
+Usamos la palabra *estadística* todos los días ("las estadísticas del equipo", "según las estadísticas") casi siempre para referirnos a números sueltos. Pero la estadística es más que eso. Es la ciencia (y el arte) de **obtener conocimiento a partir de datos**. Nos permite decir algo sobre un conjunto grande cuando solo hemos observado una parte.
 
 Conviene dividir esa ciencia en tres grandes tareas, que además son la columna vertebral de este curso:
 
 - **Análisis de los datos** (Parte I). Lo que tradicionalmente llamamos *estadística descriptiva*: organizar, resumir y visualizar lo que tenemos frente a nosotros.
 - **Producción de los datos** (Parte II). De dónde salen los datos importa tanto como qué hacemos con ellos. Un muestreo mal hecho o un experimento mal diseñado arruinan cualquier análisis posterior.
-- **Inferencia** (Parte III). A partir de una muestra, hacer afirmaciones —bien fundamentadas y con su margen de incertidumbre— sobre la población de la que provino.
+- **Inferencia** (Parte III). A partir de una muestra, hacer afirmaciones (bien fundamentadas y con su margen de incertidumbre) sobre la población de la que provino.
 
 Este capítulo abre la Parte I: aprender a mirar los datos.
 
 ## Individuos, variables y la tabla de datos
 
-Casi todo en este curso empieza con una **tabla**: las filas son los **individuos** (o unidades de observación) y las columnas son las **variables** (lo que medimos de cada individuo).
+Casi todo en este curso empieza con una **tabla**: los renglones son los **individuos** (o unidades de observación) y las columnas son las **variables** (lo que medimos de cada individuo).
 
 Trabajemos con un conjunto real: mediciones de 344 pingüinos de tres especies del archipiélago Palmer, en la Antártida. Es nuestro **laboratorio de enseñanza**: limpio, ordenado y siempre disponible.
 
@@ -39,20 +39,20 @@ library(palmerpenguins)
 glimpse(penguins)
 ```
 
-Cada fila es **un pingüino** (el individuo); cada columna es una **variable**: su especie, la isla donde se le observó, medidas de su pico y aleta, su masa corporal, su sexo y el año. Una tabla así, con un individuo por fila y una variable por columna, se llama **datos ordenados** (*tidy data*), y es la forma en que R espera recibirlos.
+Cada renglón es **un pingüino** (el individuo); cada columna es una **variable**: su especie, la isla donde se le observó, medidas de su pico y aleta, su masa corporal, su sexo y el año. Una tabla así, con un individuo por renglón y una variable por columna, se llama **datos ordenados** (*tidy data*), y es la forma en que R espera recibirlos.
 
 ::: {.callout-note title="De dónde vienen estos datos"}
 Los recolectó la Dra. Kristen Gorman en la **estación Palmer**, en el archipiélago Palmer de la Antártida, durante tres veranos australes (2007 a 2010). Los nidos se marcaron antes de la puesta del primer huevo y se midió a los dos adultos de cada pareja: largo y profundidad del pico con calibrador ($\pm 0.1$ mm), largo de la aleta derecha con regla ($\pm 1$ mm) y masa con balanza de resorte.
 
-Vale la pena tenerlo presente: detrás de cada renglón de esta tabla hubo alguien en el hielo con un calibrador en la mano. Y las celdas vacías (`NA`) también tienen causa —días en que el clima impidió llegar a las colonias—, no son un descuido.
+Vale la pena tenerlo presente: detrás de cada renglón de esta tabla hubo alguien en el hielo con un calibrador en la mano. Y las celdas vacías (`NA`) también tienen causa (días en que el clima impidió llegar a las colonias), no son un descuido.
 :::
 
 ![Las medidas del pico. El *culmen* es la cresta superior del pico; en los datos aparece como `bill_length_mm` y `bill_depth_mm`. Ilustración: *Artwork by \@allison_horst*.](figuras/culmen_depth.png){width=58% fig-align="center"}
 
-Definir **cómo** se mide una variable es parte del trabajo estadístico: si dos personas midieran el pico de forma distinta, los datos no serían comparables. Por eso el protocolo especifica el instrumento, su precisión y hasta cuál de las dos aletas se mide.
+Definir **cómo** se mide una variable es parte del trabajo estadístico. Si dos personas midieran el pico de forma distinta, los datos no serían comparables. Por eso el protocolo especifica el instrumento, su precisión y hasta cuál de las dos aletas se mide.
 
 ::: {.callout-note title="Interpretación"}
-Antes de calcular nada, responde: en la tabla, ¿qué es un individuo y qué es cada variable? Confundir esto es la fuente número uno de errores. En los datos de **galletas** del curso, por ejemplo, ¿el individuo es una marca o una calificación de un juez? (Es cada *calificación*: una fila por juez y marca.)
+Antes de calcular nada, responde: en la tabla, ¿qué es un individuo y qué es cada variable? Confundir esto es la fuente número uno de errores. En los datos de **galletas** del curso, por ejemplo, ¿el individuo es una marca o una calificación de un juez? (Es cada *calificación*: un renglón por juez y marca.)
 :::
 
 ## Tipos de variables y escalas de medición
@@ -83,10 +83,10 @@ El **tipo de variable** decide casi todo lo que sigue en el curso: qué gráfica
 
 Aunque este capítulo trata del análisis, conviene desde ya distinguir **cómo se producen** los datos, porque cambia lo que podemos concluir.
 
-- En un **estudio observacional** medimos a los individuos **sin intervenir**. Comparar la temperatura de lagartijas urbanas y de campo es observacional: no asignamos nosotros dónde vive cada lagartija.
-- En un **experimento** el investigador **aplica tratamientos**  y se observa la respuesta. La cata de galletas es un experimento: nosotros decidimos qué marca prueba cada juez y en qué orden.
+- En un **estudio observacional** medimos a los individuos **sin intervenir**. Comparar la temperatura de lagartijas urbanas y de campo es observacional. No asignamos nosotros dónde vive cada lagartija.
+- En un **experimento** el investigador **aplica tratamientos**  y se observa la respuesta. La cata de galletas es un experimento. Nosotros decidimos qué marca prueba cada juez y en qué orden.
 
-La diferencia es enorme para la interpretación: un experimento bien diseñado permite hablar de **causa y efecto**; un estudio observacional, en general, solo de **asociación**. Volveremos a esto en la Parte II.
+La diferencia es enorme para la interpretación. Un experimento bien diseñado permite hablar de **causa y efecto**; un estudio observacional, en general, solo de **asociación**. Volveremos a esto en la Parte II.
 
 También conviene separar tres formas de obtener datos: un **censo** mide a *toda* la población; una **muestra** mide solo a una parte (bien elegida, para representar al todo); un **experimento** produce datos nuevos bajo condiciones controladas.
 
@@ -104,7 +104,13 @@ galletas <- read.csv("datos/galletas.csv")
 head(galletas)
 ```
 
-Para conocer una tabla nueva, tres funciones bastan al inicio: `glimpse()` (un vistazo a todas las columnas), `head()` (las primeras filas) y `summary()` (un resumen rápido).
+::: {.callout-warning title="Los nombres de las columnas pueden cambiar al leer"}
+R necesita que los nombres de columna sean nombres válidos, así que al leer un archivo **sustituye por un punto** todo lo que no puede usar. Una columna llamada `Largo del pico (mm)` llega como `Largo.del.pico..mm.`, y entonces `datos$Largo del pico` no encuentra nada.
+
+Con los archivos del curso no ocurre, porque se nombraron pensando en eso, pero sí ocurre seguido con archivos que vienen de Excel o de una encuesta. Conviene correr `names()` después de cada lectura y usar el nombre que R reporta.
+:::
+
+Para conocer una tabla nueva, tres funciones bastan al inicio: `glimpse()` (un vistazo a todas las columnas), `head()` (los primeros renglones) y `summary()` (un resumen rápido).
 
 ```{r}
 #| label: summary-galletas
@@ -118,6 +124,16 @@ Nótese que R trató `agrado` como numérica (correcto: es una calificación en 
 galletas$marca <- factor(galletas$marca)
 levels(galletas$marca)
 ```
+
+¿Qué se gana con eso? Un factor guarda, además de los valores, **la lista de categorías posibles**. La diferencia se nota al filtrar:
+
+```{r}
+#| label: factor-niveles-vacios
+solo_oreo <- galletas[galletas$marca == "Oreo", ]
+table(solo_oreo$marca)
+```
+
+En `solo_oreo` no quedó ni una galleta de las otras tres marcas, y aun así la tabla las sigue reportando con **cero casos**, porque el factor recuerda todos los valores posibles y no solo los presentes. Si la columna fuera texto simple, esas categorías desaparecerían de la tabla y nadie notaría que faltan.
 
 ## Gráficas para variables categóricas
 
@@ -133,7 +149,7 @@ ggplot(penguins, aes(x = species)) +
   labs(x = "Especie", y = "Cantidad")
 ```
 
-Cada barra cuenta cuántos individuos caen en esa categoría. Podemos cruzar dos variables categóricas —especie e isla— coloreando o separando las barras:
+Cada barra cuenta cuántos individuos caen en esa categoría. Podemos cruzar dos variables categóricas (especie e isla) coloreando o separando las barras:
 
 ```{r}
 #| label: fig-barras-isla
@@ -146,7 +162,7 @@ ggplot(penguins, aes(x = island, fill = species)) +
 ```
 
 ::: {.callout-note title="Interpretación"}
-La segunda gráfica ya cuenta una historia: la especie *Gentoo* solo aparece en Biscoe y *Chinstrap* solo en Dream, mientras que *Adelie* está en las tres islas. Una gráfica bien hecha responde una pregunta de un vistazo.
+La segunda gráfica ya cuenta una historia. La especie *Gentoo* solo aparece en Biscoe y *Chinstrap* solo en Dream, mientras que *Adelie* está en las tres islas. Una gráfica bien hecha responde una pregunta de un vistazo.
 :::
 
 ## Gráficas para variables cuantitativas
@@ -163,7 +179,7 @@ ggplot(penguins, aes(x = body_mass_g)) +
   labs(x = "Masa corporal (g)", y = "Cantidad")
 ```
 
-Al leer un histograma nos fijamos en tres cosas: el **centro** (¿alrededor de qué valor se acumulan los datos?), la **dispersión** (¿qué tan esparcidos están?) y la **forma** (¿simétrica?, ¿sesgada?, ¿con uno o varios picos?). Esta masa se ve con *dos* montículos —una pista de que hay grupos distintos mezclados (las especies)—. Separándola por especie lo confirmamos:
+Al leer un histograma nos fijamos en tres cosas: el **centro** (¿alrededor de qué valor se acumulan los datos?), la **dispersión** (¿qué tan esparcidos están?) y la **forma** (¿simétrica?, ¿sesgada?, ¿con uno o varios picos?). Esta masa se ve con *dos* montículos, lo que suele ser una pista de que hay grupos distintos mezclados (las especies). Separándola por especie lo confirmamos:
 
 ```{r}
 #| label: fig-histograma-especie
@@ -177,7 +193,7 @@ ggplot(penguins, aes(x = body_mass_g, fill = species)) +
 
 ### Laboratorio: el ancho de clase cambia la historia {#sec-lab-bins}
 
-¿Cuántos intervalos debe tener un histograma? No hay una respuesta única, y la elección **importa**: con muy pocos se pierde el detalle, con demasiados solo se ve ruido. Mueve el deslizador  y se observa cuándo aparecen (o desaparecen) los dos montículos de la masa corporal.
+¿Cuántos intervalos debe tener un histograma? No hay una respuesta única, y la elección **importa**: con muy pocos se pierde el detalle, con demasiados solo se ve ruido. Al mover el deslizador se observa cuándo aparecen, o desaparecen, los dos montículos de la masa corporal.
 
 ```{r}
 #| label: datos-ojs-cap1
@@ -261,5 +277,5 @@ Empezamos por lo más importante y lo más olvidado: **entender los datos antes 
 
 **5.** El histograma de `flipper_length_mm` con `binwidth = 5` muestra un centro cerca de 197 mm, dispersión aproximada de 172 a 231 mm, y una forma claramente **bimodal**: dos montículos. Sí hay indicios de más de un grupo, y son las especies (los *Gentoo* tienen aletas notablemente más largas). *Este ejercicio es el mismo fenómeno del laboratorio del ancho de clase: la forma revela estructura oculta.*
 
-**6.** La respuesta es **(b) ordinal**. Hay un orden claro (bajo < medio < alto), pero las distancias entre niveles no están definidas: no podemos afirmar que la diferencia entre "bajo" y "medio" sea igual que entre "medio" y "alto". Por eso no tiene sentido promediar estas etiquetas directamente. *Nota práctica: la escala hedónica 1–9 de la cata de galletas sí se trata como cuantitativa por convención en análisis sensorial, aunque estrictamente sea ordinal; es una decisión que conviene hacer explícita.*
+**6.** La respuesta es **(b) ordinal**. Hay un orden claro (bajo < medio < alto), pero las distancias entre niveles no están definidas. No podemos afirmar que la diferencia entre "bajo" y "medio" sea igual que entre "medio" y "alto". Por eso no tiene sentido promediar estas etiquetas directamente. *Nota práctica: la escala hedónica 1–9 de la cata de galletas sí se trata como cuantitativa por convención en análisis sensorial, aunque estrictamente sea ordinal; es una decisión que conviene hacer explícita.*
 :::

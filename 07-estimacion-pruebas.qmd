@@ -1,5 +1,9 @@
 # Estimación y prueba de hipótesis {#sec-cap7}
 
+::: {.callout-warning title="Capítulo en revisión"}
+El contenido de este capítulo está completo, pero todavía no pasa por la revisión final de redacción. Se avisará en clase cuando quede listo para estudiar de aquí. Mientras tanto se puede consultar, con esa advertencia.
+:::
+
 ```{r}
 #| label: setup-cap7
 #| include: false
@@ -47,7 +51,7 @@ t.test(urbanas$temp_corporal, conf.level = 0.95)$conf.int
 ::: {.callout-important title="Qué significa (y qué NO significa) el 95 %"}
 La interpretación **correcta** es sobre el **procedimiento**: si repitiéramos el estudio muchas veces y construyéramos un intervalo cada vez, alrededor del 95 % de esos intervalos contendrían el verdadero $\mu$.
 
-Es **incorrecto** decir "hay 95 % de probabilidad de que $\mu$ esté en *este* intervalo". Una vez calculado, este intervalo concreto o contiene a $\mu$ o no lo contiene —no hay azar ya—; lo que tiene una tasa de éxito del 95 % es el método que lo produjo. El laboratorio siguiente vuelve tangible esta distinción.
+Es **incorrecto** decir "hay 95 % de probabilidad de que $\mu$ esté en *este* intervalo". Una vez calculado, este intervalo concreto o contiene a $\mu$ o no lo contiene (no hay azar ya); lo que tiene una tasa de éxito del 95 % es el método que lo produjo. El laboratorio siguiente vuelve tangible esta distinción.
 :::
 
 ### Laboratorio: ¿qué significa "95 % de confianza"? {#sec-lab-ic}
@@ -118,7 +122,7 @@ Una prueba de hipótesis responde a una pregunta distinta: ¿los datos son compa
 
 1. **Se plantea una hipótesis nula** $H_0$: la afirmación de "no hay efecto", "no hay diferencia", el statu quo. Y una **alternativa** $H_1$, lo que sospechamos.
 2. **Se supone que $H_0$ es cierta** y se calcula, bajo ese supuesto, la distribución del estadístico.
-3. **Se mide qué tan raro** sería observar unos datos como los nuestros —o más extremos— si $H_0$ fuera cierta. Esa probabilidad es el **valor p**.
+3. **Se mide qué tan raro** sería observar unos datos como los nuestros (o más extremos) si $H_0$ fuera cierta. Esa probabilidad es el **valor p**.
 4. **Se decide**: si el valor p es muy pequeño, los datos son poco compatibles con $H_0$ y la rechazamos; si no, no hay evidencia suficiente para rechazarla.
 
 ::: {.callout-important title="Dos precisiones de lenguaje que importan"}
@@ -165,7 +169,7 @@ Toda decisión estadística puede equivocarse, y hay **dos formas distintas** de
 | **No se rechaza $H_0$** | Decisión correcta | Error tipo II (probabilidad $\beta$) |
 
 - El **error tipo I** es un *falso positivo*: declarar un efecto que no existe. Su probabilidad es exactamente el nivel de significancia $\alpha$ que elegimos, típicamente 0.05.
-- El **error tipo II** es un *falso negativo*: no detectar un efecto que sí existe. Su probabilidad se denota $\beta$ y no la fijamos directamente: depende del tamaño real del efecto, de la variabilidad y del tamaño de muestra.
+- El **error tipo II** es un *falso negativo*: no detectar un efecto que sí existe. Su probabilidad se denota $\beta$ y no la fijamos directamente. Depende del tamaño real del efecto, de la variabilidad y del tamaño de muestra.
 - La **potencia** de la prueba es $1 - \beta$: la probabilidad de detectar un efecto cuando de verdad lo hay.
 
 ::: {.callout-note title="Interpretación"}
@@ -173,7 +177,7 @@ Una analogía útil es un juicio. $H_0$ es "la persona es inocente". El **error 
 
 Lo único que reduce **ambos** a la vez es aumentar el tamaño de muestra, que es como conseguir más pruebas antes de juzgar. Por eso el tamaño de muestra debe planearse **antes** de recolectar: un estudio con muestra insuficiente tiene poca potencia y puede no detectar un efecto real.
 
-Y aquí está el vínculo con lo dicho antes: cuando no rechazamos $H_0$, no sabemos si es porque no hay efecto o porque nos faltó potencia. Ese es exactamente el error tipo II, y es la razón de que no digamos "aceptamos $H_0$".
+Y aquí está el vínculo con lo dicho antes. Cuando no rechazamos $H_0$, no sabemos si es porque no hay efecto o porque nos faltó potencia. Ese es exactamente el error tipo II, y es la razón de que no digamos "aceptamos $H_0$".
 :::
 
 En R, la potencia de una prueba para una media se calcula así:
@@ -250,7 +254,7 @@ Obsérvese que **intervalo y prueba dan la misma información**: como el 34 qued
 
 ### Laboratorio: qué es realmente el valor p {#sec-lab-p}
 
-La curva es la distribución del estadístico **suponiendo que $H_0$ es cierta**. Al mover la media observada de la muestra se observa cómo el área sombreada —el valor p— se encoge conforme el resultado se aleja de lo que $H_0$ predice.
+La curva es la distribución del estadístico **suponiendo que $H_0$ es cierta**. Al mover la media observada de la muestra se observa cómo el área sombreada (el valor p) se encoge conforme el resultado se aleja de lo que $H_0$ predice.
 
 ```{ojs}
 //| panel: input
@@ -323,7 +327,7 @@ El valor p **es** la probabilidad de observar datos tan extremos como los nuestr
 
 1. **La probabilidad de que $H_0$ sea cierta.** El cálculo *supone* $H_0$; no puede a la vez medir su probabilidad.
 2. **La probabilidad de haberse equivocado** al rechazar.
-3. **Una medida del tamaño del efecto.** Un p diminuto puede corresponder a un efecto trivial si la muestra es enorme —el tema de la siguiente sección—.
+3. **Una medida del tamaño del efecto.** Un p diminuto puede corresponder a un efecto trivial si la muestra es enorme (el tema de la siguiente sección).
 :::
 
 ## Usos y abusos de la inferencia
@@ -419,11 +423,11 @@ La **estimación puntual** da un número; el **intervalo de confianza** le agreg
 
 **4.** $H_0: \mu = 10$ contra $H_1: \mu \neq 10$. Con
 `t.test(filter(ab, entorno == "Mac")$tiempo_ms, mu = 10)`
-se obtiene una media muestral cercana a **10.6 ms** y un valor p de alrededor de **0.02**, así que a $\alpha = 0.05$ se rechaza $H_0$: el tiempo medio de Mac difiere significativamente de 10 ms. *Nótese que este caso es mucho menos contundente que el de las lagartijas ($p < 0.001$): un p de 0.02 es evidencia moderada, y conviene decirlo así en vez de tratar todo lo menor que 0.05 como un sí rotundo. Reportar también el intervalo —aproximadamente de 10.1 a 11.1 ms—: informa **cuánto** vale la media, no solo que difiere.*
+se obtiene una media muestral cercana a **10.6 ms** y un valor p de alrededor de **0.02**, así que a $\alpha = 0.05$ se rechaza $H_0$: el tiempo medio de Mac difiere significativamente de 10 ms. *Nótese que este caso es mucho menos contundente que el de las lagartijas ($p < 0.001$). Un p de 0.02 es evidencia moderada, y conviene decirlo así en vez de tratar todo lo menor que 0.05 como un sí rotundo. Reportar también el intervalo (aproximadamente de 10.1 a 11.1 ms): informa **cuánto** vale la media, no solo que difiere.*
 
 **5.** Las incorrectas son la **(a)** y la **(c)**. La (a) invierte el condicional: el valor p se calcula **suponiendo** $H_0$ cierta, así que no puede ser la probabilidad de $H_0$. La (c) confunde significancia con magnitud: el valor p depende tanto del tamaño del efecto como del tamaño de muestra. La **(b)** es la lectura correcta. *La confusión (a) tiene nombre: **falacia del condicional transpuesto**, y es el error más frecuente al leer resultados científicos en prensa.*
 
-**6.** Probablemente **no** solo por ese resultado. El efecto es de 0.05 puntos porcentuales: estadísticamente significativo gracias a los 200 000 usuarios, pero práctica y económicamente irrelevante en casi cualquier contexto. Información adicional que pediría: el **intervalo de confianza** de la diferencia (para saber si el efecto podría ser aún menor), el **costo** de implementar el cambio, si hay efectos secundarios en otras métricas, y si el experimento fue una prueba A/B bien aleatorizada. *Este es el ejemplo canónico de por qué reportar solo el valor p es insuficiente: significancia y relevancia son preguntas distintas.*
+**6.** Probablemente **no** solo por ese resultado. El efecto es de 0.05 puntos porcentuales: estadísticamente significativo gracias a los 200 000 usuarios, pero práctica y económicamente irrelevante en casi cualquier contexto. Información adicional que pediría: el **intervalo de confianza** de la diferencia (para saber si el efecto podría ser aún menor), el **costo** de implementar el cambio, si hay efectos secundarios en otras métricas, y si el experimento fue una prueba A/B bien aleatorizada. *Este es el ejemplo canónico de por qué reportar solo el valor p es insuficiente. Significancia y relevancia son preguntas distintas.*
 
 **7.** Con 200 pruebas sobre datos sin efecto real, lo esperado es que alrededor de **10** resulten significativas ($200 \times 0.05$). El número exacto varía por azar, típicamente entre 5 y 16. *La moraleja: si alguien corre 200 análisis y reporta solo los 10 "hallazgos", está describiendo ruido con lenguaje de descubrimiento. Por eso importa preregistrar las hipótesis y reportar cuántas pruebas se hicieron en total.*
 
@@ -431,7 +435,7 @@ se obtiene una media muestral cercana a **10.6 ms** y un valor p de alrededor de
 
 **9.** (a) $H_0: p = 0.12$ contra $H_1: p < 0.12$, **unilateral izquierda**: la afirmación es que produce *menos* efectos. (b) $H_0: \mu = 80$ contra $H_1: \mu \neq 80$, **bilateral**: interesa cualquier desviación del valor nominal. (c) $H_0: \mu = 8000$ contra $H_1: \mu > 8000$, **unilateral derecha**. *Nótese que la hipótesis nula siempre lleva la igualdad, y que la dirección de $H_1$ la dicta la pregunta —no los datos—.*
 
-**10.** Le conviene $\alpha = 0.05$. Un nivel de significancia más alto hace **más fácil rechazar** $H_0$ y, por tanto, más probable obtener evidencia a favor de su afirmación. El riesgo que asume es un mayor **error tipo I**: cinco de cada cien veces declararía un efecto inexistente, contra una de cada cien con $\alpha = 0.01$. *Vale la pena discutir la tensión ética: quien tiene interés comercial en el resultado prefiere el umbral laxo, y por eso los niveles se fijan por convención de la disciplina y no los elige quien financia el estudio. En contextos donde un falso positivo es costoso —aprobar un fármaco inseguro— se usa $\alpha = 0.01$ o menor.*
+**10.** Le conviene $\alpha = 0.05$. Un nivel de significancia más alto hace **más fácil rechazar** $H_0$ y, por tanto, más probable obtener evidencia a favor de su afirmación. El riesgo que asume es un mayor **error tipo I**: cinco de cada cien veces declararía un efecto inexistente, contra una de cada cien con $\alpha = 0.01$. *Vale la pena discutir la tensión ética. Quien tiene interés comercial en el resultado prefiere el umbral laxo, y por eso los niveles se fijan por convención de la disciplina y no los elige quien financia el estudio. En contextos donde un falso positivo es costoso (aprobar un fármaco inseguro) se usa $\alpha = 0.01$ o menor.*
 
 **11.** Con `power.t.test(n = 30, delta = 0.5, sd = 1, type = "one.sample")` la potencia es aproximadamente **0.75**; con $n = 100$ supera **0.99**. Para una potencia de 0.90 se necesitan alrededor de **44** observaciones, que se obtienen con `power.t.test(power = 0.90, delta = 0.5, sd = 1, type = "one.sample")`. *Esta función es la herramienta para planear el tamaño de muestra antes de recolectar datos: se fija el efecto mínimo que interesa detectar y la potencia deseada, y devuelve la $n$ necesaria. Hacerlo al revés —recolectar primero y calcular la potencia después— no sirve de nada.*
 :::

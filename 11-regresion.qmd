@@ -1,5 +1,9 @@
 # Inferencia en regresión {#sec-cap11}
 
+::: {.callout-warning title="Capítulo en revisión"}
+El contenido de este capítulo está completo, pero todavía no pasa por la revisión final de redacción. Se avisará en clase cuando quede listo para estudiar de aquí. Mientras tanto se puede consultar, con esa advertencia.
+:::
+
 ```{r}
 #| label: setup-cap11
 #| include: false
@@ -193,14 +197,14 @@ La fórmula del error estándar merece atención, porque explica **qué hace que
 
 $$s_{\hat{\beta}_1} = \sqrt{\frac{s^2}{S_{xx}}}$$
 
-En el numerador está $s^2$, la dispersión de los puntos alrededor de la recta: más ruido, pendiente menos confiable. En el denominador está $S_{xx}$, la dispersión de los valores de $x$: **cuanto más separados estén los $x$, más precisa es la pendiente**. Esto último no es evidente y tiene una consecuencia práctica de diseño: al planear un experimento conviene tomar mediciones en un rango amplio de $x$, no concentrarlas. Dos puntos de apoyo muy separados determinan una recta con mucha más firmeza que dos puntos juntos.
+En el numerador está $s^2$, la dispersión de los puntos alrededor de la recta: más ruido, pendiente menos confiable. En el denominador está $S_{xx}$, la dispersión de los valores de $x$: **cuanto más separados estén los $x$, más precisa es la pendiente**. Esto último no es evidente y tiene una consecuencia práctica de diseño. Al planear un experimento conviene tomar mediciones en un rango amplio de $x$, no concentrarlas. Dos puntos de apoyo muy separados determinan una recta con mucha más firmeza que dos puntos juntos.
 
 Es, otra vez, el mismo esqueleto de todo el curso: un estimador dividido entre su error estándar. Lo único que cambia entre técnicas es cómo se calcula ese error.
 :::
 
 ## Prueba para el coeficiente de correlación
 
-Probar $H_0: \rho = 0$ (correlación poblacional nula) es equivalente a probar que la pendiente es cero: ambas preguntas son "¿hay relación lineal?".
+Probar $H_0: \rho = 0$ (correlación poblacional nula) es equivalente a probar que la pendiente es cero. Ambas preguntas son "¿hay relación lineal?".
 
 ```{r}
 #| label: cor-test
@@ -210,7 +214,7 @@ cor.test(mac$n, mac$tiempo_ms)
 ::: {.callout-note title="Interpretación"}
 El coeficiente de correlación es $r \approx 0.97$ y su prueba da el **mismo estadístico $t$ y el mismo valor p** que la pendiente. No es coincidencia: son formulaciones distintas de la misma hipótesis. La correlación aporta además el intervalo de confianza para $\rho$.
 
-Cuidado con el reflejo de sobreinterpretar: un $r$ alto indica relación lineal **fuerte**, pero sigue sin implicar causalidad (@sec-cap3), y tampoco garantiza que la recta sea el modelo correcto —eso lo dicen los residuos—.
+Cuidado con el reflejo de sobreinterpretar: un $r$ alto indica relación lineal **fuerte**, pero sigue sin implicar causalidad (@sec-cap3), y tampoco garantiza que la recta sea el modelo correcto (eso lo dicen los residuos).
 :::
 
 ## Diagnóstico de residuos
@@ -239,7 +243,7 @@ shapiro.test(residuals(modelo))
 3. **Normalidad de los errores.** Los puntos del Q-Q plot deben seguir la recta. Es el supuesto **menos crítico** con muestras grandes, gracias al TCL.
 4. **Independencia.** No hay gráfica que la salve: depende del diseño. Con datos tomados en el tiempo, hay que revisar que no haya autocorrelación.
 
-En nuestro caso los residuos insinúan una **curvatura muy leve** —los datos se generaron con un pequeño término cuadrático— que ilustra por qué esta gráfica no es un trámite: es la que nos avisa de que el modelo lineal podría estar simplificando de más.
+En nuestro caso los residuos insinúan una **curvatura muy leve** (los datos se generaron con un pequeño término cuadrático) que ilustra por qué esta gráfica no es un trámite. Es la que nos avisa de que el modelo lineal podría estar simplificando de más.
 :::
 
 ## Predicción y sus límites
@@ -284,7 +288,7 @@ Con **dos variables cuantitativas** y una pregunta inferencial:
 
 ## Resumen
 
-La recta ajustada proviene de una muestra, así que su pendiente tiene incertidumbre. La **prueba sobre $\beta_1$** decide si la relación lineal es real, y su intervalo de confianza dice **cuánto** cambia $Y$ por unidad de $X$; probar la correlación es la misma prueba con otro nombre. El $R^2$ resume qué proporción de la variabilidad explica el modelo, y el **diagnóstico de residuos** —linealidad, varianza constante, normalidad, independencia— es lo que decide si el modelo merece confianza. Predecir fuera del rango observado es extrapolar, y eso es cosa de fe, no de estadística.
+La recta ajustada proviene de una muestra, así que su pendiente tiene incertidumbre. La **prueba sobre $\beta_1$** decide si la relación lineal es real, y su intervalo de confianza dice **cuánto** cambia $Y$ por unidad de $X$; probar la correlación es la misma prueba con otro nombre. El $R^2$ resume qué proporción de la variabilidad explica el modelo, y el **diagnóstico de residuos** (linealidad, varianza constante, normalidad, independencia) es lo que decide si el modelo merece confianza. Predecir fuera del rango observado es extrapolar, y eso es cosa de fe, no de estadística.
 
 ## Cierre del curso
 
@@ -322,19 +326,19 @@ Tres reglas valen para todo lo que se hizo aquí:
    d. Evaluar si un nuevo método de enseñanza mejora las calificaciones frente al tradicional, con grupos asignados al azar.
 
 ::: {.callout-tip title="Soluciones y retroalimentación" collapse="true"}
-**1.** Con `summary(lm(tiempo_ms ~ n, data = filter(alg, entorno == "Windows")))`: pendiente ≈ **0.00212 ms por elemento**, intervalo aproximado de **0.00197 a 0.00228**, $R^2 \approx 0.94$, y un valor p del orden de $10^{-31}$. Conclusión: existe una relación lineal fuerte y altamente significativa entre el tamaño de entrada y el tiempo. *Conviene reportar la pendiente con su intervalo, no solo el valor p: el intervalo es lo que permite comparar entornos.*
+**1.** Con `summary(lm(tiempo_ms ~ n, data = filter(alg, entorno == "Windows")))`: pendiente ≈ **0.00212 ms por elemento**, intervalo aproximado de **0.00197 a 0.00228**, $R^2 \approx 0.94$, y un valor p del orden de $10^{-31}$. Conclusión: existe una relación lineal fuerte y altamente significativa entre el tamaño de entrada y el tiempo. *Conviene reportar la pendiente con su intervalo, no solo el valor p. El intervalo es lo que permite comparar entornos.*
 
 **2.** La pendiente de Windows (0.00212) es mayor que la de Mac (0.00179): **Windows se degrada más rápido** al crecer la entrada. Sus intervalos —aproximadamente (0.00197, 0.00228) contra (0.00167, 0.00192)— **no se traslapan**, lo que sugiere que la diferencia es real. *Advertencia metodológica: comparar intervalos "a ojo" es una aproximación informal. La forma rigurosa es ajustar un modelo con interacción, `lm(tiempo_ms ~ n * entorno)`, y probar directamente si el término de interacción difiere de cero. Es un buen puente hacia la regresión múltiple.*
 
-**3.** $F = t^2$: aquí $28.24^2 \approx 797$. La razón es que en regresión **simple** solo hay una variable explicativa, así que "¿el modelo global sirve?" y "¿la pendiente es distinta de cero?" son la misma pregunta. *La equivalencia se rompe en regresión múltiple: ahí el $F$ global prueba si **al menos una** de las variables aporta, mientras que cada $t$ prueba una variable en particular.*
+**3.** $F = t^2$: aquí $28.24^2 \approx 797$. La razón es que en regresión **simple** solo hay una variable explicativa, así que "¿el modelo global sirve?" y "¿la pendiente es distinta de cero?" son la misma pregunta. *La equivalencia se rompe en regresión múltiple. Ahí el $F$ global prueba si **al menos una** de las variables aporta, mientras que cada $t$ prueba una variable en particular.*
 
-**4.** Los residuos de Windows muestran la misma **curvatura leve** que los de Mac, porque ambos conjuntos se generaron con un pequeño término cuadrático. El supuesto en duda es la **linealidad**: la relación real tiene una componente curva que el modelo lineal no captura. *Con datos de tiempos de ejecución esto es esperable: muchos algoritmos tienen complejidad superlineal, así que un término en $n^2$ o un modelo en escala logarítmica podría ajustar mejor. Este es justo el tipo de hallazgo para el que sirve mirar los residuos.*
+**4.** Los residuos de Windows muestran la misma **curvatura leve** que los de Mac, porque ambos conjuntos se generaron con un pequeño término cuadrático. El supuesto en duda es la **linealidad**: la relación real tiene una componente curva que el modelo lineal no captura. *Con datos de tiempos de ejecución esto es esperable. Muchos algoritmos tienen complejidad superlineal, así que un término en $n^2$ o un modelo en escala logarítmica podría ajustar mejor. Este es justo el tipo de hallazgo para el que sirve mirar los residuos.*
 
 **5.** La correcta es la **(b)**. La (a) confunde $R^2$ con una tasa de acierto —concepto que ni siquiera aplica a una respuesta continua—; la (c) le atribuye una probabilidad al modelo, que no es lo que mide. *Otra advertencia sobre $R^2$: un valor alto no garantiza que el modelo sea adecuado. Se pueden tener datos claramente curvos con $R^2$ elevado; por eso el diagnóstico de residuos es indispensable, no opcional.*
 
-**6.** La predicción para $n = 3000$ es confiable: está **dentro** del rango observado (1000 a 10000). La de $n = 50000$ es una **extrapolación** cinco veces más allá del máximo observado: el modelo la calcula, pero no hay evidencia de que la relación siga siendo lineal tan lejos, y la curvatura detectada en los residuos sugiere que el tiempo real crecería más rápido de lo predicho. *Regla práctica: predice dentro del rango de los datos; fuera de él, se está haciendo un supuesto no verificado y conviene decirlo explícitamente.*
+**6.** La predicción para $n = 3000$ es confiable. Está **dentro** del rango observado (1000 a 10000). La de $n = 50000$ es una **extrapolación** cinco veces más allá del máximo observado: el modelo la calcula, pero no hay evidencia de que la relación siga siendo lineal tan lejos, y la curvatura detectada en los residuos sugiere que el tiempo real crecería más rápido de lo predicho. *Regla práctica: predice dentro del rango de los datos; fuera de él, se está haciendo un supuesto no verificado y conviene decirlo explícitamente.*
 
-**7.** Vería una recta con pendiente aparente —a veces positiva, a veces negativa— y podría concluir que existe una relación **que en realidad no existe** (la pendiente verdadera es cero). Sin prueba de hipótesis no hay forma de distinguir una señal real del ruido, y con $n$ pequeño y mucho ruido el azar dibuja tendencias convincentes. *Esta es la razón de ser de todo el bloque de inferencia: nuestros ojos encuentran patrones en el ruido con demasiada facilidad, y la estadística es el antídoto contra esa tendencia.*
+**7.** Vería una recta con pendiente aparente (a veces positiva, a veces negativa) y podría concluir que existe una relación **que en realidad no existe** (la pendiente verdadera es cero). Sin prueba de hipótesis no hay forma de distinguir una señal real del ruido, y con $n$ pequeño y mucho ruido el azar dibuja tendencias convincentes. *Esta es la razón de ser de todo el bloque de inferencia: nuestros ojos encuentran patrones en el ruido con demasiada facilidad, y la estadística es el antídoto contra esa tendencia.*
 
 **8.** (a) **ANOVA** de un factor con post-hoc de Tukey (@sec-cap10): una cuantitativa comparada entre tres grupos. (b) **Prueba ji-cuadrada** de independencia (@sec-cap9): dos variables categóricas. (c) **Intervalo de confianza para una proporción** (@sec-cap9), con `prop.test`. (d) **Prueba t de dos muestras independientes** (@sec-cap8) sobre un **experimento aleatorizado** (@sec-cap5); como hubo asignación al azar, aquí sí es válido hablar de causa. *Nótese que responder bien requiere identificar dos cosas: el tipo de variable y el número de grupos. Ese es, en el fondo, todo el mapa de decisión.*
 :::

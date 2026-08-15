@@ -1,0 +1,78 @@
+% ============================================================
+%  LAS TRES PREGUNTAS DE PALMER, TRADUCIDAS A FILAS DEL MAPA DE DECISION
+%  Fragmento aparte, para no mover la numeracion del resto del deck.
+%  Se activa quitando el % de la linea \input que esta en semana01.tex,
+%  justo despues del frame "Que preguntas motivaron todo este trabajo".
+%  Sirve igual de repaso al abrir una sesion posterior: se da una pregunta
+%  en lenguaje de biologo y el grupo dice que renglón del mapa le toca.
+% ============================================================
+\begin{frame}{Cómo se traduce una pregunta en una técnica}
+  Ante cualquier pregunta que traiga alguien del área, un estadístico hace tres
+  preguntas antes de mirar el mapa de decisión:
+
+  \vspace{0.3cm}
+  \begin{enumerate}
+    \item ¿Cuál es la variable \textbf{respuesta}, y de qué \textbf{tipo} es?
+      {\small (cuantitativa o categórica)}
+      \vspace{0.15cm}
+    \item ¿Cuál es la variable \textbf{explicativa}, y de qué tipo? Si es
+      categórica, ¿\textbf{cuántos niveles} tiene?
+      \vspace{0.15cm}
+    \item ¿\textbf{Cómo se obtuvieron} los datos? ¿Grupos independientes, o dos
+      medidas del \emph{mismo} individuo?
+  \end{enumerate}
+
+  \vspace{0.35cm}
+  Las dos primeras eligen el renglón. La tercera decide entre dos renglones que se
+  parecen. Y de fondo hay una cuarta: ¿la pregunta es de \textbf{diferencia}, de
+  \textbf{relación} o de \textbf{predicción}?
+
+  \vspace{0.3cm}
+  \destaca{El mapa de decisión \textbf{no se consulta con las palabras del
+  problema, sino con los tipos de variable}. Traducir de un lenguaje al otro es
+  la habilidad que se practica todo el semestre.}
+\end{frame}
+% ============================================================
+\begin{frame}{Las tres preguntas de Palmer, traducidas}
+  \begin{center}
+  {\scriptsize
+  \begin{tabular}{@{}p{4.3cm}p{4.5cm}p{3.6cm}@{}}
+    \toprule
+    \textbf{Lo que dice quien trae el problema} & \textbf{Lo que oye un estadístico} &
+    \textbf{Renglón del mapa} \\
+    \midrule
+    ¿Difieren machos y hembras en tamaño? &
+      Cuantitativa contra categórica de \textbf{2 niveles}, grupos independientes &
+      Dos grupos independientes {\scriptsize\color{grisT}(unidad 8)} \\
+    \dots y si fueran los dos del \emph{mismo nido} &
+      Cuantitativa, \textbf{dos medidas del mismo par} &
+      Datos pareados {\scriptsize\color{grisT}(unidad 8)} \\
+    ¿Y en cuál especie la diferencia es mayor? &
+      Cuantitativa contra \textbf{dos} categóricas: es una \textbf{interacción} &
+      \textcolor{rojoAc}{No está en el mapa: ANOVA de dos factores} \\
+    ¿Se puede adivinar el sexo a partir de las medidas? &
+      La respuesta ahora es \textbf{categórica}, con explicativas cuantitativas &
+      \textcolor{rojoAc}{No está en el mapa: regresión logística} \\
+    ¿Se relacionan el hielo marino y la alimentación? &
+      Dos cuantitativas &
+      Correlación {\scriptsize\color{grisT}(unidad 3)} y \Rc{lm()}
+      {\scriptsize\color{grisT}(unidad 11)} \\
+    \bottomrule
+  \end{tabular}}
+  \end{center}
+
+  \vspace{0.3cm}
+  \raggedright
+  \destaca{\small Dos observaciones que valen todo el curso.
+
+  \vspace{0.15cm}
+  \textbf{El renglón 1 y el 2 son la misma pregunta con datos distintos.} El estudio
+  midió al macho \emph{y} a la hembra del mismo nido. Eso es pareado, y la prueba
+  pareada detecta diferencias más pequeñas. Pero nuestra tabla no trae el
+  identificador del nido, así que perdimos esa ventaja.
+
+  \vspace{0.15cm}
+  \textbf{El renglón 1 y el 4 usan las mismas dos variables, con los papeles
+  invertidos.} ``¿La masa depende del sexo?'' y ``¿puedo adivinar el sexo si conozco
+  la masa?'' no son la misma pregunta, y no se contestan con la misma técnica.}
+\end{frame}

@@ -6,10 +6,16 @@ project:
 
 lang: es
 
+# La portada dice "Profesora" en lugar de "Autor", porque estas notas
+# acompañan un curso y se apoyan en las notas de Figueroa y Valencia.
+language:
+  title-block-author-single: "Profesora"
+  title-block-author-plural: "Profesoras"
+
 book:
   title: "Estadística para Ciencias de la Computación"
   subtitle: "Notas del curso · LCC · Universidad de Sonora"
-  author: "Rosalía Hernández"
+  author: "Rosalía Gpe. Hernández Amador"
   date: today
   date-format: "MMMM YYYY"
   reader-mode: true

@@ -1,5 +1,9 @@
 # Producción de datos: muestreo {#sec-cap4}
 
+::: {.callout-warning title="Capítulo en revisión"}
+El contenido de este capítulo está completo, pero todavía no pasa por la revisión final de redacción. Se avisará en clase cuando quede listo para estudiar de aquí. Mientras tanto se puede consultar, con esa advertencia.
+:::
+
 ```{r}
 #| label: setup-cap4
 #| include: false
@@ -55,7 +59,7 @@ Es el error más común. Si el método de selección está sesgado, tomar más i
 
 ## Error de muestreo y error no de muestreo
 
-Aunque el muestreo sea perfecto, dos muestras distintas dan resultados distintos: a eso se le llama **error de muestreo**, la variación natural de una muestra a otra. Es inevitable, pero **se reduce al aumentar el tamaño de la muestra** y se puede cuantificar (el **margen de error**, que formalizaremos en el @sec-cap7).
+Aunque el muestreo sea perfecto, dos muestras distintas dan resultados distintos. A eso se le llama **error de muestreo**, la variación natural de una muestra a otra. Es inevitable, pero **se reduce al aumentar el tamaño de la muestra** y se puede cuantificar (el **margen de error**, que formalizaremos en el @sec-cap7).
 
 El **error no de muestreo** es todo lo demás: sesgos, no-respuesta, errores de captura. No se arregla con más datos y suele ser el más peligroso porque no aparece en las fórmulas.
 
@@ -83,12 +87,12 @@ mean(estimaciones)   # el promedio de las estimaciones cae junto al parámetro r
 ```
 
 ::: {.callout-note title="Interpretación"}
-Las estimaciones se reparten **alrededor** del valor verdadero (línea roja): ninguna muestra da exactamente el parámetro, pero en promedio aciertan y la mayoría cae cerca. Eso es un muestreo **sin sesgo**: yerra por azar, no por sistema. Si repitieras el ejercicio con muestras de tamaño 150, el histograma sería más angosto —menos error de muestreo—. Esta idea es la semilla de las **distribuciones muestrales** del @sec-cap6.
+Las estimaciones se reparten **alrededor** del valor verdadero (línea roja): ninguna muestra da exactamente el parámetro, pero en promedio aciertan y la mayoría cae cerca. Eso es un muestreo **sin sesgo**: yerra por azar, no por sistema. Si repitieras el ejercicio con muestras de tamaño 150, el histograma sería más angosto (menos error de muestreo). Esta idea es la semilla de las **distribuciones muestrales** del @sec-cap6.
 :::
 
 ### Laboratorio: el tamaño de la muestra y el sesgo {#sec-lab-n}
 
-Este laboratorio junta las dos ideas centrales del capítulo. El primer deslizador cambia el **tamaño de muestra** y muestra cómo se angosta la distribución de estimaciones. El segundo introduce un **sesgo** en el método de selección, y revela algo incómodo: por más que crezca la muestra, las estimaciones se apretujan alrededor del valor **equivocado**.
+Este laboratorio junta las dos ideas centrales del capítulo. El primer deslizador cambia el **tamaño de muestra** y muestra cómo se angosta la distribución de estimaciones. El segundo introduce un **sesgo** en el método de selección, y revela algo incómodo. Por más que crezca la muestra, las estimaciones se apretujan alrededor del valor **equivocado**.
 
 ```{ojs}
 //| panel: input
@@ -138,7 +142,7 @@ md`Valor verdadero (línea roja) = **0.25** · Promedio de las estimaciones = **
 ```
 
 ::: {.callout-note title="Interpretación"}
-Con **sesgo en cero**, aumentar $n$ angosta el histograma alrededor de la línea roja: más datos, más precisión. Al subir el sesgo a 0.10 y aumentar luego $n$ hasta 300: el histograma se vuelve **angosto pero centrado en el lugar equivocado**. Ahí está, en una imagen, la lección del capítulo: el tamaño de muestra reduce el **error de muestreo**, nunca el **sesgo**. Una estimación sesgada con muestra grande es peligrosa justamente porque *parece* precisa.
+Con **sesgo en cero**, aumentar $n$ angosta el histograma alrededor de la línea roja: más datos, más precisión. Al subir el sesgo a 0.10 y aumentar luego $n$ hasta 300: el histograma se vuelve **angosto pero centrado en el lugar equivocado**. Ahí está, en una imagen, la lección del capítulo. El tamaño de muestra reduce el **error de muestreo**, nunca el **sesgo**. Una estimación sesgada con muestra grande es peligrosa justamente porque *parece* precisa.
 :::
 
 ## Métodos de muestreo aleatorio
@@ -313,11 +317,11 @@ Con el **aleatorio simple**, los seleccionados caen por todo el campo, en las tr
 
 Con el **estratificado**, se toma una cuota de cada zona proporcional a su tamaño. Con $n = 24$ toca exactamente **12 de la A, 8 de la B y 4 de la C**, y las dos columnas de la tabla coinciden casi perfecto. Se muestrea **dentro de todas** las zonas.
 
-Con **conglomerados**, se eligen **parcelas completas** al azar (los recuadros punteados) y se mide todo lo que hay dentro. Es mucho más barato en campo —basta desplazarse a dos parcelas en vez de recorrer las 96 posiciones—, pero como cada parcela cae casi por completo dentro de una zona, la muestra puede quedar compuesta **casi de una sola especie**. Vuelve a elegir este método varias veces y se observa saltar las barras.
+Con **conglomerados**, se eligen **parcelas completas** al azar (los recuadros punteados) y se mide todo lo que hay dentro. Es mucho más barato en campo (basta desplazarse a dos parcelas en vez de recorrer las 96 posiciones), pero como cada parcela cae casi por completo dentro de una zona, la muestra puede quedar compuesta **casi de una sola especie**. Vuelve a elegir este método varias veces y se observa saltar las barras.
 
 Con el **sistemático**, se recorre el campo en orden tomando uno de cada $k$; al avanzar por renglones va pasando por las tres zonas, así que representa bien. Sería riesgoso solo si el recorrido tuviera un patrón periódico que coincidiera con $k$.
 
-**La distinción que más se confunde**, y aquí se ve de golpe porque ambos métodos usan la misma partición del campo: en el **estratificado** se toman *algunos de cada grupo*; en **conglomerados** se toman *todos los de algunos grupos*. El estratificado busca **precisión**; los conglomerados buscan **economía**.
+**La distinción que más se confunde**, y aquí se ve de golpe porque ambos métodos usan la misma partición del campo. En el **estratificado** se toman *algunos de cada grupo*; en **conglomerados** se toman *todos los de algunos grupos*. El estratificado busca **precisión**; los conglomerados buscan **economía**.
 :::
 
 ::: {.callout-tip title="¿Qué técnica usar?"}
@@ -331,12 +335,12 @@ Para elegir un método de muestreo:
 | Población dispersa; medir todo un grupo es barato | Por conglomerados |
 | Encuestas grandes a varias escalas | Multietápico |
 
-En **todos**, la clave es que interviene el azar: eso es lo que protege del sesgo de selección.
+En **todos**, la clave es que interviene el azar. Eso es lo que protege del sesgo de selección.
 :::
 
 ## Resumen
 
-Antes de analizar, hay que **producir** bien los datos. Distinguimos población, muestra y unidad de muestreo, y vimos que el enemigo es el **sesgo** —de selección o de medición—, que ninguna cantidad de datos corrige. El **error de muestreo** es la variación natural entre muestras y se reduce con el tamaño; el **error no de muestreo** no. La aleatorización, en sus distintas formas (simple, estratificado, sistemático, por conglomerados, multietápico), es la herramienta que hace que una muestra represente a su población. En el @sec-cap5 veremos la otra forma de producir datos: los **experimentos**.
+Antes de analizar, hay que **producir** bien los datos. Distinguimos población, muestra y unidad de muestreo, y vimos que el enemigo es el **sesgo** (de selección o de medición), que ninguna cantidad de datos corrige. El **error de muestreo** es la variación natural entre muestras y se reduce con el tamaño; el **error no de muestreo** no. La aleatorización, en sus distintas formas (simple, estratificado, sistemático, por conglomerados, multietápico), es la herramienta que hace que una muestra represente a su población. En el @sec-cap5 veremos la otra forma de producir datos: los **experimentos**.
 
 ## Ejercicios
 
@@ -372,5 +376,5 @@ Antes de analizar, hay que **producir** bien los datos. Distinguimos población,
 
 **6.** Una buena propuesta es un **muestreo por conglomerados o multietápico**: elegir al azar, digamos, 15 de las 100 sucursales y dentro de cada una encuestar a clientes seleccionados al azar durante distintos días y horarios. Justificación: recorrer las 100 sucursales es caro, y los conglomerados hacen el trabajo de campo viable. Sesgos que evita: al aleatorizar **sucursales** se evita el sesgo de elegir solo las de zonas céntricas o de mayor ingreso; al variar **días y horarios** se evita sobrerrepresentar a quienes van los fines de semana o por la mañana. *Una respuesta que solo diga "encuestar a los clientes de la sucursal más cercana" describe un muestreo por conveniencia, que es precisamente lo que queremos evitar.*
 
-**7.** El **estratificado** da resultados perfectamente estables: al fijar la cuota por especie (50 %, 33 % y 17 %), el porcentaje en la muestra reproduce el de la población en **todas** las corridas. El de **conglomerados** salta muchísimo, porque cada parcela cae casi por completo dentro de una sola zona: si el azar elige la parcela de la izquierda, la muestra queda compuesta casi solo de especie A y la C no aparece. *Este fenómeno se llama **efecto de diseño**: cuando los individuos de un mismo conglomerado se parecen entre sí, el conglomerado aporta menos información que el mismo número de individuos elegidos por separado, y la estimación pierde precisión. Por eso las encuestas por conglomerados requieren muestras más grandes para alcanzar la misma precisión que un aleatorio simple — el precio que se paga por el ahorro en trabajo de campo.*
+**7.** El **estratificado** da resultados perfectamente estables: al fijar la cuota por especie (50 %, 33 % y 17 %), el porcentaje en la muestra reproduce el de la población en **todas** las corridas. El de **conglomerados** salta muchísimo, porque cada parcela cae casi por completo dentro de una sola zona. Si el azar elige la parcela de la izquierda, la muestra queda compuesta casi solo de especie A y la C no aparece. *Este fenómeno se llama **efecto de diseño**: cuando los individuos de un mismo conglomerado se parecen entre sí, el conglomerado aporta menos información que el mismo número de individuos elegidos por separado, y la estimación pierde precisión. Por eso las encuestas por conglomerados requieren muestras más grandes para alcanzar la misma precisión que un aleatorio simple — el precio que se paga por el ahorro en trabajo de campo.*
 :::

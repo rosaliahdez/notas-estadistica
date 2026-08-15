@@ -1,5 +1,9 @@
 # Inferencia para dos parámetros {#sec-cap8}
 
+::: {.callout-warning title="Capítulo en revisión"}
+El contenido de este capítulo está completo, pero todavía no pasa por la revisión final de redacción. Se avisará en clase cuando quede listo para estudiar de aquí. Mientras tanto se puede consultar, con esa advertencia.
+:::
+
 ```{r}
 #| label: setup-cap8
 #| include: false
@@ -87,7 +91,7 @@ t.test(urb, cam)
 ::: {.callout-note title="Interpretación"}
 Coinciden: $t = 4.648$ y $p \approx 0.002$.
 
-Lo revelador es comparar esta fórmula con la del @sec-t-mano. Son la misma idea: **una diferencia dividida entre su error estándar**. Lo único que cambia es qué diferencia se mide —contra un valor de referencia, o entre dos grupos— y cómo se calcula el error estándar correspondiente. Casi todos los estadísticos de prueba del curso tienen esta forma, y reconocerla vale más que memorizar cada variante.
+Lo revelador es comparar esta fórmula con la del @sec-t-mano. Son la misma idea: **una diferencia dividida entre su error estándar**. Lo único que cambia es qué diferencia se mide (contra un valor de referencia, o entre dos grupos) y cómo se calcula el error estándar correspondiente. Casi todos los estadísticos de prueba del curso tienen esta forma, y reconocerla vale más que memorizar cada variante.
 
 Un detalle que suele confundir: los grados de libertad de Welch salen de una fórmula fea que da un número **no entero** (aquí 7.5). No hay que calcularla a mano; basta saber que quedan entre el menor de los $n_i - 1$ y su suma, y usar el valor crítico correspondiente.
 :::
@@ -217,16 +221,16 @@ md`t = **${prueba.t.toFixed(2)}** · valor p = **${prueba.p < 0.0001 ? "< 0.0001
 ```
 
 ::: {.callout-note title="Interpretación"}
-Con la diferencia en 0.8 y el tamaño en 10 por grupo: las cajas se traslapan y el resultado casi nunca es significativo. Al **subir $n$ a 150 sin tocar la diferencia**: las cajas se traslapan prácticamente igual, pero el valor p se desploma y la diferencia se vuelve significativa.
+Con la diferencia en 0.8 y el tamaño en 10 por grupo. Las cajas se traslapan y el resultado casi nunca es significativo. Al **subir $n$ a 150 sin tocar la diferencia**: las cajas se traslapan prácticamente igual, pero el valor p se desploma y la diferencia se vuelve significativa.
 
-¿Por qué? Porque la caja describe la dispersión de **los datos individuales**, mientras que la prueba se refiere a la precisión de **las medias**, que mejora con $\sqrt{n}$. Son cosas distintas. Por eso el traslape de cajas no es criterio para decidir significancia —y, en el otro sentido, tampoco basta con que las cajas se separen si $n$ es minúsculo—.
+¿Por qué? Porque la caja describe la dispersión de **los datos individuales**, mientras que la prueba se refiere a la precisión de **las medias**, que mejora con $\sqrt{n}$. Son cosas distintas. Por eso el traslape de cajas no es criterio para decidir significancia (y, en el otro sentido, tampoco basta con que las cajas se separen si $n$ es minúsculo).
 
 Vale la pena el caso incómodo: diferencia en **0** con $n = 200$. De vez en cuando saldrá "significativo": es el error tipo I, ocurriendo el 5 % de las veces, tal como está diseñado.
 :::
 
 ## Muestras pareadas
 
-A veces las observaciones **vienen en parejas naturales**: el mismo paciente antes y después, el mismo terreno con dos tratamientos, o —como en nuestro proyecto— **el mismo juez calificando dos marcas**. Ignorar ese emparejamiento desperdicia información.
+A veces las observaciones **vienen en parejas naturales**: el mismo paciente antes y después, el mismo terreno con dos tratamientos, o (como en nuestro proyecto) **el mismo juez calificando dos marcas**. Ignorar ese emparejamiento desperdicia información.
 
 La solución es elegante: se calcula la **diferencia dentro de cada par** y se le aplica la prueba de **una** muestra del @sec-cap7, con $H_0: \mu_d = 0$.
 
@@ -268,7 +272,7 @@ Windows resulta unos **2 ms más lento** en promedio, con un valor p muy pequeñ
 ## Comparación de varianzas
 
 ::: {.callout-tip title="Tema complementario"}
-Este tema queda fuera del temario básico del curso, pero aparece con frecuencia en la práctica —y en las evaluaciones de posgrado— y motiva el chequeo de supuestos del ANOVA (@sec-cap10).
+Este tema queda fuera del temario básico del curso, pero aparece con frecuencia en la práctica (y en las evaluaciones de posgrado) y motiva el chequeo de supuestos del ANOVA (@sec-cap10).
 :::
 
 A veces la pregunta no es sobre el centro sino sobre la **variabilidad**: ¿un proceso es más consistente que otro? Se compara mediante el **cociente de varianzas**, cuya distribución bajo $H_0: \sigma_1^2 = \sigma_2^2$ es una **F de Fisher**.
@@ -279,7 +283,7 @@ var.test(temp_corporal ~ habitat, data = lagartijas)
 ```
 
 ::: {.callout-note title="Interpretación"}
-El cociente de varianzas es cercano a 2 (la desviación urbana es 1.63 °C contra 1.17 °C en el campo). Además de ser más cálidas, las lagartijas urbanas son **más variables**, lo cual es biológicamente razonable: la ciudad ofrece microambientes muy distintos —asfalto, sombra, jardines— mientras que el campo abierto es más homogéneo.
+El cociente de varianzas es cercano a 2 (la desviación urbana es 1.63 °C contra 1.17 °C en el campo). Además de ser más cálidas, las lagartijas urbanas son **más variables**, lo cual es biológicamente razonable: la ciudad ofrece microambientes muy distintos (asfalto, sombra, jardines) mientras que el campo abierto es más homogéneo.
 
 Cuidado: la prueba F es **muy sensible a la no normalidad**. Si los datos no son aproximadamente normales, conviene usar la prueba de Levene, más robusta.
 :::
@@ -290,7 +294,7 @@ Antes de confiar en cualquiera de estas pruebas, hay que revisar tres cosas:
 
 1. **Independencia**: las observaciones deben ser independientes entre sí (garantizada por el diseño: muestreo aleatorio o asignación aleatoria).
 2. **Normalidad**: importa sobre todo con muestras pequeñas; con $n$ grande el TCL nos protege. Se revisa con un Q-Q plot **por grupo**.
-3. **Igualdad de varianzas**: la prueba de Welch —la de R por omisión— no la requiere, así que este supuesto deja de ser crítico.
+3. **Igualdad de varianzas**: la prueba de Welch (la de R por omisión) no la requiere, así que este supuesto deja de ser crítico.
 
 ```{r}
 #| label: fig-qq-supuestos
@@ -342,15 +346,15 @@ Para comparar dos grupos, el parámetro de interés es la **diferencia de medias
 7. **Redacción.** Una prueba A/B con 40 usuarios por grupo da $p = 0.08$ para una diferencia observada de 3 segundos. Escribir la conclusión correcta y señala qué NO se puede afirmar.
 
 ::: {.callout-tip title="Soluciones y retroalimentación" collapse="true"}
-**1.** Con `t.test(masa_g ~ habitat, data = lagartijas)` se obtiene un valor p cercano a **0.01**: las lagartijas urbanas son significativamente más pesadas, con una diferencia media aproximada de 1.6 g y un intervalo que no incluye al cero. Interpretación: *"Las lagartijas urbanas pesan en promedio alrededor de 1.6 g más que las de campo abierto (p ≈ 0.01)"*. *Nótese que la evidencia aquí es más moderada que en la temperatura (p < 0.001): conviene reflejar esa diferencia de fuerza en la redacción.*
+**1.** Con `t.test(masa_g ~ habitat, data = lagartijas)` se obtiene un valor p cercano a **0.01**: las lagartijas urbanas son significativamente más pesadas, con una diferencia media aproximada de 1.6 g y un intervalo que no incluye al cero. Interpretación: *"Las lagartijas urbanas pesan en promedio alrededor de 1.6 g más que las de campo abierto (p ≈ 0.01)"*. *Nótese que la evidencia aquí es más moderada que en la temperatura (p < 0.001). Conviene reflejar esa diferencia de fuerza en la redacción.*
 
 **2.** (a) **Pareado**: el mismo paciente medido dos veces. (b) **Independiente**: son parcelas distintas. (c) **Pareado**: el mismo juez califica ambas marcas. (d) **Independiente**: corridas distintas, sin correspondencia una a una. *La prueba decisiva: ¿puedo unir cada dato de un grupo con exactamente uno del otro por una razón sustantiva? En (d) la corrida 7 de Mac no tiene nada que ver con la 7 de Windows, así que no.*
 
 **3.** La diferencia media Oreo − Chokis es de apenas **0.52 puntos**, con $p \approx 0.07$: **no** alcanza significancia al 5 %. Compárala con Oreo − Great Value, donde la diferencia es de 2.36 puntos y $p < 0.001$. Conclusión: hay evidencia clara de que Oreo supera a Great Value, pero no de que supere a Chokis. *Esto ilustra algo que reaparecerá en el @sec-cap10: no basta con saber que "las marcas difieren"; hay que averiguar **entre cuáles** está la diferencia, y para eso servirán las pruebas post-hoc. Nótese además que un p de 0.07 no significa "casi significativo": significa que los datos son razonablemente compatibles con que ambas marcas gusten igual.*
 
-**4.** El valor p es **menor con `paired = TRUE`** (≈ 0.07 pareado contra ≈ 0.12 sin parear). Al emparejar, la variabilidad entre jueces —unos califican todo alto, otros todo bajo— desaparece del cálculo, así que el error estándar se reduce y la prueba gana **potencia**. *Aquí ninguna de las dos versiones resulta significativa, pero el ejemplo muestra el mecanismo con claridad: el análisis correcto extrae más información de los mismos datos. Y ojo: ignorar el emparejamiento no es solo perder sensibilidad, es aplicar una prueba cuyo supuesto de independencia no se cumple, porque las dos calificaciones vienen de la misma persona.*
+**4.** El valor p es **menor con `paired = TRUE`** (≈ 0.07 pareado contra ≈ 0.12 sin parear). Al emparejar, la variabilidad entre jueces (unos califican todo alto, otros todo bajo) desaparece del cálculo, así que el error estándar se reduce y la prueba gana **potencia**. *Aquí ninguna de las dos versiones resulta significativa, pero el ejemplo muestra el mecanismo con claridad. El análisis correcto extrae más información de los mismos datos. Y ojo: ignorar el emparejamiento no es solo perder sensibilidad, es aplicar una prueba cuyo supuesto de independencia no se cumple, porque las dos calificaciones vienen de la misma persona.*
 
-**5.** Con una diferencia de 0.5 y una desviación de 2 en cada grupo, se necesitan aproximadamente **250 a 300 observaciones por grupo** para detectar el efecto de forma consistente. Con $n = 20$ el resultado casi nunca sale significativo aunque la diferencia **exista de verdad**. *Esto es el **poder estadístico**, y la lección de diseño es enorme: un estudio con muestra insuficiente puede no detectar un efecto real, lo que produce el error tipo II. Por eso el tamaño de muestra debe calcularse **antes** de recolectar, no lamentarse después.*
+**5.** Con una diferencia de 0.5 y una desviación de 2 en cada grupo, se necesitan aproximadamente **250 a 300 observaciones por grupo** para detectar el efecto de forma consistente. Con $n = 20$ el resultado casi nunca sale significativo aunque la diferencia **exista de verdad**. *Esto es el **poder estadístico**, y la lección de diseño es enorme. Un estudio con muestra insuficiente puede no detectar un efecto real, lo que produce el error tipo II. Por eso el tamaño de muestra debe calcularse **antes** de recolectar, no lamentarse después.*
 
 **6.** El cociente de varianzas de `lhc_mm` es cercano a 1 (desviaciones de 5.5 y 5.2 mm), así que **no** hay evidencia de que las variabilidades difieran. Combinando con la prueba de medias: en longitud, los dos grupos son **similares tanto en centro como en dispersión**. En cambio, en temperatura difieren en ambas cosas. *Buen ejercicio de síntesis: describir un grupo requiere hablar de centro **y** de dispersión, como aprendimos en el @sec-cap2.*
 

@@ -1,12 +1,16 @@
 # Presentación {.unnumbered}
 
+::: {.callout-note title="Sobre el origen de estas notas"}
+La estructura y buena parte de los ejercicios provienen de las **Notas de Estadística** de la **Dra. Gudelia Figueroa Preciado** y el **M.C. Marco Antonio Valencia Arvizu**, material de referencia de esta asignatura en el Departamento de Matemáticas de la Universidad de Sonora. Esta versión conserva su organización y la desarrolla incorporando software estadístico, datos actuales y un énfasis explícito en la interpretación de resultados.
+:::
+
 Estas notas acompañan el curso de **Estadística** de la Licenciatura en Ciencias de la Computación de la Universidad de Sonora (5.º semestre). Son la continuación natural del curso de Probabilidad y la antesala de *Introducción al Aprendizaje Automático*: aquí es donde aprendemos a **mirar datos, producir datos y hacer inferencia sobre ellos** con criterio.
 
 ## Cómo están pensadas estas notas
 
 El curso descansa en cuatro ideas, y el libro también:
 
-1. **Interpretar antes que calcular.** Cada técnica se presenta con la misma secuencia: una pregunta real, la técnica que le corresponde, los supuestos que hay que verificar, el cálculo en R y —lo más importante— la interpretación en español dirigida a alguien que no es estadístico.
+1. **Interpretar antes que calcular.** Cada técnica se presenta con la misma secuencia: una pregunta real, la técnica que le corresponde, los supuestos que hay que verificar, el cálculo en R y (lo más importante) la interpretación en español dirigida a alguien que no es estadístico.
 
 2. **Saber *qué* técnica usar.** A lo largo del libro se construye un **mapa de decisión**: dado el tipo de pregunta y el tipo de datos, ¿qué técnica corresponde? Cada vez que aparezca este recuadro, estamos agregando una pieza a ese mapa.
 
@@ -14,7 +18,7 @@ El curso descansa en cuatro ideas, y el libro también:
    Estos recuadros conectan una **pregunta** con una **técnica**. Al final del curso, juntos forman una guía para elegir el procedimiento correcto sin memorizar.
    :::
 
-3. **Pocos contextos, muchas veces.** En lugar de cambiar de problema en cada ejemplo, trabajamos sobre unos pocos conjuntos de datos que reaparecen en todo el curso. Los conocerás desde hoy y los se verá madurar: primero los describimos, luego entendemos cómo se produjeron y al final les hacemos inferencia.
+3. **Pocos contextos, muchas veces.** En lugar de cambiar de problema en cada ejemplo, trabajamos sobre unos pocos conjuntos de datos que reaparecen en todo el curso. Se conocen desde hoy y se los verá madurar. Primero los describimos, luego entendemos cómo se produjeron y al final les hacemos inferencia.
 
 4. **R desde el primer día.** Todo el cómputo se hace en R. No se necesita saber estadística para empezar a usarlo, ni saber programar (eso ya se sabe): solo aprender el vocabulario de R que iremos usando.
 
@@ -31,8 +35,8 @@ El curso descansa en cuatro ideas, y el libro también:
 | **Pingüinos** (Palmer Penguins) | Datos reales y limpios de 344 pingüinos de la Antártida | Laboratorio de enseñanza: aprender la mecánica de cada técnica sin fricción |
 | **Galletas** | Cata a ciegas de marcas de galletas, diseñada por el grupo | Diseño de experimentos y ANOVA |
 | **Lagartijas** | Fisiología de lagartijas urbanas vs. de campo | Comparación de dos grupos |
-| **Rickettsiosis** | Factores asociados a un resultado de laboratorio | Proporciones y ji-cuadrada |
-| **Algoritmos** | Tiempos de ejecución según el tamaño de entrada | Regresión y pruebas A/B |
+| **Rickettsiosis** | Zona de residencia, contacto con perros y garrapatas frente al resultado de laboratorio | Proporciones y ji-cuadrada |
+| **Algoritmos** | Tiempos de ejecución de un algoritmo, según el tamaño de la entrada y según el equipo | Regresión y pruebas A/B |
 | **Hongos / sustrato** | Cultivo de seta en distintos sustratos | ANOVA con datos de laboratorio |
 
 Los conjuntos aplicados están en la carpeta `datos/` de este proyecto. Los pingüinos vienen en un paquete de R.
@@ -50,7 +54,3 @@ install.packages(c("tidyverse", "palmerpenguins"))
 - `palmerpenguins` trae el conjunto de pingüinos.
 
 Con eso listo, se puede pasar al @sec-cap1.
-
-::: {.callout-note title="Sobre el origen de estas notas"}
-La estructura y buena parte de los ejercicios provienen de las notas de **Estadística** de la Dra. Gudelia Figueroa Preciado y el M.C. Marco Antonio Valencia Arvizu, material de referencia de este curso en el Departamento de Matemáticas. Esta versión conserva su organización y la desarrolla incorporando software estadístico, datos actuales y un énfasis explícito en la interpretación de resultados.
-:::

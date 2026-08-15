@@ -1,5 +1,9 @@
 # Análisis de varianza (ANOVA) {#sec-cap10}
 
+::: {.callout-warning title="Capítulo en revisión"}
+El contenido de este capítulo está completo, pero todavía no pasa por la revisión final de redacción. Se avisará en clase cuando quede listo para estudiar de aquí. Mientras tanto se puede consultar, con esa advertencia.
+:::
+
 ```{r}
 #| label: setup-cap10
 #| include: false
@@ -44,7 +48,7 @@ ggplot(galletas, aes(x = reorder(marca, agrado), y = agrado, fill = marca)) +
   theme(legend.position = "none")
 ```
 
-Las medias por marca difieren, pero dentro de cada marca también hay dispersión: no todos los jueces coinciden. La pregunta del ANOVA es exactamente esa comparación:
+Las medias por marca difieren, pero dentro de cada marca también hay dispersión. No todos los jueces coinciden. La pregunta del ANOVA es exactamente esa comparación:
 
 > ¿La variación **entre** las medias de los grupos es grande comparada con la variación **dentro** de los grupos?
 
@@ -187,7 +191,7 @@ Si se deja la separación en 1.5 y se **sube el ruido** de 0.3 a 3: las medias s
 
 Por último, al subir el **n por grupo** manteniendo todo lo demás: $F$ crece. Más datos, más capacidad de detectar la misma diferencia.
 
-Ese cociente —señal contra ruido— es todo el ANOVA.
+Ese cociente (señal contra ruido) es todo el ANOVA.
 :::
 
 ## El ANOVA en R
@@ -204,7 +208,7 @@ summary(modelo)
 ```
 
 ::: {.callout-note title="Interpretación"}
-La tabla de ANOVA se lee así: la fila `marca` es la variación **entre** grupos (3 grados de libertad, uno menos que el número de marcas) y `Residuals` es la variación **dentro** (96 grados de libertad). El cociente de sus cuadrados medios da $F \approx 19.1$, con un valor p del orden de $10^{-10}$.
+La tabla de ANOVA se lee así: el renglón `marca` es la variación **entre** grupos (3 grados de libertad, uno menos que el número de marcas) y `Residuals` es la variación **dentro** (96 grados de libertad). El cociente de sus cuadrados medios da $F \approx 19.1$, con un valor p del orden de $10^{-10}$.
 
 Conclusión: **rechazamos $H_0$**, las marcas no gustan por igual. Pero ojo con lo que **no** sabemos todavía: el ANOVA dice que *hay* diferencias, no *entre cuáles*. Para eso hacen falta las pruebas post-hoc.
 :::
@@ -306,7 +310,7 @@ bartlett.test(agrado ~ marca, data = galletas)
 ::: {.callout-important title="Qué hacer si un supuesto falla"}
 - **Normalidad**: con grupos de tamaño razonable el ANOVA es bastante robusto gracias al TCL. Si falla claramente, se puede transformar la variable (logaritmo, raíz) o usar la alternativa no paramétrica **Kruskal-Wallis** (`kruskal.test`).
 - **Homogeneidad de varianzas**: si Bartlett o Levene la rechazan, se usa el ANOVA de Welch (`oneway.test(..., var.equal = FALSE)`), que no la exige.
-- **Independencia**: no tiene arreglo estadístico. Si el diseño la violó —por ejemplo, si los jueces se copiaron—, los datos no sirven para esta prueba. Por eso el diseño va primero.
+- **Independencia**: no tiene arreglo estadístico. Si el diseño la violó (por ejemplo, si los jueces se copiaron), los datos no sirven para esta prueba. Por eso el diseño va primero.
 :::
 
 ## Pruebas post-hoc: ¿entre cuáles?
@@ -357,7 +361,7 @@ TukeyHSD(modelo_h)$sustrato |> round(2)
 ::: {.callout-note title="Interpretación"}
 Aquí $F$ es enorme y el efecto del sustrato es contundente: la paja de trigo y la pulpa de café rinden mucho más que el olote y, sobre todo, que el aserrín. Bartlett no rechaza la igualdad de varianzas, así que el supuesto se sostiene.
 
-Un detalle honesto que vale la pena discutir en clase: el grupo del aserrín **parece** más variable que los demás (su desviación es la mayor). Sin embargo, Bartlett no lo detecta como significativo. Con 25 bolsas por grupo, la prueba no tiene suficiente **potencia** para distinguir esa diferencia de varianzas del azar. Es el mismo fenómeno del @sec-cap8: no rechazar no equivale a demostrar igualdad.
+Un detalle honesto que vale la pena discutir en clase. El grupo del aserrín **parece** más variable que los demás (su desviación es la mayor). Sin embargo, Bartlett no lo detecta como significativo. Con 25 bolsas por grupo, la prueba no tiene suficiente **potencia** para distinguir esa diferencia de varianzas del azar. Es el mismo fenómeno del @sec-cap8: no rechazar no equivale a demostrar igualdad.
 :::
 
 ::: {.callout-tip title="¿Qué técnica usar?"}
@@ -377,7 +381,7 @@ Con **tres o más grupos** y una variable respuesta cuantitativa:
 
 ## Resumen
 
-Cuando hay tres o más grupos, comparar por pares infla el error tipo I; el **ANOVA** hace una sola prueba global comparando la variación **entre** grupos con la variación **dentro** de ellos, mediante el estadístico $F$. Rechazar $H_0$ significa que *alguna* media difiere, y las pruebas **post-hoc** —Tukey— revelan *entre cuáles*, corrigiendo por comparaciones múltiples. Los supuestos —independencia, normalidad de los residuos y homogeneidad de varianzas— deben verificarse siempre, y cada uno tiene su alternativa cuando falla. En el @sec-cap11 cerramos el curso volviendo a la regresión, ahora para hacerle inferencia.
+Cuando hay tres o más grupos, comparar por pares infla el error tipo I; el **ANOVA** hace una sola prueba global comparando la variación **entre** grupos con la variación **dentro** de ellos, mediante el estadístico $F$. Rechazar $H_0$ significa que *alguna* media difiere, y las pruebas **post-hoc** (Tukey) revelan *entre cuáles*, corrigiendo por comparaciones múltiples. Los supuestos (independencia, normalidad de los residuos y homogeneidad de varianzas) deben verificarse siempre, y cada uno tiene su alternativa cuando falla. En el @sec-cap11 cerramos el curso volviendo a la regresión, ahora para hacerle inferencia.
 
 ## Ejercicios
 

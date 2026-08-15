@@ -1,7 +1,7 @@
 % ============================================================
 %  Estadística · LCC · Universidad de Sonora
-%  Semana 1 — Presentación del curso y Unidad 1
-%  Compilar en Overleaf con pdfLaTeX
+%  Semana 1 — Presentación del curso, el conjunto penguins, R y RStudio
+%  Archivo autocontenido. Se puede copiar y pegar tal cual en Overleaf.
 % ============================================================
 \documentclass[aspectratio=169,10pt]{beamer}
 \usepackage[utf8]{inputenc}
@@ -55,7 +55,14 @@
   keywordstyle=\color{azulUS}\bfseries, commentstyle=\color{grisT}\itshape,
   stringstyle=\color{verdeOk}, showstringspaces=false, breaklines=true,
   frame=single, rulecolor=\color{azulClaro}, backgroundcolor=\color{azulClaro!35},
-  numbers=none, aboveskip=6pt, belowskip=4pt}
+  numbers=none, aboveskip=6pt, belowskip=4pt,
+  % Para que las vocales acentuadas no rompan la compilación si algún día se
+  % escriben dentro de un bloque de código o de un comentario.
+  extendedchars=true,
+  literate={á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+           {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+           {ñ}{{\~n}}1 {Ñ}{{\~N}}1 {ü}{{\"u}}1 {Ü}{{\"U}}1
+           {¿}{{?`}}1 {¡}{{!`}}1}
 \lstset{style=Rstyle}
 % ---------- Comandos de R dentro del texto ----------
 %  Mismo aspecto que el código en línea del libro: fondo gris y letra morada.
@@ -65,12 +72,39 @@
 \definecolor{codigoFondo}{HTML}{EFF0F2}
 \newcommand{\Rc}[1]{{\setlength{\fboxsep}{1.6pt}%
   \colorbox{codigoFondo}{\textcolor{codigoTexto}{\texttt{#1}}}}}
+% ---------- Interruptor de las diapositivas de respuestas ----------
+%  Con \respuestastrue el PDF sale completo, como para dar la clase.
+%  Con \respuestasfalse desaparecen las dos diapositivas de respuestas de la
+%  práctica, que es la versión que conviene compartir mientras la tarea sigue
+%  abierta. Basta cambiar esa palabra y volver a compilar.
+\newif\ifrespuestas
+\respuestastrue
 % ---------- Caja auxiliar para destacar ideas ----------
 \newcommand{\destaca}[1]{%
   \par\vspace{3pt}\noindent
   \colorbox{azulClaro}{%
     \parbox{\dimexpr\linewidth-2\fboxsep\relax}{\vspace{3pt}#1\vspace{3pt}}}%
   \par\vspace{3pt}}
+% ---------- Hojas de separación por sesión ----------
+%  Cumplen dos funciones: al preparar la clase, ver de un golpe dónde terminó
+%  cada día; al repasar, reconocer dónde empieza cada bloque.
+%
+%  SIN NUMERAR A PROPÓSITO. El número global de sesión se rompe en cuanto el
+%  calendario real se mueve, y se mueve siempre. La hoja marca el corte por su
+%  posición, que no depende de ninguna cuenta.
+%
+%  Uso:  \hojaSesion{Título del bloque}{Resumen de lo que se vio.}
+%  Va dentro de un frame [plain]:
+%      \begin{frame}[plain]
+%        \hojaSesion{...}{...}
+%      \end{frame}
+\newcommand{\hojaSesion}[2]{%
+  \vfill
+  \begin{beamercolorbox}[wd=\textwidth,sep=16pt,center]{frametitle}
+    {\Large\bfseries #1}\\[11pt]
+    \begin{minipage}{0.82\textwidth}\centering\small #2\end{minipage}
+  \end{beamercolorbox}
+  \vfill}
 % ============================================================
 %  PINGÜINOS EN TIKZ  (estilo kawaii)
 %  Solo se usan como respaldo: si están las ilustraciones de Horst en
@@ -162,6 +196,13 @@
 \end{frame}
 % ============================================================
 \section{Presentación del curso}
+% ---------- bloque: presentación del curso ----------
+\begin{frame}[plain]
+  \hojaSesion{Presentación del curso}{%
+  Qué estudia la Estadística y cómo está organizado el curso. El libro de texto, el mapa de decisión y el formulario. Con qué conjuntos de datos vamos a trabajar, el
+  proyecto de la cata a ciegas, los criterios de evaluación, y por qué el
+  software del curso es R.}
+\end{frame}
 \begin{frame}{Medios de contacto}
 \begin{itemize}
     \item \textbf{Prof. Rosalía Gpe. Hernández Amador}\\
@@ -172,14 +213,14 @@
       \vspace{0.25cm}
     \item \textbf{Ramanujan} (Moodle): cuestionarios y entregas
       \vspace{0.25cm}
-    \item \textbf{Libro del curso}:
+    \item \textbf{Libro del curso} (en construcción):\\
       {\small \url{https://rosaliahdez.github.io/notas-estadistica/}}
 \end{itemize}
       \vspace{0.2cm}
 \end{frame}
 % ============================================================
 \begin{frame}{¿De qué trata la Estadística?}
-  La Estadística consiste en \textbf{obtener conocimiento a partir de datos}, por medio de tres acciones clave:
+  La Estadística es el área de las matemáticas que estudia las técnicas que nos permiten \textbf{obtener conocimiento a partir de datos}. Para lograr ésto, se requieren de tres acciones clave:
   \vspace{0.5cm}
   \begin{columns}[T]
     \begin{column}{0.32\textwidth}
@@ -200,6 +241,10 @@ La Probabilidad es el \textbf{fundamento teórico} en el que se basan las técni
 \end{frame}
 % ============================================================
 \begin{frame}{Estructura del temario del curso}
+  El temario oficial del curso se divide en tres partes principales:
+
+  \vspace{4mm}
+
   \begin{center}
   \begin{tikzpicture}[scale=1]
     \node[fill=azulClaro,rounded corners,text width=3.4cm,align=center,minimum height=2.1cm] (a) at (-4.2,0)
@@ -212,12 +257,18 @@ La Probabilidad es el \textbf{fundamento teórico} en el que se basan las técni
     \draw[->,azulUS,very thick] (b) -- (c);
   \end{tikzpicture}
   \end{center}
-  \vspace{0.8cm}
-  \raggedright
 
-  El temario oficial del curso puede consultarse en la página del
+  \vspace{0.4cm}
+
+  Cada parte corresponde a un área distinta de la Estadística. La parte I es
+  \textit{Estadística Descriptiva}, la parte II introduce el \textit{Muestreo} y el
+  \textit{Diseño de Experimentos}, y la parte III es \textit{Estadística Inferencial}.
+
+  \vspace{0.8cm}
+  {\footnotesize El temario completo del curso puede consultarse en la página del
   programa de la licenciatura:\\
-  \href{https://cc.unison.mx/plan-de-estudios/}{\texttt{lcc.unison.mx/plan-de-estudios}}
+  \href{https://cc.unison.mx/plan-de-estudios/}{\texttt{lcc.unison.mx/plan-de-estudios}}.}
+
 \end{frame}
 % ============================================================
 \begin{frame}{Objetivos del curso}
@@ -227,7 +278,7 @@ La Probabilidad es el \textbf{fundamento teórico} en el que se basan las técni
       \begin{itemize}
         \item Que memoricen fórmulas
         \item Que apliquen procedimientos sin saber por qué
-        \item Que reporten un valor $p$ y se sientan satisfechos
+        \item Que reporten un valor y se sientan satisfechos
       \end{itemize}
     \end{column}
     \begin{column}{0.48\textwidth}
@@ -249,7 +300,7 @@ La Probabilidad es el \textbf{fundamento teórico} en el que se basan las técni
 \begin{center}
 \href{https://rosaliahdez.github.io/notas-estadistica/}{\texttt{rosaliahdez.github.io/notas-estadistica}}
 \end{center}
-que conserva la organización de las notas mencionadas, pero a las cuales se les ha agregado:
+que conserva la organización de las notas mencionadas, a las cuales se les ha agregado:
   \begin{itemize}
     \item Todo el cómputo en \textbf{R}, con el código explícito
     \item \textbf{Gráficos interactivos} para mover parámetros y analizar su efecto
@@ -260,7 +311,8 @@ que conserva la organización de las notas mencionadas, pero a las cuales se les
 \end{frame}
 % ============================================================
 \begin{frame}{Sobre el mapa de decisión}
-  Cada tema aportará una fila a esta tabla, que nombraremos \textbf{mapa de decisión} y que iremos armando a lo largo del curso:
+  Cada tema aporta un renglón a esta tabla, que nombramos \textbf{mapa de decisión} y que iremos armando a lo largo del curso:
+  
   \vspace{0.35cm}
   \centering
   {\small
@@ -272,16 +324,21 @@ que conserva la organización de las notas mencionadas, pero a las cuales se les
     ¿Difieren dos grupos? & Cuantitativa por 2 grupos & Prueba $t$ \\
     ¿Difieren tres o más grupos? & Cuantitativa por $k$ grupos & ANOVA y post-hoc \\
     ¿Están asociadas dos categóricas? & Tabla de contingencia & Ji-cuadrada \\
-    \multicolumn{3}{c}{\textcolor{grisT}{\textit{... y doce filas más}}} \\
+    \multicolumn{3}{c}{\textcolor{grisT}{\textit{... y doce renglones más}}} \\
     \bottomrule
   \end{tabular}}
   \vspace{0.5cm}
   \raggedright
   \destaca{La pregunta importante en el curso no será \textit{``¿cuál es la fórmula?''},
-  sino \textit{``¿qué técnica corresponde a esta pregunta y a estos datos?''}}
+  sino \textbf{\textit{``¿qué técnica corresponde a esta pregunta y a estos datos?''}}
+
+  \vspace{0.15cm}
+  Nótese la columna de en medio. El mapa no se consulta con las palabras del problema
+  sino con el \textbf{tipo de las variables}, y eso se irá haciendo evidente conforme lo
+  vayamos armando.}
 \end{frame}
 \begin{frame}{Sobre el formulario}
-  También, conforme avancemos en el curso, se irá construyendo un formulario (que se utilizará durante los exámenes). Se presenta un pequeño extracto del formulario:
+  También, conforme avancemos en el curso, se irá construyendo un formulario (que se utilizará durante los exámenes). Se presenta aquí un pequeño extracto:
   \vspace{0.3cm}
     \begin{columns}[T]
     \begin{column}{0.48\textwidth}
@@ -321,14 +378,15 @@ que conserva la organización de las notas mencionadas, pero a las cuales se les
     Datos reales y limpios. El dataset base para nuestras prácticas \\
     \textbf{Galletas} & Cata a ciegas diseñada y ejecutada por los estudiantes del curso \\
     \textbf{Lagartijas} & Fisiología de ejemplares de ciudad contra campo abierto \\
-    \textbf{Salud regional} & Factores asociados a un resultado de laboratorio \\
-    \textbf{Algoritmos} & Tiempos de ejecución según el tamaño de la entrada \\
+    \textbf{Rickettsiosis} & Zona de residencia, contacto con perros y garrapatas frente al resultado de laboratorio \\
+    \textbf{Algoritmos} & Tiempos de ejecución de un algoritmo, según el tamaño de la entrada y según el equipo \\
     \bottomrule
   \end{tabular}}
   \vspace{0.5cm}
   \raggedright
 
  \destaca{Se trabajarán a lo largo del curso, aplicando las técnicas correspondientes al tipo de datos y a las preguntas que se buscan resolver.
+ 
 \vspace{2mm}
   Primero describiremos los datos, luego entenderemos cómo se produjeron (expositores invitados), y al final se harán inferencias.}
 \end{frame}
@@ -357,10 +415,11 @@ que conserva la organización de las notas mencionadas, pero a las cuales se les
    \destaca{Al final del curso tendrán un estudio propio, de principio a fin, ejemplificando así el \textbf{ciclo completo de un estudio estadístico}.}
 \end{frame}
 % ============================================================
-\begin{frame}{Criterios de evaluación}
+\begin{frame}{Criterios de evaluación del curso}
+
   \centering
   {\small
-  \begin{tabular}{@{}p{5.4cm}c p{5.4cm}@{}}
+  \begin{tabular}{@{}p{5.4cm}c p{5.9cm}@{}}
     \toprule
     \textbf{Instrumento} & \textbf{Valor} & \textbf{Notas} \\
     \midrule
@@ -376,7 +435,7 @@ que conserva la organización de las notas mencionadas, pero a las cuales se les
   \raggedright
   \destaca{Los exámenes se aplican con formulario. No se evalúa memorización, sino que sepan \textbf{elegir la técnica}, verificar supuestos, \textbf{calcular} sobre conjuntos pequeños de datos, \textbf{interpretar salidas de R}, y \textbf{explicar} la conclusión en lenguaje simple, entendible por alguien que no es estadístico.}
 \vspace{0.3cm}
-  Para tener derecho a evaluación ordinaria se requiere al menos el \textbf{75 \%  de asistencia}, conforme al Artículo 70 del Reglamento Escolar de la Universidad de Sonora.
+  {\footnotesize Para tener derecho a evaluación ordinaria se requiere al menos el \textbf{75 \% de asistencia}, conforme al Artículo 70 del Reglamento Escolar de la Universidad de Sonora.}
 \end{frame}
 % ============================================================
 \begin{frame}{Software principal: R · Interfaz: RStudio}
@@ -401,13 +460,13 @@ que conserva la organización de las notas mencionadas, pero a las cuales se les
       \raggedright
     \end{column}
   \end{columns}
-      \destaca{ El objetivo no es aprender a programar en R, sino aprender a utilizarlos comandos estadísticos básicos de R para analizar datos y hacer inferencia.}
+      \destaca{ El objetivo no es aprender a programar en R, sino aprender a utilizar los comandos estadísticos básicos de R para analizar datos y hacer inferencia.}
   \vspace{0.3cm}
   {\footnotesize Para quien venga de Python: en los apéndices del libro hay una tabla de
   equivalencias entre los comandos centrales de R y sus contrapartes en Python.}
 \end{frame}
 \begin{frame}{Formas de usar R}
-  \centering
+  \begin{center}
   {\small
   \begin{tabular}{@{}p{3.1cm}p{4.7cm}p{4.4cm}@{}}
     \toprule
@@ -423,27 +482,27 @@ que conserva la organización de las notas mencionadas, pero a las cuales se les
       Crear una cuenta gratuita \\
     \bottomrule
   \end{tabular}}
-\end{frame}
-% ============================================================
-\begin{frame}[fragile]{Tarea}
-  \textbf{1. Instalar R y luego RStudio}, en ese orden:
+  \end{center}
+
+  \vspace{5mm}
+  \destaca{
+   \textbf{Tarea: Instalar R y luego RStudio}, en ese orden:
   \begin{itemize}
     \item R: \texttt{https://cran.r-project.org}
     \item RStudio Desktop: \texttt{https://posit.co/download/rstudio-desktop}
-  \end{itemize}
-  \vspace{0.3cm}
-  \textbf{2. Instalar los paquetes} que usaremos. Copiar esto en la consola de RStudio:
-\begin{lstlisting}
-install.packages(c("tidyverse", "palmerpenguins"))
-\end{lstlisting}
-  \vspace{0.2cm}
-  \textbf{3. Comprobar que funciona:}
-\begin{lstlisting}
-library(palmerpenguins)
-head(penguins)
-\end{lstlisting}
+    \end{itemize}}
 \end{frame}
+
 % ============================================================
+\section{El conjunto de datos penguins}
+% ---------- bloque: el conjunto penguins ----------
+\begin{frame}[plain]
+  \hojaSesion{De dónde salen los datos: \texttt{penguins}}{%
+  El dataset que usaremos a lo largo del curso. La estación Palmer y las tres
+  especies, qué se midió y con qué instrumento, el diccionario de variables, el
+  diseño del estudio, por qué hay datos faltantes y por qué entender el contexto
+  es parte del análisis.}
+\end{frame}
 \begin{frame}{Los pingüinos de Palmer}
   \begin{center}
   \IfFileExists{figuras/lter_penguins.png}{%
@@ -459,6 +518,7 @@ head(penguins)
       \node[align=center] at (4.2,-1.7)  {\textbf{Juanito}};
     \end{tikzpicture}
   }
+  
   \vspace{0.25cm}
   {\small
   \begin{tabular}{@{}lll@{}}
@@ -493,8 +553,8 @@ head(penguins)
         \item Masa corporal (g)
       \end{itemize}
       \vspace{0.3cm}
-      \destaca{\small Detalle importante: definir \emph{cómo} se mide una variable
-      es parte del trabajo estadístico. Si dos personas miden el pico de forma distinta,
+      \destaca{\small Vale la pena notar que \textbf{definir \emph{cómo} se mide una variable
+      es parte del trabajo estadístico}. Si dos personas miden el pico de forma distinta,
       los datos no son comparables.}
     \end{column}
   \end{columns}
@@ -513,11 +573,12 @@ head(penguins)
   }{%
     \IfFileExists{figuras/r-mapa-palmer.png}{%
       \includegraphics[height=0.66\textheight]{r-mapa-palmer.png}\\[2pt]
-      {\tiny\color{grisT}\color{grisT}\small Mapa del archipiélago Palmer}
+      {\tiny\color{grisT}\small Mapa del archipiélago Palmer}
     }{%
       {\color{grisT}\small[Mapa del archipiélago Palmer]}
     }%
   }
+  
   \vspace{0.15cm}
   {\footnotesize Archipiélago Palmer, al oeste de la Península Antártica.\\ Las tres islas
   de estudio están a pocos kilómetros de la estación Palmer, en la isla Anvers.}
@@ -540,11 +601,11 @@ head(penguins)
     \end{column}
     \begin{column}{0.42\textwidth}
       \destaca{\small Tres veranos de trabajo de campo en la Antártida para obtener
-      \textbf{344 renglones} de datos.
+      344 renglones de datos.
 
       \vspace{0.25cm}
-      Vale la pena tenerlo presente cada vez que abramos este archivo: detrás de cada
-      fila hubo alguien en el hielo, con un calibrador en la mano.}
+      \textbf{Vale la pena tenerlo presente cada vez que abramos este archivo. Detrás de cada
+      renglón hubo alguien en el hielo, con un calibrador en la mano.}}
     \end{column}
   \end{columns}
 \end{frame}
@@ -563,7 +624,7 @@ head(penguins)
     4 & Adelie & Torgersen & \textcolor{rojoAc}{NA} & \textcolor{rojoAc}{NA} & \textcolor{rojoAc}{NA} & \textcolor{rojoAc}{NA} & \textcolor{rojoAc}{NA} & 2007 \\
     5 & Adelie & Torgersen & female & 36.7 & 19.3 & 193 & 3450 & 2007 \\
     6 & Adelie & Torgersen & male   & 39.3 & 20.6 & 190 & 3650 & 2007 \\
-    \multicolumn{9}{c}{\textcolor{grisT}{\textit{... 338 filas más}}} \\
+    \multicolumn{9}{c}{\textcolor{grisT}{\textit{... 338 renglones más}}} \\
     \bottomrule
   \end{tabular}}
 
@@ -571,16 +632,17 @@ head(penguins)
   \raggedright
   \destaca{Contiene 344 renglones y 8 columnas. Los nombres están en inglés porque así vienen
   en el paquete, y así los vamos a escribir en R. Las tres medidas de longitud están en
-  \textbf{milímetros} y la masa en \textbf{gramos}.
+  milímetros y la masa en gramos.
 
   \vspace{0.2cm}
   Nótese el renglón 4: casi todo \textcolor{rojoAc}{\texttt{NA}}. Ese pingüino se registró
-  pero no se le pudo medir. Más adelante veremos por qué, y qué hacer con esos casos.}
+  pero no se le pudo medir. Más adelante veremos por qué, y cómo trabajar con esos casos.}
 \end{frame}
 % ============================================================
 \begin{frame}{Diccionario del conjunto de datos}
-  Todo conjunto de datos serio viene con su \textbf{diccionario}: qué significa cada
+  Todo conjunto de datos serio viene con su \textbf{diccionario}, donde se indica qué significa cada
   columna, de qué tipo es y en qué unidades está medida.
+  
   \vspace{0.3cm}
   \centering
   {\scriptsize
@@ -603,32 +665,128 @@ head(penguins)
   \destaca{\small Nótese que \texttt{year} es un número pero funciona como \textbf{etiqueta}:
   promediar años no tiene sentido. Y que hay más faltantes en \texttt{sex} (11) que en las
   medidas (2): a esos once no se les pudo determinar el sexo en el laboratorio.
+  
   \vspace{0.2cm}
   El diccionario completo del conjunto está en el libro, junto con los de los otros
-  conjuntos del curso. Consultarlo es el \textbf{primer paso} de cualquier análisis.}
+  conjuntos del curso. \textbf{Consultar del diccionario es el primer paso de cualquier análisis.}}
 \end{frame}
 % ============================================================
 \begin{frame}{¿Qué preguntas motivaron todo este trabajo?}
-  Nadie va tres veranos a la Antártida sin una pregunta. Las del estudio original fueron:
-  \vspace{0.35cm}
-  \begin{enumerate}
-    \item ¿Existe \textbf{dimorfismo sexual} en el tamaño corporal de estas tres especies?
-      Es decir, ¿machos y hembras difieren en tamaño, y en cuál especie más?
-      \vspace{0.2cm}
-    \item ¿Se puede \textbf{determinar el sexo} de un pingüino a partir de sus medidas
-      corporales, sin necesidad de análisis de ADN?
-      \vspace{0.2cm}
-    \item ¿Está relacionada la variabilidad ambiental —el \textbf{hielo marino} de cada
-      invierno— con las diferencias de alimentación entre machos y hembras?
-  \end{enumerate}
-  \vspace{0.2cm}
-  \destaca{\small Las preguntas explican cada decisión del diseño: por eso se midió a
+  Nadie va tres veranos a la Antártida sin una pregunta. Las del estudio original
+  fueron tres.
+
+  \vspace{0.15cm}
+  \centering
+  {\small
+  \begin{tabular}{@{}p{7.2cm}p{4.8cm}@{}}
+    \toprule
+    \textbf{Pregunta} & \textbf{Técnica que la resuelve} \\
+    \midrule
+    \textcolor[HTML]{1F4E79}{$\bullet$} ¿Existe \textbf{dimorfismo sexual} en el tamaño
+    corporal de estas tres especies? ¿Machos y hembras difieren en tamaño? &
+      Prueba $t$ para dos grupos independientes {\scriptsize\color{grisT}(unidad 8)} \\
+    \textcolor[HTML]{1F4E79}{$\bullet$} ¿Se puede \textbf{determinar el sexo} de un
+    pingüino a partir de sus medidas corporales, sin análisis de ADN? &
+      Clasificación con regresión logística o análisis discriminante
+      {\scriptsize\color{rojoAc}(fuera del temario)} \\
+    \textcolor[HTML]{1F4E79}{$\bullet$} ¿Está relacionada la variabilidad ambiental
+    (el \textbf{hielo marino} de cada invierno) con las diferencias de alimentación
+    entre machos y hembras? &
+      Correlación y regresión {\scriptsize\color{grisT}(unidades 3 y 11)}, sobre
+      variables que \textcolor{rojoAc}{no están en nuestra tabla} \\
+    \bottomrule
+  \end{tabular}}
+
+  \vspace{0.15cm}
+  \raggedright
+  \destaca{\small Las preguntas explican cada decisión del diseño. Por eso se midió a
   \textbf{los dos} miembros de cada pareja (para comparar sexos), por eso se determinó el
   sexo por \textbf{ADN} (para tener la respuesta correcta con la que comparar), y por eso
   se midieron \textbf{cuatro dimensiones} corporales (para ver cuáles predicen el sexo).
 
-  En el dataset original sí aparece información sobre la alimentación, medida mediante isótopos estables en muestras de sangre e incluye además datos satelitales de hielo marino. De este modo, nosotros no podemos responder la tercer pregunta con el dataset de $344\times 8$ que usaremos en el curso. \textbf{qué preguntas se pueden responder depende de qué variables se midieron,} no de qué técnica se conoce. Si la variable no está en la tabla, ninguna técnica la inventa.}
+  \vspace{3mm}
+  \textbf{Qué preguntas se pueden responder depende de qué variables se midieron,} no de
+  qué técnica se conoce. Si la variable no está en la tabla, no podemos contar con ella.}
 \end{frame}
+% ------------------------------------------------------------
+%  DOS DIAPOSITIVAS OPCIONALES, DESACTIVADAS.
+%  Traducen las tres preguntas de Palmer a renglones del mapa de decisión.
+%  Se dejaron apagadas para no mover la numeración del resto.
+%  Para encenderlas, seleccionar el bloque de abajo y quitarle el comentario.
+%  En Overleaf, Ctrl + / hace las dos cosas.
+% ------------------------------------------------------------
+%  \begin{frame}{Cómo se traduce una pregunta en una técnica}
+%    Ante cualquier pregunta que traiga alguien del área, un estadístico hace tres
+%    preguntas antes de mirar el mapa de decisión:
+%
+%    \vspace{0.3cm}
+%    \begin{enumerate}
+%      \item ¿Cuál es la variable \textbf{respuesta}, y de qué \textbf{tipo} es?
+%        {\small (cuantitativa o categórica)}
+%        \vspace{0.15cm}
+%      \item ¿Cuál es la variable \textbf{explicativa}, y de qué tipo? Si es
+%        categórica, ¿\textbf{cuántos niveles} tiene?
+%        \vspace{0.15cm}
+%      \item ¿\textbf{Cómo se obtuvieron} los datos? ¿Grupos independientes, o dos
+%        medidas del \emph{mismo} individuo?
+%    \end{enumerate}
+%
+%    \vspace{0.35cm}
+%    Las dos primeras eligen el renglón. La tercera decide entre dos renglones que se
+%    parecen. Y de fondo hay una cuarta: ¿la pregunta es de \textbf{diferencia}, de
+%    \textbf{relación} o de \textbf{predicción}?
+%
+%    \vspace{0.3cm}
+%    \destaca{El mapa de decisión \textbf{no se consulta con las palabras del
+%    problema, sino con los tipos de variable}. Traducir de un lenguaje al otro es
+%    la habilidad que se practica todo el semestre.}
+%  \end{frame}
+%  % ============================================================
+%  \begin{frame}{Las tres preguntas de Palmer, traducidas}
+%    \begin{center}
+%    {\scriptsize
+%    \begin{tabular}{@{}p{4.3cm}p{4.5cm}p{3.6cm}@{}}
+%      \toprule
+%      \textbf{Lo que dice quien trae el problema} & \textbf{Lo que oye un estadístico} &
+%      \textbf{Renglón del mapa} \\
+%      \midrule
+%      ¿Difieren machos y hembras en tamaño? &
+%        Cuantitativa contra categórica de \textbf{2 niveles}, grupos independientes &
+%        Dos grupos independientes {\scriptsize\color{grisT}(unidad 8)} \\
+%      \dots y si fueran los dos del \emph{mismo nido} &
+%        Cuantitativa, \textbf{dos medidas del mismo par} &
+%        Datos pareados {\scriptsize\color{grisT}(unidad 8)} \\
+%      ¿Y en cuál especie la diferencia es mayor? &
+%        Cuantitativa contra \textbf{dos} categóricas: es una \textbf{interacción} &
+%        \textcolor{rojoAc}{No está en el mapa: ANOVA de dos factores} \\
+%      ¿Se puede adivinar el sexo a partir de las medidas? &
+%        La respuesta ahora es \textbf{categórica}, con explicativas cuantitativas &
+%        \textcolor{rojoAc}{No está en el mapa: regresión logística} \\
+%      ¿Se relacionan el hielo marino y la alimentación? &
+%        Dos cuantitativas &
+%        Correlación {\scriptsize\color{grisT}(unidad 3)} y \Rc{lm()}
+%        {\scriptsize\color{grisT}(unidad 11)} \\
+%      \bottomrule
+%    \end{tabular}}
+%    \end{center}
+%
+%    \vspace{0.3cm}
+%    \raggedright
+%    \destaca{\small Dos observaciones que valen todo el curso.
+%
+%    \vspace{0.15cm}
+%    \textbf{El renglón 1 y el 2 son la misma pregunta con datos distintos.} El estudio
+%    midió al macho \emph{y} a la hembra del mismo nido. Eso es pareado, y la prueba
+%    pareada detecta diferencias más pequeñas. Pero nuestra tabla no trae el
+%    identificador del nido, así que perdimos esa ventaja.
+%
+%    \vspace{0.15cm}
+%    \textbf{El renglón 1 y el 4 usan las mismas dos variables, con los papeles
+%    invertidos.} ``¿La masa depende del sexo?'' y ``¿puedo adivinar el sexo si conozco
+%    la masa?'' no son la misma pregunta, y no se contestan con la misma técnica.}
+%  \end{frame}
+%
+% ------------------------------------------------------------
 % ============================================================
 \begin{frame}{¿Qué más le podemos preguntar a estos datos?}
   \centering
@@ -656,7 +814,7 @@ head(penguins)
   lo que vemos}, y hacer \textbf{inferencias, es decir afirmar algo sobre toda la población habiendo visto solo una muestra, y decir con cuánta confianza lo afirmamos.}}
 \end{frame}
 % ============================================================
-\begin{frame}{El diseño del estudio observacional}
+\begin{frame}{El diseño del estudio}
   \destaca{Las acciones llevadas a cabo por los investigadores para registrar los datos no fueron improvisadas. Los nidos se marcaron \textbf{antes} de que las hembras pusieran el primer huevo, y se monitorearon de forma constante. Esto es, \textbf{había un plan antes de obtener los datos}.}
   \vspace{0.4cm}
   \centering
@@ -712,21 +870,22 @@ head(penguins)
       {\small Se midió a todos los adultos exactamente en la etapa de \emph{un huevo}.
       La masa de un pingüino cambia muchísimo a lo largo de la reproducción, medirlos
       en momentos distintos habría hecho incomparables los datos.}
+      
       \vspace{0.35cm}
       \textbf{La pareja completa}\\[3pt]
-      {\small De cada nido se midió al macho \emph{y} a la hembra. Los datos vienen
-      \textbf{en parejas}, lo cual permite comparaciones más finas
-      %(unidad 8)
-      .}
+      {\small De cada nido se midió al macho \emph{y} a la hembra. En el estudio original
+      los datos son \textbf{pareados}, y eso permite comparaciones más finas. Nuestra
+      tabla, en cambio, no trae el identificador del nido, así que esa ventaja se perdió
+      al simplificarla.}
     \end{column}
     \begin{column}{0.48\textwidth}
       \textbf{Seguimiento posterior}\\[3pt]
       {\small Después de manipularlos, se siguió vigilando cada nido para confirmar
       que la pareja completara su nidada de dos huevos.}
       \vspace{0.35cm}
-      \destaca{\small Esto es \textbf{control} en el sentido técnico: mantener constante
+      \destaca{\small Esto es \textbf{control} en el sentido técnico: \textbf{mantener constante
       todo lo que no se está estudiando, para que las diferencias observadas se deban
-      a lo que sí interesa.% (unidad 5).
+      a lo que sí interesa}.% (unidad 5).
  }
     \end{column}
   \end{columns}
@@ -749,14 +908,13 @@ head(penguins)
 
   \vspace{0.25cm}
   Los datos faltantes casi nunca faltan al azar: \textbf{tienen una causa}. Aquí fueron
-  el clima y un ave depredadora. Preguntar por qué falta un dato es parte del análisis, así como tomar la decisión de \textbf{qué hacer} con dichos faltantes.}
+  el clima y un ave depredadora. \textbf{Preguntar por qué falta un dato es parte del análisis, así como tomar la decisión de qué hacer con dichos faltantes}.}
 \end{frame}
 % ============================================================
 \begin{frame}{Entender el contexto del problema y el origen de los datos IMPORTA}
   Al contar cuántos pingüinos de cada especie hay en cada isla, resulta esta tabla
   (una \textbf{tabla de contingencia}):
 
-  \vspace{0.2cm}
   \centering
   {\small
   \begin{tabular}{@{}lrrrr@{}}
@@ -774,380 +932,684 @@ head(penguins)
   \vspace{0.3cm}
   \raggedright
   En la unidad 9 veremos una prueba para decidir si dos variables categóricas están
-  \textbf{asociadas}. Aplicada aquí, saldría una \textbf{asociación fuerte}: los ceros hacen que \texttt{especie} e \texttt{isla} ``parezcan`` íntimamente ligadas. Sin embargo, concluir ``\emph{descubrimos que la especie depende de la isla}'' \textbf{¡sería un error!}. Esos ceros no son un hallazgo sobre la naturaleza: son consecuencia
-  del \textbf{diseño del muestreo}. Los Juanito se buscaron únicamente en Biscoe y los
-  Barbijo únicamente en Dream, porque ahí están sus colonias.
+  \textbf{asociadas}. Aplicada aquí, saldría una \textbf{asociación fuerte}, pero es debido a los ceros, que hacen que \texttt{especie} e \texttt{isla} ``parezcan`` íntimamente ligadas. Sin embargo, concluir ``\emph{descubrimos que la especie depende de la isla}'' \textbf{¡sería un error!}. Esos ceros no son un hallazgo sobre la naturaleza. Son consecuencia
+  del \textbf{diseño del muestreo}. \textbf{Los Juanito se buscaron únicamente en Biscoe y los
+  Barbijo únicamente en Dream, porque ahí están sus colonias}.
+
+  \vspace{0.2cm}
+  \destaca{
+  Por esto \textbf{es muy importante entender el contexto del problema} aunque no seamos del área,  \textbf{y comprender cómo se recolectaron los datos}.}
+\end{frame}
+
+% ============================================================
+\section{Introducción a R y RStudio}
+% ---------- bloque: R y RStudio ----------
+%  Una clase completa dedicada al software, antes de empezar la Unidad 1.
+%  El razonamiento: si R se introduce a cuentagotas (una línea copiada del
+%  pizarrón cada día), nunca se vuelve una herramienta propia. Conviene invertir
+%  una sesión entera para que después el software no compita con la estadística
+%  por la atención del grupo.
+%  Requisito: todos con su computadora y la instalación hecha, que se dejó de tarea
+%  al presentar el curso.
+%  La diapositiva siguiente, la de comprobar la instalación, conviene mostrarla al
+%  final de la clase anterior si sobra tiempo: así los problemas de instalación aparecen
+%  un día antes y no al arrancar esta sesión.
+\begin{frame}[plain]
+  \hojaSesion{Introducción a R y RStudio}{%
+  Reconocer la interfaz y saber dónde se escribe cada cosa. Ejecutar código, usar
+  R como calculadora y ver que además es un lenguaje de programación. Cargar el conjunto
+  \texttt{penguins} desde su librería, explorarlo y manipular la tabla con R base.}
+\end{frame}
+
+% ============================================================
+\begin{frame}{Las cuatro ventanas de RStudio}
+
+  \begin{center}
+  \IfFileExists{figuras/rstudio-ventanas.png}{%
+    \includegraphics[height=0.60\textheight]{rstudio-ventanas.png}
+  }{%
+  \begin{tikzpicture}[scale=0.82,every node/.style={align=center}]
+    % fondos
+    \fill[azulClaro] (0.06,3.06) rectangle (7.44,5.94);
+    \fill[azulClaro!45] (0.06,0.06) rectangle (7.44,2.94);
+    \fill[azulClaro!45] (7.56,3.06) rectangle (12.94,5.94);
+    \fill[azulClaro!45] (7.56,0.06) rectangle (12.94,2.94);
+    % marcos
+    \draw[grisT,thick] (0,0) rectangle (13,6);
+    \draw[grisT,thick] (7.5,0) -- (7.5,6);
+    \draw[grisT,thick] (0,3) -- (13,3);
+    % contenido
+    \node[font=\small\bfseries,text=azulUS] at (3.75,5.45) {1. Editor (\emph{Source})};
+    \node[font=\scriptsize,text width=6.6cm] at (3.75,4.15)
+      {Aquí se escribe el código \textbf{que se guarda}: los archivos \texttt{.R} y
+       \texttt{.qmd}.\\[2pt] Con \textbf{Ctrl + Enter} se ejecuta \\[2pt] rápidamente una instrucción.};
+    \node[font=\small\bfseries,text=azulUS] at (3.75,2.5) {2. Consola};
+    \node[font=\scriptsize,text width=6.6cm] at (3.75,1.3)
+      {R dentro de RStudio. \\[2pt] Aquí aparecen los resultados. Lo que se teclea
+       directamente aquí \textbf{no queda guardado}.\\[2pt]
+       Junto a ella hay una pestaña \textbf{Terminal}, que \emph{no} es R.};
+    \node[font=\small\bfseries,text=azulUS] at (10.25,5.45) {3. Environment};
+    \node[font=\scriptsize,text width=4.8cm] at (10.25,4.2)
+      {Contiene los \textbf{objetos que existen} en esta sesión: tablas, vectores, funciones.\\[2pt]
+       Si algo no aparece aquí, R no lo conoce.};
+    \node[font=\small\bfseries,text=azulUS] at (10.25,2.5) {4. Files · Plots · Help};
+    \node[font=\scriptsize,text width=4.8cm] at (10.25,1.3)
+      {Los archivos de la carpeta, las gráficas que se producen, los paquetes
+       instalados y la ayuda.};
+  \end{tikzpicture}}
+\end{center}
+  
+  \vspace{0.2cm}
+  {\footnotesize Si al abrir RStudio faltara alguna ventana:
+  \textbf{View $\rightarrow$ Panes $\rightarrow$ Show All Panes}.}
+\end{frame}
+% ============================================================
+\begin{frame}{Consola, script y terminal}
+  \centering
+  {\small
+  \begin{tabular}{@{}p{2.6cm}p{4.9cm}p{4.9cm}@{}}
+    \toprule
+    \textbf{Dónde} & \textbf{Qué es} & \textbf{Cuándo se usa} \\
+    \midrule
+    \textbf{Consola} & El intérprete de R esperando una orden. Lo que se escribe
+      se ejecuta y se pierde &
+      Para probar algo rápido: ver una tabla, revisar un valor, consultar la ayuda \\
+    \textbf{Script}  {\scriptsize(archivo \texttt{.R})} &
+      Un archivo de texto con código, que se guarda &
+      Para todo lo que se va a entregar o repetir. \textbf{Aquí se trabaja} \\
+    \textbf{Terminal} & La línea de comandos \textbf{del sistema operativo}, no de R. &
+      Para \texttt{git}, para moverse entre carpetas, o para arrancar R sin RStudio
+      escribiendo \texttt{R} \\
+    \bottomrule
+  \end{tabular}}
+  
+  \vspace{0.5cm}
+  \raggedright
+  \destaca{Para el curso se sugiere \textbf{escribir en el script}, ya que un análisis que solo existe en la consola no se guarda, así que no podrán recuperarlo la próxima vez que abran RStudio. No es reproducible.}
+\end{frame}
+
+% ============================================================
+\begin{frame}[fragile]{R como calculadora}
+\begin{lstlisting}
+2 + 3 * 4        # 14, la jerarquia de operaciones es la usual
+(2 + 3) * 4      # 20
+7 / 2            # 3.5
+7 %/% 2          # 3    division entera
+7 %% 2           # 1    residuo
+2^10             # 1024
+sqrt(2)          # 1.414214
+log(100, base = 10)   # 2
+round(pi, 3)     # 3.142
+\end{lstlisting}
+
+  \vspace{0.25cm}
+  \destaca{\small  Con la \textbf{flecha hacia arriba} se recupera el último comando, y con
+  \textbf{Tab} R completa el nombre de una función.}
+\end{frame}
+
+% ============================================================
+\begin{frame}[fragile]{R también es un lenguaje de programación}
+\begin{lstlisting}
+a <- 3; b <- 10    # <- es el simbolo de asignacion
+
+x <- c(1, 2, 3)    # concatenar valores para crear un vector
+x / 1000           # opera sobre TODO el vector, sin ciclo
+x[1]               # extraer el primer elemento 
+
+y <- c(10, 20, 30, 40, 50)
+x + y              # tiene sentido la suma aunque los vectores no tengan igual longitud, el vector corto se "recicla"
+\end{lstlisting}
+
+  \vspace{0.2cm}
+  \destaca{\small Precauciones para quienes vienen de otro lenguaje:
+  \begin{itemize}
+      \item los índices \textbf{empiezan en 1}
+      \item casi ninguna operación necesita un ciclo
+  porque las funciones \textbf{trabajan sobre vectores completos}
+  \item \textbf{el reciclaje} (como en el ejemplo \texttt{x + y}) 
+  puede ser una fuente de errores difíciles de ver.
+  \end{itemize} 
+  
+  \vspace{0.2cm}
+  Se pueden definir funciones, como es de esperarse:
+  \Rc{promedio <- function(x) sum(x) / length(x)}. No profundizaremos en eso, pues
+  el objetivo del curso es \textbf{usar} R para analizar datos.}
+\end{frame}
+
+
+
+% ============================================================
+
+
+
+\begin{frame}[fragile]{Cargar datos que vienen en una librería: \texttt{penguins}}
+
+Instalamos el paquete en nuestra máquina: 
+\begin{lstlisting}
+install.packages("palmerpenguins")
+\end{lstlisting}
+
+\vspace{4mm}
+Cargamos la librería a la sesión actual:
+\begin{lstlisting}
+library(palmerpenguins)
+\end{lstlisting}
+
+  \vspace{0.4cm}
+  \destaca{\small   Un paquete se \textbf{instala una sola vez} en la computadora, pero se \textbf{carga con \Rc{library()} en cada sesión} de trabajo. Si cerramos el programa, la próxima vez que ocupemos el dataset deberemos volver a cargar la librería.
+
+  \vspace{0.15cm}
+  Documentación del paquete y de los datos:
+  \href{https://allisonhorst.github.io/palmerpenguins/}{\texttt{allisonhorst.github.io/palmerpenguins}}}
+\end{frame}
+
+
+% ============================================================
+\begin{frame}[fragile]{Comandos para exploración de datos}
+\begin{lstlisting}
+dim(penguins)             # cantidad de renglones y columnas
+nrow(penguins); ncol(penguins)   # cada uno por separado
+names(penguins)           # los nombres de las columnas
+str(penguins)             # tipo de cada columna y primeros valores
+summary(penguins)         # resumen numérico de cada columna, con los NA contados
+View(penguins)            # abre la tabla completa en una pestana
+\end{lstlisting}
+
+  \vspace{0.3cm}
+  \destaca{\small Estas líneas son el \textbf{primer contacto con cualquier
+  tabla}.  Obsérvese que la instrucción \Rc{summary(penguins)} devuelve un resumen similar al contenido en el diccionario de la base de datos.}
+\end{frame}
+
+% ============================================================
+\begin{frame}[fragile]{Explorar y manipular tablas con R base}
+\begin{lstlisting}
+penguins[ , 1]                               # extraer la columna 1 
+penguins$body_mass_g                         # extraer columnas por su nombre
+penguins[ , 3:6]                             # extraer varias columnas a la vez (de la 3 a la 6)
+penguins[1:10, 6:8]                          # extraer renglones y columnas
+penguins[1:5, c("species", "body_mass_g")]   # extraer renglones y columnas por nombre
+penguins[penguins$species == "Gentoo", ]     # filtrar renglones
+table(penguins$species)                      # contar por categorias
+table(penguins$species, penguins$island)     # la tabla de contingencia
+mean(penguins$body_mass_g, na.rm = TRUE)     # Media de UNA columna
+\end{lstlisting}
+% aggregate(body_mass_g ~ species, data = penguins, FUN = mean)
+
+  \vspace{0.25cm}
+  \destaca{\small La primera línea es la sintaxis fundamental para \textit{extraer}:
+  \textbf{corchete, renglones, coma, columnas, corchete}. Dejar vacío un lado significa ``todas''. También se pueden extraer columnas por su nombre usando el símbolo \$.
+  
+  \vspace{0.15cm}
+    \vspace{0.2cm}
+  Nótese que el promedio de algo que incluye un faltante es un faltante (\texttt{NA}). R obliga a decidir
+  explícitamente, con \Rc{na.rm = TRUE}, que se van a ignorar.}
+\end{frame}
+
+% ============================================================
+% ---------- bloque: resumir y manipular tablas ----------
+%  Hasta la diapositiva anterior llegó la clase pasada. Esta hoja marca el corte.
+%  Ahí se mencionaron de paso apply y dplyr; aquí se retoman con calma.
+\begin{frame}[plain]
+  \hojaSesion{Continuación con R y RStudio: \\ resumir y manipular tablas}{%
+   Resumir por grupos con la familia \texttt{apply} de R base y
+  con \texttt{dplyr}, \\ su equivalente moderno. }
+\end{frame}
+
+
+% ============================================================
+%  Diapositiva opcional. Se puede omitir sin que nada se rompa después: todo lo
+%  que sigue en el curso se resuelve con dplyr. Se incluye porque la familia
+%  apply es el idioma del código de R que van a encontrar publicado, y porque a
+%  un grupo de computación le interesa ver el estilo funcional del lenguaje.
+
+\begin{frame}[fragile]{Aplicar una función a muchas cosas: la familia \texttt{apply} de R base}
+
+En lugar de escribir un ciclo, le pasamos
+  \textbf{una función} (por ejemplo \Rc{mean}) a otra función (de la familia \texttt{apply}) que la aplica sobre cada pedazo. Es el estilo
+  funcional del lenguaje, y R lo trae nativamente.
+\begin{lstlisting}
+sapply(penguins[, 3:6], mean, na.rm = TRUE)   # la media de CADA columna numerica
+tapply(penguins$body_mass_g, penguins$species, mean, na.rm = TRUE)
+                                              # una media POR especie
+\end{lstlisting}
+%m <- matrix(1:6, nrow = 2)
+%apply(m, 1, sum)     # 9 12      por renglon  (la dimension 1)
+%apply(m, 2, sum)     # 3 7 11    por columna  (la dimension 2)
+%Reduce(`+`, 1:5)     # 15        R tambien trae Map, Filter y Reduce
+
 
   \vspace{0.2cm}
   \destaca{\small
-  Por esto \textbf{es muy importante entender el contexto del problema} aunque no seamos del área,  \textbf{y comprender cómo se recolectaron los datos}.}
+  Nótese que \Rc{tapply} es exactamente \emph{agrupar y resumir} en una línea. Es lo
+  que hará \Rc{group\_by() + summarise()} de \texttt{dplyr}, y verlo así ayuda a
+  entender qué pasa por detrás. A lo largo del curso usaremos \texttt{dplyr} porque se lee mejor cuando  hay varios pasos encadenados, pero \Rc{sapply} y \Rc{tapply} aparecen en muchas referencias sobre
+  código de R.}
 \end{frame}
+
+
 % ============================================================
-\begin{frame}{Actividad: capturemos nuestros propios datos}
+\begin{frame}[fragile]{Lo mismo, con \texttt{dplyr}}
+
+Instalamos el paquete y cargamos la librería:
+\begin{lstlisting}
+install.packages("tidyverse")
+library(dplyr)
+\end{lstlisting}
+
+  \vspace{0.1cm}
+  La tarea, resuelta de dos maneras: \textbf{Obtener la masa promedio de los pingüinos
+  Gentoo, separada por sexo.}
+
+  \vspace{0.1cm}
   \begin{columns}[T]
-    \begin{column}{0.52\textwidth}
-      Cada quien recibe un \textbf{pingüino de pan}. Antes de comerlo, hay que medirlo.
-      \vspace{0.3cm}
-      \begin{enumerate}
-        \item Acordar \textbf{en grupo} cómo se mide cada variable. ¿El largo desde dónde
-          hasta dónde? ¿Con qué instrumento?
-        \item Registrar los datos de los 20 individuos en una tabla común
-        \item Anotar cualquier \texttt{NA} y \textbf{por qué} faltó
-      \end{enumerate}
+    \begin{column}{0.47\textwidth}
+      {\footnotesize\textbf{Con R base}}
+\begin{lstlisting}
+gentoo <- penguins[
+  penguins$species == "Gentoo", ]
+tapply(gentoo$body_mass_g,
+       gentoo$sex,
+       mean, na.rm = TRUE)
+\end{lstlisting}
     \end{column}
-    \begin{column}{0.44\textwidth}
-      \centering
-      {\small
-      \begin{tabular}{@{}cccc@{}}
-        \toprule
-        \textbf{id} & \textbf{largo} & \textbf{ancho} & \textbf{masa} \\
-        \midrule
-        1 & & & \\
-        2 & & & \\
-        3 & & & \\
-        \multicolumn{4}{c}{\textcolor{grisT}{\textit{...}}} \\
-        20 & & & \\
-        \bottomrule
-      \end{tabular}}
+    \begin{column}{0.51\textwidth}
+      {\footnotesize\textbf{Con \texttt{dplyr}}}
+\begin{lstlisting}
+penguins |>
+  filter(species == "Gentoo") |>
+  group_by(sex) |>
+  summarise(masa = mean(body_mass_g,
+                        na.rm = TRUE))
+\end{lstlisting}
     \end{column}
   \end{columns}
-  \vspace{0.4cm}
-  \destaca{\small Al terminar tendremos un conjunto de datos \textbf{propio}, capturado
-  con nuestro protocolo, con nuestras discusiones sobre cómo medir y con nuestros datos
-  faltantes. Lo usaremos en la siguiente sesión.
+
   \vspace{0.2cm}
-  Es exactamente lo que hizo el equipo de la estación Palmer. Aquí el experimento es en pequeño, y con pan.}
+  \destaca{\small El símbolo \Rc{|>} se llama \textit{pipe} (o tubería) se lee \textbf{``y luego''}. Toma \texttt{penguins},
+  \emph{y luego} filtra, \emph{y luego} agrupa, \emph{y luego} resume. La versión de la
+  izquierda hay que armarla al revés, guardando antes un resultado intermedio.}
 \end{frame}
 % ============================================================
-\section{Unidad 1: Exploración de los datos}
-\begin{frame}[plain]
-  \centering
-  \vspace{1.2cm}
-  {\Large\bfseries\color{azulUS} Unidad 1}\\[6pt]
-  {\large\color{azulUS} Exploración de los datos}\\[14pt]
-  \IfFileExists{figuras/lter_penguins.png}{%
-    \includegraphics[height=0.32\textheight]{lter_penguins.png}
-  }{%
-    \begin{tikzpicture}[scale=0.55]
-      \begin{scope}[shift={(-2,0)}] \pingAdelie \end{scope}
-      \begin{scope}[shift={(0,0)}] \pingChinstrap \end{scope}
-      \begin{scope}[shift={(2,0)}] \pingGentoo \end{scope}
-    \end{tikzpicture}
-  }\\[10pt]
-  {\small\color{grisT} Aprender a mirar los datos antes de tocarlos}
-\end{frame}
-\begin{frame}{Todo empieza con una tabla}
-  \centering
-  {\footnotesize
-  \begin{tabular}{@{}lllccc@{}}
-    \toprule
-    \textbf{especie} & \textbf{isla} & \textbf{sexo} & \textbf{pico (mm)} & \textbf{aleta (mm)} & \textbf{masa (g)} \\
-    \midrule
-    Adelia & Torgersen & macho & 39.1 & 181 & 3750 \\
-    Adelia & Torgersen & hembra & 39.5 & 186 & 3800 \\
-    Juanito & Biscoe & hembra & 46.1 & 211 & 4500 \\
-    Barbijo & Dream & macho & 50.0 & 196 & 3900 \\
-    \multicolumn{6}{c}{\textcolor{grisT}{\textit{... 340 filas más}}} \\
-    \bottomrule
-  \end{tabular}}
-  \vspace{0.7cm}
-  \raggedright
-  \begin{columns}[T]
-    \begin{column}{0.48\textwidth}
-      \destaca{\textbf{Individuos} (las filas)\\[3pt]
-      {\small Cada fila es \emph{un pingüino}: la unidad que observamos}}
-    \end{column}
-    \begin{column}{0.48\textwidth}
-      \destaca{\textbf{Variables} (las columnas)\\[3pt]
-      {\small Cada columna es \emph{algo que medimos} de cada pingüino}}
-    \end{column}
-  \end{columns}
-\end{frame}
-\begin{frame}{Confundir esto es el error número uno}
-  \destaca{\textbf{Pregunta.} En los datos de la cata de galletas, ¿qué es un individuo:
-  una marca de galleta o la calificación de un juez?}
-  \vspace{0.8cm}
-  \pause
-  Es \textbf{cada calificación}: una fila por juez y por marca.
-  \vspace{0.4cm}
-  \centering
-  {\footnotesize
-  \begin{tabular}{@{}cccc@{}}
-    \toprule
-    \textbf{juez} & \textbf{orden} & \textbf{marca} & \textbf{agrado} \\
-    \midrule
-    1 & 1 & Oreo & 8 \\
-    1 & 2 & Chokis & 7 \\
-    1 & 3 & Lors & 5 \\
-    2 & 1 & Lors & 6 \\
-    \bottomrule
-  \end{tabular}}
-  \vspace{0.5cm}
-  \raggedright
-  {\footnotesize Si la tabla estuviera armada con una fila por marca, no podríamos
-  analizar nada: perderíamos la información de quién calificó qué.}
-\end{frame}
-\begin{frame}{Tipos de variables}
-  \begin{columns}[T]
-    \begin{column}{0.48\textwidth}
-      \destaca{\textbf{Categóricas} (cualitativas)\\[4pt]
-      {\small Clasifican al individuo en grupos\\[4pt]
-      \textit{especie, isla, sexo, marca de galleta}}}
-    \end{column}
-    \begin{column}{0.48\textwidth}
-      \destaca{\textbf{Cuantitativas} (numéricas)\\[4pt]
-      {\small Miden una cantidad\\[4pt]
-      \textit{masa, largo de la aleta, tiempo de ejecución}}}
-    \end{column}
-  \end{columns}
-  \vspace{0.7cm}
-  \destaca{\textbf{Cuidado.} No todo número es cuantitativo. El \emph{año} de observación
-  es un número, pero promediar años rara vez tiene sentido. Y un código de muestra
-  como \texttt{G134} es una etiqueta, no una cantidad.}
-\end{frame}
-\begin{frame}{Escalas de medición}
-  \centering
+\begin{frame}{Los verbos de \texttt{dplyr}}
+  \begin{center}
   {\small
-  \begin{tabular}{@{}llp{5.2cm}@{}}
+  \begin{tabular}{@{}p{3.4cm}p{8.4cm}@{}}
     \toprule
-    \textbf{Escala} & \textbf{Permite} & \textbf{Ejemplo} \\
+    \textbf{Verbo} & \textbf{Qué hace} \\
     \midrule
-    \textbf{Nominal}   & Solo distinguir categorías & Especie, isla, marca \\
-    \textbf{Ordinal}   & Ordenar, sin distancias definidas & Nivel de agrado: bajo, medio, alto \\
-    \textbf{Intervalo} & Orden y distancias, sin cero absoluto & Temperatura en $^\circ$C \\
-    \textbf{Razón}     & Orden, distancias y cero absoluto & Masa, longitud, tiempo \\
+    \Rc{filter()}    & Se queda con ciertos renglones \\
+    \Rc{select()}    & Se queda con ciertas columnas \\
+    \Rc{mutate()}    & Crea una columna nueva \\
+    \Rc{arrange()}   & Ordena los renglones \\
+    \Rc{summarise()} & Resume la tabla en uno o varios números \\
+    \Rc{group\_by()} & Hace que el resumen se calcule por grupo \\
     \bottomrule
   \end{tabular}}
-  \vspace{0.6cm}
-  \raggedright
-  \destaca{La escala decide qué operaciones tienen sentido. Promediar temperaturas
-  corporales es válido; ``promediar'' especies, no.
-  \vspace{0.2cm}
-  ¿Y la escala hedónica de la cata, de 1 a 7? Estrictamente es \textbf{ordinal}, pero
-  en análisis sensorial se trata como cuantitativa por convención. Es una decisión
-  que conviene hacer explícita, no esconder.}
-\end{frame}
-\begin{frame}{Ejercicio rápido: clasifiquen conmigo}
-  \centering
-  {\small
-  \begin{tabular}{@{}lcc@{}}
-    \toprule
-    \textbf{Variable} & \textbf{¿Tipo?} & \textbf{¿Escala?} \\
-    \midrule
-    Especie del pingüino & & \\[6pt]
-    Masa corporal en gramos & & \\[6pt]
-    Nivel de dulzor preferido (poco / medio / muy) & & \\[6pt]
-    Código de la muestra (\texttt{G134}) & & \\[6pt]
-    Número de galletas consumidas al mes & & \\
-    \bottomrule
-  \end{tabular}}
-  \vspace{0.7cm}
-  \raggedright
-  {\footnotesize Se resuelve en voz alta. La última tiene trampa: es cuantitativa
-  \emph{discreta} y de razón.}
-\end{frame}
-\begin{frame}{¿De dónde vienen los datos? Dos mundos distintos}
-  \begin{columns}[T]
-    \begin{column}{0.48\textwidth}
-      \destaca{\textbf{Estudio observacional}\\[4pt]
-      {\small Medimos \textbf{sin intervenir}.\\[4pt]
-      \textit{Comparar la temperatura de lagartijas de ciudad y de campo:
-      nadie decidió dónde vive cada una.}}}
-      \vspace{0.3cm}
-      \centering\textcolor{rojoAc}{\small Permite hablar de \textbf{asociación}}
-    \end{column}
-    \begin{column}{0.48\textwidth}
-      \destaca{\textbf{Experimento}\\[4pt]
-      {\small \textbf{Aplicamos tratamientos} y medimos la respuesta.\\[4pt]
-      \textit{Decidir al azar en qué orden cata cada juez las cuatro marcas.}}}
-      \vspace{0.3cm}
-      \centering\textcolor{verdeOk}{\small Permite hablar de \textbf{causa y efecto}}
-    \end{column}
-  \end{columns}
-  \vspace{0.6cm}
-  \destaca{Un titular como \textit{``quienes toman café viven más''} viene de un estudio
-  \textbf{observacional}. Quizá quienes toman café comparten otros hábitos, y esos
-  explican la diferencia. Por eso el titular no autoriza a concluir que el café alargue la vida.}
-\end{frame}
-% ============================================================
-%  Este frame estaba antes en la presentación del curso. Se movió aquí, justo
-%  después de definir observacional y experimento, para no adelantar los términos
-%  tratamiento, azar, causa y efecto en la primera media hora de clase.
-% ============================================================
-\begin{frame}{Nuestros dos conjuntos, uno de cada tipo}
-  \begin{columns}[T]
-    \begin{column}{0.48\textwidth}
-      \destaca{\textbf{Un estudio bien diseñado}\\[4pt]
-      {\small El de los pingüinos. Se planeó todo con cuidado: qué medir, con qué
-      instrumento, en qué etapa, cuántos nidos por isla.
-      \vspace{0.2cm}
-      Pero nadie \emph{asignó} la especie ni el sexo de cada pingüino: eso ya venía dado.}}
-      \vspace{0.25cm}
-      \centering\textcolor{rojoAc}{\small Sigue siendo \textbf{observacional}}
-    \end{column}
-    \begin{column}{0.48\textwidth}
-      \destaca{\textbf{Un experimento}\\[4pt]
-      {\small La cata de galletas. Nosotros decidiremos, \emph{al azar}, en qué orden
-      prueba cada juez cada marca.
-      \vspace{0.2cm}
-      Al asignar nosotros los tratamientos, podremos hablar de causa.}}
-      \vspace{0.25cm}
-      \centering\textcolor{verdeOk}{\small Es un \textbf{experimento}}
-    \end{column}
-  \end{columns}
-  \vspace{0.45cm}
-  \destaca{Conviene no confundir \emph{planear bien la recolección} con \emph{hacer un
-  experimento}. El estudio de los pingüinos es un ejemplo excelente de lo primero, y de
-  ahí salieron respuestas válidas a sus preguntas. Pero solo la asignación al azar de
-  tratamientos —lo que haremos con las galletas— autoriza a hablar de \textbf{causa y efecto}.}
-\end{frame}
-\begin{frame}{Tres formas de obtener datos}
-  \vspace{0.2cm}
-  \centering
-  \begin{tikzpicture}[scale=0.95]
-    \node[fill=azulClaro,rounded corners,text width=3.3cm,align=center,minimum height=1.9cm] at (-4.2,0)
-      {\textbf{Censo}\\[3pt]{\scriptsize Se mide \emph{toda} la población}\\[3pt]{\scriptsize Caro, a veces imposible}};
-    \node[fill=azulClaro,rounded corners,text width=3.3cm,align=center,minimum height=1.9cm] at (0,0)
-      {\textbf{Muestra}\\[3pt]{\scriptsize Se mide una \emph{parte} bien elegida}\\[3pt]{\scriptsize Unidad 4}};
-    \node[fill=azulClaro,rounded corners,text width=3.3cm,align=center,minimum height=1.9cm] at (4.2,0)
-      {\textbf{Experimento}\\[3pt]{\scriptsize Se \emph{producen} datos nuevos}\\[3pt]{\scriptsize Unidad 5}};
-  \end{tikzpicture}
-  \vspace{0.7cm}
-  \raggedright
-  \destaca{Hay encuestas con \textbf{millones} de respuestas que han fallado en predecir
-  una elección. El problema no fue el tamaño, sino \emph{cómo} se eligió a quién preguntar.
-  Es el tema de la unidad 4.}
-\end{frame}
-% ============================================================
-\begin{frame}{Gráficas: una para cada tipo de variable}
-  \begin{columns}[T]
-    \begin{column}{0.48\textwidth}
-      \textbf{Variable categórica}\\[4pt]
-      La pregunta es \emph{¿cuántos hay de cada categoría?}\\[6pt]
-      \centering
-      \IfFileExists{figuras/r-barras-especie.png}{%
-        \includegraphics[width=0.95\textwidth]{r-barras-especie.png}%
-      }{%
-        \begin{tikzpicture}[scale=0.72]
-          \draw[grisT,->] (0,0) -- (0,3.3);
-          \draw[grisT,->] (0,0) -- (4.6,0);
-          \fill[azulUS] (0.5,0) rectangle (1.3,3.0);
-          \fill[azulUS] (1.7,0) rectangle (2.5,1.5);
-          \fill[azulUS] (2.9,0) rectangle (3.7,2.2);
-          \node[below,font=\tiny] at (0.9,0) {Adelia};
-          \node[below,font=\tiny] at (2.1,0) {Barbijo};
-          \node[below,font=\tiny] at (3.3,0) {Juanito};
-          \node[left,font=\tiny] at (0,3.0) {152};
-          \node[left,font=\tiny] at (0,1.5) {68};
-        \end{tikzpicture}%
-      }\\[3pt]
-      {\scriptsize Diagrama de barras}
-    \end{column}
-    \begin{column}{0.48\textwidth}
-      \textbf{Variable cuantitativa}\\[4pt]
-      La pregunta es \emph{¿cómo se distribuyen los valores?}\\[6pt]
-      \centering
-      \IfFileExists{figuras/r-histograma-masa.png}{%
-        \includegraphics[width=0.95\textwidth]{r-histograma-masa.png}%
-      }{%
-        \begin{tikzpicture}[scale=0.72]
-          \draw[grisT,->] (0,0) -- (0,3.3);
-          \draw[grisT,->] (0,0) -- (4.6,0);
-          \fill[azulUS] (0.3,0) rectangle (0.75,0.8);
-          \fill[azulUS] (0.75,0) rectangle (1.2,2.1);
-          \fill[azulUS] (1.2,0) rectangle (1.65,2.7);
-          \fill[azulUS] (1.65,0) rectangle (2.1,1.6);
-          \fill[azulUS] (2.1,0) rectangle (2.55,0.9);
-          \fill[azulUS] (2.55,0) rectangle (3.0,1.7);
-          \fill[azulUS] (3.0,0) rectangle (3.45,2.3);
-          \fill[azulUS] (3.45,0) rectangle (3.9,1.1);
-          \fill[azulUS] (3.9,0) rectangle (4.35,0.4);
-          \node[below,font=\tiny] at (2.3,0) {masa corporal (g)};
-        \end{tikzpicture}%
-      }\\[3pt]
-      {\scriptsize Histograma}
-    \end{column}
-  \end{columns}
+  \end{center}
+
   \vspace{0.4cm}
-  \destaca{\small ¿Notan algo raro en el histograma? Tiene \textbf{dos montículos}.
-  Eso casi siempre significa que hay grupos distintos mezclados.}
+  \destaca{Con esos seis y la tubería se resuelve casi todo lo que haremos en el curso.
+  La documentación completa, con ejemplos, está en
+  \href{https://dplyr.tidyverse.org/}{\texttt{dplyr.tidyverse.org}}}
 \end{frame}
-\begin{frame}{Al leer un histograma, tres preguntas}
-  \begin{columns}[T]
-    \begin{column}{0.3\textwidth}
-      \destaca{\centering\textbf{Centro}\\[3pt]{\small ¿Alrededor de qué valor se acumulan?}}
-    \end{column}
-    \begin{column}{0.3\textwidth}
-      \destaca{\centering\textbf{Dispersión}\\[3pt]{\small ¿Qué tan esparcidos están?}}
-    \end{column}
-    \begin{column}{0.3\textwidth}
-      \destaca{\centering\textbf{Forma}\\[3pt]{\small ¿Simétrica? ¿Sesgada? ¿Uno o varios picos?}}
-    \end{column}
-  \end{columns}
-  \vspace{0.8cm}
-  \destaca{Y una advertencia importante: el \textbf{ancho de clase} que se elige
-  cambia la historia que cuenta el histograma. Con intervalos muy anchos desaparece
-  la estructura; con intervalos muy angostos solo se ve ruido.
-  \vspace{0.25cm}
-  En el libro hay un laboratorio interactivo para moverlo y verlo. Un histograma
-  no es un dato objetivo: es una \textbf{decisión} de quien grafica.}
-\end{frame}
-\begin{frame}{De dónde venían los dos montículos}
-  \centering
-  \IfFileExists{figuras/r-histograma-especie.png}{%
-    \includegraphics[width=0.78\textwidth]{r-histograma-especie.png}
-  }{%
-    {\color{grisT}\small[Histograma de la masa separado por especie]}
-  }
+% ============================================================
+\begin{frame}{Por qué las dos salidas no se ven iguales}
+  Los números coinciden. Lo que no coincide es la pantalla, y conviene verlo con calma.
+
   \vspace{0.3cm}
-  \raggedright
-  \destaca{Al separar por especie, el misterio se resuelve: los Juanito son
-  notablemente más pesados. Los ``dos montículos'' eran \textbf{dos poblaciones
-  mezcladas}.
-  \vspace{0.2cm}
-  Moraleja para todo el curso: cuando una distribución se ve rara, casi siempre hay
-  una \textbf{variable escondida} que la explica. Buscarla es parte del análisis.}
-\end{frame}
-\begin{frame}{El ancho de clase no es un detalle}
-  \centering
-  \IfFileExists{figuras/r-ancho-100.png}{%
-    \includegraphics[width=0.32\textwidth]{r-ancho-100.png}\hfill
-    \includegraphics[width=0.32\textwidth]{r-ancho-250.png}\hfill
-    \includegraphics[width=0.32\textwidth]{r-ancho-800.png}
-  }{%
-    {\color{grisT}\small[Tres histogramas de los mismos datos con anchos de clase distintos]}
-  }
+  \begin{center}
+  {\small
+  \begin{tabular}{@{}lrrr@{}}
+    \toprule
+    & \textbf{female} & \textbf{male} & \textbf{sin sexo} \\
+    \midrule
+    \Rc{tapply()}     & 4679.74 & 5484.84 & \textcolor{rojoAc}{no aparece} \\
+    \Rc{summarise()}  & 4679.74 & 5484.84 & 4587.50 \\
+    \midrule
+    Cuántos son       & 58 & 61 & 5 \\
+    \bottomrule
+  \end{tabular}}
+  \end{center}
+
   \vspace{0.35cm}
-  \raggedright
-  \destaca{Los \textbf{mismos datos}, tres decisiones distintas. Con intervalos muy
-  angostos solo se ve ruido; con intervalos muy anchos desaparece la estructura; en
-  medio se distinguen los dos grupos.
-  \vspace{0.2cm}
-  Un histograma no es un dato objetivo: es una \textbf{decisión} de quien grafica.
-  En el libro hay un laboratorio para moverlo y verlo en vivo.}
+  \destaca{\small Las medias de \texttt{female} y \texttt{male} son \textbf{idénticas}
+  por los dos caminos. Lo que cambia son dos cosas:
+  \Rc{group\_by()} agrega un tercer renglón con los cinco pingüinos Gentoo a los que no
+  se les determinó el sexo, y \Rc{tapply()} los descarta sin avisar. Además
+  \texttt{dplyr} redondea al mostrar, así que en pantalla aparece 4680 en lugar de
+  4679.74.
+
+  \vspace{0.15cm}
+  Que el resumen avise de los casos sin clasificar es una ventaja, no un defecto.}
+\end{frame}
+
+% ============================================================
+% ---------- bloque: cierre de R ----------
+%  La clase anterior llegó hasta la comparación con dplyr, así que el bloque de R
+%  se estira una clase más.
+\begin{frame}[plain]
+  \hojaSesion{Cerramos R y RStudio}{%
+  El directorio de trabajo y los tipos de datos. Cómo escribir una tabla en un
+  archivo. Cómo leer un archivo propio. Cómo devolverle el tipo \texttt{factor} a una
+  columna que llegó como texto. Los errores más comunes. Cerramos con la práctica.}
 \end{frame}
 % ============================================================
-\begin{frame}{Cierre}
+\begin{frame}[fragile]{El directorio de trabajo}
+  R busca y guarda archivos a partir de una carpeta, llamada directorio de trabajo:
+\begin{lstlisting}
+getwd()               # en que carpeta estoy
+list.files()          # que hay en ella
+list.files("datos")   # que hay en la subcarpeta datos
+\end{lstlisting}
+  \vspace{0.2cm}
+  Se puede cambiar a mano, aunque conviene poco:
+\begin{lstlisting}
+setwd("C:/Users/yo/Documentos/estadistica")   # con / o con \\, nunca con \
+\end{lstlisting}
+
+  \vspace{0.2cm}
+  \destaca{\small La forma recomendable es crear un \textbf{Proyecto} de RStudio
+  (\textbf{File $\rightarrow$ New Project}). Al abrirlo, el directorio de trabajo
+  queda fijado en su carpeta, y entonces basta escribir rutas
+  \textbf{relativas} como \Rc{"datos/mi-archivo.csv"}.
+  
+  \vspace{0.2cm}
+  Así el trabajo funciona en cualquier computadora. Un \Rc{setwd()} con la ruta
+  personal de quien lo escribió falla en todas las demás máquinas. Es el motivo
+  número uno de que un análisis ajeno ``no corra''.}
+\end{frame}
+
+% ============================================================
+\begin{frame}[fragile]{Tipos de datos en R}
+\begin{lstlisting}
+class(penguins$body_mass_g)   # "numeric"    un numero
+class(penguins$year)          # "integer"    un entero
+class(penguins$species)       # "factor"     una categoria
+class("Adelie")               # "character"  texto, siempre entre comillas
+levels(penguins$species)      # "Adelie" "Chinstrap" "Gentoo"
+
+gentoo <- penguins[penguins$species == "Gentoo", ]
+table(gentoo$species)         # Adelie 0, Chinstrap 0, Gentoo 124
+\end{lstlisting}
+
+  \vspace{0.25cm}
+  \destaca{\small Las dos últimas líneas muestran qué guarda de más un \textbf{factor}.
+  En \texttt{gentoo} no quedó ni un solo Adelia, y aun así la tabla sigue reportando esa
+  categoría con \textbf{cero casos}, porque el factor recuerda todos los valores
+  posibles y no solo los que están presentes.
+
+  \vspace{0.15cm}
+  \textbf{Si la columna fuera texto simple, las categorías vacías desaparecerían de la tabla y
+  nadie notaría que faltan. Por eso conviene que las variables categóricas sean factor}.}
+\end{frame}
+% ============================================================
+\begin{frame}[fragile]{Los faltantes se contagian}
+\begin{lstlisting}
+mean(c(3750, NA, 3250))                 # NA        <- se contagia: hay NA y el resultado da NA
+mean(c(3750, NA, 3250), na.rm = TRUE)   # 3500
+c(3750, NA, 3250) > 3500                # TRUE NA FALSE  <- tambien se contagia
+
+is.na(c(3750, NA, 3250))                # FALSE TRUE FALSE
+!is.na(c(3750, NA, 3250))               # TRUE FALSE TRUE
+\end{lstlisting}
+
+  \vspace{0.25cm}
+  \destaca{\small El promedio de algo que incluye un faltante es un faltante, y una
+  comparación contra un faltante también lo es. Es a propósito, R nos obliga a decidir
+  qué hacer con lo que falta en lugar de ignorarlo a escondidas.
+
+  \vspace{0.15cm}
+  Las dos últimas líneas presentan el signo \Rc{!}, que en R significa \textbf{negación}
+  y se lee ``no''. \Rc{is.na(x)} pregunta si cada valor es faltante, y \Rc{!is.na(x)}
+  pregunta lo contrario. Así, \Rc{na.rm = TRUE} sirve al resumir y \Rc{!is.na()} sirve
+  al filtrar.}
+\end{frame}
+
+
+% ============================================================
+\begin{frame}[fragile]{Cargar datos desde un archivo propio}
+  Escribamos en un archivo la tabla \texttt{penguins}:
+\begin{lstlisting}
+write.csv(penguins, "mis-pinguinos.csv", row.names = FALSE)
+\end{lstlisting}
+
+\vspace{0.15cm}
+Ahora cargamos a la sesión el archivo recién creado, y comprobamos que es como el original:
+\begin{lstlisting}
+mios <- read.csv("mis-pinguinos.csv")
+dim(mios); names(mios); str(mios)
+\end{lstlisting}
+
+  \vspace{0.15cm}
+  \destaca{\small Si devuelve \Rc{cannot open file ... No such file or directory},
+  el archivo existe pero R está mirando otra carpeta: revisar \Rc{getwd()}. Si se
+  guarda dentro de una subcarpeta, la ruta se escribe \Rc{"datos/mis-pinguinos.csv"}.
+
+  \vspace{0.15cm}
+  Conviene comparar el \Rc{str()} de antes y el de después: notemos que al leer el CSV, \texttt{species} deja de
+  ser un factor y queda como texto. Un CSV es texto plano y \textbf{no guarda los
+  tipos}; hay que revisarlos después de cada lectura.}
+ 
+\end{frame}
+
+% ============================================================
+\begin{frame}[fragile]{Recuperar el tipo \texttt{factor}}
+  Al releer el CSV, \texttt{species} quedó como texto. Esto es lo que se pierde:
+
+  \vspace{0.15cm}
+  \begin{itemize}
+    \item \Rc{summary(mios)} ya no cuenta cuántos hay de cada especie, solo informa
+      que la columna es texto
+    \item \Rc{levels()} devuelve \Rc{NULL}, así que se pierde el orden de las categorías
+    \item \Rc{table()} \textbf{deja de mostrar las categorías que quedaron con cero casos}
+  \end{itemize}
+
+  \vspace{0.15cm}
+  Se le devuelve el tipo así:
+\begin{lstlisting}
+mios$species <- factor(mios$species)              # una columna
+mios <- read.csv("mis-pinguinos.csv",
+                 stringsAsFactors = TRUE)         # todas de una vez, al leer
+mios$species <- factor(mios$species,
+       levels = c("Adelie", "Chinstrap", "Gentoo"))  # fijando el orden
+\end{lstlisting}
+
+  \vspace{0.2cm}
+  \destaca{\small Con texto las funciones no fallan. \Rc{table()}, \Rc{tapply()} y las
+  pruebas de inferencia arman el factor sobre la marcha, pero lo arman \textbf{con las
+  categorías que encuentran en los datos}, y nunca inventan una que no esté. Por eso
+  siguen dando resultado, y por eso se pierde justo lo de la lista de arriba: las
+  categorías vacías y el orden que uno hubiera fijado.
+
+  \vspace{0.15cm}
+  \textbf{Devolverle el tipo factor es recuperar información que el CSV no supo
+  guardar}.}
+\end{frame}
+
+
+
+% ============================================================
+\begin{frame}[fragile]{Cuando el archivo viene de otro lado}
+  Nuestro \texttt{mis-pinguinos.csv} lo escribió R, así que se relee sin problemas. Un
+  archivo que llega de Excel, de una encuesta o de un compañero suele traer tres
+  asuntos que hay que atender:
+
+  \vspace{2mm}
+\begin{lstlisting}
+# 1. Excel en espanol guarda con ; de separador y coma decimal
+otros <- read.csv2("archivo.csv")
+
+# 2. Si los acentos y las enes se ven mal, se declara la codificacion
+otros <- read.csv("archivo.csv", fileEncoding = "latin1")
+
+# 3. Los nombres de las columnas llegan cambiados
+names(otros)                  # "Largo.del.pico..mm."
+otros$Largo.del.pico..mm.     # asi si se extrae la columna
+\end{lstlisting}
+
+  \vspace{0.2cm}
+  \destaca{\small La tercera es la que más desconcierta. R necesita que los nombres de
+  columna sean nombres válidos, así que al leer \textbf{sustituye por un punto} todo lo
+  que no puede usar. Una columna llamada \texttt{Largo del pico (mm)} llega convertida en
+  \Rc{Largo.del.pico..mm.}, con dos puntos seguidos donde estaban el espacio y el
+  paréntesis.
+
+  \vspace{0.15cm}
+  De ahí la costumbre de correr \Rc{names()} después de cada lectura y usar el nombre que
+  R reporta, no el que traía el archivo.}
+\end{frame}
+
+
+
+
+% ============================================================
+\begin{frame}[fragile]{Cuidado al comparar decimales}
+\begin{lstlisting}
+0.1 + 0.2 == 0.3               # FALSE
+print(0.1 + 0.2, digits = 20)  # 0.30000000000000004441
+all.equal(0.1 + 0.2, 0.3)      # TRUE
+\end{lstlisting}
+
+  \vspace{0.3cm}
+  \destaca{No es un defecto de R sino \textbf{aritmética de punto flotante}, y pasa
+  igual en C, en Python y en Java. El número $0.1$ no tiene representación exacta
+  en binario.
+
+  \vspace{0.2cm}
+  De ahí una regla para todo el curso: \textbf{nunca debemos comparar dos resultados
+  de un cálculo con \Rc{==}}. Se usa \Rc{all.equal()} o se compara la diferencia contra
+  una tolerancia. Cuando en la unidad 7 comparemos un valor $p$ contra $0.05$,
+  esta advertencia va a reaparecer.}
+\end{frame}
+
+
+
+% ============================================================
+\begin{frame}[fragile]{Errores típicos}
+  \centering
+  {\small
+  \begin{tabular}{@{}p{6.2cm}p{6.2cm}@{}}
+    \toprule
+    \textbf{Lo que dice R} & \textbf{Lo que en realidad pasó} \\
+    \midrule
+    \texttt{object 'penguis' not found} &
+      Un nombre mal escrito, o la línea que lo creaba nunca se ejecutó \\
+    \texttt{could not find function "filter"} &
+      Falta cargar el paquete: \Rc{library(dplyr)} \\
+    \texttt{cannot open file ...} &
+      La ruta o el directorio de trabajo. Revisar \Rc{getwd()} \\
+    El símbolo \texttt{+} al inicio de la línea &
+      Quedó un paréntesis o una comilla sin cerrar. Se corta con \textbf{Esc} \\
+    \bottomrule
+  \end{tabular}}
+  \vspace{0.45cm}
+  \raggedright
+  \destaca{La ayuda es parte del lenguaje:
+  \Rc{?mean} abre la documentación de una función,
+  \Rc{example(mean)} corre sus ejemplos y
+  \Rc{??"standard deviation"} busca por tema.}
+\end{frame}
+% ============================================================
+\begin{frame}[fragile]{Práctica de la sesión}
+  En un Proyecto de RStudio, con un script llamado \texttt{practica-software.R} responde:
+
+  \vspace{0.25cm}
+  \begin{enumerate}
+    \item ¿Cuántos faltantes tiene \Rc{bill\_length\_mm}? ¿Y \Rc{sex}?
+    \item Calcular el largo promedio del pico \textbf{por isla}, primero con \Rc{tapply} y luego
+      con \Rc{group\_by()} y \Rc{summarise()}. ¿Coinciden los dos resultados?
+    \item ¿Qué isla tiene el pico más largo en promedio? Escribir en una línea a qué
+      se debe. Conviene volver a ver la tabla de contingencia de especie por isla
+    \item Quedarse con los pingüinos cuyo pico supera el promedio general, y contar
+      cuántos quedaron de cada especie
+    \item Guardar en un CSV \textbf{la tabla filtrada del punto 4}, volver a leerla y
+      revisar con \Rc{str()} si cambió el tipo de alguna columna
+    \item Agregar una pregunta propia sobre \texttt{penguins} y el código que la contesta
+  \end{enumerate}
+
+  \vspace{0.3cm}
+  \destaca{\small Se entrega el script en Teams. Debe correr sin errores y traer las
+  respuestas comentadas. }
+
+\end{frame}
+% ---- Las dos diapositivas siguientes solo salen con \respuestastrue ----
+\ifrespuestas
+% ============================================================
+%  NOTA. Los números del punto 1 (2 y 11 faltantes) salen del diccionario de datos
+%  ya conocido. Los promedios por isla del punto 2 conviene correrlos una vez y,
+%  si se quiere, pegarlos aquí; a propósito no se inventaron.
+\begin{frame}[fragile]{Respuestas de la práctica}
+\begin{lstlisting}
+# 1. Faltantes
+sum(is.na(penguins$bill_length_mm))   # 2
+sum(is.na(penguins$sex))              # 11
+
+# 2. Largo promedio del pico por isla, de las dos maneras
+tapply(penguins$bill_length_mm, penguins$island, mean, na.rm = TRUE)
+penguins |> group_by(island) |>
+  summarise(largo = mean(bill_length_mm, na.rm = TRUE))
+
+# 4. Los de pico mayor al promedio general, y cuantos son de cada especie
+promedio <- mean(penguins$bill_length_mm, na.rm = TRUE)
+grandes  <- penguins[!is.na(penguins$bill_length_mm) &
+                     penguins$bill_length_mm > promedio, ]
+table(grandes$species)
+
+# 5. Guardar, releer y revisar los tipos
+write.csv(grandes, "picos-grandes.csv", row.names = FALSE)
+otra <- read.csv("picos-grandes.csv")
+str(otra)
+\end{lstlisting}
+\end{frame}
+% ============================================================
+\begin{frame}{Respuestas de la práctica: lo que había que ver}
+  \begin{itemize}
+    \item \textbf{1.} Dos faltantes en el pico y once en el sexo, los mismos números
+      del diccionario de datos que ya conocemos
+    \item \textbf{2.} Los dos caminos dan lo mismo. Si no coinciden, casi siempre es
+      porque a uno de los dos se le olvidó \Rc{na.rm = TRUE}
+    \item \textbf{4.} En R base hay que agregar \Rc{!is.na(...)}, porque comparar un
+      faltante contra un número devuelve \Rc{NA} y el corchete deja renglones vacíos.
+      Con \Rc{filter()} eso no pasa
+    \item \textbf{5.} \texttt{species} regresa como texto, no como factor
+  \end{itemize}
+
+  \vspace{0.25cm}
+  \destaca{\small \textbf{El punto 3 es el importante.} El promedio más bajo es el de
+  Torgersen, y no porque la isla haga algo. En Torgersen \textbf{solo hay pingüinos
+  Adelia}, que son los de pico más corto, mientras que en las otras dos islas se
+  concentran las especies de pico largo.
+
+  \vspace{0.15cm}
+  Lo que parece un efecto de la isla es un efecto de la \textbf{especie}. Es la misma
+  tabla de contingencia de especie por isla, ahora encontrada por ustedes con los datos en
+  la mano.}
+\end{frame}
+\fi
+% ============================================================
+%  El cierre va FUERA del interruptor: aparece en las dos versiones,
+%  la completa y la que se comparte sin respuestas.
+\begin{frame}{Cierre de la semana}
   \textbf{Lo que vimos}
   \begin{itemize}
-    \item Individuos y variables: siempre identificarlos antes de calcular
-    \item Tipos de variables y escalas de medición
-    \item Observacional contra experimental, y por qué solo el segundo permite hablar de causa
-    \item La gráfica adecuada según el tipo de variable
+    \item De qué trata la Estadística y cómo está organizado el curso
+    \item De dónde salen los datos de \texttt{penguins}, y por qué el contexto importa
+    \item La interfaz de RStudio, y dónde se escribe cada cosa
+    \item Cargar datos, explorarlos y manipularlos con R base y con \texttt{dplyr}
+    \item Escribir y volver a leer un archivo propio, y qué se pierde en el camino
   \end{itemize}
-  \vspace{0.4cm}
-  \textbf{Para la próxima sesión}
+
+  \vspace{0.6cm}
+  \textbf{Para la próxima clase}
   \begin{itemize}
-    \item Tener R y RStudio instalados, con los dos paquetes
-    \item Leer el capítulo 1 del libro y resolver los ejercicios 1 a 3
-    \item Primer cuestionario en Moodle
+    \item Entregar la práctica en Teams, el lunes antes de las 23:59
+    \item Contestar el cuestionario de R y RStudio en Moodle
   \end{itemize}
-  \vspace{0.5cm}
-  \destaca{\small Las soluciones de los ejercicios están en el libro, explicadas.
-  Intentarlos primero y luego compararlas: así sirven.}
 \end{frame}
+
 \begin{frame}[plain]
   \centering
+
   \vspace{1.0cm}
   \IfFileExists{figuras/lter_penguins.png}{%
     \includegraphics[height=0.36\textheight]{lter_penguins.png}\\[2pt]
@@ -1159,10 +1621,10 @@ head(penguins)
       \begin{scope}[shift={(2.4,0)}] \pingGentoo \end{scope}
     \end{tikzpicture}
   }
+
   \vspace{0.6cm}
   {\Large\color{azulUS} ¿Preguntas?}\\[10pt]
-  {\small\color{grisT} \url{https://rosaliahdez.github.io/notas-estadistica/} \\
-  Comunicación por Teams · Cuestionarios en Moodle}
+
   \vspace{0.7cm}
   {\tiny\color{grisT}
   Datos: Horst A, Hill A, Gorman K (2020). \textit{palmerpenguins} (CC-0). ---

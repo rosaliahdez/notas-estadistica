@@ -1,5 +1,9 @@
 # Distribuciones muestrales y TCL {#sec-cap6}
 
+::: {.callout-warning title="Capítulo en revisión"}
+El contenido de este capítulo está completo, pero todavía no pasa por la revisión final de redacción. Se avisará en clase cuando quede listo para estudiar de aquí. Mientras tanto se puede consultar, con esa advertencia.
+:::
+
 ```{r}
 #| label: setup-cap6
 #| include: false
@@ -18,7 +22,7 @@ Empieza la Parte III. Ya sabemos explorar datos (Parte I) y producirlos bien (Pa
 
 ## Parámetros y estadísticos
 
-Un **parámetro** es un número que describe a la **población**: la proporción real de positivos, la masa media de todos los pingüinos. Casi nunca lo conocemos —es justo lo que queremos averiguar—.
+Un **parámetro** es un número que describe a la **población**: la proporción real de positivos, la masa media de todos los pingüinos. Casi nunca lo conocemos (es justo lo que queremos averiguar).
 
 Un **estadístico** es el mismo número calculado sobre la **muestra**: la proporción de positivos *en mi muestra*, la masa media *de los pingüinos que medí*. Ese sí lo podemos calcular.
 
@@ -82,11 +86,11 @@ Lo anterior vale siempre. Pero, ¿de qué **forma** es la distribución muestral
 Para muestras **suficientemente grandes**, la distribución muestral de la media es aproximadamente **normal**, sin importar la forma de la población de origen.
 :::
 
-Esto es lo que hace posible casi toda la inferencia del curso: aunque no sepamos cómo se distribuyen los datos, sí sabemos cómo se comporta su media. Como regla práctica, $n \geq 30$ suele bastar; con poblaciones muy sesgadas hace falta más.
+Esto es lo que hace posible casi toda la inferencia del curso. Aunque no sepamos cómo se distribuyen los datos, sí sabemos cómo se comporta su media. Como regla práctica, $n \geq 30$ suele bastar; con poblaciones muy sesgadas hace falta más.
 
 ### Laboratorio: ver el TCL en acción {#sec-lab-tcl}
 
-Aquí el deslizador vale más que mil palabras. Conviene elegir una población **deliberadamente no normal** —sesgada, uniforme o bimodal— y luego aumentar $n$. Se observa cómo la distribución de las medias se vuelve acampanada y se angosta, aunque la población de origen no tenga nada de campana.
+Aquí el deslizador vale más que mil palabras. Conviene elegir una población **deliberadamente no normal** (sesgada, uniforme o bimodal) y luego aumentar $n$. Se observa cómo la distribución de las medias se vuelve acampanada y se angosta, aunque la población de origen no tenga nada de campana.
 
 ```{ojs}
 //| panel: input
@@ -155,7 +159,7 @@ Plot.plot({
 ```
 
 ::: {.callout-note title="Interpretación"}
-Con $n = 1$ las dos gráficas son iguales: una muestra de tamaño uno *es* un dato individual. Al subir a $n = 5$ la asimetría ya se suaviza; hacia $n = 30$ la distribución de las medias es prácticamente una campana simétrica, **aunque la población de arriba siga siendo sesgada o bimodal**. Nótese también que la campana se va **angostando**: es el error estándar $\sigma/\sqrt{n}$ encogiéndose. Vale la pena el caso más contraintuitivo, "bimodal": la población tiene dos jorobas y las medias forman una sola campana.
+Con $n = 1$ las dos gráficas son iguales. Una muestra de tamaño uno *es* un dato individual. Al subir a $n = 5$ la asimetría ya se suaviza; hacia $n = 30$ la distribución de las medias es prácticamente una campana simétrica, **aunque la población de arriba siga siendo sesgada o bimodal**. Nótese también que la campana se va **angostando**: es el error estándar $\sigma/\sqrt{n}$ encogiéndose. Vale la pena el caso más contraintuitivo, "bimodal": la población tiene dos jorobas y las medias forman una sola campana.
 :::
 
 ## Trabajar con la normal: probabilidades y cuantiles
@@ -186,7 +190,7 @@ qnorm(0.90, mean = 185, sd = 17)
 ::: {.callout-note title="Interpretación"}
 La respuesta ronda los 207 cm. La clave para no equivocarse es traducir bien el enunciado: *"superada por el 10 %"* significa que el 10 % está **por encima**, es decir el 90 % **por debajo**, así que el cuantil que se busca es el 0.90 y no el 0.10.
 
-Sin computadora, este cálculo se hace en dos pasos con una tabla de la normal estándar: primero se busca el valor $z$ que deja el 90 % por debajo ($z \approx 1.282$) y luego se deshace la estandarización, $x = \mu + z\sigma = 185 + 1.282 \times 17 \approx 206.8$ cm. Conviene practicar ambas vías, porque en un examen sin computadora solo se dispone de la tabla.
+Sin computadora, este cálculo se hace en dos pasos con una tabla de la normal estándar. Primero se busca el valor $z$ que deja el 90 % por debajo ($z \approx 1.282$) y luego se deshace la estandarización, $x = \mu + z\sigma = 185 + 1.282 \times 17 \approx 206.8$ cm. Conviene practicar ambas vías, porque en un examen sin computadora solo se dispone de la tabla.
 :::
 
 Los cuantiles de la normal estándar que más se repiten son estos, y vale la pena reconocerlos:
@@ -226,7 +230,7 @@ La distribución muestral es el puente entre la muestra y la población:
 | Media $\bar{x}$ | $\mu$ | $\sigma/\sqrt{n}$ | Normal (por el TCL) |
 | Proporción $\hat{p}$ | $p$ | $\sqrt{p(1-p)/n}$ | Normal (si $np \ge 10$ y $n(1-p) \ge 10$) |
 
-Todo lo que sigue en el curso —intervalos de confianza y pruebas de hipótesis— se construye sobre esta tabla.
+Todo lo que sigue en el curso (intervalos de confianza y pruebas de hipótesis) se construye sobre esta tabla.
 :::
 
 ## Resumen
@@ -250,13 +254,13 @@ Distinguimos **parámetro** (población, desconocido) de **estadístico** (muest
 ::: {.callout-tip title="Soluciones y retroalimentación" collapse="true"}
 **1.** (a) **Estadístico**: se calculó sobre los pingüinos observados (la muestra). (b) **Parámetro**: describe a toda la población de Sonora. (c) **Estadístico**: se calculó sobre las lagartijas de nuestra base. *Regla rápida: si lo pudiste calcular con los datos, es un estadístico; si te gustaría conocerlo pero no lo se tiene, es un parámetro.*
 
-**2.** Error estándar $= \sigma/\sqrt{n}$: para $n=25$ es $20/5 = 4$; para $n=100$ es $20/10 = 2$; para $n=400$ es $20/20 = 1$. Hay que **cuadruplicar** la muestra para reducir el error a la mitad. *Esta es la consecuencia práctica más importante del capítulo: la precisión es cara, porque crece con $\sqrt{n}$ y no con $n$. Pasar de 400 a 800 encuestas mejora poco; para el doble de precisión harían falta 1600.*
+**2.** Error estándar $= \sigma/\sqrt{n}$: para $n=25$ es $20/5 = 4$; para $n=100$ es $20/10 = 2$; para $n=400$ es $20/20 = 1$. Hay que **cuadruplicar** la muestra para reducir el error a la mitad. *Esta es la consecuencia práctica más importante del capítulo. La precisión es cara, porque crece con $\sqrt{n}$ y no con $n$. Pasar de 400 a 800 encuestas mejora poco; para el doble de precisión harían falta 1600.*
 
-**3.** (a) **Sí**: con $n = 50$ el TCL ya suele funcionar bien incluso con sesgo. (b) **No**: con $n = 4$ y población sesgada, la media muestral hereda el sesgo. (c) **Sí**: si la población es normal, la media es normal **exactamente**, para cualquier $n$, sin necesidad del TCL. *El caso (c) es el que más se olvida: el TCL es para poblaciones no normales; si ya es normal, no hace falta.*
+**3.** (a) **Sí**: con $n = 50$ el TCL ya suele funcionar bien incluso con sesgo. (b) **No**: con $n = 4$ y población sesgada, la media muestral hereda el sesgo. (c) **Sí**: si la población es normal, la media es normal **exactamente**, para cualquier $n$, sin necesidad del TCL. *El caso (c) es el que más se olvida. El TCL es para poblaciones no normales; si ya es normal, no hace falta.*
 
 **4.** Ambos histogramas se centran cerca de 1 (la media de una exponencial con `rate = 1`). Con $n = 5$ la distribución de medias sigue **notoriamente sesgada a la derecha**; con $n = 80$ es simétrica y acampanada. Las desviaciones estándar son aproximadamente $1/\sqrt{5} \approx 0.45$ y $1/\sqrt{80} \approx 0.11$. *Es el mismo fenómeno del laboratorio del @sec-lab-tcl, ahora reproducido en R.*
 
 **5.** Error estándar $= \sqrt{0.4 \times 0.6 / 100} = \sqrt{0.0024} \approx 0.049$. Condiciones: $np = 40 \geq 10$ y $n(1-p) = 60 \geq 10$; **sí se cumplen**, así que la aproximación normal es adecuada. *Cuando $p$ es muy cercana a 0 o a 1, estas condiciones fallan y hay que recurrir a métodos exactos.*
 
-**6.** Una redacción posible: *"Cada encuesta da un resultado ligeramente distinto, pero esos resultados se agrupan de manera predecible alrededor del valor real, y qué tan agrupados están depende del tamaño de la muestra, no del tamaño del país. Con 1000 personas bien elegidas al azar, el resultado típico se aleja del valor verdadero solo unos tres puntos porcentuales."* *Lo esencial es transmitir dos ideas: que lo que importa es el **tamaño de la muestra** y no la fracción de la población, y que la selección debe ser **aleatoria** —si no lo es, ni un millón de respuestas sirven, como vimos en el @sec-cap4—.*
+**6.** Una redacción posible: *"Cada encuesta da un resultado ligeramente distinto, pero esos resultados se agrupan de manera predecible alrededor del valor real, y qué tan agrupados están depende del tamaño de la muestra, no del tamaño del país. Con 1000 personas bien elegidas al azar, el resultado típico se aleja del valor verdadero solo unos tres puntos porcentuales."* *Lo esencial es transmitir dos ideas: que lo que importa es el **tamaño de la muestra** y no la fracción de la población, y que la selección debe ser **aleatoria** (si no lo es, ni un millón de respuestas sirven, como vimos en el @sec-cap4).*
 :::

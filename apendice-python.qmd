@@ -3,7 +3,7 @@
 El curso usa **R**, pero muchos estudiantes de la licenciatura llegan con más experiencia en **Python**. Este apéndice pone las dos versiones del mismo cálculo una junto a la otra.
 
 ::: {.callout-note title="Para qué sirve esta tabla"}
-No para trabajar en Python durante el curso —las prácticas y el proyecto se entregan en R—, sino para que quien ya conoce Python reconozca lo que está viendo y para que quede claro que **las técnicas son las mismas**: lo que cambia es la sintaxis.
+No para trabajar en Python durante el curso (las prácticas y el proyecto se entregan en R), sino para que quien ya conoce Python reconozca lo que está viendo y para que quede claro que **las técnicas son las mismas**: lo que cambia es la sintaxis.
 
 En Python los equivalentes viven en tres bibliotecas: `pandas` para manipular datos, `scipy.stats` para las pruebas y `statsmodels` para modelos.
 :::
@@ -37,7 +37,7 @@ datos = pd.read_csv("datos/galletas.csv")
 
 | Qué se quiere | R | Python |
 |---|---|---|
-| Primeras filas | `head(datos)` | `datos.head()` |
+| Primeros renglones | `head(datos)` | `datos.head()` |
 | Estructura | `glimpse(datos)` | `datos.info()` |
 | Resumen general | `summary(datos)` | `datos.describe()` |
 | Media | `mean(x)` | `x.mean()` |
@@ -103,7 +103,7 @@ datos = pd.read_csv("datos/galletas.csv")
 
 ## Un ejemplo completo, en los dos lenguajes {.unnumbered}
 
-La misma pregunta —¿difiere el agrado entre las marcas de galletas?— resuelta de las dos formas:
+La misma pregunta (¿difiere el agrado entre las marcas de galletas?) resuelta de las dos formas:
 
 ::: {.panel-tabset}
 ## R
@@ -156,5 +156,5 @@ print(stats.bartlett(*grupos))
 ::: {.callout-tip title="La conclusión de fondo"}
 Los dos bloques hacen exactamente lo mismo y dan exactamente los mismos números. La estadística no cambia con el lenguaje.
 
-Lo que se aprende en este curso —qué técnica corresponde, qué supuestos verificar, cómo interpretar el resultado— es transferible a cualquier herramienta. La sintaxis se consulta; el criterio, no.
+Lo que se aprende en este curso (qué técnica corresponde, qué supuestos verificar, cómo interpretar el resultado) es transferible a cualquier herramienta. La sintaxis se consulta; el criterio, no.
 :::

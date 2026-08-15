@@ -1,5 +1,9 @@
 # Producción de datos: diseño de experimentos {#sec-cap5}
 
+::: {.callout-warning title="Capítulo en revisión"}
+El contenido de este capítulo está completo, pero todavía no pasa por la revisión final de redacción. Se avisará en clase cuando quede listo para estudiar de aquí. Mientras tanto se puede consultar, con esa advertencia.
+:::
+
 ```{r}
 #| label: setup-cap5
 #| include: false
@@ -39,11 +43,11 @@ Identificar bien estas piezas es el primer paso: define qué se compara (los niv
 Un buen experimento descansa en tres ideas:
 
 - **Control.** Mantener constante todo lo demás para que las diferencias en la respuesta se deban al tratamiento y no a otra cosa. En la cata: misma cantidad de galleta, misma iluminación, mismo vaso de agua para limpiar el paladar, misma consigna.
-- **Aleatorización.** Asignar los tratamientos (o su orden) **al azar**. Es la defensa contra las variables ocultas: reparte de forma pareja, entre los tratamientos, cualquier factor que no controlamos.
-- **Réplicas.** Aplicar cada tratamiento a **varias** unidades. Sin réplicas no podemos distinguir el efecto del tratamiento de la variación natural entre unidades: una sola bolsa por sustrato no dice nada.
+- **Aleatorización.** Asignar los tratamientos (o su orden) **al azar**. Es la defensa contra las variables ocultas. Reparte de forma pareja, entre los tratamientos, cualquier factor que no controlamos.
+- **Réplicas.** Aplicar cada tratamiento a **varias** unidades. Sin réplicas no podemos distinguir el efecto del tratamiento de la variación natural entre unidades. Una sola bolsa por sustrato no dice nada.
 
 ::: {.callout-note title="Interpretación"}
-Los tres trabajan juntos. El **control** reduce el ruido, la **aleatorización** evita el sesgo y las **réplicas** nos dejan medir cuánta variación es "normal" —justo lo que el ANOVA del @sec-cap10 necesita para decidir si las diferencias entre marcas son reales—.
+Los tres trabajan juntos. El **control** reduce el ruido, la **aleatorización** evita el sesgo y las **réplicas** nos dejan medir cuánta variación es "normal" (justo lo que el ANOVA del @sec-cap10 necesita para decidir si las diferencias entre marcas son reales).
 :::
 
 ## Sesgos en experimentos con personas
@@ -84,7 +88,7 @@ head(plan, 8)
 
 Cada juez recibe una permutación diferente de las marcas: nadie las prueba en el mismo orden, y así el efecto de orden se reparte parejo entre las cuatro marcas en lugar de perjudicar siempre a la misma.
 
-El experimento produce una tabla **ordenada**, con una fila por cata, lista para analizarse después:
+El experimento produce una tabla **ordenada**, con un renglón por cata, lista para analizarse después:
 
 ```{r}
 #| label: estructura-galletas
@@ -92,14 +96,14 @@ galletas <- read.csv("datos/galletas.csv")
 head(galletas)
 ```
 
-Aquí solo **diseñamos** y **recolectamos**. El análisis —¿difieren de verdad las marcas?— es un ANOVA de un factor, y lo haremos en el @sec-cap10 con estos mismos datos.
+Aquí solo **diseñamos** y **recolectamos**. El análisis (¿difieren de verdad las marcas?) es un ANOVA de un factor, y lo haremos en el @sec-cap10 con estos mismos datos.
 
 ## La sesión en clase
 
 ::: {.callout-note title="Protocolo de la cata (actividad de la semana 5)"}
 **Antes:** se preparan las galletas en platos rotulados con códigos neutros (no la marca), agua para limpiar el paladar y una **hoja de cata** con una escala hedónica de 1 (me disgusta mucho) a 9 (me gusta mucho).
 
-**Diseño (en grupo):** antes de probar nada, la clase propone cómo hacer la cata justa. La idea es que *emerjan* de la discusión el orden aleatorizado, el cegado, el silencio y las réplicas —los principios de este capítulo—.
+**Diseño (en grupo):** antes de probar nada, la clase propone cómo hacer la cata justa. La idea es que *emerjan* de la discusión el orden aleatorizado, el cegado, el silencio y las réplicas (los principios de este capítulo).
 
 **Ejecución:** la mitad del grupo cata (jueces), la otra mitad aplica y captura (experimentadores). Cada juez sigue su orden del plan de aleatorización y anota su agrado por marca.
 
@@ -135,7 +139,7 @@ El experimento es la forma de producir datos que permite hablar de **causa**. Se
 
 **2.** (a) **Observacional**: los pacientes eligieron tomar el suplemento, así que los grupos pueden diferir en otras cosas (quien lo elige quizá cuida más su salud). No permite concluir causa. (b) **Experimental**: la asignación es aleatoria, sí permite concluir causa. (c) **Observacional**: la asistencia fue por decisión propia. *En (a) y (c) el fenómeno se llama **autoselección**, la fuente más común de confusión en estudios de salud y educación.*
 
-**3.** (a) Falla **réplicas**: con una sola bolsa no hay forma de estimar la variación natural entre bolsas del mismo sustrato. (b) Falla **aleatorización**: el orden fijo hace que la fatiga de paladar perjudique siempre a Great Value y favorezca a Oreo. (c) Falla **control**: las condiciones cambiaron entre mediciones (año y laboratorio distintos), así que la diferencia observada podría deberse a eso y no a la marca. *En (c) se dice que el efecto de la marca está **confundido** con el del laboratorio y el tiempo: no hay manera de separarlos.*
+**3.** (a) Falla **réplicas**: con una sola bolsa no hay forma de estimar la variación natural entre bolsas del mismo sustrato. (b) Falla **aleatorización**: el orden fijo hace que la fatiga de paladar perjudique siempre a Great Value y favorezca a Oreo. (c) Falla **control**: las condiciones cambiaron entre mediciones (año y laboratorio distintos), así que la diferencia observada podría deberse a eso y no a la marca. *En (c) se dice que el efecto de la marca está **confundido** con el del laboratorio y el tiempo. No hay manera de separarlos.*
 
 **4.** Como el paladar se cansa y arrastra sabores, las últimas posiciones tienden a recibir calificaciones más bajas. Si todos los jueces catan en el mismo orden, ese castigo cae **siempre sobre la misma marca**, y no podríamos distinguir si esa marca gustó menos por su sabor o por su posición. Al aleatorizar, cada marca ocupa todas las posiciones aproximadamente por igual y el efecto se reparte parejo. *La aleatorización no elimina el efecto de orden: lo convierte en ruido en lugar de sesgo.*
 

@@ -1,5 +1,9 @@
 # Relaciones entre variables {#sec-cap3}
 
+::: {.callout-warning title="Capítulo en revisión"}
+El contenido de este capítulo está completo, pero todavía no pasa por la revisión final de redacción. Se avisará en clase cuando quede listo para estudiar de aquí. Mientras tanto se puede consultar, con esa advertencia.
+:::
+
 ```{r}
 #| label: setup-cap3
 #| include: false
@@ -218,7 +222,7 @@ Ampliamos el mapa de decisión para **dos o más variables cuantitativas**:
 
 ## Del resumen a la inferencia (próxima parada)
 
-La matriz de correlación y la covarianza son el punto de partida de técnicas más avanzadas del análisis multivariado —componentes principales, reducción de dimensión—, que quedan fuera del alcance de este curso. Aquí nos quedamos en el nivel descriptivo; en la Parte III aprenderemos a decidir si estas relaciones son **estadísticamente significativas** o pudieron surgir por azar.
+La matriz de correlación y la covarianza son el punto de partida de técnicas más avanzadas del análisis multivariado (componentes principales, reducción de dimensión), que quedan fuera del alcance de este curso. Aquí nos quedamos en el nivel descriptivo; en la Parte III aprenderemos a decidir si estas relaciones son **estadísticamente significativas** o pudieron surgir por azar.
 
 ## Resumen
 

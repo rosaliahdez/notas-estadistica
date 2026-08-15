@@ -1,5 +1,9 @@
 # Inferencia para datos enumerativos {#sec-cap9}
 
+::: {.callout-warning title="Capítulo en revisión"}
+El contenido de este capítulo está completo, pero todavía no pasa por la revisión final de redacción. Se avisará en clase cuando quede listo para estudiar de aquí. Mientras tanto se puede consultar, con esa advertencia.
+:::
+
 ```{r}
 #| label: setup-cap9
 #| include: false
@@ -70,7 +74,7 @@ Nótese que el intervalo está lejos del cero, y que reportar la **diferencia co
 
 ## Tablas de contingencia y la prueba ji-cuadrada
 
-Cuando ambas variables son categóricas —y sobre todo si alguna tiene más de dos niveles—, la herramienta general es la **tabla de contingencia** y la **prueba ji-cuadrada de independencia**.
+Cuando ambas variables son categóricas (y sobre todo si alguna tiene más de dos niveles), la herramienta general es la **tabla de contingencia** y la **prueba ji-cuadrada de independencia**.
 
 La lógica es la de siempre. Bajo $H_0$ las dos variables son **independientes**; a partir de ese supuesto se calculan las **frecuencias esperadas**, y el estadístico mide cuánto se apartan las observadas de ellas:
 
@@ -92,7 +96,7 @@ prueba$expected   # lo que esperaríamos si NO hubiera asociación
 ::: {.callout-note title="Interpretación"}
 Se esperarían 36 positivos entre quienes no tienen contacto con perros, pero solo se observaron 13; y se esperaban 69 entre quienes sí, pero se observaron 92. Esas desviaciones producen $\chi^2 \approx 29.8$ con 1 grado de libertad y un valor p del orden de $10^{-8}$: se rechaza la independencia. **Hay asociación** entre el contacto con perros y el resultado.
 
-Los **grados de libertad** de una tabla son $(\text{filas}-1)\times(\text{columnas}-1)$: aquí $(2-1)(2-1) = 1$.
+Los **grados de libertad** de una tabla son $(\text{renglones}-1)\times(\text{columnas}-1)$: aquí $(2-1)(2-1) = 1$.
 :::
 
 ::: {.callout-important title="Condición de la prueba ji-cuadrada"}
@@ -101,7 +105,7 @@ La aproximación exige que **todas las frecuencias esperadas sean al menos 5** (
 
 ### Laboratorio: observado contra esperado {#sec-lab-chi}
 
-Al mover las cuatro celdas de la tabla se observa cómo cambian las frecuencias **esperadas bajo independencia**, cada contribución al estadístico y el valor p. Conviene intentar primero lograr un $\chi^2$ casi nulo (proporciones parecidas entre filas) y luego una asociación fuerte.
+Al mover las cuatro celdas de la tabla se observa cómo cambian las frecuencias **esperadas bajo independencia**, cada contribución al estadístico y el valor p. Conviene intentar primero lograr un $\chi^2$ casi nulo (proporciones parecidas entre renglones) y luego una asociación fuerte.
 
 ```{ojs}
 //| panel: input
@@ -190,9 +194,9 @@ md`χ² = **${chi.X2.toFixed(2)}** (gl = 1) · valor p = **${chi.p < 0.0001 ? "<
 ```
 
 ::: {.callout-note title="Interpretación"}
-Al poner 50, 150, 50, 150: las dos filas tienen exactamente la misma proporción de positivos, las frecuencias observadas coinciden con las esperadas y $\chi^2$ vale casi cero. Al subir los "expuestos y positivos": las barras azules se despegan de las grises y el estadístico crece.
+Al poner 50, 150, 50, 150: los dos renglones tienen exactamente la misma proporción de positivos, las frecuencias observadas coinciden con las esperadas y $\chi^2$ vale casi cero. Al subir los "expuestos y positivos": las barras azules se despegan de las grises y el estadístico crece.
 
-Dos observaciones importantes. Primera: lo que importa no son las **cantidades** sino las **proporciones dentro de cada fila**; 10 de 20 y 100 de 200 son la misma proporción. Segunda: si multiplicas las cuatro celdas por 10 conservando las proporciones, el $\chi^2$ también se multiplica por 10 —la misma asociación, medida con más datos, se vuelve más significativa—. Es, otra vez, la lección de que el valor p depende del tamaño de muestra tanto como del efecto.
+Dos observaciones importantes. Primera: lo que importa no son las **cantidades** sino las **proporciones dentro de cada renglón**; 10 de 20 y 100 de 200 son la misma proporción. Segunda: si multiplicas las cuatro celdas por 10 conservando las proporciones, el $\chi^2$ también se multiplica por 10 (la misma asociación, medida con más datos, se vuelve más significativa). Es, otra vez, la lección de que el valor p depende del tamaño de muestra tanto como del efecto.
 :::
 
 ## El mismo cálculo a mano {#sec-categoricos-mano}
@@ -260,7 +264,7 @@ Tan importante como detectar asociaciones es no inventarlas. Veamos la positivid
 ```{r}
 #| label: chi-zona
 tabla_zona <- table(rick$zona, rick$resultado)
-round(prop.table(tabla_zona, margin = 1), 3)   # proporciones por fila
+round(prop.table(tabla_zona, margin = 1), 3)   # proporciones por renglón
 
 chisq.test(tabla_zona)
 ```
@@ -287,7 +291,7 @@ Con **variables categóricas**:
 
 ## Resumen
 
-Para datos categóricos, el parámetro es una **proporción**. Su estimación viene con intervalo de confianza, y su comparación entre dos grupos se hace con `prop.test()`, reportando siempre la **diferencia y su intervalo**. Cuando ambas variables son categóricas, la **tabla de contingencia** y la prueba **ji-cuadrada** contrastan lo observado con lo esperado bajo independencia; sus grados de libertad son $(f-1)(c-1)$ y exige frecuencias esperadas de al menos 5. Rechazar la independencia indica **asociación**, no causa —sobre todo con datos observacionales—. Y un patrón visible en las proporciones puede no ser significativo: hay que probarlo antes de explicarlo. En el @sec-cap10 volvemos a variables cuantitativas, ahora comparando **tres o más grupos**.
+Para datos categóricos, el parámetro es una **proporción**. Su estimación viene con intervalo de confianza, y su comparación entre dos grupos se hace con `prop.test()`, reportando siempre la **diferencia y su intervalo**. Cuando ambas variables son categóricas, la **tabla de contingencia** y la prueba **ji-cuadrada** contrastan lo observado con lo esperado bajo independencia; sus grados de libertad son $(f-1)(c-1)$ y exige frecuencias esperadas de al menos 5. Rechazar la independencia indica **asociación**, no causa —sobre todo con datos observacionales—. Y un patrón visible en las proporciones puede no ser significativo. Hay que probarlo antes de explicarlo. En el @sec-cap10 volvemos a variables cuantitativas, ahora comparando **tres o más grupos**.
 
 ## Ejercicios
 
@@ -314,9 +318,9 @@ Para datos categóricos, el parámetro es una **proporción**. Su estimación vi
 ::: {.callout-tip title="Soluciones y retroalimentación" collapse="true"}
 **1.** Con `prop.test(sum(rick$garrapatas == "si"), nrow(rick))` se obtiene una proporción cercana al **42 %**, con un intervalo aproximado de 38 % a 47 %. Interpretación: *"Con 95 % de confianza, entre el 38 % y el 47 % de la población evaluada tuvo contacto con garrapatas."* *Conviene recordar que el nivel de confianza describe la tasa de acierto del procedimiento, no la probabilidad de este intervalo concreto (@sec-cap7).*
 
-**2.** La positividad es del **38.2 %** con garrapatas contra **15.3 %** sin ellas: una diferencia cercana a **23 puntos porcentuales**, con valor p del orden de $10^{-8}$. Interpretación: *"Las personas con contacto con garrapatas presentaron una positividad más de dos veces mayor."* *Este resultado es coherente con la biología de la enfermedad: la garrapata es el vector. Aun así, sigue siendo un estudio observacional, así que la palabra correcta es asociación.*
+**2.** La positividad es del **38.2 %** con garrapatas contra **15.3 %** sin ellas: una diferencia cercana a **23 puntos porcentuales**, con valor p del orden de $10^{-8}$. Interpretación: *"Las personas con contacto con garrapatas presentaron una positividad más de dos veces mayor."* *Este resultado es coherente con la biología de la enfermedad. La garrapata es el vector. Aun así, sigue siendo un estudio observacional, así que la palabra correcta es asociación.*
 
-**3.** Las frecuencias esperadas son todas superiores a 20, muy por encima del mínimo de 5, así que la aproximación es válida. Si alguna esperada fuera menor que 5 —por ejemplo con una enfermedad muy rara o una muestra pequeña—, la alternativa correcta es la **prueba exacta de Fisher** (`fisher.test`), que no depende de aproximaciones. *Otra opción, cuando tiene sentido sustantivo, es agrupar categorías poco frecuentes; pero eso debe decidirse antes de ver los resultados, no después.*
+**3.** Las frecuencias esperadas son todas superiores a 20, muy por encima del mínimo de 5, así que la aproximación es válida. Si alguna esperada fuera menor que 5 (por ejemplo con una enfermedad muy rara o una muestra pequeña), la alternativa correcta es la **prueba exacta de Fisher** (`fisher.test`), que no depende de aproximaciones. *Otra opción, cuando tiene sentido sustantivo, es agrupar categorías poco frecuentes; pero eso debe decidirse antes de ver los resultados, no después.*
 
 **4.** Para 3 × 2: $(3-1)(2-1) = 2$ grados de libertad. Para 4 × 2: $(4-1)(2-1) = 3$. *Los grados de libertad reflejan cuántas celdas se puede llenar libremente antes de que los totales marginales determinen el resto; por eso dependen de la forma de la tabla y no del tamaño de muestra.*
 
@@ -324,9 +328,9 @@ Para datos categóricos, el parámetro es una **proporción**. Su estimación vi
 
 **6.** El error es saltar de **asociación** a **causa** con datos observacionales. Nadie asignó al azar quién convive con perros; las personas que lo hacen pueden diferir sistemáticamente en otras cosas (viven en zonas con más garrapatas, pasan más tiempo al aire libre), y el perro puede ser simplemente un **indicador de exposición** al verdadero vector. Versión correcta: *"Se encontró una asociación estadísticamente significativa entre el contacto con perros y un resultado positivo; el contacto con perros podría estar actuando como indicador de exposición a garrapatas."* *La única forma de establecer causa sería un experimento aleatorizado, que aquí sería imposible y poco ético; en epidemiología se recurre entonces a criterios adicionales y al control de variables de confusión.*
 
-**7.** Las **proporciones no cambian** (en ambos casos 40 % y 20 % de positivos por fila), pero el **valor p sí baja** drásticamente: al multiplicar por 5, el estadístico $\chi^2$ también se multiplica por 5. La conclusión es la misma que en el @sec-cap7: la significancia estadística mezcla el **tamaño del efecto** con el **tamaño de la muestra**. Con pocos datos, una asociación real puede pasar inadvertida; con muchos, una asociación trivial se vuelve significativa. *Por eso conviene acompañar la prueba con una medida del tamaño de la asociación —como la diferencia de proporciones y su intervalo— y no reportar solo el valor p.*
+**7.** Las **proporciones no cambian** (en ambos casos 40 % y 20 % de positivos por renglón), pero el **valor p sí baja** drásticamente: al multiplicar por 5, el estadístico $\chi^2$ también se multiplica por 5. La conclusión es la misma que en el @sec-cap7: la significancia estadística mezcla el **tamaño del efecto** con el **tamaño de la muestra**. Con pocos datos, una asociación real puede pasar inadvertida; con muchos, una asociación trivial se vuelve significativa. *Por eso conviene acompañar la prueba con una medida del tamaño de la asociación (como la diferencia de proporciones y su intervalo) y no reportar solo el valor p.*
 **8.** (a) $H_0: p = 0.12$ contra $H_1: p < 0.12$, prueba **unilateral izquierda**, porque la afirmación es que la proporción es *menor*. (b) Las condiciones se cumplen holgadamente: $np_0 = 120$ y $n(1-p_0) = 880$, ambos muy por encima de 10. (c) Con `prop.test(100, 1000, p = 0.12, alternative = "less")` se obtiene $\hat{p} = 0.10$ y un valor p cercano a **0.026**, menor que 0.05: se **rechaza** $H_0$. Interpretación: *"Los datos aportan evidencia de que la nueva tableta produce efectos secundarios en una proporción menor que el 12 % del medicamento actual."* (d) A mano:
 $$z_c = \frac{0.10 - 0.12}{\sqrt{0.12 \times 0.88 / 1000}} \approx -1.95$$
-Como $-1.95 < -1.645$, se rechaza $H_0$, misma conclusión. *Dos observaciones para la interpretación. Primera: si la prueba se hubiera planteado bilateral, el valor p sería aproximadamente 0.052 y **no** se habría rechazado —de ahí la importancia de fijar la dirección desde la pregunta, y no después de ver los datos—. Segunda: la reducción estimada es de 12 % a 10 %, es decir dos puntos porcentuales; conviene preguntarse si esa diferencia es clínicamente relevante y no solo estadísticamente significativa.*
+Como $-1.95 < -1.645$, se rechaza $H_0$, misma conclusión. *Dos observaciones para la interpretación. Primera: si la prueba se hubiera planteado bilateral, el valor p sería aproximadamente 0.052 y **no** se habría rechazado (de ahí la importancia de fijar la dirección desde la pregunta, y no después de ver los datos). Segunda: la reducción estimada es de 12 % a 10 %, es decir dos puntos porcentuales; conviene preguntarse si esa diferencia es clínicamente relevante y no solo estadísticamente significativa.*
 
 :::

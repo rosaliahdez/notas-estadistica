@@ -2,6 +2,16 @@
 
 A lo largo del libro se fue armando, recuadro a recuadro, una guía para elegir la técnica correcta. Aquí está completa. Es la respuesta a la pregunta que abre todo análisis: **¿qué hacer con estos datos?**
 
+## Cómo se usa este mapa
+
+El mapa **no se consulta con las palabras del problema, sino con los tipos de variable**. Quien trae el problema habla de dimorfismo sexual, de tiempos de ejecución o de galletas; el trabajo estadístico empieza por traducir eso a tres respuestas:
+
+1. ¿Cuál es la variable **respuesta**, y de qué **tipo** es: cuantitativa o categórica?
+2. ¿Cuál es la variable **explicativa**, y de qué tipo? Si es categórica, ¿cuántos niveles tiene?
+3. ¿**Cómo se obtuvieron** los datos: grupos independientes, o dos medidas del mismo individuo?
+
+Las dos primeras eligen el renglón; la tercera decide entre renglones que se parecen (por ejemplo, entre la prueba para dos grupos independientes y la prueba para datos pareados). De fondo hay una cuarta pregunta, que ordena la tabla sin que se note: si es una pregunta de **diferencia**, de **relación** o de **predicción**.
+
 
 | Mi pregunta | Tipo de datos | Técnica | Capítulo |
 |---|---|---|---|
@@ -22,7 +32,24 @@ A lo largo del libro se fue armando, recuadro a recuadro, una guía para elegir 
 | ¿Difieren tres o más grupos? | Cuantitativa por k grupos | `aov()` + `TukeyHSD()` | @sec-cap10 |
 | ¿La relación entre X e Y es real? | 2 cuantitativas | `lm()` y prueba sobre la pendiente | @sec-cap11 |
 
-Tres reglas que valen para todas las filas de esa tabla:
+## Dos renglones que este curso no cubre
+
+En cuanto los datos se vuelven un poco más ricos, aparecen dos preguntas que el temario no alcanza. No se estudian aquí, pero conviene reconocerlas: saber que la pregunta **tiene** respuesta, y cómo se llama, evita forzar una técnica que no corresponde.
+
+| Mi pregunta | Tipo de datos | Técnica | Relación con el curso |
+|---|---|---|---|
+| ¿El efecto de un factor **depende** del otro? | Cuantitativa por 2 categóricas | ANOVA de dos factores con interacción, `aov(y ~ a * b)` | Extensión de @sec-cap10 |
+| ¿Puedo predecir una respuesta **categórica**? | Categórica binaria, con explicativas cuantitativas | Regresión logística, `glm(..., family = binomial)`; o análisis discriminante | Extensión de @sec-cap11 |
+
+Dos aclaraciones sobre esa tabla:
+
+- La primera pregunta **no** se contesta con un ANOVA de un factor aplicado dos veces. Que un factor influya y el otro también es distinto de que el efecto de uno **cambie según el nivel** del otro. Eso último es la interacción, y solo se prueba con el modelo que la incluye.
+
+- La segunda **no** cabe en el renglón de `lm()`, aunque las explicativas sean cuantitativas, porque ahí la respuesta debe ser cuantitativa. Cuando la respuesta es una categoría, una recta predeciría valores por debajo de 0 y por arriba de 1, que no son probabilidades posibles.
+
+Reconocer que una pregunta cae fuera del temario es parte de la competencia profesional, no una carencia. Lo contrario (aplicar la técnica más parecida que uno conoce) es la fuente de la mayoría de los análisis mal hechos.
+
+Tres reglas que valen para todos los renglones de esa tabla:
 
 1. **Mirar los datos antes de calcular.** Una gráfica nos dice si la técnica tiene sentido.
 2. **Verificar los supuestos.** Un valor p calculado sobre supuestos rotos no significa nada.

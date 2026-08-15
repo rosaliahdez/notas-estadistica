@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Evaluación sensorial · Captura digital</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+:root{
+  --azul:#1F4E79; --azul-claro:#DCE6F1; --gris:#5F5E5A; --borde:#D3D1C7;
+  --verde:#1D9E75; --rojo:#C0392B; --fondo:#F7F6F3;
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
+body{margin:0; font-family:-apple-system,"Segoe UI",Roboto,sans-serif; background:var(--fondo);
+     color:#2C2C2A; font-size:17px; line-height:1.5}
+.wrap{max-width:880px; margin:0 auto; padding:16px 16px 80px}
+header{background:var(--azul); color:#fff; padding:14px 16px; position:sticky; top:0; z-index:10}
+header .t{font-size:17px; font-weight:600}
+header .s{font-size:13px; opacity:.85}
+h1{font-size:22px; margin:18px 0 6px; color:var(--azul)}
+h2{font-size:18px; margin:22px 0 8px; color:var(--azul)}
+p.ind{background:#fff; border-left:4px solid var(--azul); padding:12px 14px; margin:14px 0; font-size:15px}
+.card{background:#fff; border:1px solid var(--borde); border-radius:12px; padding:16px; margin:14px 0}
+label.f{display:block; font-weight:600; margin:14px 0 6px}
+input[type=text],select{width:100%; padding:12px; font-size:17px; border:1px solid var(--borde);
+  border-radius:8px; background:#fff; font-family:inherit}
+.escala{display:grid; grid-template-columns:repeat(7,1fr); gap:6px; margin-top:6px}
+.escala button{padding:14px 2px; font-size:19px; font-weight:600; border:1px solid var(--borde);
+  background:#fff; border-radius:10px; cursor:pointer; min-height:52px}
+.escala button.on{background:var(--azul); color:#fff; border-color:var(--azul)}
+.leyenda{display:flex; justify-content:space-between; font-size:11px; color:var(--gris); margin-top:4px}
+.attr{padding:12px 0; border-bottom:1px solid #EEEDE8}
+.attr:last-child{border-bottom:none}
+.attr .n{font-weight:600; margin-bottom:2px}
+button.b{padding:15px 22px; font-size:17px; font-weight:600; border-radius:10px; cursor:pointer;
+  border:1px solid var(--azul); background:var(--azul); color:#fff; font-family:inherit}
+button.b.sec{background:#fff; color:var(--azul)}
+button.b:disabled{opacity:.4}
+.barra{position:fixed; bottom:0; left:0; right:0; background:#fff; border-top:1px solid var(--borde);
+  padding:12px 16px; display:flex; gap:10px; justify-content:space-between; align-items:center}
+.codigo{font-size:40px; font-weight:700; letter-spacing:2px; color:var(--azul); text-align:center; margin:8px 0}
+.paso{font-size:13px; color:var(--gris)}
+table{width:100%; border-collapse:collapse; font-size:14px; margin:10px 0}
+th,td{border:1px solid var(--borde); padding:7px 9px; text-align:left}
+th{background:var(--azul); color:#fff; font-weight:600}
+tr:nth-child(even) td{background:var(--azul-claro)}
+.opciones button{display:block; width:100%; text-align:left; padding:13px 14px; margin:6px 0;
+  font-size:16px; border:1px solid var(--borde); background:#fff; border-radius:8px; cursor:pointer;
+  font-family:inherit}
+.opciones button.on{background:var(--azul); color:#fff; border-color:var(--azul)}
+.limpia{text-align:center; padding:30px 10px}
+.limpia .icono{font-size:52px}
+.pill{display:inline-block; background:var(--azul-claro); color:var(--azul); padding:3px 10px;
+  border-radius:20px; font-size:13px; font-weight:600}
+.ok{color:var(--verde); font-weight:600}
+.aviso{background:#FAEEDA; border-left:4px solid #BA7517; padding:10px 12px; font-size:14px; margin:10px 0}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+@media(max-width:560px){ .grid2{grid-template-columns:1fr} .escala{grid-template-columns:repeat(4,1fr)} }
+.mini{font-size:13px; color:var(--gris)}
+</style>
+</head>
+<body>
+<header>
+  <div class="t" id="hTitulo">Evaluación sensorial</div>
+  <div class="s" id="hSub">Captura digital · Departamento de Matemáticas, Universidad de Sonora</div>
+</header>
+<div class="wrap" id="app"></div>
+<div class="barra" id="barra"></div>
+
+<script>
+/* ====================== ESTADO ====================== */
+const ESCALA_HED = ["Me disgusta mucho","Me disgusta moderadamente","Me disgusta ligeramente",
+  "Ni me gusta ni me disgusta","Me gusta ligeramente","Me gusta moderadamente","Me gusta mucho"];
+const ESCALA_ACU = ["Totalmente en desacuerdo","En desacuerdo moderadamente","En desacuerdo ligeramente",
+  "Ni de acuerdo ni en desacuerdo","De acuerdo ligeramente","De acuerdo moderadamente","Totalmente de acuerdo"];
+const ANTES  = [["apariencia","Apariencia"],["color","Color"],["aroma","Aroma"],["intensidad_olor","Intensidad del olor"]];
+const DESPUES= [["sabor","Sabor"],["dulzor","Dulzor"],["crocancia","Crocancia"],
+                ["desmoronable","Desmoronable"],["textura","Textura"],["gusto_residual","Gusto residual"]];
+
+let S = cargar() || {
+  config:null,          // {estudio, tratamientos:[{marca,codigo}], nPanelistas, semilla}
+  plan:[],              // [{panelista, folio, orden, codigo, marca}]
+  registros:[],         // una fila por (panelista, muestra)
+  panelistas:[],        // datos de control por panelista
+  actual:null,          // {panelista, folio, i, fase, datos:{}, control:{}}
+  pantalla:"setup"
+};
+
+function guardar(){ try{ localStorage.setItem("cata_v1", JSON.stringify(S)); }catch(e){} }
+function cargar(){ try{ return JSON.parse(localStorage.getItem("cata_v1")); }catch(e){ return null; } }
+
+/* ====================== ALEATORIZACIÓN ====================== */
+// Generador con semilla (mulberry32) para que el plan sea reproducible
+function rng(semilla){
+  let a = semilla >>> 0;
+  return function(){ a += 0x6D2B79F5; let t = a;
+    t = Math.imul(t ^ t>>>15, t|1); t ^= t + Math.imul(t ^ t>>>7, t|61);
+    return ((t ^ t>>>14) >>> 0) / 4294967296; };
+}
+// Secuencias de Williams: balancean la posición de cada tratamiento y el
+// arrastre de sabor de una muestra a la siguiente (Williams, 1949).
+function secuenciasWilliams(t){
+  const primera = [];
+  for(let j = 0; j < t; j++)
+    primera.push(j % 2 === 0 ? j/2 + 1 : t - (j-1)/2);
+  const filas = [];
+  for(let i = 0; i < t; i++)
+    filas.push(primera.map(v => ((v - 1 + i) % t) + 1));
+  if(t % 2 === 1)                       // con t impar hacen falta las inversas
+    filas.push(...filas.slice(0, t).map(f => f.slice().reverse()));
+  return filas;
+}
+
+function generarPlan(cfg){
+  const r = rng(cfg.semilla);
+  const T = cfg.tratamientos.length;
+  const folios = [];
+  while(folios.length < cfg.nPanelistas){
+    const f = 100 + Math.floor(r()*900);
+    if(!folios.includes(f)) folios.push(f);
+  }
+  const plan = [];
+
+  if(cfg.metodo === "williams"){
+    const secs = secuenciasWilliams(T);
+    // se asigna una secuencia a cada panelista, recorriéndolas en orden
+    // aleatorio dentro de cada ronda para que el reparto quede parejo
+    const asignadas = [];
+    while(asignadas.length < cfg.nPanelistas){
+      const ronda = secs.map((_, i) => i);
+      for(let i = ronda.length-1; i > 0; i--){
+        const j = Math.floor(r()*(i+1)); [ronda[i],ronda[j]] = [ronda[j],ronda[i]];
+      }
+      asignadas.push(...ronda);
+    }
+    for(let p = 1; p <= cfg.nPanelistas; p++){
+      secs[asignadas[p-1]].forEach((idx, k) => plan.push({
+        panelista:p, folio:folios[p-1], orden:k+1,
+        codigo:cfg.tratamientos[idx-1].codigo, marca:cfg.tratamientos[idx-1].marca,
+        secuencia:asignadas[p-1]+1
+      }));
+    }
+  } else {
+    for(let p = 1; p <= cfg.nPanelistas; p++){
+      const t = cfg.tratamientos.slice();
+      for(let i = t.length-1; i > 0; i--){          // permutación de Fisher-Yates
+        const j = Math.floor(r()*(i+1)); [t[i],t[j]] = [t[j],t[i]];
+      }
+      t.forEach((tr, k) => plan.push({
+        panelista:p, folio:folios[p-1], orden:k+1, codigo:tr.codigo, marca:tr.marca, secuencia:""
+      }));
+    }
+  }
+  return plan;
+}
+
+/* ====================== UTILIDADES DE VISTA ====================== */
+const $ = id => document.getElementById(id);
+function ir(p){ S.pantalla = p; guardar(); render(); }
+function esc(s){ return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+function bloqueEscala(clave, etiqueta, valores, destino){
+  const v = destino[clave];
+  return `<div class="attr"><div class="n">${etiqueta}</div>
+    <div class="escala">${valores.map((_,i)=>
+      `<button onclick="setVal('${clave}',${i+1})" class="${v===i+1?'on':''}">${i+1}</button>`).join("")}</div>
+    <div class="leyenda"><span>${valores[0]}</span><span>${valores[6]}</span></div></div>`;
+}
+function setVal(k, v){ S.actual.datos[k] = v; guardar(); render(); }
+function setCtrl(k, v){ S.actual.control[k] = v; guardar(); render(); }
+
+function opciones(clave, lista, destino){
+  return `<div class="opciones">${lista.map(o =>
+    `<button onclick="setCtrl('${clave}','${esc(o)}')" class="${destino[clave]===o?'on':''}">${esc(o)}</button>`
+  ).join("")}</div>`;
+}
+
+/* ====================== PANTALLAS ====================== */
+function render(){
+  const app = $("app"), barra = $("barra");
+  if(S.config) $("hTitulo").textContent = S.config.estudio;
+
+  /* ---------- SETUP ---------- */
+  if(S.pantalla === "setup"){
+    const c = S.config || {estudio:"Evaluación sensorial de galletas",
+      tratamientos:[{marca:"Oreo",codigo:"G134"},{marca:"Giro",codigo:"G340"},
+                    {marca:"Lors",codigo:"G875"},{marca:"Great Value",codigo:"G282"}],
+      nPanelistas:24, semilla:123};
+    app.innerHTML = `<h1>Configuración del estudio</h1>
+      <p class="ind">Esta pantalla la usa quien coordina la sesión. Define los tratamientos y genera el
+      <strong>plan de aleatorización</strong>: a cada panelista se le asigna un orden distinto de presentación
+      y un folio, siguiendo un diseño por bloques completos al azar.</p>
+      <div class="card">
+        <label class="f">Nombre del estudio</label>
+        <input type="text" id="cEstudio" value="${esc(c.estudio)}">
+        <div class="grid2">
+          <div><label class="f">Número de panelistas</label>
+            <input type="text" id="cN" value="${c.nPanelistas}"></div>
+          <div><label class="f">Semilla (reproducibilidad)</label>
+            <input type="text" id="cSemilla" value="${c.semilla}"></div>
+        </div>
+        <label class="f">Método de asignación del orden</label>
+        <select id="cMetodo">
+          <option value="williams" ${(c.metodo||"williams")==="williams"?"selected":""}>Orden balanceado (diseño de Williams) — recomendado</option>
+          <option value="simple" ${c.metodo==="simple"?"selected":""}>Aleatorización simple por bloques</option>
+        </select>
+        <p class="mini">El <strong>orden balanceado</strong> logra que cada muestra ocupe cada posición
+        el mismo número de veces y que cada par de muestras consecutivas aparezca una sola vez, con lo cual
+        se neutralizan tanto el efecto de posición como el arrastre de sabor. La aleatorización simple
+        también es válida, pero deja esos efectos repartidos de forma desigual.</p>
+        <label class="f">Tratamientos: marca y código ciego</label>
+        <div id="trats">${c.tratamientos.map((t,i)=>`
+          <div class="grid2" style="margin-bottom:6px">
+            <input type="text" id="m${i}" value="${esc(t.marca)}" placeholder="Marca">
+            <input type="text" id="k${i}" value="${esc(t.codigo)}" placeholder="Código">
+          </div>`).join("")}</div>
+        <p class="mini">Los panelistas solo verán el código; la marca queda registrada en el archivo final.</p>
+      </div>
+      ${S.plan.length ? `<div class="card"><h2>Plan generado</h2>
+        <p><span class="pill">${S.config.nPanelistas} panelistas</span>
+           <span class="pill">${S.plan.length} evaluaciones</span></p>
+        <table><tr><th>Panelista</th><th>Folio</th><th>Orden de presentación</th></tr>
+        ${Array.from({length:Math.min(S.config.nPanelistas,8)},(_,p)=>{
+          const f = S.plan.filter(x=>x.panelista===p+1);
+          return `<tr><td>${p+1}</td><td>${f[0].folio}</td><td>${f.map(x=>x.codigo).join(" → ")}</td></tr>`;
+        }).join("")}</table>
+        ${S.config.nPanelistas>8?`<p class="mini">Se muestran los primeros 8 de ${S.config.nPanelistas}.</p>`:""}
+        <button class="b sec" onclick="exportarPlan()">Descargar plan en Excel</button></div>`:""}`;
+    barra.innerHTML = `<button class="b sec" onclick="generar()">Generar plan de aleatorización</button>
+      ${S.plan.length?`<button class="b" onclick="ir('inicio')">Comenzar sesión →</button>`:``}`;
+    return;
+  }
+
+  /* ---------- INICIO DE PANELISTA ---------- */
+  if(S.pantalla === "inicio"){
+    const hechos = new Set(S.panelistas.map(p=>p.panelista));
+    const sig = Array.from({length:S.config.nPanelistas},(_,i)=>i+1).find(p=>!hechos.has(p));
+    if(!sig){ ir("cierre"); return; }
+    const folio = S.plan.find(x=>x.panelista===sig).folio;
+    app.innerHTML = `<h1>Panelista ${sig} de ${S.config.nPanelistas}</h1>
+      <div class="card"><p class="mini">Folio asignado</p><div class="codigo">${folio}</div></div>
+      <div class="card">
+        <label class="f">Facultad o programa</label>
+        <input type="text" id="pFac" placeholder="Por ejemplo: Ciencias de la Computación">
+        <label class="f">Sexo</label>
+        <select id="pSexo"><option value="">Seleccionar…</option><option>Mujer</option>
+          <option>Hombre</option><option>Prefiere no decirlo</option></select>
+        <label class="f">¿Ha consumido alimentos en la última hora?</label>
+        <select id="pCom"><option value="">Seleccionar…</option><option>Sí</option><option>No</option></select>
+      </div>
+      <p class="ind"><strong>Indicaciones que se leen al panelista:</strong> evalúe los atributos del producto
+      antes y después de degustar cada muestra. Si desea más cantidad, puede solicitarla. Si el producto no es
+      de su agrado, no es necesario terminarlo. Por favor no comente sus preferencias en voz alta, para no
+      influir en las opiniones de los demás. Al finalizar cada muestra, coma un trozo de manzana, beba agua
+      mineral y acerque el frasco de café para limpiar el olfato.</p>`;
+    barra.innerHTML = `<span class="paso">${S.panelistas.length} de ${S.config.nPanelistas} completados</span>
+      <button class="b" onclick="iniciarPanelista(${sig},${folio})">Iniciar evaluación →</button>`;
+    return;
+  }
+
+  /* ---------- LIMPIEZA DE PALADAR ---------- */
+  if(S.pantalla === "limpieza"){
+    app.innerHTML = `<div class="limpia">
+      <div class="icono">⏳</div>
+      <h1>Limpieza de paladar</h1>
+      <p>Antes de la siguiente muestra:</p>
+      <div class="card" style="text-align:left">
+        <p>1. Coma un trozo de manzana.</p>
+        <p>2. Beba agua mineral.</p>
+        <p>3. Acerque el frasco de café para limpiar el olfato.</p>
+      </div>
+      <p class="mini">Este paso reduce el arrastre de sabores entre muestras.</p></div>`;
+    barra.innerHTML = `<span class="paso">Muestra ${S.actual.i+1} de ${S.config.tratamientos.length}</span>
+      <button class="b" onclick="ir('muestra')">Continuar →</button>`;
+    return;
+  }
+
+  /* ---------- EVALUACIÓN DE UNA MUESTRA ---------- */
+  if(S.pantalla === "muestra"){
+    const fila = S.plan.filter(x=>x.panelista===S.actual.panelista)[S.actual.i];
+    const d = S.actual.datos, fase = S.actual.fase;
+    let cuerpo = `<div class="card"><p class="mini" style="text-align:center">Muestra</p>
+      <div class="codigo">${fila.codigo}</div></div>`;
+    let listo = false;
+    if(fase === "antes"){
+      cuerpo += `<h2>1. Antes de degustar la muestra</h2>
+        <div class="card">${ANTES.map(([k,e])=>bloqueEscala(k,e,ESCALA_HED,d)).join("")}</div>`;
+      listo = ANTES.every(([k])=>d[k]);
+    } else {
+      cuerpo += `<h2>2. Después de degustar la muestra</h2>
+        <div class="card">${DESPUES.map(([k,e])=>bloqueEscala(k,e,ESCALA_HED,d)).join("")}</div>
+        <div class="card">${bloqueEscala("agrado_general","Agrado general",ESCALA_HED,d)}</div>
+        <h2>¿Qué tan de acuerdo está con las siguientes afirmaciones?</h2>
+        <div class="card">
+          ${bloqueEscala("compraria","Compraría el producto",ESCALA_ACU,d)}
+          ${bloqueEscala("recomendaria","Recomendaría el producto a otra persona",ESCALA_ACU,d)}</div>`;
+      listo = DESPUES.every(([k])=>d[k]) && d.agrado_general && d.compraria && d.recomendaria;
+    }
+    app.innerHTML = cuerpo;
+    barra.innerHTML = `<span class="paso">Folio ${S.actual.folio} · muestra ${S.actual.i+1} de ${S.config.tratamientos.length}</span>
+      <button class="b" onclick="avanzar()" ${listo?"":"disabled"}>
+        ${fase==="antes"?"Ya degusté la muestra →":"Guardar muestra →"}</button>`;
+    return;
+  }
+
+  /* ---------- CUESTIONARIO DE CONTROL ---------- */
+  if(S.pantalla === "control"){
+    const c = S.actual.control;
+    const codigos = S.config.tratamientos.map(t=>t.codigo);
+    app.innerHTML = `<h1>Cuestionario final</h1>
+      <p class="ind">Estas preguntas caracterizan los hábitos de consumo del panelista y permiten
+      contextualizar sus respuestas.</p>
+      <div class="card"><label class="f">1. ¿Con qué frecuencia suele consumir galletas?</label>
+        ${opciones("frecuencia",["Todos los días","Varias veces a la semana","Una vez a la semana","Rara vez","Nunca"],c)}</div>
+      <div class="card"><label class="f">2. ¿Qué tipo de galletas consume con mayor frecuencia?</label>
+        ${opciones("tipo",["Galletas tipo sándwich (con relleno)","Galletas con chispas de chocolate","Galletas integrales","Otro"],c)}
+        ${c.tipo==="Otro"?`<input type="text" id="cOtro" placeholder="¿Cuál?" value="${esc(c.tipo_otro||"")}"
+           oninput="S.actual.control.tipo_otro=this.value; guardar()">`:""}</div>
+      <div class="card"><label class="f">3. ¿Qué nivel de dulzor prefiere en las galletas?</label>
+        ${opciones("dulzor_pref",["Muy dulce","Moderadamente dulce","Poco dulce","No dulce"],c)}</div>
+      <div class="card"><label class="f">4. ¿Cuál fue su muestra favorita?</label>
+        ${opciones("favorita",codigos,c)}</div>
+      <div class="card"><label class="f">5. ¿Cuál fue la muestra que menos le gustó?</label>
+        ${opciones("menos",codigos,c)}</div>`;
+    const listo = c.frecuencia && c.tipo && c.dulzor_pref && c.favorita && c.menos;
+    barra.innerHTML = `<span class="paso">Folio ${S.actual.folio}</span>
+      <button class="b" onclick="terminarPanelista()" ${listo?"":"disabled"}>Finalizar →</button>`;
+    return;
+  }
+
+  /* ---------- GRACIAS ---------- */
+  if(S.pantalla === "gracias"){
+    app.innerHTML = `<div class="limpia"><div class="icono">✓</div>
+      <h1>Evaluación registrada</h1>
+      <p>Gracias por participar.</p>
+      <p class="mini">${S.panelistas.length} de ${S.config.nPanelistas} panelistas completados.</p></div>`;
+    barra.innerHTML = `<button class="b sec" onclick="ir('cierre')">Panel de coordinación</button>
+      <button class="b" onclick="ir('inicio')">Siguiente panelista →</button>`;
+    return;
+  }
+
+  /* ---------- CIERRE / EXPORTACIÓN ---------- */
+  if(S.pantalla === "cierre"){
+    const n = S.panelistas.length, N = S.config.nPanelistas;
+    app.innerHTML = `<h1>Panel de coordinación</h1>
+      <div class="card">
+        <p><span class="pill">${n} de ${N} panelistas</span>
+           <span class="pill">${S.registros.length} evaluaciones capturadas</span></p>
+        ${n===N?`<p class="ok">Sesión completa.</p>`:`<p class="mini">Faltan ${N-n} panelistas.</p>`}
+      </div>
+      <div class="card">
+        <h2>Descargar resultados</h2>
+        <p class="mini">El archivo de Excel incluye tres hojas: los datos en formato listo para analizar,
+        el cuestionario de control por panelista y el plan de aleatorización.</p>
+        <p><button class="b" onclick="exportarExcel()">Descargar Excel (.xlsx)</button></p>
+        <p><button class="b sec" onclick="exportarCSV()">Descargar CSV (respaldo)</button>
+           <button class="b sec" onclick="exportarR()">Descargar script de R</button></p>
+        <div class="aviso">El archivo de Excel requiere conexión la primera vez que se abre esta página.
+        El CSV funciona siempre, incluso sin conexión.</div>
+      </div>
+      <div class="card">
+        <h2>Vista previa</h2>
+        <table><tr><th>Folio</th><th>Orden</th><th>Código</th><th>Agrado</th></tr>
+        ${S.registros.slice(-8).map(r=>`<tr><td>${r.folio}</td><td>${r.orden}</td>
+          <td>${r.codigo}</td><td>${r.agrado_general}</td></tr>`).join("")}</table>
+        <p class="mini">Últimas ${Math.min(8,S.registros.length)} evaluaciones.</p>
+      </div>
+      <div class="card">
+        <h2>Reiniciar</h2>
+        <p class="mini">Borra todo lo capturado en este dispositivo. Descargue los resultados antes.</p>
+        <button class="b sec" style="border-color:var(--rojo);color:var(--rojo)" onclick="reiniciar()">Borrar y empezar de nuevo</button>
+      </div>`;
+    barra.innerHTML = `<button class="b sec" onclick="ir('setup')">Configuración</button>
+      ${n<N?`<button class="b" onclick="ir('inicio')">Continuar con panelistas →</button>`:""}`;
+    return;
+  }
+}
+
+/* ====================== ACCIONES ====================== */
+function generar(){
+  const n = parseInt($("cN").value) || 8;
+  const trats = [];
+  for(let i=0;i<4;i++){
+    const m = $("m"+i)?.value.trim(), k = $("k"+i)?.value.trim();
+    if(m && k) trats.push({marca:m, codigo:k});
+  }
+  if(trats.length < 2){ alert("Se requieren al menos dos tratamientos con marca y código."); return; }
+  S.config = { estudio:$("cEstudio").value.trim()||"Evaluación sensorial",
+               tratamientos:trats, nPanelistas:n, semilla:parseInt($("cSemilla").value)||123,
+               metodo:$("cMetodo").value };
+  S.plan = generarPlan(S.config);
+  S.registros = []; S.panelistas = [];
+  guardar(); render();
+}
+function iniciarPanelista(p, folio){
+  const fac = $("pFac").value.trim(), sexo = $("pSexo").value, com = $("pCom").value;
+  if(!sexo || !com){ alert("Complete sexo y consumo de alimentos."); return; }
+  S.actual = { panelista:p, folio:folio, i:0, fase:"antes", datos:{},
+               control:{}, meta:{facultad:fac, sexo:sexo, comio:com} };
+  ir("muestra");
+}
+function avanzar(){
+  if(S.actual.fase === "antes"){ S.actual.fase = "despues"; guardar(); render(); return; }
+  const fila = S.plan.filter(x=>x.panelista===S.actual.panelista)[S.actual.i];
+  S.registros.push(Object.assign({
+    estudio:S.config.estudio, panelista:S.actual.panelista, folio:S.actual.folio,
+    orden:fila.orden, codigo:fila.codigo, marca:fila.marca
+  }, S.actual.datos));
+  S.actual.i++; S.actual.fase = "antes"; S.actual.datos = {};
+  if(S.actual.i >= S.config.tratamientos.length) ir("control");
+  else ir("limpieza");
+}
+function terminarPanelista(){
+  const c = S.actual.control, m = S.actual.meta;
+  S.panelistas.push({
+    estudio:S.config.estudio, panelista:S.actual.panelista, folio:S.actual.folio,
+    facultad:m.facultad, sexo:m.sexo, comio_ultima_hora:m.comio,
+    frecuencia:c.frecuencia, tipo:c.tipo==="Otro"?("Otro: "+(c.tipo_otro||"")):c.tipo,
+    dulzor_preferido:c.dulzor_pref, favorita_codigo:c.favorita, menos_gusto_codigo:c.menos,
+    favorita_marca:(S.config.tratamientos.find(t=>t.codigo===c.favorita)||{}).marca,
+    menos_gusto_marca:(S.config.tratamientos.find(t=>t.codigo===c.menos)||{}).marca
+  });
+  S.actual = null; ir("gracias");
+}
+function reiniciar(){
+  if(!confirm("¿Borrar todos los datos capturados en este dispositivo?")) return;
+  localStorage.removeItem("cata_v1");
+  S = {config:null, plan:[], registros:[], panelistas:[], actual:null, pantalla:"setup"};
+  render();
+}
+
+/* ====================== EXPORTACIÓN ====================== */
+function hojaDatos(){
+  const cols = ["estudio","panelista","folio","orden","codigo","marca",
+    ...ANTES.map(a=>a[0]), ...DESPUES.map(a=>a[0]), "agrado_general","compraria","recomendaria"];
+  return [cols, ...S.registros.map(r=>cols.map(c=>r[c] ?? ""))];
+}
+function hojaPanelistas(){
+  const cols = ["estudio","panelista","folio","facultad","sexo","comio_ultima_hora","frecuencia",
+    "tipo","dulzor_preferido","favorita_codigo","favorita_marca","menos_gusto_codigo","menos_gusto_marca"];
+  return [cols, ...S.panelistas.map(r=>cols.map(c=>r[c] ?? ""))];
+}
+function hojaPlan(){
+  const cols = ["panelista","folio","secuencia","orden","codigo","marca"];
+  return [cols, ...S.plan.map(r=>cols.map(c=>r[c] ?? ""))];
+}
+function exportarExcel(){
+  if(typeof XLSX === "undefined"){
+    alert("No se pudo cargar el generador de Excel (requiere conexión). Use el respaldo en CSV.");
+    return;
+  }
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(hojaDatos()), "datos");
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(hojaPanelistas()), "panelistas");
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(hojaPlan()), "plan_aleatorizacion");
+  XLSX.writeFile(wb, nombreArchivo("xlsx"));
+}
+function exportarPlan(){
+  if(typeof XLSX === "undefined"){ bajar(aCSV(hojaPlan()), "plan_aleatorizacion.csv"); return; }
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(hojaPlan()), "plan_aleatorizacion");
+  XLSX.writeFile(wb, "plan_aleatorizacion.xlsx");
+}
+function aCSV(aoa){
+  return aoa.map(f=>f.map(v=>{
+    const s = String(v);
+    return /[",;\n]/.test(s) ? '"'+s.replace(/"/g,'""')+'"' : s;
+  }).join(",")).join("\n");
+}
+function exportarCSV(){
+  bajar("﻿"+aCSV(hojaDatos()), nombreArchivo("csv"));
+  setTimeout(()=>bajar("﻿"+aCSV(hojaPanelistas()), "panelistas.csv"), 400);
+}
+function exportarR(){
+  const codigo = `# Análisis del experimento sensorial
+# ${S.config.estudio}
+# Generado automáticamente por la aplicación de captura
+
+library(tidyverse)
+
+datos <- read.csv("datos.csv")          # hoja "datos" exportada
+datos$marca    <- factor(datos$marca)
+datos$panelista <- factor(datos$panelista)
+
+# --- Exploración ---
+datos |> group_by(marca) |>
+  summarise(n = n(), media = mean(agrado_general), de = sd(agrado_general))
+
+ggplot(datos, aes(x = marca, y = agrado_general, fill = marca)) +
+  geom_boxplot() +
+  labs(x = "Marca", y = "Agrado general (1-7)") +
+  theme_minimal() + theme(legend.position = "none")
+
+# --- Diseño por bloques completos al azar: cada panelista es un bloque ---
+modelo <- aov(agrado_general ~ marca + panelista, data = datos)
+summary(modelo)
+
+# --- Verificación de supuestos ---
+shapiro.test(residuals(modelo))         # normalidad de los residuos
+bartlett.test(agrado_general ~ marca, data = datos)   # homogeneidad de varianzas
+plot(modelo, which = 1)                # residuos contra ajustados
+
+# --- Comparaciones post-hoc ---
+TukeyHSD(modelo, which = "marca")
+plot(TukeyHSD(modelo, which = "marca"), las = 1)
+`;
+  bajar(codigo, "analisis_cata.R");
+}
+function nombreArchivo(ext){
+  const f = new Date().toISOString().slice(0,10);
+  return "cata_" + f + "." + ext;
+}
+function bajar(texto, nombre){
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([texto], {type:"text/plain;charset=utf-8"}));
+  a.download = nombre; a.click();
+}
+
+render();
+</script>
+</body>
+</html>

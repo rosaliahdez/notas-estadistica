@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>10&nbsp; Análisis de varianza (ANOVA) – Estadística para Ciencias de la Computación</title>
+<title>11&nbsp; Análisis de varianza (ANOVA) – Estadística para Ciencias de la Computación</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -22,6 +22,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -44,7 +79,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-e671ceb1ec85f3bd6fb682ad87dd4085.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-22a2d3c8fd5a3a2e3c4a69971a64c298.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -72,11 +109,42 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Buscar"
   }
 }</script>
+<script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 <link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -89,7 +157,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06-muestrales.html">III. Inferencia estadística</a></li><li class="breadcrumb-item"><a href="./10-anova.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Análisis de varianza (ANOVA)</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./laboratorio-estandarizacion.html">III. Inferencia estadística</a></li><li class="breadcrumb-item"><a href="./10-anova.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Análisis de varianza (ANOVA)</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -190,38 +258,44 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./laboratorio-estandarizacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Laboratorio interactivo: la estandarización</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./06-muestrales.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Distribuciones muestrales y TCL</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Distribuciones muestrales y TCL</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./07-estimacion-pruebas.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Estimación y prueba de hipótesis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estimación y prueba de hipótesis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./08-dos-muestras.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Inferencia para dos parámetros</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Inferencia para dos parámetros</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./09-enumerativos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Inferencia para datos enumerativos</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Inferencia para datos enumerativos</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10-anova.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Análisis de varianza (ANOVA)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Análisis de varianza (ANOVA)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./11-regresion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Inferencia en regresión</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Inferencia en regresión</span></span></a>
   </div>
 </li>
       </ul>
@@ -232,6 +306,41 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Referencias</span></a>
   </div>
 </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Apéndices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mapa-decision.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mapa de decisión</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./formulario.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Formulario</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./apendice-python.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">R y Python, lado a lado</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./laboratorio-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Practicar R sin instalar nada</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -242,21 +351,29 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">En este capítulo</h2>
    
   <ul>
-  <li><a href="#anova-de-un-factor-y-la-prueba-f" id="toc-anova-de-un-factor-y-la-prueba-f" class="nav-link active" data-scroll-target="#anova-de-un-factor-y-la-prueba-f"><span class="header-section-number">10.1</span> ANOVA de un factor y la prueba F</a></li>
-  <li><a href="#verificación-de-supuestos-normalidad-de-residuos-y-homogeneidad-de-varianzas-bartlettlevene" id="toc-verificación-de-supuestos-normalidad-de-residuos-y-homogeneidad-de-varianzas-bartlettlevene" class="nav-link" data-scroll-target="#verificación-de-supuestos-normalidad-de-residuos-y-homogeneidad-de-varianzas-bartlettlevene"><span class="header-section-number">10.2</span> Verificación de supuestos: normalidad de residuos y homogeneidad de varianzas (Bartlett/Levene)</a></li>
-  <li><a href="#comparación-gráfica-de-medias" id="toc-comparación-gráfica-de-medias" class="nav-link" data-scroll-target="#comparación-gráfica-de-medias"><span class="header-section-number">10.3</span> Comparación gráfica de medias</a></li>
-  <li><a href="#comparaciones-post-hoc-tukey" id="toc-comparaciones-post-hoc-tukey" class="nav-link" data-scroll-target="#comparaciones-post-hoc-tukey"><span class="header-section-number">10.4</span> Comparaciones post-hoc (Tukey)</a></li>
-  <li><a href="#análisis-del-experimento-de-galletas" id="toc-análisis-del-experimento-de-galletas" class="nav-link" data-scroll-target="#análisis-del-experimento-de-galletas"><span class="header-section-number">10.5</span> Análisis del experimento de galletas</a></li>
-  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">10.6</span> Ejercicios</a></li>
+  <li><a href="#por-qué-no-muchas-pruebas-t" id="toc-por-qué-no-muchas-pruebas-t" class="nav-link active" data-scroll-target="#por-qué-no-muchas-pruebas-t"><span class="header-section-number">11.1</span> Por qué no muchas pruebas t</a></li>
+  <li><a href="#la-idea-dos-fuentes-de-variación" id="toc-la-idea-dos-fuentes-de-variación" class="nav-link" data-scroll-target="#la-idea-dos-fuentes-de-variación"><span class="header-section-number">11.2</span> La idea: dos fuentes de variación</a>
+  <ul class="collapse">
+  <li><a href="#sec-lab-f" id="toc-sec-lab-f" class="nav-link" data-scroll-target="#sec-lab-f"><span class="header-section-number">11.2.1</span> Laboratorio: entre grupos contra dentro de grupos</a></li>
+  </ul></li>
+  <li><a href="#el-anova-en-r" id="toc-el-anova-en-r" class="nav-link" data-scroll-target="#el-anova-en-r"><span class="header-section-number">11.3</span> El ANOVA en R</a>
+  <ul class="collapse">
+  <li><a href="#sec-anova-mano" id="toc-sec-anova-mano" class="nav-link" data-scroll-target="#sec-anova-mano"><span class="header-section-number">11.3.1</span> El mismo cálculo a mano</a></li>
+  </ul></li>
+  <li><a href="#verificación-de-supuestos" id="toc-verificación-de-supuestos" class="nav-link" data-scroll-target="#verificación-de-supuestos"><span class="header-section-number">11.4</span> Verificación de supuestos</a></li>
+  <li><a href="#pruebas-post-hoc-entre-cuáles" id="toc-pruebas-post-hoc-entre-cuáles" class="nav-link" data-scroll-target="#pruebas-post-hoc-entre-cuáles"><span class="header-section-number">11.5</span> Pruebas post-hoc: ¿entre cuáles?</a></li>
+  <li><a href="#un-segundo-caso-los-sustratos" id="toc-un-segundo-caso-los-sustratos" class="nav-link" data-scroll-target="#un-segundo-caso-los-sustratos"><span class="header-section-number">11.6</span> Un segundo caso: los sustratos</a></li>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen"><span class="header-section-number">11.7</span> Resumen</a></li>
+  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">11.8</span> Ejercicios</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06-muestrales.html">III. Inferencia estadística</a></li><li class="breadcrumb-item"><a href="./10-anova.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Análisis de varianza (ANOVA)</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./laboratorio-estandarizacion.html">III. Inferencia estadística</a></li><li class="breadcrumb-item"><a href="./10-anova.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Análisis de varianza (ANOVA)</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-cap10" class="quarto-section-identifier"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Análisis de varianza (ANOVA)</span></span></h1>
+<h1 class="title"><span id="sec-cap10" class="quarto-section-identifier"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Análisis de varianza (ANOVA)</span></span></h1>
 </div>
 
 
@@ -273,60 +390,673 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="callout callout-style-default callout-important callout-titled" title="Plantilla en construcción">
+<div class="callout callout-style-default callout-warning callout-titled" title="Capítulo en revisión">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Importante</span>Plantilla en construcción
+<span class="screen-reader-only">Advertencia</span>Capítulo en revisión
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Este capítulo corresponde a <strong>Semana 13</strong> del calendario y usa los datos de <strong>galletas, hongos/sustrato</strong>. La estructura de secciones ya está fijada; el contenido se desarrolla con el mismo formato del <a href="01-exploracion.html" class="quarto-xref"><span>Capítulo 1</span></a>: pregunta real, técnica, supuestos, cómputo en R e interpretación.</p>
+<p>El contenido de este capítulo está completo, pero todavía no pasa por la revisión final de redacción. Se avisará en clase cuando quede listo para estudiar de aquí. Mientras tanto se puede consultar, con esa advertencia.</p>
 </div>
 </div>
-<section id="anova-de-un-factor-y-la-prueba-f" class="level2" data-number="10.1">
-<h2 data-number="10.1" class="anchored" data-anchor-id="anova-de-un-factor-y-la-prueba-f"><span class="header-section-number">10.1</span> ANOVA de un factor y la prueba F</h2>
-<p><em>(En construcción.)</em></p>
-</section>
-<section id="verificación-de-supuestos-normalidad-de-residuos-y-homogeneidad-de-varianzas-bartlettlevene" class="level2" data-number="10.2">
-<h2 data-number="10.2" class="anchored" data-anchor-id="verificación-de-supuestos-normalidad-de-residuos-y-homogeneidad-de-varianzas-bartlettlevene"><span class="header-section-number">10.2</span> Verificación de supuestos: normalidad de residuos y homogeneidad de varianzas (Bartlett/Levene)</h2>
-<p><em>(En construcción.)</em></p>
-</section>
-<section id="comparación-gráfica-de-medias" class="level2" data-number="10.3">
-<h2 data-number="10.3" class="anchored" data-anchor-id="comparación-gráfica-de-medias"><span class="header-section-number">10.3</span> Comparación gráfica de medias</h2>
-<p><em>(En construcción.)</em></p>
-</section>
-<section id="comparaciones-post-hoc-tukey" class="level2" data-number="10.4">
-<h2 data-number="10.4" class="anchored" data-anchor-id="comparaciones-post-hoc-tukey"><span class="header-section-number">10.4</span> Comparaciones post-hoc (Tukey)</h2>
-<p><em>(En construcción.)</em></p>
-</section>
-<section id="análisis-del-experimento-de-galletas" class="level2" data-number="10.5">
-<h2 data-number="10.5" class="anchored" data-anchor-id="análisis-del-experimento-de-galletas"><span class="header-section-number">10.5</span> Análisis del experimento de galletas</h2>
-<p><em>(En construcción.)</em></p>
-<div class="callout callout-style-default callout-tip callout-titled" title="¿Qué técnica uso?">
+<div class="callout callout-style-default callout-tip callout-titled" title="Objetivos del capítulo">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>¿Qué técnica uso?
+<span class="screen-reader-only">Tip</span>Objetivos del capítulo
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Tres o más grupos, una variable cuantitativa: ANOVA + prueba F; si hay diferencias, post-hoc (Tukey) para ver entre cuáles.</p>
+<ul>
+<li>Explicar por qué <strong>no</strong> se deben hacer muchas pruebas t para comparar varios grupos.</li>
+<li>Entender el ANOVA como una comparación entre <strong>variación entre grupos</strong> y <strong>dentro de grupos</strong>.</li>
+<li>Aplicar la <strong>prueba F</strong> y verificar sus <strong>supuestos</strong>.</li>
+<li>Identificar <strong>entre cuáles</strong> grupos está la diferencia con pruebas <strong>post-hoc</strong>.</li>
+</ul>
+</div>
+</div>
+<p>Llegamos al capítulo del proyecto. Ya sabemos comparar dos grupos (<a href="08-dos-muestras.html" class="quarto-xref"><span>Capítulo 9</span></a>); ahora son <strong>tres o más</strong>: cuatro marcas de galletas, cuatro sustratos de cultivo, tres terapias. La técnica se llama <strong>análisis de varianza</strong>, y su nombre es curioso: usa varianzas para comparar <strong>medias</strong>.</p>
+<section id="por-qué-no-muchas-pruebas-t" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="por-qué-no-muchas-pruebas-t"><span class="header-section-number">11.1</span> Por qué no muchas pruebas t</h2>
+<p>La tentación es obvia: si tengo cuatro marcas, hago todas las comparaciones de a dos. Con cuatro grupos son seis pruebas. El problema es el de las <strong>comparaciones múltiples</strong> que ya vimos en el <a href="07-estimacion-pruebas.html" class="quarto-xref"><span>Capítulo 8</span></a>: cada prueba tiene 5 % de probabilidad de dar un falso positivo, y esas probabilidades se acumulan.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.95</span><span class="sc">^</span><span class="dv">6</span>   <span class="co"># probabilidad de al menos un falso positivo en 6 pruebas</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.2649081</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Es decir, <strong>más del 26 %</strong> de probabilidad de “descubrir” al menos una diferencia inexistente. Con diez grupos serían 45 pruebas y la probabilidad superaría el 90 %. El ANOVA resuelve esto con <strong>una sola prueba global</strong> que mantiene el error en 5 %.</p>
+</section>
+<section id="la-idea-dos-fuentes-de-variación" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="la-idea-dos-fuentes-de-variación"><span class="header-section-number">11.2</span> La idea: dos fuentes de variación</h2>
+<p>Miremos primero los datos del experimento de la cata:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(galletas, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(marca, agrado), <span class="at">y =</span> agrado, <span class="at">fill =</span> marca)) <span class="sc">+</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Marca"</span>, <span class="at">y =</span> <span class="st">"Agrado (1–9)"</span>) <span class="sc">+</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="fig-box-galletas" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-box-galletas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="10-anova_files/figure-html/fig-box-galletas-1.png" class="img-fluid figure-img" width="528">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-box-galletas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;11.1: Agrado por marca de galleta (25 jueces, cata a ciegas).
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Las medias por marca difieren, pero dentro de cada marca también hay dispersión. No todos los jueces coinciden. La pregunta del ANOVA es exactamente esa comparación:</p>
+<blockquote class="blockquote">
+<p>¿La variación <strong>entre</strong> las medias de los grupos es grande comparada con la variación <strong>dentro</strong> de los grupos?</p>
+</blockquote>
+<p>Si las medias están muy separadas respecto al ruido interno, concluimos que los grupos difieren de verdad. Si la separación es del mismo orden que el ruido, no.</p>
+<p>Formalmente se descompone la variación total en dos partes:</p>
+<p><span class="math display">\[SC_{\text{total}} = \underbrace{SC_{\text{entre}}}_{\text{efecto del factor}} + \underbrace{SC_{\text{dentro}}}_{\text{ruido}}\]</span></p>
+<p>y el estadístico es su cociente, ajustado por grados de libertad:</p>
+<p><span class="math display">\[F = \frac{SC_{\text{entre}} / (k-1)}{SC_{\text{dentro}} / (N-k)} = \frac{\text{variación entre grupos}}{\text{variación dentro de grupos}}\]</span></p>
+<p>Bajo <span class="math inline">\(H_0\)</span> (todas las medias iguales), <span class="math inline">\(F\)</span> ronda 1. Valores grandes son evidencia contra <span class="math inline">\(H_0\)</span>.</p>
+<section id="sec-lab-f" class="level3" data-number="11.2.1">
+<h3 data-number="11.2.1" class="anchored" data-anchor-id="sec-lab-f"><span class="header-section-number">11.2.1</span> Laboratorio: entre grupos contra dentro de grupos</h3>
+<p>Aquí se ve el corazón del ANOVA. Al mover la <strong>separación entre las medias</strong> y la <strong>dispersión dentro de cada grupo</strong> se observa cómo responde <span class="math inline">\(F\)</span>. Se descubrirá que lo que importa no es la separación en sí, sino la separación <strong>relativa al ruido</strong>.</p>
+<div class="cell panel-input card bg-light p-2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="74" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 73;"><span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>viewof separacion <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">0</span><span class="op">,</span> <span class="dv">4</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">1.5</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.1</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"separación entre medias"</span>})</span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a>viewof ruido <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="fl">0.3</span><span class="op">,</span> <span class="dv">3</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.1</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"dispersión dentro de grupos"</span>})</span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>viewof nGrupoF <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">5</span><span class="op">,</span> <span class="dv">40</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">15</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">5</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"n por grupo"</span>})</span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a>viewof regenerar <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">button</span>(<span class="st">"Nuevas muestras"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="81" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 80;"><span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a>datosF <span class="op">=</span> {</span>
+<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a>  regenerar<span class="op">;</span></span>
+<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> medias <span class="op">=</span> [<span class="dv">10</span><span class="op">,</span> <span class="dv">10</span> <span class="op">+</span> separacion<span class="op">,</span> <span class="dv">10</span> <span class="op">+</span> <span class="dv">2</span> <span class="op">*</span> separacion]<span class="op">;</span></span>
+<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> nombres <span class="op">=</span> [<span class="st">"A"</span><span class="op">,</span> <span class="st">"B"</span><span class="op">,</span> <span class="st">"C"</span>]<span class="op">;</span></span>
+<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> out <span class="op">=</span> []<span class="op">;</span></span>
+<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a>  medias<span class="op">.</span><span class="fu">forEach</span>((m<span class="op">,</span> i) <span class="kw">=&gt;</span> {</span>
+<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> gen <span class="op">=</span> d3<span class="op">.</span><span class="fu">randomNormal</span>(m<span class="op">,</span> ruido)<span class="op">;</span></span>
+<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="kw">let</span> j <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> j <span class="op">&lt;</span> nGrupoF<span class="op">;</span> j<span class="op">++</span>) out<span class="op">.</span><span class="fu">push</span>({ <span class="dt">grupo</span><span class="op">:</span> nombres[i]<span class="op">,</span> <span class="dt">valor</span><span class="op">:</span> <span class="fu">gen</span>() })<span class="op">;</span></span>
+<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> out<span class="op">;</span></span>
+<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="96" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 95;"><span id="cb5-96"><a href="#cb5-96" aria-hidden="true" tabindex="-1"></a>anovaF <span class="op">=</span> {</span>
+<span id="cb5-97"><a href="#cb5-97" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> grupos <span class="op">=</span> d3<span class="op">.</span><span class="fu">group</span>(datosF<span class="op">,</span> d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">grupo</span>)<span class="op">;</span></span>
+<span id="cb5-98"><a href="#cb5-98" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> todos <span class="op">=</span> datosF<span class="op">.</span><span class="fu">map</span>(d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">valor</span>)<span class="op">;</span></span>
+<span id="cb5-99"><a href="#cb5-99" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> granMedia <span class="op">=</span> d3<span class="op">.</span><span class="fu">mean</span>(todos)<span class="op">;</span></span>
+<span id="cb5-100"><a href="#cb5-100" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> ssb <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> ssw <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb5-101"><a href="#cb5-101" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">const</span> [<span class="op">,</span> vals] <span class="kw">of</span> grupos) {</span>
+<span id="cb5-102"><a href="#cb5-102" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> v <span class="op">=</span> vals<span class="op">.</span><span class="fu">map</span>(d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">valor</span>)<span class="op">,</span> m <span class="op">=</span> d3<span class="op">.</span><span class="fu">mean</span>(v)<span class="op">;</span></span>
+<span id="cb5-103"><a href="#cb5-103" aria-hidden="true" tabindex="-1"></a>    ssb <span class="op">+=</span> v<span class="op">.</span><span class="at">length</span> <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">pow</span>(m <span class="op">-</span> granMedia<span class="op">,</span> <span class="dv">2</span>)<span class="op">;</span></span>
+<span id="cb5-104"><a href="#cb5-104" aria-hidden="true" tabindex="-1"></a>    ssw <span class="op">+=</span> d3<span class="op">.</span><span class="fu">sum</span>(v<span class="op">,</span> x <span class="kw">=&gt;</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">pow</span>(x <span class="op">-</span> m<span class="op">,</span> <span class="dv">2</span>))<span class="op">;</span></span>
+<span id="cb5-105"><a href="#cb5-105" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-106"><a href="#cb5-106" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> k <span class="op">=</span> grupos<span class="op">.</span><span class="at">size</span><span class="op">,</span> N <span class="op">=</span> todos<span class="op">.</span><span class="at">length</span><span class="op">;</span></span>
+<span id="cb5-107"><a href="#cb5-107" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> d1 <span class="op">=</span> k <span class="op">-</span> <span class="dv">1</span><span class="op">,</span> d2 <span class="op">=</span> N <span class="op">-</span> k<span class="op">;</span></span>
+<span id="cb5-108"><a href="#cb5-108" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> F <span class="op">=</span> (ssb <span class="op">/</span> d1) <span class="op">/</span> (ssw <span class="op">/</span> d2)<span class="op">;</span></span>
+<span id="cb5-109"><a href="#cb5-109" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> { ssb<span class="op">,</span> ssw<span class="op">,</span> d1<span class="op">,</span> d2<span class="op">,</span> F<span class="op">,</span> <span class="dt">p</span><span class="op">:</span> <span class="fu">betaiF</span>(d2 <span class="op">/</span> <span class="dv">2</span><span class="op">,</span> d1 <span class="op">/</span> <span class="dv">2</span><span class="op">,</span> d2 <span class="op">/</span> (d2 <span class="op">+</span> d1 <span class="op">*</span> F)) }<span class="op">;</span></span>
+<span id="cb5-110"><a href="#cb5-110" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="115" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 114;"><span id="cb6-115"><a href="#cb6-115" aria-hidden="true" tabindex="-1"></a>gammlnF <span class="op">=</span> (x) <span class="kw">=&gt;</span> {</span>
+<span id="cb6-116"><a href="#cb6-116" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> cof <span class="op">=</span> [<span class="fl">76.18009172947146</span><span class="op">,</span> <span class="op">-</span><span class="fl">86.50532032941677</span><span class="op">,</span> <span class="fl">24.01409824083091</span><span class="op">,</span></span>
+<span id="cb6-117"><a href="#cb6-117" aria-hidden="true" tabindex="-1"></a>               <span class="op">-</span><span class="fl">1.231739572450155</span><span class="op">,</span> <span class="fl">0.1208650973866179e-2</span><span class="op">,</span> <span class="op">-</span><span class="fl">0.5395239384953e-5</span>]<span class="op">;</span></span>
+<span id="cb6-118"><a href="#cb6-118" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> y <span class="op">=</span> x<span class="op">,</span> tmp <span class="op">=</span> x <span class="op">+</span> <span class="fl">5.5</span><span class="op">;</span></span>
+<span id="cb6-119"><a href="#cb6-119" aria-hidden="true" tabindex="-1"></a>  tmp <span class="op">-=</span> (x <span class="op">+</span> <span class="fl">0.5</span>) <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">log</span>(tmp)<span class="op">;</span></span>
+<span id="cb6-120"><a href="#cb6-120" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> ser <span class="op">=</span> <span class="fl">1.000000000190015</span><span class="op">;</span></span>
+<span id="cb6-121"><a href="#cb6-121" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">let</span> j <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> j <span class="op">&lt;</span> <span class="dv">6</span><span class="op">;</span> j<span class="op">++</span>) ser <span class="op">+=</span> cof[j] <span class="op">/</span> <span class="op">++</span>y<span class="op">;</span></span>
+<span id="cb6-122"><a href="#cb6-122" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="op">-</span>tmp <span class="op">+</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">log</span>(<span class="fl">2.5066282746310005</span> <span class="op">*</span> ser <span class="op">/</span> x)<span class="op">;</span></span>
+<span id="cb6-123"><a href="#cb6-123" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="128" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 127;"><span id="cb7-128"><a href="#cb7-128" aria-hidden="true" tabindex="-1"></a>betacfF <span class="op">=</span> (a<span class="op">,</span> b<span class="op">,</span> x) <span class="kw">=&gt;</span> {</span>
+<span id="cb7-129"><a href="#cb7-129" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> qab <span class="op">=</span> a <span class="op">+</span> b<span class="op">,</span> qap <span class="op">=</span> a <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> qam <span class="op">=</span> a <span class="op">-</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb7-130"><a href="#cb7-130" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> c <span class="op">=</span> <span class="dv">1</span><span class="op">,</span> d <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> qab <span class="op">*</span> x <span class="op">/</span> qap<span class="op">;</span></span>
+<span id="cb7-131"><a href="#cb7-131" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(d) <span class="op">&lt;</span> <span class="fl">1e-300</span>) d <span class="op">=</span> <span class="fl">1e-300</span><span class="op">;</span></span>
+<span id="cb7-132"><a href="#cb7-132" aria-hidden="true" tabindex="-1"></a>  d <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> d<span class="op">;</span></span>
+<span id="cb7-133"><a href="#cb7-133" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> h <span class="op">=</span> d<span class="op">;</span></span>
+<span id="cb7-134"><a href="#cb7-134" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">let</span> m <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> m <span class="op">&lt;=</span> <span class="dv">300</span><span class="op">;</span> m<span class="op">++</span>) {</span>
+<span id="cb7-135"><a href="#cb7-135" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> m2 <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> m<span class="op">;</span></span>
+<span id="cb7-136"><a href="#cb7-136" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> aa <span class="op">=</span> m <span class="op">*</span> (b <span class="op">-</span> m) <span class="op">*</span> x <span class="op">/</span> ((qam <span class="op">+</span> m2) <span class="op">*</span> (a <span class="op">+</span> m2))<span class="op">;</span></span>
+<span id="cb7-137"><a href="#cb7-137" aria-hidden="true" tabindex="-1"></a>    d <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> aa <span class="op">*</span> d<span class="op">;</span> <span class="cf">if</span> (<span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(d) <span class="op">&lt;</span> <span class="fl">1e-300</span>) d <span class="op">=</span> <span class="fl">1e-300</span><span class="op">;</span></span>
+<span id="cb7-138"><a href="#cb7-138" aria-hidden="true" tabindex="-1"></a>    c <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> aa <span class="op">/</span> c<span class="op">;</span> <span class="cf">if</span> (<span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(c) <span class="op">&lt;</span> <span class="fl">1e-300</span>) c <span class="op">=</span> <span class="fl">1e-300</span><span class="op">;</span></span>
+<span id="cb7-139"><a href="#cb7-139" aria-hidden="true" tabindex="-1"></a>    d <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> d<span class="op">;</span> h <span class="op">*=</span> d <span class="op">*</span> c<span class="op">;</span></span>
+<span id="cb7-140"><a href="#cb7-140" aria-hidden="true" tabindex="-1"></a>    aa <span class="op">=</span> <span class="op">-</span>(a <span class="op">+</span> m) <span class="op">*</span> (qab <span class="op">+</span> m) <span class="op">*</span> x <span class="op">/</span> ((a <span class="op">+</span> m2) <span class="op">*</span> (qap <span class="op">+</span> m2))<span class="op">;</span></span>
+<span id="cb7-141"><a href="#cb7-141" aria-hidden="true" tabindex="-1"></a>    d <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> aa <span class="op">*</span> d<span class="op">;</span> <span class="cf">if</span> (<span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(d) <span class="op">&lt;</span> <span class="fl">1e-300</span>) d <span class="op">=</span> <span class="fl">1e-300</span><span class="op">;</span></span>
+<span id="cb7-142"><a href="#cb7-142" aria-hidden="true" tabindex="-1"></a>    c <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> aa <span class="op">/</span> c<span class="op">;</span> <span class="cf">if</span> (<span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(c) <span class="op">&lt;</span> <span class="fl">1e-300</span>) c <span class="op">=</span> <span class="fl">1e-300</span><span class="op">;</span></span>
+<span id="cb7-143"><a href="#cb7-143" aria-hidden="true" tabindex="-1"></a>    d <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> d<span class="op">;</span></span>
+<span id="cb7-144"><a href="#cb7-144" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> del <span class="op">=</span> d <span class="op">*</span> c<span class="op">;</span> h <span class="op">*=</span> del<span class="op">;</span></span>
+<span id="cb7-145"><a href="#cb7-145" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(del <span class="op">-</span> <span class="dv">1</span>) <span class="op">&lt;</span> <span class="fl">1e-12</span>) <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb7-146"><a href="#cb7-146" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb7-147"><a href="#cb7-147" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> h<span class="op">;</span></span>
+<span id="cb7-148"><a href="#cb7-148" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-5" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="153" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 152;"><span id="cb8-153"><a href="#cb8-153" aria-hidden="true" tabindex="-1"></a>betaiF <span class="op">=</span> (a<span class="op">,</span> b<span class="op">,</span> x) <span class="kw">=&gt;</span> {</span>
+<span id="cb8-154"><a href="#cb8-154" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (x <span class="op">&lt;=</span> <span class="dv">0</span>) <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb8-155"><a href="#cb8-155" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (x <span class="op">&gt;=</span> <span class="dv">1</span>) <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb8-156"><a href="#cb8-156" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> bt <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">exp</span>(<span class="fu">gammlnF</span>(a <span class="op">+</span> b) <span class="op">-</span> <span class="fu">gammlnF</span>(a) <span class="op">-</span> <span class="fu">gammlnF</span>(b)</span>
+<span id="cb8-157"><a href="#cb8-157" aria-hidden="true" tabindex="-1"></a>             <span class="op">+</span> a <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">log</span>(x) <span class="op">+</span> b <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">log</span>(<span class="dv">1</span> <span class="op">-</span> x))<span class="op">;</span></span>
+<span id="cb8-158"><a href="#cb8-158" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> x <span class="op">&lt;</span> (a <span class="op">+</span> <span class="dv">1</span>) <span class="op">/</span> (a <span class="op">+</span> b <span class="op">+</span> <span class="dv">2</span>)</span>
+<span id="cb8-159"><a href="#cb8-159" aria-hidden="true" tabindex="-1"></a>    <span class="op">?</span> bt <span class="op">*</span> <span class="fu">betacfF</span>(a<span class="op">,</span> b<span class="op">,</span> x) <span class="op">/</span> a</span>
+<span id="cb8-160"><a href="#cb8-160" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span> <span class="dv">1</span> <span class="op">-</span> bt <span class="op">*</span> <span class="fu">betacfF</span>(b<span class="op">,</span> a<span class="op">,</span> <span class="dv">1</span> <span class="op">-</span> x) <span class="op">/</span> b<span class="op">;</span></span>
+<span id="cb8-161"><a href="#cb8-161" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-6" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="166" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 165;"><span id="cb9-166"><a href="#cb9-166" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb9-167"><a href="#cb9-167" aria-hidden="true" tabindex="-1"></a>  <span class="dt">height</span><span class="op">:</span> <span class="dv">260</span><span class="op">,</span></span>
+<span id="cb9-168"><a href="#cb9-168" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> { <span class="dt">label</span><span class="op">:</span> <span class="st">"grupo"</span> }<span class="op">,</span></span>
+<span id="cb9-169"><a href="#cb9-169" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> { <span class="dt">label</span><span class="op">:</span> <span class="st">"valor"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">4</span><span class="op">,</span> <span class="dv">20</span>] }<span class="op">,</span></span>
+<span id="cb9-170"><a href="#cb9-170" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb9-171"><a href="#cb9-171" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(datosF<span class="op">,</span> { <span class="dt">x</span><span class="op">:</span> <span class="st">"grupo"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"valor"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"#1F4E79"</span><span class="op">,</span> <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.4</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="dv">3</span><span class="op">,</span></span>
+<span id="cb9-172"><a href="#cb9-172" aria-hidden="true" tabindex="-1"></a>      <span class="dt">dx</span><span class="op">:</span> () <span class="kw">=&gt;</span> (<span class="bu">Math</span><span class="op">.</span><span class="fu">random</span>() <span class="op">-</span> <span class="fl">0.5</span>) <span class="op">*</span> <span class="dv">16</span> })<span class="op">,</span></span>
+<span id="cb9-173"><a href="#cb9-173" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">tickY</span>(datosF<span class="op">,</span> Plot<span class="op">.</span><span class="fu">groupX</span>({ <span class="dt">y</span><span class="op">:</span> <span class="st">"mean"</span> }<span class="op">,</span></span>
+<span id="cb9-174"><a href="#cb9-174" aria-hidden="true" tabindex="-1"></a>      { <span class="dt">x</span><span class="op">:</span> <span class="st">"grupo"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"valor"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#C0392B"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">3</span> }))<span class="op">,</span></span>
+<span id="cb9-175"><a href="#cb9-175" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([d3<span class="op">.</span><span class="fu">mean</span>(datosF<span class="op">,</span> d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">valor</span>)]<span class="op">,</span></span>
+<span id="cb9-176"><a href="#cb9-176" aria-hidden="true" tabindex="-1"></a>      { <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#888780"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"4"</span> })</span>
+<span id="cb9-177"><a href="#cb9-177" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb9-178"><a href="#cb9-178" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-7" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="183" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 182;"><span id="cb10-183"><a href="#cb10-183" aria-hidden="true" tabindex="-1"></a><span class="fu">md</span><span class="vs">`SC entre = **</span><span class="sc">${</span>anovaF<span class="op">.</span><span class="at">ssb</span><span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">1</span>)<span class="sc">}</span><span class="vs">** · SC dentro = **</span><span class="sc">${</span>anovaF<span class="op">.</span><span class="at">ssw</span><span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">1</span>)<span class="sc">}</span><span class="vs">** · **F = </span><span class="sc">${</span>anovaF<span class="op">.</span><span class="at">F</span><span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">2</span>)<span class="sc">}</span><span class="vs">** · valor p = **</span><span class="sc">${</span>anovaF<span class="op">.</span><span class="at">p</span> <span class="op">&lt;</span> <span class="fl">0.0001</span> <span class="op">?</span> <span class="st">"&lt; 0.0001"</span> <span class="op">:</span> anovaF<span class="op">.</span><span class="at">p</span><span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">4</span>)<span class="sc">}</span><span class="vs">** · </span><span class="sc">${</span>anovaF<span class="op">.</span><span class="at">p</span> <span class="op">&lt;</span> <span class="fl">0.05</span> <span class="op">?</span> <span class="st">"**se rechaza la igualdad de medias**"</span> <span class="op">:</span> <span class="st">"no se rechaza"</span><span class="sc">}</span><span class="vs">`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-8" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Con la separación en <strong>0</strong>: las tres rayas rojas (las medias) quedan casi sobre la línea gris (la media global), <span class="math inline">\(F\)</span> ronda 1 y el resultado casi nunca es significativo. Es el comportamiento esperado cuando <span class="math inline">\(H_0\)</span> es cierta.</p>
+<p>Si se deja la separación en 1.5 y se <strong>sube el ruido</strong> de 0.3 a 3: las medias siguen igual de separadas, pero <span class="math inline">\(F\)</span> se desploma. La misma diferencia real se vuelve indetectable cuando los grupos son muy dispersos. Y al revés: con poco ruido, una separación pequeña basta.</p>
+<p>Por último, al subir el <strong>n por grupo</strong> manteniendo todo lo demás: <span class="math inline">\(F\)</span> crece. Más datos, más capacidad de detectar la misma diferencia.</p>
+<p>Ese cociente (señal contra ruido) es todo el ANOVA.</p>
 </div>
 </div>
 </section>
-<section id="ejercicios" class="level2" data-number="10.6">
-<h2 data-number="10.6" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">10.6</span> Ejercicios</h2>
-<p><em>Por desarrollar (banco de la Dra. Figueroa reorganizado + reactivos nuevos).</em></p>
+</section>
+<section id="el-anova-en-r" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="el-anova-en-r"><span class="header-section-number">11.3</span> El ANOVA en R</h2>
+<p>Volvamos a las galletas. Las hipótesis son:</p>
+<ul>
+<li><span class="math inline">\(H_0: \mu_{\text{Oreo}} = \mu_{\text{Chokis}} = \mu_{\text{Lors}} = \mu_{\text{GreatValue}}\)</span></li>
+<li><span class="math inline">\(H_1\)</span>: al menos una media difiere de las demás</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">aov</span>(agrado <span class="sc">~</span> marca, <span class="at">data =</span> galletas)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             Df Sum Sq Mean Sq F value   Pr(&gt;F)    </span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; marca        3  82.76  27.587   19.12 8.38e-10 ***</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals   96 138.48   1.443                     </span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La tabla de ANOVA se lee así: el renglón <code>marca</code> es la variación <strong>entre</strong> grupos (3 grados de libertad, uno menos que el número de marcas) y <code>Residuals</code> es la variación <strong>dentro</strong> (96 grados de libertad). El cociente de sus cuadrados medios da <span class="math inline">\(F \approx 19.1\)</span>, con un valor p del orden de <span class="math inline">\(10^{-10}\)</span>.</p>
+<p>Conclusión: <strong>rechazamos <span class="math inline">\(H_0\)</span></strong>, las marcas no gustan por igual. Pero ojo con lo que <strong>no</strong> sabemos todavía: el ANOVA dice que <em>hay</em> diferencias, no <em>entre cuáles</em>. Para eso hacen falta las pruebas post-hoc.</p>
+</div>
+</div>
+<section id="sec-anova-mano" class="level3" data-number="11.3.1">
+<h3 data-number="11.3.1" class="anchored" data-anchor-id="sec-anova-mano"><span class="header-section-number">11.3.1</span> El mismo cálculo a mano</h3>
+<p>Un ANOVA completo con nueve datos cabe en media hoja, y hacerlo una vez muestra de dónde sale la tabla que imprime R. Tres tratamientos con tres observaciones cada uno:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Grupo</th>
+<th>Datos</th>
+<th>Media</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>7, 8, 9</td>
+<td>8</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>5, 6, 7</td>
+<td>6</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>3, 4, 5</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<p>La media general de los nueve datos es <span class="math inline">\(\bar{x} = 6\)</span>.</p>
+<p><strong>Paso 1. Variación entre grupos.</strong> Cuánto se apartan las medias de grupo de la media general, ponderando por el tamaño de cada grupo:</p>
+<p><span class="math display">\[SC_{\text{entre}} = \sum n_i(\bar{x}_i - \bar{x})^2 = 3(8-6)^2 + 3(6-6)^2 + 3(4-6)^2 = 12 + 0 + 12 = 24\]</span></p>
+<p>con <span class="math inline">\(k - 1 = 2\)</span> grados de libertad.</p>
+<p><strong>Paso 2. Variación dentro de grupos.</strong> Cuánto se apartan los datos de la media de <strong>su propio</strong> grupo:</p>
+<p><span class="math display">\[SC_{\text{dentro}} = \underbrace{(7-8)^2 + (8-8)^2 + (9-8)^2}_{2} + \underbrace{2}_{\text{grupo B}} + \underbrace{2}_{\text{grupo C}} = 6\]</span></p>
+<p>con <span class="math inline">\(N - k = 9 - 3 = 6\)</span> grados de libertad.</p>
+<p><strong>Paso 3. Los cuadrados medios</strong>, que son las sumas divididas entre sus grados de libertad:</p>
+<p><span class="math display">\[CM_{\text{entre}} = \frac{24}{2} = 12, \qquad CM_{\text{dentro}} = \frac{6}{6} = 1\]</span></p>
+<p><strong>Paso 4. El estadístico F</strong>, su cociente:</p>
+<p><span class="math display">\[F = \frac{CM_{\text{entre}}}{CM_{\text{dentro}}} = \frac{12}{1} = 12\]</span></p>
+<p><strong>Paso 5. La decisión.</strong> El valor crítico <span class="math inline">\(F_{0.95}(2, 6)\)</span> es 5.14. Como <span class="math inline">\(12 &gt; 5.14\)</span>, se rechaza la igualdad de medias.</p>
+<p>La tabla de ANOVA reúne todo lo anterior:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Fuente</th>
+<th>SC</th>
+<th>gl</th>
+<th>CM</th>
+<th>F</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Entre grupos</td>
+<td>24</td>
+<td>2</td>
+<td>12</td>
+<td>12</td>
+</tr>
+<tr class="even">
+<td>Dentro de grupos</td>
+<td>6</td>
+<td>6</td>
+<td>1</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td><strong>30</strong></td>
+<td><strong>8</strong></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>),</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">g =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>), <span class="at">each =</span> <span class="dv">3</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">aov</span>(y <span class="sc">~</span> g, <span class="at">data =</span> datos))</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             Df Sum Sq Mean Sq F value Pr(&gt;F)   </span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; g            2     24      12      12  0.008 **</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals    6      6       1                  </span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La salida de R reproduce exactamente la tabla: 24 y 6 de sumas de cuadrados, 12 y 1 de cuadrados medios, <span class="math inline">\(F = 12\)</span> y <span class="math inline">\(p = 0.008\)</span>.</p>
+<p>Tres cosas que este ejemplo deja ver con claridad:</p>
+<p><strong>Las sumas de cuadrados se reparten.</strong> <span class="math inline">\(SC_{\text{total}} = 30 = 24 + 6\)</span>, y los grados de libertad también: <span class="math inline">\(8 = 2 + 6\)</span>. Toda la variación de los datos queda repartida entre lo que explica el factor y lo que queda como ruido. De ahí el nombre “análisis de varianza”: se analiza la varianza descomponiéndola.</p>
+<p><strong>El cuadrado medio dentro es la varianza común.</strong> Vale 1, que es exactamente la varianza de cada grupo por separado (los tres tienen datos consecutivos). Es la estimación del ruido de fondo contra la que se compara todo lo demás.</p>
+<p><strong>F es un cociente señal-ruido</strong>, igual que el estadístico <span class="math inline">\(t\)</span>: la variación explicada por el factor, medida en unidades de la variación no explicada. Un <span class="math inline">\(F\)</span> de 12 significa que las diferencias entre grupos son doce veces mayores de lo que cabría esperar por el ruido interno.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="verificación-de-supuestos" class="level2" data-number="11.4">
+<h2 data-number="11.4" class="anchored" data-anchor-id="verificación-de-supuestos"><span class="header-section-number">11.4</span> Verificación de supuestos</h2>
+<p>Antes de creerle al resultado hay que revisar tres supuestos. Este paso no es un trámite: es lo que distingue un análisis serio de uno decorativo.</p>
+<p><strong>1. Independencia.</strong> Garantizada por el diseño: cada juez calificó de forma individual, sin comentarios en voz alta, y el orden se aleatorizó (<a href="05-experimentos.html" class="quarto-xref"><span>Capítulo 5</span></a>).</p>
+<p><strong>2. Normalidad de los residuos.</strong> Se revisa con un Q-Q plot de los residuos del modelo, no de los datos crudos:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>residuos <span class="ot">&lt;-</span> <span class="fu">residuals</span>(modelo)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="at">r =</span> residuos), <span class="fu">aes</span>(<span class="at">sample =</span> r)) <span class="sc">+</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span> <span class="fu">stat_qq_line</span>(<span class="at">color =</span> <span class="st">"#1F4E79"</span>) <span class="sc">+</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Cuantiles teóricos"</span>, <span class="at">y =</span> <span class="st">"Residuos"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="fig-qq-anova" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-qq-anova-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="10-anova_files/figure-html/fig-qq-anova-1.png" class="img-fluid figure-img" width="441">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-qq-anova-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;11.2: Q-Q plot de los residuos del modelo.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(residuos)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Shapiro-Wilk normality test</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  residuos</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; W = 0.97228, p-value = 0.03314</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>3. Homogeneidad de varianzas.</strong> Que la dispersión sea parecida en todos los grupos:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bartlett.test</span>(agrado <span class="sc">~</span> marca, <span class="at">data =</span> galletas)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Bartlett test of homogeneity of variances</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  agrado by marca</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Bartlett's K-squared = 3.3986, df = 3, p-value = 0.3341</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Qué hacer si un supuesto falla">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Qué hacer si un supuesto falla
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Normalidad</strong>: con grupos de tamaño razonable el ANOVA es bastante robusto gracias al TCL. Si falla claramente, se puede transformar la variable (logaritmo, raíz) o usar la alternativa no paramétrica <strong>Kruskal-Wallis</strong> (<code>kruskal.test</code>).</li>
+<li><strong>Homogeneidad de varianzas</strong>: si Bartlett o Levene la rechazan, se usa el ANOVA de Welch (<code>oneway.test(..., var.equal = FALSE)</code>), que no la exige.</li>
+<li><strong>Independencia</strong>: no tiene arreglo estadístico. Si el diseño la violó (por ejemplo, si los jueces se copiaron), los datos no sirven para esta prueba. Por eso el diseño va primero.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="pruebas-post-hoc-entre-cuáles" class="level2" data-number="11.5">
+<h2 data-number="11.5" class="anchored" data-anchor-id="pruebas-post-hoc-entre-cuáles"><span class="header-section-number">11.5</span> Pruebas post-hoc: ¿entre cuáles?</h2>
+<p>Rechazar <span class="math inline">\(H_0\)</span> deja la pregunta interesante abierta. Las <strong>pruebas post-hoc</strong> comparan todos los pares <strong>corrigiendo</strong> por comparaciones múltiples, de modo que el error global se mantenga en 5 %. La más usada es la de <strong>Tukey</strong>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(modelo)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Tukey multiple comparisons of means</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     95% family-wise confidence level</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Fit: aov(formula = agrado ~ marca, data = galletas)</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $marca</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                    diff         lwr       upr     p adj</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; GreatValue-Chokis -1.84 -2.72819696 -0.951803 0.0000027</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Lors-Chokis       -1.00 -1.88819696 -0.111803 0.0208515</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Oreo-Chokis        0.52 -0.36819696  1.408197 0.4233208</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Lors-GreatValue    0.84 -0.04819696  1.728197 0.0707424</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Oreo-GreatValue    2.36  1.47180304  3.248197 0.0000000</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Oreo-Lors          1.52  0.63180304  2.408197 0.0001225</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">TukeyHSD</span>(modelo), <span class="at">las =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="fig-tukey" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-tukey-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="10-anova_files/figure-html/fig-tukey-1.png" class="img-fluid figure-img" width="528">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tukey-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;11.3: Diferencias entre pares con sus intervalos de confianza ajustados.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Cada renglón es una comparación con su intervalo de confianza <strong>ajustado</strong>: si el intervalo <strong>no contiene al cero</strong>, esa pareja difiere significativamente. El resultado dibuja dos gamas:</p>
+<ul>
+<li><strong>Oreo (7.36) y Chokis (6.84)</strong> no difieren significativamente entre sí.</li>
+<li><strong>Lors (5.84) y Great Value (5.00)</strong> tampoco difieren entre sí.</li>
+<li>Pero <strong>cualquier marca del primer grupo supera a cualquiera del segundo</strong>.</li>
+</ul>
+<p>Redacción para el reporte del proyecto: <em>“El agrado difiere significativamente entre marcas (F(3,96) = 19.1, p &lt; 0.001). Las comparaciones de Tukey identifican dos grupos homogéneos: Oreo y Chokis obtienen las calificaciones más altas, sin diferencia detectable entre ellas, mientras que Lors y Great Value quedan por debajo, también sin diferencia entre sí.”</em></p>
+<p>Esta conclusión es mucho más útil que un simple “las marcas difieren”, y es justo lo que un cliente querría saber.</p>
+</div>
+</div>
+</section>
+<section id="un-segundo-caso-los-sustratos" class="level2" data-number="11.6">
+<h2 data-number="11.6" class="anchored" data-anchor-id="un-segundo-caso-los-sustratos"><span class="header-section-number">11.6</span> Un segundo caso: los sustratos</h2>
+<p>El mismo análisis con los datos del cultivo de setas:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>modelo_h <span class="ot">&lt;-</span> <span class="fu">aov</span>(eficiencia_biologica <span class="sc">~</span> sustrato, <span class="at">data =</span> hongos)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo_h)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             Df Sum Sq Mean Sq F value Pr(&gt;F)    </span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sustrato     3  19566    6522   83.25 &lt;2e-16 ***</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals   96   7521      78                   </span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="fu">bartlett.test</span>(eficiencia_biologica <span class="sc">~</span> sustrato, <span class="at">data =</span> hongos)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Bartlett test of homogeneity of variances</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  eficiencia_biologica by sustrato</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Bartlett's K-squared = 3.515, df = 3, p-value = 0.3188</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(modelo_h)<span class="sc">$</span>sustrato <span class="sc">|&gt;</span> <span class="fu">round</span>(<span class="dv">2</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                        diff    lwr   upr p adj</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; olote_maiz-aserrin    14.91   8.36 21.45  0.00</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; paja_trigo-aserrin    35.51  28.97 42.06  0.00</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; pulpa_cafe-aserrin    30.79  24.25 37.34  0.00</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; paja_trigo-olote_maiz 20.60  14.06 27.15  0.00</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; pulpa_cafe-olote_maiz 15.88   9.34 22.43  0.00</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; pulpa_cafe-paja_trigo -4.72 -11.27  1.83  0.24</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Aquí <span class="math inline">\(F\)</span> es enorme y el efecto del sustrato es contundente: la paja de trigo y la pulpa de café rinden mucho más que el olote y, sobre todo, que el aserrín. Bartlett no rechaza la igualdad de varianzas, así que el supuesto se sostiene.</p>
+<p>Un detalle honesto que vale la pena discutir en clase. El grupo del aserrín <strong>parece</strong> más variable que los demás (su desviación es la mayor). Sin embargo, Bartlett no lo detecta como significativo. Con 25 bolsas por grupo, la prueba no tiene suficiente <strong>potencia</strong> para distinguir esa diferencia de varianzas del azar. Es el mismo fenómeno del <a href="08-dos-muestras.html" class="quarto-xref"><span>Capítulo 9</span></a>: no rechazar no equivale a demostrar igualdad.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="¿Qué técnica usar?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>¿Qué técnica usar?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Con <strong>tres o más grupos</strong> y una variable respuesta cuantitativa:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Paso</th>
+<th>Herramienta en R</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. Explorar</td>
+<td><code>boxplot</code> o <code>ggplot</code> con <code>geom_boxplot()</code></td>
+</tr>
+<tr class="even">
+<td>2. Prueba global</td>
+<td><code>aov(y ~ grupo)</code> y <code>summary()</code></td>
+</tr>
+<tr class="odd">
+<td>3. Normalidad de residuos</td>
+<td>Q-Q plot y <code>shapiro.test(residuals(m))</code></td>
+</tr>
+<tr class="even">
+<td>4. Homogeneidad de varianzas</td>
+<td><code>bartlett.test(y ~ grupo)</code></td>
+</tr>
+<tr class="odd">
+<td>5. ¿Entre cuáles?</td>
+<td><code>TukeyHSD(m)</code></td>
+</tr>
+<tr class="even">
+<td>Si fallan los supuestos</td>
+<td><code>oneway.test(var.equal = FALSE)</code> o <code>kruskal.test</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Nunca</strong> deben hacerse múltiples pruebas t sin corrección: infla el error tipo I.</p>
+</div>
+</div>
+</section>
+<section id="resumen" class="level2" data-number="11.7">
+<h2 data-number="11.7" class="anchored" data-anchor-id="resumen"><span class="header-section-number">11.7</span> Resumen</h2>
+<p>Cuando hay tres o más grupos, comparar por pares infla el error tipo I; el <strong>ANOVA</strong> hace una sola prueba global comparando la variación <strong>entre</strong> grupos con la variación <strong>dentro</strong> de ellos, mediante el estadístico <span class="math inline">\(F\)</span>. Rechazar <span class="math inline">\(H_0\)</span> significa que <em>alguna</em> media difiere, y las pruebas <strong>post-hoc</strong> (Tukey) revelan <em>entre cuáles</em>, corrigiendo por comparaciones múltiples. Los supuestos (independencia, normalidad de los residuos y homogeneidad de varianzas) deben verificarse siempre, y cada uno tiene su alternativa cuando falla. En el <a href="11-regresion.html" class="quarto-xref"><span>Capítulo 12</span></a> cerramos el curso volviendo a la regresión, ahora para hacerle inferencia.</p>
+</section>
+<section id="ejercicios" class="level2" data-number="11.8">
+<h2 data-number="11.8" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">11.8</span> Ejercicios</h2>
+<ol type="1">
+<li><p><strong>Comparaciones múltiples.</strong> Con 5 grupos, ¿cuántas comparaciones por pares hay? ¿Cuál es la probabilidad de al menos un falso positivo si se hacen todas a <span class="math inline">\(\alpha = 0.05\)</span>?</p></li>
+<li><p><strong>Lee la tabla.</strong> En la salida de <code>summary(modelo)</code> para las galletas, identificar: los grados de libertad de cada fuente, la suma de cuadrados entre grupos y el cuadrado medio residual. ¿Qué representa este último?</p></li>
+<li><p><strong>ANOVA completo.</strong> Con <code>datos/hongos_sustrato.csv</code>, analiza si los <strong>días a cosecha</strong> difieren entre sustratos. Hacer el ciclo completo: explorar, prueba global, supuestos y post-hoc.</p></li>
+<li><p><strong>Supuestos.</strong> Verificar la normalidad de los residuos del modelo del ejercicio 3. Si fallara, ¿qué alternativa usarías?</p></li>
+<li><p><strong>Laboratorio.</strong> En el <a href="#sec-lab-f" class="quarto-xref"><span>Sección 11.2.1</span></a>, fijar la separación en 1 y el ruido en 2. ¿Es significativo? Ahora sube el n por grupo hasta que lo sea de forma consistente. ¿Qué implica esto para planear un experimento?</p></li>
+<li><p><strong>Del ANOVA al post-hoc.</strong> Un investigador reporta: <em>“el ANOVA fue significativo (p = 0.003), por lo tanto el tratamiento A es mejor que el B”</em>. ¿Qué error comete?</p></li>
+<li><p><strong>Conecta con el proyecto.</strong> Con los datos de la cata, ¿por qué fue importante aleatorizar el orden en que cada juez probó las marcas? Relacionar la respuesta con el supuesto que podría haberse violado.</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Soluciones y retroalimentación">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Soluciones y retroalimentación
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>1.</strong> Con 5 grupos hay <span class="math inline">\(\binom{5}{2} = 10\)</span> comparaciones. La probabilidad de al menos un falso positivo es <span class="math inline">\(1 - 0.95^{10} \approx 0.40\)</span>, es decir <strong>40 %</strong>. <em>Con 10 grupos serían 45 comparaciones y la probabilidad superaría el 90 %: prácticamente garantizado encontrar algo “significativo” aunque no exista nada. Este es el argumento central para usar ANOVA.</em></p>
+<p><strong>2.</strong> Grados de libertad: 3 para <code>marca</code> (número de grupos menos uno) y 96 para <code>Residuals</code> (<span class="math inline">\(N - k = 100 - 4\)</span>). La suma de cuadrados entre grupos es aproximadamente 82.8. El cuadrado medio residual (≈ 1.44) es la <strong>estimación de la varianza dentro de los grupos</strong>, es decir, del ruido: cuánto varían las calificaciones entre jueces que probaron la misma marca. <em>Su raíz cuadrada, ≈ 1.2 puntos, es la desviación estándar típica dentro de cada marca, y sirve para juzgar si una diferencia de medias es grande en términos prácticos.</em></p>
+<p><strong>3.</strong> El ciclo es: <code>ggplot(...) + geom_boxplot()</code>, luego <code>m &lt;- aov(dias_cosecha ~ sustrato, hongos); summary(m)</code>, después <code>shapiro.test(residuals(m))</code> y <code>bartlett.test(dias_cosecha ~ sustrato, hongos)</code>, y finalmente <code>TukeyHSD(m)</code>. El resultado es contundente: los días a cosecha difieren entre sustratos, siendo la paja de trigo el más rápido (unos 21 días) y el aserrín el más lento (unos 30). <em>Nótese que aquí “mejor” significa <strong>menos</strong> días: siempre hay que traducir la dirección del efecto al lenguaje del problema.</em></p>
+<p><strong>4.</strong> Los residuos deberían seguir razonablemente la recta del Q-Q plot. Si la normalidad fallara claramente, las alternativas son: transformar la variable (logaritmo si hay sesgo a la derecha), usar el <strong>ANOVA de Welch</strong> si el problema real son las varianzas, o recurrir a <strong>Kruskal-Wallis</strong> (<code>kruskal.test</code>), que es la versión no paramétrica y compara medianas basándose en rangos. <em>Con 25 observaciones por grupo, el ANOVA es bastante robusto ante desviaciones moderadas de la normalidad, gracias al TCL.</em></p>
+<p><strong>5.</strong> Con separación 1 y ruido 2, con <span class="math inline">\(n = 5\)</span> o 15 el resultado casi nunca es significativo; hacia <span class="math inline">\(n = 30\)</span> o 40 empieza a serlo de manera consistente. Implicación para el diseño: <strong>el tamaño de muestra debe planearse antes</strong>, en función de qué tan grande es el efecto que se quiere detectar y de cuánto ruido hay. <em>Un experimento con muestra insuficiente puede no detectar un efecto que sí existe (error tipo II), y desperdicia el trabajo de campo. Esto se llama cálculo de potencia y en R se hace con <code>power.anova.test()</code>.</em></p>
+<p><strong>6.</strong> El error es saltar del resultado <strong>global</strong> a una conclusión <strong>particular</strong>. El ANOVA solo dice que <em>alguna</em> media difiere; puede que la diferencia real esté entre C y D, y que A y B sean indistinguibles. Para afirmar algo sobre la pareja A–B hace falta una prueba <strong>post-hoc</strong> que además corrija por comparaciones múltiples. <em>Es exactamente lo que pasó con las galletas: el ANOVA salió significativo, pero Tukey mostró que Oreo y Chokis <strong>no</strong> difieren entre sí.</em></p>
+<p><strong>7.</strong> Aleatorizar el orden protege el supuesto de que las diferencias observadas se deban <strong>solo a la marca</strong>. Si todos hubieran catado en el mismo orden, el efecto de fatiga de paladar habría castigado siempre a la última marca, quedando <strong>confundido</strong> con el efecto de la marca: sería imposible saber si Great Value salió mal por su sabor o por probarse al final. <em>En términos del modelo, la aleatorización convierte esa fuente de variación sistemática en ruido aleatorio, que el ANOVA absorbe en los residuos en lugar de atribuirlo erróneamente al factor.</em></p>
+</div>
+</div>
+</div>
 
 
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+W10=
+</script>
 </section>
 
 </main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBzZXBhcmFjaW9uID0gSW5wdXRzLnJhbmdlKFswLCA0XSwge3ZhbHVlOiAxLjUsIHN0ZXA6IDAuMSwgbGFiZWw6IFwic2VwYXJhY2nDs24gZW50cmUgbWVkaWFzXCJ9KVxudmlld29mIHJ1aWRvID0gSW5wdXRzLnJhbmdlKFswLjMsIDNdLCB7dmFsdWU6IDEsIHN0ZXA6IDAuMSwgbGFiZWw6IFwiZGlzcGVyc2nDs24gZGVudHJvIGRlIGdydXBvc1wifSlcbnZpZXdvZiBuR3J1cG9GID0gSW5wdXRzLnJhbmdlKFs1LCA0MF0sIHt2YWx1ZTogMTUsIHN0ZXA6IDUsIGxhYmVsOiBcIm4gcG9yIGdydXBvXCJ9KVxudmlld29mIHJlZ2VuZXJhciA9IElucHV0cy5idXR0b24oXCJOdWV2YXMgbXVlc3RyYXNcIilcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImRhdG9zRiA9IHtcbiAgcmVnZW5lcmFyO1xuICBjb25zdCBtZWRpYXMgPSBbMTAsIDEwICsgc2VwYXJhY2lvbiwgMTAgKyAyICogc2VwYXJhY2lvbl07XG4gIGNvbnN0IG5vbWJyZXMgPSBbXCJBXCIsIFwiQlwiLCBcIkNcIl07XG4gIGNvbnN0IG91dCA9IFtdO1xuICBtZWRpYXMuZm9yRWFjaCgobSwgaSkgPT4ge1xuICAgIGNvbnN0IGdlbiA9IGQzLnJhbmRvbU5vcm1hbChtLCBydWlkbyk7XG4gICAgZm9yIChsZXQgaiA9IDA7IGogPCBuR3J1cG9GOyBqKyspIG91dC5wdXNoKHsgZ3J1cG86IG5vbWJyZXNbaV0sIHZhbG9yOiBnZW4oKSB9KTtcbiAgfSk7XG4gIHJldHVybiBvdXQ7XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTMiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJhbm92YUYgPSB7XG4gIGNvbnN0IGdydXBvcyA9IGQzLmdyb3VwKGRhdG9zRiwgZCA9PiBkLmdydXBvKTtcbiAgY29uc3QgdG9kb3MgPSBkYXRvc0YubWFwKGQgPT4gZC52YWxvcik7XG4gIGNvbnN0IGdyYW5NZWRpYSA9IGQzLm1lYW4odG9kb3MpO1xuICBsZXQgc3NiID0gMCwgc3N3ID0gMDtcbiAgZm9yIChjb25zdCBbLCB2YWxzXSBvZiBncnVwb3MpIHtcbiAgICBjb25zdCB2ID0gdmFscy5tYXAoZCA9PiBkLnZhbG9yKSwgbSA9IGQzLm1lYW4odik7XG4gICAgc3NiICs9IHYubGVuZ3RoICogTWF0aC5wb3cobSAtIGdyYW5NZWRpYSwgMik7XG4gICAgc3N3ICs9IGQzLnN1bSh2LCB4ID0+IE1hdGgucG93KHggLSBtLCAyKSk7XG4gIH1cbiAgY29uc3QgayA9IGdydXBvcy5zaXplLCBOID0gdG9kb3MubGVuZ3RoO1xuICBjb25zdCBkMSA9IGsgLSAxLCBkMiA9IE4gLSBrO1xuICBjb25zdCBGID0gKHNzYiAvIGQxKSAvIChzc3cgLyBkMik7XG4gIHJldHVybiB7IHNzYiwgc3N3LCBkMSwgZDIsIEYsIHA6IGJldGFpRihkMiAvIDIsIGQxIC8gMiwgZDIgLyAoZDIgKyBkMSAqIEYpKSB9O1xufVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC00IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiZ2FtbWxuRiA9ICh4KSA9PiB7XG4gIGNvbnN0IGNvZiA9IFs3Ni4xODAwOTE3Mjk0NzE0NiwgLTg2LjUwNTMyMDMyOTQxNjc3LCAyNC4wMTQwOTgyNDA4MzA5MSxcbiAgICAgICAgICAgICAgIC0xLjIzMTczOTU3MjQ1MDE1NSwgMC4xMjA4NjUwOTczODY2MTc5ZS0yLCAtMC41Mzk1MjM5Mzg0OTUzZS01XTtcbiAgbGV0IHkgPSB4LCB0bXAgPSB4ICsgNS41O1xuICB0bXAgLT0gKHggKyAwLjUpICogTWF0aC5sb2codG1wKTtcbiAgbGV0IHNlciA9IDEuMDAwMDAwMDAwMTkwMDE1O1xuICBmb3IgKGxldCBqID0gMDsgaiA8IDY7IGorKykgc2VyICs9IGNvZltqXSAvICsreTtcbiAgcmV0dXJuIC10bXAgKyBNYXRoLmxvZygyLjUwNjYyODI3NDYzMTAwMDUgKiBzZXIgLyB4KTtcbn1cbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImJldGFjZkYgPSAoYSwgYiwgeCkgPT4ge1xuICBjb25zdCBxYWIgPSBhICsgYiwgcWFwID0gYSArIDEsIHFhbSA9IGEgLSAxO1xuICBsZXQgYyA9IDEsIGQgPSAxIC0gcWFiICogeCAvIHFhcDtcbiAgaWYgKE1hdGguYWJzKGQpIDwgMWUtMzAwKSBkID0gMWUtMzAwO1xuICBkID0gMSAvIGQ7XG4gIGxldCBoID0gZDtcbiAgZm9yIChsZXQgbSA9IDE7IG0gPD0gMzAwOyBtKyspIHtcbiAgICBjb25zdCBtMiA9IDIgKiBtO1xuICAgIGxldCBhYSA9IG0gKiAoYiAtIG0pICogeCAvICgocWFtICsgbTIpICogKGEgKyBtMikpO1xuICAgIGQgPSAxICsgYWEgKiBkOyBpZiAoTWF0aC5hYnMoZCkgPCAxZS0zMDApIGQgPSAxZS0zMDA7XG4gICAgYyA9IDEgKyBhYSAvIGM7IGlmIChNYXRoLmFicyhjKSA8IDFlLTMwMCkgYyA9IDFlLTMwMDtcbiAgICBkID0gMSAvIGQ7IGggKj0gZCAqIGM7XG4gICAgYWEgPSAtKGEgKyBtKSAqIChxYWIgKyBtKSAqIHggLyAoKGEgKyBtMikgKiAocWFwICsgbTIpKTtcbiAgICBkID0gMSArIGFhICogZDsgaWYgKE1hdGguYWJzKGQpIDwgMWUtMzAwKSBkID0gMWUtMzAwO1xuICAgIGMgPSAxICsgYWEgLyBjOyBpZiAoTWF0aC5hYnMoYykgPCAxZS0zMDApIGMgPSAxZS0zMDA7XG4gICAgZCA9IDEgLyBkO1xuICAgIGNvbnN0IGRlbCA9IGQgKiBjOyBoICo9IGRlbDtcbiAgICBpZiAoTWF0aC5hYnMoZGVsIC0gMSkgPCAxZS0xMikgYnJlYWs7XG4gIH1cbiAgcmV0dXJuIGg7XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTYiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJiZXRhaUYgPSAoYSwgYiwgeCkgPT4ge1xuICBpZiAoeCA8PSAwKSByZXR1cm4gMDtcbiAgaWYgKHggPj0gMSkgcmV0dXJuIDE7XG4gIGNvbnN0IGJ0ID0gTWF0aC5leHAoZ2FtbWxuRihhICsgYikgLSBnYW1tbG5GKGEpIC0gZ2FtbWxuRihiKVxuICAgICAgICAgICAgICsgYSAqIE1hdGgubG9nKHgpICsgYiAqIE1hdGgubG9nKDEgLSB4KSk7XG4gIHJldHVybiB4IDwgKGEgKyAxKSAvIChhICsgYiArIDIpXG4gICAgPyBidCAqIGJldGFjZkYoYSwgYiwgeCkgLyBhXG4gICAgOiAxIC0gYnQgKiBiZXRhY2ZGKGIsIGEsIDEgLSB4KSAvIGI7XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTciLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJQbG90LnBsb3Qoe1xuICBoZWlnaHQ6IDI2MCxcbiAgeDogeyBsYWJlbDogXCJncnVwb1wiIH0sXG4gIHk6IHsgbGFiZWw6IFwidmFsb3JcIiwgZG9tYWluOiBbNCwgMjBdIH0sXG4gIG1hcmtzOiBbXG4gICAgUGxvdC5kb3QoZGF0b3NGLCB7IHg6IFwiZ3J1cG9cIiwgeTogXCJ2YWxvclwiLCBmaWxsOiBcIiMxRjRFNzlcIiwgZmlsbE9wYWNpdHk6IDAuNCwgcjogMyxcbiAgICAgIGR4OiAoKSA9PiAoTWF0aC5yYW5kb20oKSAtIDAuNSkgKiAxNiB9KSxcbiAgICBQbG90LnRpY2tZKGRhdG9zRiwgUGxvdC5ncm91cFgoeyB5OiBcIm1lYW5cIiB9LFxuICAgICAgeyB4OiBcImdydXBvXCIsIHk6IFwidmFsb3JcIiwgc3Ryb2tlOiBcIiNDMDM5MkJcIiwgc3Ryb2tlV2lkdGg6IDMgfSkpLFxuICAgIFBsb3QucnVsZVkoW2QzLm1lYW4oZGF0b3NGLCBkID0+IGQudmFsb3IpXSxcbiAgICAgIHsgc3Ryb2tlOiBcIiM4ODg3ODBcIiwgc3Ryb2tlRGFzaGFycmF5OiBcIjRcIiB9KVxuICBdXG59KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC04IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoibWRgU0MgZW50cmUgPSAqKiR7YW5vdmFGLnNzYi50b0ZpeGVkKDEpfSoqIMK3IFNDIGRlbnRybyA9ICoqJHthbm92YUYuc3N3LnRvRml4ZWQoMSl9KiogwrcgKipGID0gJHthbm92YUYuRi50b0ZpeGVkKDIpfSoqIMK3IHZhbG9yIHAgPSAqKiR7YW5vdmFGLnAgPCAwLjAwMDEgPyBcIjwgMC4wMDAxXCIgOiBhbm92YUYucC50b0ZpeGVkKDQpfSoqIMK3ICR7YW5vdmFGLnAgPCAwLjA1ID8gXCIqKnNlIHJlY2hhemEgbGEgaWd1YWxkYWQgZGUgbWVkaWFzKipcIiA6IFwibm8gc2UgcmVjaGF6YVwifWBcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnc2VwYXJhY2lvbicpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdydWlkbycpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCduR3J1cG9GJykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ3JlZ2VuZXJhcicpIn1dfQ==
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../..";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -730,12 +1460,12 @@ ul.task-list li input[type="checkbox"] {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./09-enumerativos.html" class="pagination-link" aria-label="Inferencia para datos enumerativos">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Inferencia para datos enumerativos</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Inferencia para datos enumerativos</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./11-regresion.html" class="pagination-link" aria-label="Inferencia en regresión">
-        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Inferencia en regresión</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Inferencia en regresión</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

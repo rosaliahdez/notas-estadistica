@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>5&nbsp; Producción de datos: diseño de experimentos – Estadística para Ciencias de la Computación</title>
+<title>Mapa de decisión – Estadística para Ciencias de la Computación</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -23,41 +23,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -68,8 +33,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./laboratorio-estandarizacion.html" rel="next">
-<link href="./04-muestreo.html" rel="prev">
+<link href="./formulario.html" rel="next">
+<link href="./references.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -111,11 +76,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
 <link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
-<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 
-<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -128,7 +118,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04-muestreo.html">II. Producción de los datos</a></li><li class="breadcrumb-item"><a href="./05-experimentos.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Producción de datos: diseño de experimentos</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./mapa-decision.html">Apéndices</a></li><li class="breadcrumb-item"><a href="./mapa-decision.html">Mapa de decisión</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -212,7 +202,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./05-experimentos.html" class="sidebar-item-text sidebar-link active">
+  <a href="./05-experimentos.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Producción de datos: diseño de experimentos</span></span></a>
   </div>
 </li>
@@ -288,7 +278,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./mapa-decision.html" class="sidebar-item-text sidebar-link">
+  <a href="./mapa-decision.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Mapa de decisión</span></a>
   </div>
 </li>
@@ -322,23 +312,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">En este capítulo</h2>
    
   <ul>
-  <li><a href="#observar-no-basta-por-qué-experimentamos" id="toc-observar-no-basta-por-qué-experimentamos" class="nav-link active" data-scroll-target="#observar-no-basta-por-qué-experimentamos"><span class="header-section-number">5.1</span> Observar no basta: por qué experimentamos</a></li>
-  <li><a href="#el-vocabulario-del-diseño" id="toc-el-vocabulario-del-diseño" class="nav-link" data-scroll-target="#el-vocabulario-del-diseño"><span class="header-section-number">5.2</span> El vocabulario del diseño</a></li>
-  <li><a href="#los-tres-principios-del-diseño" id="toc-los-tres-principios-del-diseño" class="nav-link" data-scroll-target="#los-tres-principios-del-diseño"><span class="header-section-number">5.3</span> Los tres principios del diseño</a></li>
-  <li><a href="#sesgos-en-experimentos-con-personas" id="toc-sesgos-en-experimentos-con-personas" class="nav-link" data-scroll-target="#sesgos-en-experimentos-con-personas"><span class="header-section-number">5.4</span> Sesgos en experimentos con personas</a></li>
-  <li><a href="#armar-el-plan-de-aleatorización-en-r" id="toc-armar-el-plan-de-aleatorización-en-r" class="nav-link" data-scroll-target="#armar-el-plan-de-aleatorización-en-r"><span class="header-section-number">5.5</span> Armar el plan de aleatorización en R</a></li>
-  <li><a href="#la-sesión-en-clase" id="toc-la-sesión-en-clase" class="nav-link" data-scroll-target="#la-sesión-en-clase"><span class="header-section-number">5.6</span> La sesión en clase</a></li>
-  <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen"><span class="header-section-number">5.7</span> Resumen</a></li>
-  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">5.8</span> Ejercicios</a></li>
+  <li><a href="#cómo-se-usa-este-mapa" id="toc-cómo-se-usa-este-mapa" class="nav-link active" data-scroll-target="#cómo-se-usa-este-mapa">Cómo se usa este mapa</a></li>
+  <li><a href="#dos-renglones-que-este-curso-no-cubre" id="toc-dos-renglones-que-este-curso-no-cubre" class="nav-link" data-scroll-target="#dos-renglones-que-este-curso-no-cubre">Dos renglones que este curso no cubre</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04-muestreo.html">II. Producción de los datos</a></li><li class="breadcrumb-item"><a href="./05-experimentos.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Producción de datos: diseño de experimentos</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./mapa-decision.html">Apéndices</a></li><li class="breadcrumb-item"><a href="./mapa-decision.html">Mapa de decisión</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-cap5" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Producción de datos: diseño de experimentos</span></span></h1>
+<h1 class="title"><span id="sec-mapa" class="quarto-section-identifier">Mapa de decisión</span></h1>
 </div>
 
 
@@ -355,247 +339,176 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div class="callout callout-style-default callout-warning callout-titled" title="Capítulo en revisión">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Advertencia</span>Capítulo en revisión
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>El contenido de este capítulo está completo, pero todavía no pasa por la revisión final de redacción. Se avisará en clase cuando quede listo para estudiar de aquí. Mientras tanto se puede consultar, con esa advertencia.</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Objetivos del capítulo">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Objetivos del capítulo
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li>Nombrar las piezas de un experimento: <strong>unidad experimental, factor, niveles, tratamiento y respuesta</strong>.</li>
-<li>Aplicar los tres principios: <strong>control, aleatorización y réplicas</strong>.</li>
-<li>Prevenir los sesgos típicos de experimentos con personas: <strong>orden, cegado y contaminación</strong>.</li>
-<li>Armar un <strong>plan de aleatorización</strong> en R.</li>
-</ul>
-</div>
-</div>
-<p>En el <a href="04-muestreo.html" class="quarto-xref"><span>Capítulo 4</span></a> vimos una forma de producir datos: el muestreo, que observa sin intervenir. La otra es el <strong>experimento</strong>, donde el investigador <strong>aplica tratamientos</strong> y mide la respuesta. La diferencia es enorme: un experimento bien diseñado es lo único que permite hablar de <strong>causa y efecto</strong>. Este capítulo es el corazón del proyecto del curso: la cata de galletas.</p>
-<section id="observar-no-basta-por-qué-experimentamos" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="observar-no-basta-por-qué-experimentamos"><span class="header-section-number">5.1</span> Observar no basta: por qué experimentamos</h2>
-<p>Un estudio observacional puede mostrar que dos cosas van juntas, pero no cuál causa a cuál, ni si las une una tercera variable oculta (lo vimos con la correlación en el <a href="03-relaciones.html" class="quarto-xref"><span>Capítulo 3</span></a>). En un experimento <strong>nosotros</strong> decidimos qué tratamiento recibe cada unidad, y al hacerlo por azar rompemos el vínculo con esas variables ocultas. Por eso, para preguntas del tipo “¿la marca influye en el agrado?”, diseñamos un experimento.</p>
-</section>
-<section id="el-vocabulario-del-diseño" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="el-vocabulario-del-diseño"><span class="header-section-number">5.2</span> El vocabulario del diseño</h2>
-<p>Todo experimento se describe con las mismas piezas. Veámoslas en nuestros dos contextos:</p>
+<p>A lo largo del libro se fue armando, recuadro a recuadro, una guía para elegir la técnica correcta. Aquí está completa. Es la respuesta a la pregunta que abre todo análisis: <strong>¿qué hacer con estos datos?</strong></p>
+<section id="cómo-se-usa-este-mapa" class="level2">
+<h2 class="anchored" data-anchor-id="cómo-se-usa-este-mapa">Cómo se usa este mapa</h2>
+<p>El mapa <strong>no se consulta con las palabras del problema, sino con los tipos de variable</strong>. Quien trae el problema habla de dimorfismo sexual, de tiempos de ejecución o de galletas; el trabajo estadístico empieza por traducir eso a tres respuestas:</p>
+<ol type="1">
+<li>¿Cuál es la variable <strong>respuesta</strong>, y de qué <strong>tipo</strong> es: cuantitativa o categórica?</li>
+<li>¿Cuál es la variable <strong>explicativa</strong>, y de qué tipo? Si es categórica, ¿cuántos niveles tiene?</li>
+<li>¿<strong>Cómo se obtuvieron</strong> los datos: grupos independientes, o dos medidas del mismo individuo?</li>
+</ol>
+<p>Las dos primeras eligen el renglón; la tercera decide entre renglones que se parecen (por ejemplo, entre la prueba para dos grupos independientes y la prueba para datos pareados). De fondo hay una cuarta pregunta, que ordena la tabla sin que se note: si es una pregunta de <strong>diferencia</strong>, de <strong>relación</strong> o de <strong>predicción</strong>.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Pieza</th>
-<th>Cata de galletas</th>
-<th>Cultivo de setas</th>
+<th>Mi pregunta</th>
+<th>Tipo de datos</th>
+<th>Técnica</th>
+<th>Capítulo</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>Unidad experimental</strong></td>
-<td>Cada cata (un juez probando una galleta)</td>
-<td>Cada bolsa de sustrato</td>
+<td>¿Cómo se ve esta variable?</td>
+<td>1 categórica</td>
+<td>Barras, tabla de frecuencias</td>
+<td><a href="01-exploracion.html" class="quarto-xref"><span>1&nbsp; Exploración de los datos</span></a></td>
 </tr>
 <tr class="even">
-<td><strong>Factor</strong></td>
-<td>La marca</td>
-<td>El sustrato</td>
+<td>¿Cómo se distribuye?</td>
+<td>1 cuantitativa</td>
+<td>Histograma, boxplot, Q-Q plot</td>
+<td><a href="01-exploracion.html" class="quarto-xref"><span>1&nbsp; Exploración de los datos</span></a>, <a href="02-descriptiva.html" class="quarto-xref"><span>2&nbsp; Análisis numérico de datos</span></a></td>
 </tr>
 <tr class="odd">
-<td><strong>Niveles</strong></td>
-<td>Oreo, Chokis, Lors, Great Value</td>
-<td>Paja, pulpa de café, olote, aserrín</td>
+<td>¿Cuál es su centro y dispersión?</td>
+<td>1 cuantitativa</td>
+<td>Media/mediana, desviación/RIC</td>
+<td><a href="02-descriptiva.html" class="quarto-xref"><span>2&nbsp; Análisis numérico de datos</span></a></td>
 </tr>
 <tr class="even">
-<td><strong>Tratamiento</strong></td>
-<td>Probar una marca</td>
-<td>Sembrar en un sustrato</td>
+<td>¿Cómo se relacionan dos variables?</td>
+<td>2 cuantitativas</td>
+<td>Dispersión, correlación, recta</td>
+<td><a href="03-relaciones.html" class="quarto-xref"><span>3&nbsp; Relaciones entre variables</span></a></td>
 </tr>
 <tr class="odd">
-<td><strong>Variable respuesta</strong></td>
-<td>Agrado (escala 1–9)</td>
-<td>Eficiencia biológica (%)</td>
+<td>¿Cómo obtengo datos representativos?</td>
+<td>—</td>
+<td>Muestreo aleatorio (simple, estratificado…)</td>
+<td><a href="04-muestreo.html" class="quarto-xref"><span>4&nbsp; Producción de datos: muestreo</span></a></td>
+</tr>
+<tr class="even">
+<td>¿Cómo pruebo causa y efecto?</td>
+<td>—</td>
+<td>Experimento: control, aleatorización, réplicas</td>
+<td><a href="05-experimentos.html" class="quarto-xref"><span>5&nbsp; Producción de datos: diseño de experimentos</span></a></td>
+</tr>
+<tr class="odd">
+<td>¿Cuánto vale un parámetro?</td>
+<td>1 muestra</td>
+<td>Intervalo de confianza</td>
+<td><a href="07-estimacion-pruebas.html" class="quarto-xref"><span>8&nbsp; Estimación y prueba de hipótesis</span></a></td>
+</tr>
+<tr class="even">
+<td>¿Difiere de un valor de referencia?</td>
+<td>1 muestra</td>
+<td><code>t.test(x, mu = ...)</code></td>
+<td><a href="07-estimacion-pruebas.html" class="quarto-xref"><span>8&nbsp; Estimación y prueba de hipótesis</span></a></td>
+</tr>
+<tr class="odd">
+<td>¿Difieren dos grupos independientes?</td>
+<td>Cuantitativa por 2 grupos</td>
+<td><code>t.test(y ~ grupo)</code></td>
+<td><a href="08-dos-muestras.html" class="quarto-xref"><span>9&nbsp; Inferencia para dos parámetros</span></a></td>
+</tr>
+<tr class="even">
+<td>¿Difieren dos medidas del mismo sujeto?</td>
+<td>Datos pareados</td>
+<td><code>t.test(x, y, paired = TRUE)</code></td>
+<td><a href="08-dos-muestras.html" class="quarto-xref"><span>9&nbsp; Inferencia para dos parámetros</span></a></td>
+</tr>
+<tr class="odd">
+<td>¿Difieren dos varianzas?</td>
+<td>Cuantitativa por 2 grupos</td>
+<td><code>var.test(y ~ grupo)</code></td>
+<td><a href="08-dos-muestras.html" class="quarto-xref"><span>9&nbsp; Inferencia para dos parámetros</span></a></td>
+</tr>
+<tr class="even">
+<td>¿Cuánto vale una proporción?</td>
+<td>1 categórica binaria</td>
+<td><code>prop.test(x, n)</code></td>
+<td><a href="09-enumerativos.html" class="quarto-xref"><span>10&nbsp; Inferencia para datos enumerativos</span></a></td>
+</tr>
+<tr class="odd">
+<td>¿Difieren dos proporciones?</td>
+<td>Binaria por 2 grupos</td>
+<td><code>prop.test(c(x1,x2), c(n1,n2))</code></td>
+<td><a href="09-enumerativos.html" class="quarto-xref"><span>10&nbsp; Inferencia para datos enumerativos</span></a></td>
+</tr>
+<tr class="even">
+<td>¿Están asociadas dos categóricas?</td>
+<td>Tabla de contingencia</td>
+<td><code>chisq.test(tabla)</code></td>
+<td><a href="09-enumerativos.html" class="quarto-xref"><span>10&nbsp; Inferencia para datos enumerativos</span></a></td>
+</tr>
+<tr class="odd">
+<td>¿Difieren tres o más grupos?</td>
+<td>Cuantitativa por k grupos</td>
+<td><code>aov()</code> + <code>TukeyHSD()</code></td>
+<td><a href="10-anova.html" class="quarto-xref"><span>11&nbsp; Análisis de varianza (ANOVA)</span></a></td>
+</tr>
+<tr class="even">
+<td>¿La relación entre X e Y es real?</td>
+<td>2 cuantitativas</td>
+<td><code>lm()</code> y prueba sobre la pendiente</td>
+<td><a href="11-regresion.html" class="quarto-xref"><span>12&nbsp; Inferencia en regresión</span></a></td>
 </tr>
 </tbody>
 </table>
-<p>Identificar bien estas piezas es el primer paso: define qué se compara (los niveles del factor) y qué se mide (la respuesta).</p>
 </section>
-<section id="los-tres-principios-del-diseño" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="los-tres-principios-del-diseño"><span class="header-section-number">5.3</span> Los tres principios del diseño</h2>
-<p>Un buen experimento descansa en tres ideas:</p>
+<section id="dos-renglones-que-este-curso-no-cubre" class="level2">
+<h2 class="anchored" data-anchor-id="dos-renglones-que-este-curso-no-cubre">Dos renglones que este curso no cubre</h2>
+<p>En cuanto los datos se vuelven un poco más ricos, aparecen dos preguntas que el temario no alcanza. No se estudian aquí, pero conviene reconocerlas: saber que la pregunta <strong>tiene</strong> respuesta, y cómo se llama, evita forzar una técnica que no corresponde.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Mi pregunta</th>
+<th>Tipo de datos</th>
+<th>Técnica</th>
+<th>Relación con el curso</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>¿El efecto de un factor <strong>depende</strong> del otro?</td>
+<td>Cuantitativa por 2 categóricas</td>
+<td>ANOVA de dos factores con interacción, <code>aov(y ~ a * b)</code></td>
+<td>Extensión de <a href="10-anova.html" class="quarto-xref"><span>11&nbsp; Análisis de varianza (ANOVA)</span></a></td>
+</tr>
+<tr class="even">
+<td>¿Puedo predecir una respuesta <strong>categórica</strong>?</td>
+<td>Categórica binaria, con explicativas cuantitativas</td>
+<td>Regresión logística, <code>glm(..., family = binomial)</code>; o análisis discriminante</td>
+<td>Extensión de <a href="11-regresion.html" class="quarto-xref"><span>12&nbsp; Inferencia en regresión</span></a></td>
+</tr>
+</tbody>
+</table>
+<p>Dos aclaraciones sobre esa tabla:</p>
 <ul>
-<li><strong>Control.</strong> Mantener constante todo lo demás para que las diferencias en la respuesta se deban al tratamiento y no a otra cosa. En la cata: misma cantidad de galleta, misma iluminación, mismo vaso de agua para limpiar el paladar, misma consigna.</li>
-<li><strong>Aleatorización.</strong> Asignar los tratamientos (o su orden) <strong>al azar</strong>. Es la defensa contra las variables ocultas. Reparte de forma pareja, entre los tratamientos, cualquier factor que no controlamos.</li>
-<li><strong>Réplicas.</strong> Aplicar cada tratamiento a <strong>varias</strong> unidades. Sin réplicas no podemos distinguir el efecto del tratamiento de la variación natural entre unidades. Una sola bolsa por sustrato no dice nada.</li>
+<li><p>La primera pregunta <strong>no</strong> se contesta con un ANOVA de un factor aplicado dos veces. Que un factor influya y el otro también es distinto de que el efecto de uno <strong>cambie según el nivel</strong> del otro. Eso último es la interacción, y solo se prueba con el modelo que la incluye.</p></li>
+<li><p>La segunda <strong>no</strong> cabe en el renglón de <code>lm()</code>, aunque las explicativas sean cuantitativas, porque ahí la respuesta debe ser cuantitativa. Cuando la respuesta es una categoría, una recta predeciría valores por debajo de 0 y por arriba de 1, que no son probabilidades posibles.</p></li>
 </ul>
-<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Interpretación
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Los tres trabajan juntos. El <strong>control</strong> reduce el ruido, la <strong>aleatorización</strong> evita el sesgo y las <strong>réplicas</strong> nos dejan medir cuánta variación es “normal” (justo lo que el ANOVA del <a href="10-anova.html" class="quarto-xref"><span>Capítulo 11</span></a> necesita para decidir si las diferencias entre marcas son reales).</p>
-</div>
-</div>
-</section>
-<section id="sesgos-en-experimentos-con-personas" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="sesgos-en-experimentos-con-personas"><span class="header-section-number">5.4</span> Sesgos en experimentos con personas</h2>
-<p>Cuando quienes responden son personas, aparecen sesgos que hay que anticipar en el diseño. Son los que descubriremos en la sesión de la cata:</p>
-<ul>
-<li><strong>Efecto de orden y fatiga de paladar.</strong> La galleta que se prueba al final se juzga con el paladar cansado y la memoria de las anteriores (arrastre). Solución: <strong>aleatorizar el orden</strong> de cata para cada juez y limpiar el paladar entre marcas.</li>
-<li><strong>Falta de cegado.</strong> Si el juez sabe qué marca prueba, su expectativa contamina la calificación (“es Oreo, debe gustarme”). Solución: cata <strong>a ciegas</strong>; idealmente, que quien reparte tampoco sepa cuál es (doble ciego).</li>
-<li><strong>Contaminación entre jueces.</strong> Un gesto o un comentario en voz alta arrastra la opinión de los demás. Solución: catar en silencio, sin expresiones, y capturar cada quien su hoja.</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="¿Qué técnica usar?">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>¿Qué técnica usar?
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Antes de recolectar, conviene revisar esta lista de diseño:</p>
+<p>Reconocer que una pregunta cae fuera del temario es parte de la competencia profesional, no una carencia. Lo contrario (aplicar la técnica más parecida que uno conoce) es la fuente de la mayoría de los análisis mal hechos.</p>
+<p>Tres reglas que valen para todos los renglones de esa tabla:</p>
 <ol type="1">
-<li>¿Cuál es la <strong>unidad experimental</strong>, el <strong>factor</strong>, sus <strong>niveles</strong> y la <strong>respuesta</strong>?</li>
-<li>¿Qué mantengo <strong>bajo control</strong>?</li>
-<li>¿Qué <strong>aleatorizo</strong> (tratamientos u orden)?</li>
-<li>¿Cuántas <strong>réplicas</strong> por tratamiento?</li>
-<li>Si hay personas, ¿cómo aseguro <strong>cegado</strong> y evito <strong>contaminación</strong>?</li>
+<li><strong>Mirar los datos antes de calcular.</strong> Una gráfica nos dice si la técnica tiene sentido.</li>
+<li><strong>Verificar los supuestos.</strong> Un valor p calculado sobre supuestos rotos no significa nada.</li>
+<li><strong>Interpretar en el lenguaje del problema.</strong> Fuera de esta clase, a nadie le interesa el estadístico <span class="math inline">\(t\)</span>: les interesa saber si las galletas gustan distinto, si el tratamiento sirve, cuánto tarda el algoritmo.</li>
 </ol>
-<p>Si se puede responder las cinco, el experimento está bien diseñado.</p>
-</div>
-</div>
-</section>
-<section id="armar-el-plan-de-aleatorización-en-r" class="level2" data-number="5.5">
-<h2 data-number="5.5" class="anchored" data-anchor-id="armar-el-plan-de-aleatorización-en-r"><span class="header-section-number">5.5</span> Armar el plan de aleatorización en R</h2>
-<p>Aleatorizar no se hace “a ojo”: se hace con el azar de la computadora, y se documenta. Para la cata, cada juez debe probar las cuatro marcas en un <strong>orden distinto y al azar</strong>. Así se genera el plan:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>marcas <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Oreo"</span>, <span class="st">"Chokis"</span>, <span class="st">"Lors"</span>, <span class="st">"GreatValue"</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>plan <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="cf">function</span>(j) {</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">juez =</span> j, <span class="at">orden =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">marca =</span> <span class="fu">sample</span>(marcas))</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>plan <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(plan)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(plan, <span class="dv">8</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["juez"],"name":[1],"type":["int"],"align":["right"]},{"label":["orden"],"name":[2],"type":["int"],"align":["right"]},{"label":["marca"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"1","3":"Oreo","_rn_":"1"},{"1":"1","2":"2","3":"GreatValue","_rn_":"2"},{"1":"1","2":"3","3":"Lors","_rn_":"3"},{"1":"1","2":"4","3":"Chokis","_rn_":"4"},{"1":"2","2":"1","3":"Oreo","_rn_":"5"},{"1":"2","2":"2","3":"Lors","_rn_":"6"},{"1":"2","2":"3","3":"GreatValue","_rn_":"7"},{"1":"2","2":"4","3":"Chokis","_rn_":"8"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-</div>
-</div>
-<p>Cada juez recibe una permutación diferente de las marcas: nadie las prueba en el mismo orden, y así el efecto de orden se reparte parejo entre las cuatro marcas en lugar de perjudicar siempre a la misma.</p>
-<p>El experimento produce una tabla <strong>ordenada</strong>, con un renglón por cata, lista para analizarse después:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>galletas <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"datos/galletas.csv"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(galletas)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["juez"],"name":[1],"type":["int"],"align":["right"]},{"label":["orden"],"name":[2],"type":["int"],"align":["right"]},{"label":["marca"],"name":[3],"type":["chr"],"align":["left"]},{"label":["agrado"],"name":[4],"type":["int"],"align":["right"]}],"data":[{"1":"1","2":"1","3":"Oreo","4":"8","_rn_":"1"},{"1":"1","2":"2","3":"Chokis","4":"7","_rn_":"2"},{"1":"1","2":"3","3":"Lors","4":"5","_rn_":"3"},{"1":"1","2":"4","3":"GreatValue","4":"4","_rn_":"4"},{"1":"2","2":"1","3":"Oreo","4":"8","_rn_":"5"},{"1":"2","2":"2","3":"Chokis","4":"7","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-</div>
-</div>
-<p>Aquí solo <strong>diseñamos</strong> y <strong>recolectamos</strong>. El análisis (¿difieren de verdad las marcas?) es un ANOVA de un factor, y lo haremos en el <a href="10-anova.html" class="quarto-xref"><span>Capítulo 11</span></a> con estos mismos datos.</p>
-</section>
-<section id="la-sesión-en-clase" class="level2" data-number="5.6">
-<h2 data-number="5.6" class="anchored" data-anchor-id="la-sesión-en-clase"><span class="header-section-number">5.6</span> La sesión en clase</h2>
-<div class="callout callout-style-default callout-note callout-titled" title="Protocolo de la cata (actividad de la semana 5)">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Protocolo de la cata (actividad de la semana 5)
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Antes:</strong> se preparan las galletas en platos rotulados con códigos neutros (no la marca), agua para limpiar el paladar y una <strong>hoja de cata</strong> con una escala hedónica de 1 (me disgusta mucho) a 9 (me gusta mucho).</p>
-<p><strong>Diseño (en grupo):</strong> antes de probar nada, la clase propone cómo hacer la cata justa. La idea es que <em>emerjan</em> de la discusión el orden aleatorizado, el cegado, el silencio y las réplicas (los principios de este capítulo).</p>
-<p><strong>Ejecución:</strong> la mitad del grupo cata (jueces), la otra mitad aplica y captura (experimentadores). Cada juez sigue su orden del plan de aleatorización y anota su agrado por marca.</p>
-<p><strong>Después:</strong> se capturan los datos y se guardan para el análisis del <a href="10-anova.html" class="quarto-xref"><span>Capítulo 11</span></a>. Si no coincidieran con los del respaldo, mejor: se discute por qué.</p>
-</div>
-</div>
-</section>
-<section id="resumen" class="level2" data-number="5.7">
-<h2 data-number="5.7" class="anchored" data-anchor-id="resumen"><span class="header-section-number">5.7</span> Resumen</h2>
-<p>El experimento es la forma de producir datos que permite hablar de <strong>causa</strong>. Se describe con unidad experimental, factor, niveles, tratamiento y respuesta, y descansa en tres principios: <strong>control, aleatorización y réplicas</strong>. Con personas, hay que blindar el diseño contra el <strong>orden</strong>, la falta de <strong>cegado</strong> y la <strong>contaminación</strong> entre participantes. Aleatorizar se hace con la computadora y se documenta. Con esto cierra la Parte II: ya sabemos producir datos por muestreo y por experimento. La Parte III nos enseña a <strong>inferir</strong> a partir de ellos.</p>
-</section>
-<section id="ejercicios" class="level2" data-number="5.8">
-<h2 data-number="5.8" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">5.8</span> Ejercicios</h2>
-<ol type="1">
-<li><p><strong>Anatomía de un experimento.</strong> Para el cultivo de setas (<code>datos/hongos_sustrato.csv</code>), identificar la unidad experimental, el factor, sus niveles, un tratamiento y la variable respuesta.</p></li>
-<li><p><strong>Observacional o experimental.</strong> Clasificar cada estudio y di si permite concluir causa y efecto:</p>
-<ol type="a">
-<li>Un estudiante de medicina compara la mejoría de pacientes que <em>eligieron</em> tomar un suplemento contra los que no.</li>
-<li>Se asignan al azar tres fertilizantes a parcelas de trigo y se compara el rendimiento.</li>
-<li>Se registran las calificaciones de quienes asistieron o no, por decisión propia, a asesorías.</li>
-</ol></li>
-<li><p><strong>¿Qué principio falta?</strong> En cada diseño defectuoso, di cuál de los tres principios se viola:</p>
-<ol type="a">
-<li>Se prueba un solo germinado por cada sustrato.</li>
-<li>Todos los jueces prueban primero Oreo y al final Great Value.</li>
-<li>Se compara la marca nueva medida hoy con la vieja medida el año pasado, en otro laboratorio.</li>
-</ol></li>
-<li><p><strong>¿Por qué aleatorizar el orden?</strong> Explicar, con el efecto de fatiga de paladar, qué problema evita que cada juez cate en un orden distinto.</p></li>
-<li><p><strong>Cegado.</strong> Describir cómo se haría una cata <strong>doble ciego</strong> de galletas y qué sesgo evita cada capa del cegado.</p></li>
-<li><p><strong>Aleatoriza en R.</strong> Generar un plan de aleatorización para un experimento de setas con 4 sustratos y 5 réplicas por sustrato (20 bolsas), asignando al azar qué bolsa recibe cada sustrato.</p></li>
-</ol>
-<div class="callout callout-style-default callout-tip callout-titled" title="Soluciones y retroalimentación">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Soluciones y retroalimentación
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p><strong>1.</strong> Unidad experimental: <strong>cada bolsa</strong> de cultivo. Factor: el <strong>sustrato</strong>. Niveles: paja de trigo, pulpa de café, olote de maíz y aserrín. Un tratamiento: sembrar en pulpa de café. Variable respuesta: la <strong>eficiencia biológica (%)</strong>; <code>dias_cosecha</code> es una segunda respuesta y <code>contaminado</code> una respuesta categórica. <em>Un experimento puede tener varias variables respuesta; lo que lo define como de un factor es que se manipula una sola cosa.</em></p>
-<p><strong>2.</strong> (a) <strong>Observacional</strong>: los pacientes eligieron tomar el suplemento, así que los grupos pueden diferir en otras cosas (quien lo elige quizá cuida más su salud). No permite concluir causa. (b) <strong>Experimental</strong>: la asignación es aleatoria, sí permite concluir causa. (c) <strong>Observacional</strong>: la asistencia fue por decisión propia. <em>En (a) y (c) el fenómeno se llama <strong>autoselección</strong>, la fuente más común de confusión en estudios de salud y educación.</em></p>
-<p><strong>3.</strong> (a) Falla <strong>réplicas</strong>: con una sola bolsa no hay forma de estimar la variación natural entre bolsas del mismo sustrato. (b) Falla <strong>aleatorización</strong>: el orden fijo hace que la fatiga de paladar perjudique siempre a Great Value y favorezca a Oreo. (c) Falla <strong>control</strong>: las condiciones cambiaron entre mediciones (año y laboratorio distintos), así que la diferencia observada podría deberse a eso y no a la marca. <em>En (c) se dice que el efecto de la marca está <strong>confundido</strong> con el del laboratorio y el tiempo. No hay manera de separarlos.</em></p>
-<p><strong>4.</strong> Como el paladar se cansa y arrastra sabores, las últimas posiciones tienden a recibir calificaciones más bajas. Si todos los jueces catan en el mismo orden, ese castigo cae <strong>siempre sobre la misma marca</strong>, y no podríamos distinguir si esa marca gustó menos por su sabor o por su posición. Al aleatorizar, cada marca ocupa todas las posiciones aproximadamente por igual y el efecto se reparte parejo. <em>La aleatorización no elimina el efecto de orden: lo convierte en ruido en lugar de sesgo.</em></p>
-<p><strong>5.</strong> Cata doble ciego: (i) las galletas se sirven en platos con <strong>códigos neutros</strong> (por ejemplo, 3 dígitos al azar), de modo que el <strong>juez</strong> no sabe qué marca prueba —esto evita el sesgo de expectativa por la fama de la marca—; (ii) quien <strong>reparte y recoge</strong> las hojas tampoco sabe qué código corresponde a qué marca —esto evita que transmita pistas involuntarias con gestos, tonos o comentarios—. La correspondencia código–marca la guarda una persona ajena hasta el análisis. <em>La segunda capa es la que suele olvidarse y es justo la que protege del sesgo del experimentador.</em></p>
-<p><strong>6.</strong> Una solución en R:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>sustratos <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"paja_trigo"</span>, <span class="st">"pulpa_cafe"</span>, <span class="st">"olote_maiz"</span>, <span class="st">"aserrin"</span>), <span class="at">each =</span> <span class="dv">5</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>plan_setas <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">bolsa    =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">sustrato =</span> <span class="fu">sample</span>(sustratos)   <span class="co"># permuta la asignación al azar</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>plan_setas</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<p>La clave es <code>sample()</code>, que permuta las asignaciones: así, si las bolsas ocupan posiciones distintas en el invernadero (unas con más luz o humedad), esa variación no queda ligada sistemáticamente a un sustrato. <em>Documenta siempre la semilla (<code>set.seed</code>) para que el plan sea reproducible y auditable.</em></p>
-</div>
-</div>
-</div>
 
 
 <script type="ojs-module-contents">
@@ -1028,13 +941,13 @@ window._ojs.runtime.interpretFromScriptTags();
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./04-muestreo.html" class="pagination-link" aria-label="Producción de datos: muestreo">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Producción de datos: muestreo</span></span>
+      <a href="./references.html" class="pagination-link" aria-label="Referencias">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Referencias</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./laboratorio-estandarizacion.html" class="pagination-link" aria-label="Laboratorio interactivo: la estandarización">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Laboratorio interactivo: la estandarización</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./formulario.html" class="pagination-link" aria-label="Formulario">
+        <span class="nav-page-text">Formulario</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

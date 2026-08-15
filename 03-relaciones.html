@@ -23,6 +23,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -44,7 +79,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-e671ceb1ec85f3bd6fb682ad87dd4085.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-22a2d3c8fd5a3a2e3c4a69971a64c298.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -72,11 +109,42 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Buscar"
   }
 }</script>
+<script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 <link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -190,38 +258,44 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./laboratorio-estandarizacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Laboratorio interactivo: la estandarización</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./06-muestrales.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Distribuciones muestrales y TCL</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Distribuciones muestrales y TCL</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./07-estimacion-pruebas.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Estimación y prueba de hipótesis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estimación y prueba de hipótesis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./08-dos-muestras.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Inferencia para dos parámetros</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Inferencia para dos parámetros</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./09-enumerativos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Inferencia para datos enumerativos</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Inferencia para datos enumerativos</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10-anova.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Análisis de varianza (ANOVA)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Análisis de varianza (ANOVA)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./11-regresion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Inferencia en regresión</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Inferencia en regresión</span></span></a>
   </div>
 </li>
       </ul>
@@ -232,6 +306,41 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Referencias</span></a>
   </div>
 </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Apéndices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mapa-decision.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mapa de decisión</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./formulario.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Formulario</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./apendice-python.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">R y Python, lado a lado</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./laboratorio-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Practicar R sin instalar nada</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -242,13 +351,20 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">En este capítulo</h2>
    
   <ul>
-  <li><a href="#variable-dependiente-y-variable-regresora" id="toc-variable-dependiente-y-variable-regresora" class="nav-link active" data-scroll-target="#variable-dependiente-y-variable-regresora"><span class="header-section-number">3.1</span> Variable dependiente y variable regresora</a></li>
-  <li><a href="#diagrama-de-dispersión" id="toc-diagrama-de-dispersión" class="nav-link" data-scroll-target="#diagrama-de-dispersión"><span class="header-section-number">3.2</span> Diagrama de dispersión</a></li>
-  <li><a href="#correlación-de-pearson" id="toc-correlación-de-pearson" class="nav-link" data-scroll-target="#correlación-de-pearson"><span class="header-section-number">3.3</span> Correlación de Pearson</a></li>
-  <li><a href="#regresión-por-mínimos-cuadrados-enfoque-descriptivo" id="toc-regresión-por-mínimos-cuadrados-enfoque-descriptivo" class="nav-link" data-scroll-target="#regresión-por-mínimos-cuadrados-enfoque-descriptivo"><span class="header-section-number">3.4</span> Regresión por mínimos cuadrados (enfoque descriptivo)</a></li>
-  <li><a href="#análisis-gráfico-de-residuales" id="toc-análisis-gráfico-de-residuales" class="nav-link" data-scroll-target="#análisis-gráfico-de-residuales"><span class="header-section-number">3.5</span> Análisis gráfico de residuales</a></li>
-  <li><a href="#matriz-de-correlación-entre-varias-variables" id="toc-matriz-de-correlación-entre-varias-variables" class="nav-link" data-scroll-target="#matriz-de-correlación-entre-varias-variables"><span class="header-section-number">3.6</span> Matriz de correlación entre varias variables</a></li>
-  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">3.7</span> Ejercicios</a></li>
+  <li><a href="#el-diagrama-de-dispersión" id="toc-el-diagrama-de-dispersión" class="nav-link active" data-scroll-target="#el-diagrama-de-dispersión"><span class="header-section-number">3.1</span> El diagrama de dispersión</a></li>
+  <li><a href="#el-coeficiente-de-correlación" id="toc-el-coeficiente-de-correlación" class="nav-link" data-scroll-target="#el-coeficiente-de-correlación"><span class="header-section-number">3.2</span> El coeficiente de correlación</a>
+  <ul class="collapse">
+  <li><a href="#sec-lab-cor" id="toc-sec-lab-cor" class="nav-link" data-scroll-target="#sec-lab-cor"><span class="header-section-number">3.2.1</span> Laboratorio: ¿cómo se ve cada valor de r?</a></li>
+  </ul></li>
+  <li><a href="#la-recta-de-regresión-por-mínimos-cuadrados" id="toc-la-recta-de-regresión-por-mínimos-cuadrados" class="nav-link" data-scroll-target="#la-recta-de-regresión-por-mínimos-cuadrados"><span class="header-section-number">3.3</span> La recta de regresión por mínimos cuadrados</a>
+  <ul class="collapse">
+  <li><a href="#sec-regresion-mano" id="toc-sec-regresion-mano" class="nav-link" data-scroll-target="#sec-regresion-mano"><span class="header-section-number">3.3.1</span> El mismo cálculo a mano</a></li>
+  </ul></li>
+  <li><a href="#análisis-de-residuales" id="toc-análisis-de-residuales" class="nav-link" data-scroll-target="#análisis-de-residuales"><span class="header-section-number">3.4</span> Análisis de residuales</a></li>
+  <li><a href="#matriz-de-correlación-varias-variables-a-la-vez" id="toc-matriz-de-correlación-varias-variables-a-la-vez" class="nav-link" data-scroll-target="#matriz-de-correlación-varias-variables-a-la-vez"><span class="header-section-number">3.5</span> Matriz de correlación: varias variables a la vez</a></li>
+  <li><a href="#del-resumen-a-la-inferencia-próxima-parada" id="toc-del-resumen-a-la-inferencia-próxima-parada" class="nav-link" data-scroll-target="#del-resumen-a-la-inferencia-próxima-parada"><span class="header-section-number">3.6</span> Del resumen a la inferencia (próxima parada)</a></li>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen"><span class="header-section-number">3.7</span> Resumen</a></li>
+  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">3.8</span> Ejercicios</a></li>
   </ul>
 </nav>
     </div>
@@ -274,64 +390,420 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="callout callout-style-default callout-important callout-titled" title="Plantilla en construcción">
+<div class="callout callout-style-default callout-warning callout-titled" title="Capítulo en revisión">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Importante</span>Plantilla en construcción
+<span class="screen-reader-only">Advertencia</span>Capítulo en revisión
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Este capítulo corresponde a <strong>Semana 3</strong> del calendario y usa los datos de <strong>algoritmos, pingüinos</strong>. La estructura de secciones ya está fijada; el contenido se desarrolla con el mismo formato del <a href="01-exploracion.html" class="quarto-xref"><span>Capítulo 1</span></a>: pregunta real, técnica, supuestos, cómputo en R e interpretación.</p>
+<p>El contenido de este capítulo está completo, pero todavía no pasa por la revisión final de redacción. Se avisará en clase cuando quede listo para estudiar de aquí. Mientras tanto se puede consultar, con esa advertencia.</p>
 </div>
 </div>
-<section id="variable-dependiente-y-variable-regresora" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="variable-dependiente-y-variable-regresora"><span class="header-section-number">3.1</span> Variable dependiente y variable regresora</h2>
-<p><em>(En construcción.)</em></p>
-</section>
-<section id="diagrama-de-dispersión" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="diagrama-de-dispersión"><span class="header-section-number">3.2</span> Diagrama de dispersión</h2>
-<p><em>(En construcción.)</em></p>
-</section>
-<section id="correlación-de-pearson" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="correlación-de-pearson"><span class="header-section-number">3.3</span> Correlación de Pearson</h2>
-<p><em>(En construcción.)</em></p>
-</section>
-<section id="regresión-por-mínimos-cuadrados-enfoque-descriptivo" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="regresión-por-mínimos-cuadrados-enfoque-descriptivo"><span class="header-section-number">3.4</span> Regresión por mínimos cuadrados (enfoque descriptivo)</h2>
-<p><em>(En construcción.)</em></p>
-</section>
-<section id="análisis-gráfico-de-residuales" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="análisis-gráfico-de-residuales"><span class="header-section-number">3.5</span> Análisis gráfico de residuales</h2>
-<p><em>(En construcción.)</em></p>
-</section>
-<section id="matriz-de-correlación-entre-varias-variables" class="level2" data-number="3.6">
-<h2 data-number="3.6" class="anchored" data-anchor-id="matriz-de-correlación-entre-varias-variables"><span class="header-section-number">3.6</span> Matriz de correlación entre varias variables</h2>
-<p><em>(En construcción.)</em></p>
-<div class="callout callout-style-default callout-tip callout-titled" title="¿Qué técnica uso?">
+<div class="callout callout-style-default callout-tip callout-titled" title="Objetivos del capítulo">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>¿Qué técnica uso?
+<span class="screen-reader-only">Tip</span>Objetivos del capítulo
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Dos variables cuantitativas: ¿fuerza de la relación? → correlación; ¿predecir Y a partir de X? → recta de regresión.</p>
+<ul>
+<li>Explorar la relación entre dos variables cuantitativas con un <strong>diagrama de dispersión</strong>.</li>
+<li>Cuantificar una relación lineal con el <strong>coeficiente de correlación</strong>.</li>
+<li>Ajustar una <strong>recta de regresión</strong> por mínimos cuadrados e interpretar sus coeficientes.</li>
+<li>Revisar el ajuste con el <strong>análisis de residuales</strong>.</li>
+<li>Resumir varias variables a la vez con una <strong>matriz de correlación</strong>.</li>
+</ul>
+</div>
+</div>
+<p>Hasta aquí describimos <strong>una</strong> variable a la vez. Casi siempre la pregunta interesante es sobre <strong>dos</strong>: ¿el tiempo de ejecución crece con el tamaño de entrada?, ¿un pico más largo viene con un pico más profundo? Este capítulo cierra la Parte I estudiando cómo se relacionan dos variables cuantitativas.</p>
+<section id="el-diagrama-de-dispersión" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="el-diagrama-de-dispersión"><span class="header-section-number">3.1</span> El diagrama de dispersión</h2>
+<p>La primera herramienta —siempre— es graficar. En un <strong>diagrama de dispersión</strong> cada individuo es un punto: una variable en el eje horizontal (la <strong>regresora</strong> o explicativa, <code>x</code>) y otra en el vertical (la <strong>respuesta</strong> o dependiente, <code>y</code>).</p>
+<p>Usemos los tiempos de ejecución de un algoritmo según el tamaño de la entrada.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>alg <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"datos/algoritmos_regresion.csv"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>mac <span class="ot">&lt;-</span> <span class="fu">filter</span>(alg, entorno <span class="sc">==</span> <span class="st">"Mac"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mac, <span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> tiempo_ms)) <span class="sc">+</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"#1F4E79"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Tamaño de entrada (n)"</span>, <span class="at">y =</span> <span class="st">"Tiempo (ms)"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="fig-dispersion-alg" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dispersion-alg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03-relaciones_files/figure-html/fig-dispersion-alg-1.png" class="img-fluid figure-img" width="480">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dispersion-alg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3.1: Tiempo de ejecución según el tamaño de entrada (entorno Mac).
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Al leer una nube de puntos nos fijamos en tres rasgos: la <strong>dirección</strong> (¿sube o baja?), la <strong>forma</strong> (¿recta o curva?) y la <strong>fuerza</strong> (¿los puntos están apretados sobre un patrón o dispersos?). Aquí la relación es creciente, aproximadamente lineal y bastante fuerte.</p>
+</section>
+<section id="el-coeficiente-de-correlación" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="el-coeficiente-de-correlación"><span class="header-section-number">3.2</span> El coeficiente de correlación</h2>
+<p>El <strong>coeficiente de correlación de Pearson</strong>, <code>r</code>, resume en un número la <strong>fuerza y dirección de una relación lineal</strong>. Va de −1 a 1: cerca de 1 es una relación lineal creciente fuerte; cerca de −1, decreciente fuerte; cerca de 0, sin relación lineal.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(mac<span class="sc">$</span>n, mac<span class="sc">$</span>tiempo_ms)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.9711912</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Correlación no es causalidad">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Correlación no es causalidad
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Que dos variables estén correlacionadas <strong>no</strong> significa que una cause a la otra. El clásico ejemplo: las ventas de helado y los ahogamientos suben juntos, pero ninguno causa al otro (los une el calor del verano). La correlación describe <em>asociación</em>; para hablar de <em>causa</em> necesitamos un experimento (Parte II). Además, <code>r</code> solo mide relación <strong>lineal</strong>: una relación fuerte pero curva puede dar <code>r</code> cercano a 0.</p>
+</div>
+</div>
+<section id="sec-lab-cor" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="sec-lab-cor"><span class="header-section-number">3.2.1</span> Laboratorio: ¿cómo se ve cada valor de r?</h3>
+<p>Leer un número como “r = 0.6” no dice mucho hasta que se ve la nube que le corresponde. Al mover el deslizador se entrena el ojo: para cada valor de <span class="math inline">\(r\)</span>, así se ven los datos.</p>
+<div class="cell panel-input card bg-light p-2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="64" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 63;"><span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>viewof rval <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="op">-</span><span class="dv">1</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.7</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.05</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"correlación r"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="69" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 68;"><span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>base <span class="op">=</span> <span class="bu">Array</span><span class="op">.</span><span class="fu">from</span>({<span class="dt">length</span><span class="op">:</span> <span class="dv">90</span>}<span class="op">,</span> () <span class="kw">=&gt;</span> [d3<span class="op">.</span><span class="fu">randomNormal</span>()()<span class="op">,</span> d3<span class="op">.</span><span class="fu">randomNormal</span>()()])</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="74" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 73;"><span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a>nube <span class="op">=</span> base<span class="op">.</span><span class="fu">map</span>(([z1<span class="op">,</span> z2]) <span class="kw">=&gt;</span> ({</span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> z1<span class="op">,</span></span>
+<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> rval <span class="op">*</span> z1 <span class="op">+</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">sqrt</span>(<span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span> <span class="op">-</span> rval <span class="op">*</span> rval)) <span class="op">*</span> z2</span>
+<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a>}))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="82" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 81;"><span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a>  <span class="dt">height</span><span class="op">:</span> <span class="dv">260</span><span class="op">,</span></span>
+<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> { <span class="dt">label</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="op">-</span><span class="fl">3.2</span><span class="op">,</span> <span class="fl">3.2</span>] }<span class="op">,</span></span>
+<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> { <span class="dt">label</span><span class="op">:</span> <span class="st">"y"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="op">-</span><span class="fl">3.2</span><span class="op">,</span> <span class="fl">3.2</span>] }<span class="op">,</span></span>
+<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(nube<span class="op">,</span> { <span class="dt">x</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"y"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"#1F4E79"</span><span class="op">,</span> <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.65</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="fl">3.5</span> })<span class="op">,</span></span>
+<span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">linearRegressionY</span>(nube<span class="op">,</span> { <span class="dt">x</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"y"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#C0392B"</span> })</span>
+<span id="cb6-89"><a href="#cb6-89" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb6-90"><a href="#cb6-90" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-4" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Con <span class="math inline">\(r\)</span> cerca de 0 la nube es un borrón redondo: conocer <span class="math inline">\(x\)</span> no ayuda a adivinar <span class="math inline">\(y\)</span>. Conforme <span class="math inline">\(|r|\)</span> crece, la nube se aprieta contra la recta hasta volverse casi una línea en <span class="math inline">\(\pm 1\)</span>. Nótese también que el <strong>signo</strong> solo cambia la inclinación, no la fuerza: <span class="math inline">\(r = -0.8\)</span> es tan fuerte como <span class="math inline">\(r = 0.8\)</span>. Un ejercicio útil: poner el deslizador en 0.5 y observar cuánta dispersión sigue habiendo — mucha gente sobrestima lo que significa “correlación moderada”.</p>
 </div>
 </div>
 </section>
-<section id="ejercicios" class="level2" data-number="3.7">
-<h2 data-number="3.7" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">3.7</span> Ejercicios</h2>
-<p><em>Por desarrollar (banco de la Dra. Figueroa reorganizado + reactivos nuevos).</em></p>
+</section>
+<section id="la-recta-de-regresión-por-mínimos-cuadrados" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="la-recta-de-regresión-por-mínimos-cuadrados"><span class="header-section-number">3.3</span> La recta de regresión por mínimos cuadrados</h2>
+<p>Cuando la relación es lineal, podemos resumirla con una <strong>recta</strong>: <span class="math inline">\(\hat{y} = b_0 + b_1 x\)</span>. El método de <strong>mínimos cuadrados</strong> elige la recta que hace más pequeña la suma de los errores al cuadrado (las distancias verticales de los puntos a la recta). En R se ajusta con <code>lm()</code> (“modelo lineal”).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(tiempo_ms <span class="sc">~</span> n, <span class="at">data =</span> mac)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(modelo)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)           n </span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1.189200000 0.001794473</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mac, <span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> tiempo_ms)) <span class="sc">+</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"#1F4E79"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">"#C0392B"</span>) <span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Tamaño de entrada (n)"</span>, <span class="at">y =</span> <span class="st">"Tiempo (ms)"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="fig-recta-alg" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-recta-alg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03-relaciones_files/figure-html/fig-recta-alg-1.png" class="img-fluid figure-img" width="480">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-recta-alg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3.2: Recta de mínimos cuadrados sobre los datos.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La <strong>pendiente</strong> (<span class="math inline">\(b_1\)</span>) es lo que más nos dice: por cada elemento adicional en la entrada, el tiempo aumenta aproximadamente ese número de milisegundos. La <strong>ordenada al origen</strong> (<span class="math inline">\(b_0\)</span>) es el tiempo estimado cuando <span class="math inline">\(n = 0\)</span>; muchas veces es solo un punto de anclaje sin sentido físico (aquí, un “costo fijo” del algoritmo). Conviene interpretar la pendiente en las unidades del problema.</p>
+</div>
+</div>
+<p>En este capítulo la recta es <strong>descripción</strong>: resume la tendencia. En el <a href="11-regresion.html" class="quarto-xref"><span>Capítulo 12</span></a> volveremos a ella para <em>hacer inferencia</em>: ¿la pendiente es realmente distinta de cero o pudo salir por azar?</p>
+<section id="sec-regresion-mano" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="sec-regresion-mano"><span class="header-section-number">3.3.1</span> El mismo cálculo a mano</h3>
+<p>Vale la pena obtener una recta con lápiz y papel, aunque sea una vez. Estos son cinco tiempos de ejecución (en ms) para entradas de 1 a 5 miles de elementos:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th><span class="math inline">\(x\)</span> (miles)</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(y\)</span> (ms)</td>
+<td>3.1</td>
+<td>4.8</td>
+<td>6.4</td>
+<td>8.3</td>
+<td>9.9</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Paso 1. Las cinco sumas.</strong> Todo el cálculo se apoya en ellas:</p>
+<p><span class="math display">\[\sum x = 15, \quad \sum y = 32.5, \quad \sum xy = 114.6, \quad \sum x^2 = 55, \quad \sum y^2 = 240.51\]</span></p>
+<p><strong>Paso 2. Las sumas de cuadrados corregidas.</strong></p>
+<p><span class="math display">\[S_{xx} = \sum x^2 - \frac{(\sum x)^2}{n} = 55 - \frac{15^2}{5} = 55 - 45 = 10\]</span></p>
+<p><span class="math display">\[S_{yy} = \sum y^2 - \frac{(\sum y)^2}{n} = 240.51 - \frac{32.5^2}{5} = 29.26\]</span></p>
+<p><span class="math display">\[S_{xy} = \sum xy - \frac{(\sum x)(\sum y)}{n} = 114.6 - \frac{15 \times 32.5}{5} = 114.6 - 97.5 = 17.1\]</span></p>
+<p><strong>Paso 3. La correlación.</strong></p>
+<p><span class="math display">\[r = \frac{S_{xy}}{\sqrt{S_{xx}S_{yy}}} = \frac{17.1}{\sqrt{10 \times 29.26}} = \frac{17.1}{17.106} = 0.9997\]</span></p>
+<p><strong>Paso 4. La recta.</strong></p>
+<p><span class="math display">\[\hat{\beta}_1 = \frac{S_{xy}}{S_{xx}} = \frac{17.1}{10} = 1.71, \qquad \hat{\beta}_0 = \bar{y} - \hat{\beta}_1\bar{x} = 6.5 - 1.71(3) = 1.37\]</span></p>
+<p>La recta ajustada es <span class="math inline">\(\hat{y} = 1.37 + 1.71x\)</span>.</p>
+<p>Comprobación en R:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>xs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>ys <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">3.1</span>, <span class="fl">4.8</span>, <span class="fl">6.4</span>, <span class="fl">8.3</span>, <span class="fl">9.9</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(xs, ys)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.9996753</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(ys <span class="sc">~</span> xs))</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)          xs </span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        1.37        1.71</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Coinciden: <span class="math inline">\(r = 0.9997\)</span> y la recta <span class="math inline">\(\hat{y} = 1.37 + 1.71x\)</span>. La pendiente dice que cada mil elementos adicionales agregan 1.71 ms.</p>
+<p>Vale la pena mirar la estructura del cálculo. Las tres cantidades <span class="math inline">\(S_{xx}\)</span>, <span class="math inline">\(S_{yy}\)</span> y <span class="math inline">\(S_{xy}\)</span> resumen <strong>todo</strong> lo que hace falta: la dispersión de <span class="math inline">\(x\)</span>, la de <span class="math inline">\(y\)</span> y cómo varían juntas. A partir de ellas salen tanto la correlación como la recta, lo cual explica por qué ambas responden a la misma pregunta desde ángulos distintos. Y la fórmula <span class="math inline">\(\hat{\beta}_0 = \bar{y} - \hat{\beta}_1\bar{x}\)</span> revela algo que no se ve en la gráfica: <strong>la recta de mínimos cuadrados siempre pasa por el punto <span class="math inline">\((\bar{x}, \bar{y})\)</span></strong>, el centro de gravedad de la nube.</p>
+<p>Estos mismos cinco datos se retoman en el <a href="11-regresion.html" class="quarto-xref"><span>Capítulo 12</span></a> para calcular a mano la <strong>incertidumbre</strong> de la pendiente.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="análisis-de-residuales" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="análisis-de-residuales"><span class="header-section-number">3.4</span> Análisis de residuales</h2>
+<p>Un <strong>residual</strong> es lo que la recta no explicó: la diferencia entre el valor observado y el predicho, <span class="math inline">\(y - \hat{y}\)</span>. Si la recta es un buen resumen, los residuales no deben mostrar ningún patrón: solo ruido alrededor de cero. Graficarlos contra los valores ajustados es el chequeo básico.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>mac_aug <span class="ot">&lt;-</span> mac <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ajustado =</span> <span class="fu">fitted</span>(modelo),</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">residual =</span> <span class="fu">resid</span>(modelo))</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mac_aug, <span class="fu">aes</span>(<span class="at">x =</span> ajustado, <span class="at">y =</span> residual)) <span class="sc">+</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"#1F4E79"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">"#C0392B"</span>) <span class="sc">+</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Valor ajustado (ms)"</span>, <span class="at">y =</span> <span class="st">"Residual (ms)"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="fig-residuales" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-residuales-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03-relaciones_files/figure-html/fig-residuales-1.png" class="img-fluid figure-img" width="480">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-residuales-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3.3: Residuales contra valores ajustados.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Buscamos una nube <strong>sin estructura</strong>, repartida arriba y abajo del cero. Si apareciera una curva (forma de U), la relación real no sería del todo lineal; si el ancho creciera hacia la derecha (forma de embudo), la dispersión no sería constante. Estos diagnósticos serán obligatorios cuando hagamos inferencia con regresión.</p>
+</div>
+</div>
+</section>
+<section id="matriz-de-correlación-varias-variables-a-la-vez" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="matriz-de-correlación-varias-variables-a-la-vez"><span class="header-section-number">3.5</span> Matriz de correlación: varias variables a la vez</h2>
+<p>Cuando hay <strong>varias</strong> variables cuantitativas, una <strong>matriz de correlación</strong> muestra el <code>r</code> de cada par. Con los pingüinos:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g) <span class="sc">|&gt;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor</span>(<span class="at">use =</span> <span class="st">"complete.obs"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="dv">2</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                   bill_length_mm bill_depth_mm flipper_length_mm body_mass_g</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; bill_length_mm              1.00         -0.24              0.66        0.60</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; bill_depth_mm              -0.24          1.00             -0.58       -0.47</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; flipper_length_mm           0.66         -0.58              1.00        0.87</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; body_mass_g                 0.60         -0.47              0.87        1.00</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Cada celda es la correlación de un par de variables (la diagonal es 1: toda variable se correlaciona perfecto consigo misma). Se lee de un vistazo: el largo de la aleta y la masa corporal van muy de la mano (0.87), mientras que el largo y la profundidad del pico casi no se relacionan de forma lineal (−0.24).</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="¿Qué técnica usar?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>¿Qué técnica usar?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ampliamos el mapa de decisión para <strong>dos o más variables cuantitativas</strong>:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Mi pregunta</th>
+<th>Herramienta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>¿Cómo se ven relacionadas dos variables?</td>
+<td>Diagrama de dispersión</td>
+</tr>
+<tr class="even">
+<td>¿Qué tan fuerte es su relación lineal?</td>
+<td>Coeficiente de correlación <code>r</code></td>
+</tr>
+<tr class="odd">
+<td>¿Cómo predigo <code>y</code> a partir de <code>x</code>?</td>
+<td>Recta de regresión (<code>lm</code>)</td>
+</tr>
+<tr class="even">
+<td>¿La recta ajusta bien?</td>
+<td>Análisis de residuales</td>
+</tr>
+<tr class="odd">
+<td>¿Cómo se relacionan varias variables?</td>
+<td>Matriz de correlación</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Advertencia permanente:</strong> correlación describe asociación, no causa.</p>
+</div>
+</div>
+</section>
+<section id="del-resumen-a-la-inferencia-próxima-parada" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="del-resumen-a-la-inferencia-próxima-parada"><span class="header-section-number">3.6</span> Del resumen a la inferencia (próxima parada)</h2>
+<p>La matriz de correlación y la covarianza son el punto de partida de técnicas más avanzadas del análisis multivariado (componentes principales, reducción de dimensión), que quedan fuera del alcance de este curso. Aquí nos quedamos en el nivel descriptivo; en la Parte III aprenderemos a decidir si estas relaciones son <strong>estadísticamente significativas</strong> o pudieron surgir por azar.</p>
+</section>
+<section id="resumen" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="resumen"><span class="header-section-number">3.7</span> Resumen</h2>
+<p>Para relacionar dos variables cuantitativas: primero un <strong>diagrama de dispersión</strong>, luego el <strong>coeficiente de correlación</strong> para medir la fuerza lineal y la <strong>recta de mínimos cuadrados</strong> para resumir la tendencia y predecir. El <strong>análisis de residuales</strong> nos dice si la recta es un buen resumen, y la <strong>matriz de correlación</strong> extiende la idea a varias variables. Cierra aquí la Parte I: ya sabemos explorar datos. En la Parte II veremos de dónde deben <em>venir</em> esos datos para que las conclusiones valgan.</p>
+</section>
+<section id="ejercicios" class="level2" data-number="3.8">
+<h2 data-number="3.8" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">3.8</span> Ejercicios</h2>
+<ol type="1">
+<li><p><strong>Dispersión y correlación.</strong> Con los pingüinos, graficar <code>body_mass_g</code> (y) contra <code>flipper_length_mm</code> (x) y calcula su correlación. Describir dirección, forma y fuerza.</p></li>
+<li><p><strong>Interpretar la pendiente.</strong> Ajustar <code>lm(tiempo_ms ~ n)</code> para el entorno <strong>Windows</strong> de <code>datos/algoritmos_regresion.csv</code>. ¿Cuántos milisegundos agrega cada elemento adicional? Comparar la pendiente con la de Mac.</p></li>
+<li><p><strong>Correlación y linealidad.</strong> Inventar (o dibuja) un conjunto de puntos con una relación fuerte pero <strong>curva</strong> y explicar por qué su <code>r</code> puede ser cercano a cero. ¿Qué mostraría el diagrama de dispersión que <code>r</code> esconde?</p></li>
+<li><p><strong>Residuales.</strong> Para el modelo del ejercicio 2, graficar los residuales contra los valores ajustados. ¿Se observa algún patrón? ¿Qué indicaría si lo hubiera?</p></li>
+<li><p><strong>Causa vs.&nbsp;asociación.</strong> Dar un ejemplo, distinto al del helado, de dos variables correlacionadas donde sería un error concluir que una causa la otra. Identificar una posible variable oculta que las relacione.</p></li>
+<li><p><strong>Matriz de correlación.</strong> Calcular la matriz de correlación de las cuatro medidas numéricas de los pingüinos por separado para la especie <em>Gentoo</em> (<code>filter(species == "Gentoo")</code>). ¿Cambian mucho las correlaciones respecto a la matriz global? ¿Por qué podría pasar eso?</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Soluciones y retroalimentación">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Soluciones y retroalimentación
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>1.</strong> <code>cor(penguins$flipper_length_mm, penguins$body_mass_g, use = "complete.obs")</code> da aproximadamente <strong>0.87</strong>. La relación es <strong>creciente, aproximadamente lineal y fuerte</strong>: pingüinos con aletas más largas tienden a pesar más. <em>Tiene sentido biológico: ambas variables reflejan el tamaño general del animal.</em></p>
+<p><strong>2.</strong> La pendiente de Windows ronda <strong>0.0019–0.0020 ms por elemento</strong>, ligeramente mayor que la de Mac (≈0.0018). Interpretación: por cada elemento adicional en la entrada, Windows tarda un poco más. <em>Ojo: la diferencia se ve pequeña porque está en milisegundos por elemento; multiplicada por 10 000 elementos se vuelve visible. Conviene interpretar siempre la pendiente en la escala del problema.</em></p>
+<p><strong>3.</strong> El caso clásico es una <strong>parábola</strong>, por ejemplo puntos sobre <span class="math inline">\(y = x^2\)</span> con <span class="math inline">\(x\)</span> entre <span class="math inline">\(-3\)</span> y <span class="math inline">\(3\)</span>: hay una relación perfectamente determinista, pero <span class="math inline">\(r \approx 0\)</span> porque la parte creciente y la decreciente se cancelan. El diagrama de dispersión muestra de inmediato la curva que <code>r</code> esconde. <em>Moraleja: nunca debe reportarse <code>r</code> sin haber visto la nube de puntos.</em></p>
+<p><strong>4.</strong> Los residuales muestran una <strong>curvatura leve</strong> (los datos fueron generados con un pequeño término cuadrático). Un patrón en forma de U indicaría que la relación no es del todo lineal y que un modelo curvo ajustaría mejor; un patrón de embudo indicaría que la dispersión crece con el valor ajustado. <em>Estos dos diagnósticos son los que revisaremos formalmente en el <a href="11-regresion.html" class="quarto-xref"><span>Capítulo 12</span></a>.</em></p>
+<p><strong>5.</strong> Ejemplos válidos: el número de bomberos en un incendio y los daños (los une el <strong>tamaño del incendio</strong>); las ventas de lentes de sol y de trajes de baño (los une la <strong>estación del año</strong>); el tamaño del pie y la habilidad lectora en niños (los une la <strong>edad</strong>). <em>En todos, la tercera variable se llama variable de confusión o variable oculta; solo un experimento aleatorizado la neutraliza.</em></p>
+<p><strong>6.</strong> Sí cambian, y a veces mucho. La correlación entre el largo y la profundidad del pico pasa de ser <strong>negativa</strong> en el conjunto global (≈ −0.24) a <strong>positiva</strong> dentro de cada especie. Esto ocurre porque las especies difieren sistemáticamente en su forma de pico, y mezclarlas crea una tendencia artificial. <em>Es una manifestación de la <strong>paradoja de Simpson</strong>: una relación puede invertirse al agrupar o desagrupar los datos. Es la razón por la que siempre conviene explorar por subgrupos antes de concluir.</em></p>
+</div>
+</div>
+</div>
 
 
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+W10=
+</script>
 </section>
 
 </main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBydmFsID0gSW5wdXRzLnJhbmdlKFstMSwgMV0sIHt2YWx1ZTogMC43LCBzdGVwOiAwLjA1LCBsYWJlbDogXCJjb3JyZWxhY2nDs24gclwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImJhc2UgPSBBcnJheS5mcm9tKHtsZW5ndGg6IDkwfSwgKCkgPT4gW2QzLnJhbmRvbU5vcm1hbCgpKCksIGQzLnJhbmRvbU5vcm1hbCgpKCldKVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0zIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoibnViZSA9IGJhc2UubWFwKChbejEsIHoyXSkgPT4gKHtcbiAgeDogejEsXG4gIHk6IHJ2YWwgKiB6MSArIE1hdGguc3FydChNYXRoLm1heCgwLCAxIC0gcnZhbCAqIHJ2YWwpKSAqIHoyXG59KSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IlBsb3QucGxvdCh7XG4gIGhlaWdodDogMjYwLFxuICB4OiB7IGxhYmVsOiBcInhcIiwgZG9tYWluOiBbLTMuMiwgMy4yXSB9LFxuICB5OiB7IGxhYmVsOiBcInlcIiwgZG9tYWluOiBbLTMuMiwgMy4yXSB9LFxuICBtYXJrczogW1xuICAgIFBsb3QuZG90KG51YmUsIHsgeDogXCJ4XCIsIHk6IFwieVwiLCBmaWxsOiBcIiMxRjRFNzlcIiwgZmlsbE9wYWNpdHk6IDAuNjUsIHI6IDMuNSB9KSxcbiAgICBQbG90LmxpbmVhclJlZ3Jlc3Npb25ZKG51YmUsIHsgeDogXCJ4XCIsIHk6IFwieVwiLCBzdHJva2U6IFwiI0MwMzkyQlwiIH0pXG4gIF1cbn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ3J2YWwnKSJ9XX0=
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../..";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

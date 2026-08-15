@@ -23,6 +23,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -44,7 +79,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-e671ceb1ec85f3bd6fb682ad87dd4085.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-22a2d3c8fd5a3a2e3c4a69971a64c298.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -72,11 +109,42 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Buscar"
   }
 }</script>
+<script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 <link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -190,38 +258,44 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./laboratorio-estandarizacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Laboratorio interactivo: la estandarización</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./06-muestrales.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Distribuciones muestrales y TCL</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Distribuciones muestrales y TCL</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./07-estimacion-pruebas.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Estimación y prueba de hipótesis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estimación y prueba de hipótesis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./08-dos-muestras.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Inferencia para dos parámetros</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Inferencia para dos parámetros</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./09-enumerativos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Inferencia para datos enumerativos</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Inferencia para datos enumerativos</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10-anova.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Análisis de varianza (ANOVA)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Análisis de varianza (ANOVA)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./11-regresion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Inferencia en regresión</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Inferencia en regresión</span></span></a>
   </div>
 </li>
       </ul>
@@ -232,6 +306,41 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Referencias</span></a>
   </div>
 </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Apéndices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mapa-decision.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mapa de decisión</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./formulario.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Formulario</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./apendice-python.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">R y Python, lado a lado</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./laboratorio-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Practicar R sin instalar nada</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -242,12 +351,19 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">En este capítulo</h2>
    
   <ul>
-  <li><a href="#medidas-de-localización-media-mediana-cuartiles" id="toc-medidas-de-localización-media-mediana-cuartiles" class="nav-link active" data-scroll-target="#medidas-de-localización-media-mediana-cuartiles"><span class="header-section-number">2.1</span> Medidas de localización: media, mediana, cuartiles</a></li>
-  <li><a href="#medidas-de-dispersión-rango-varianza-desviación-estándar-ric" id="toc-medidas-de-dispersión-rango-varianza-desviación-estándar-ric" class="nav-link" data-scroll-target="#medidas-de-dispersión-rango-varianza-desviación-estándar-ric"><span class="header-section-number">2.2</span> Medidas de dispersión: rango, varianza, desviación estándar, RIC</a></li>
-  <li><a href="#el-diagrama-de-caja-boxplot-y-la-comparación-entre-grupos" id="toc-el-diagrama-de-caja-boxplot-y-la-comparación-entre-grupos" class="nav-link" data-scroll-target="#el-diagrama-de-caja-boxplot-y-la-comparación-entre-grupos"><span class="header-section-number">2.3</span> El diagrama de caja (boxplot) y la comparación entre grupos</a></li>
-  <li><a href="#forma-de-una-distribución-y-el-q-q-plot-complemento-para-el-examen-de-la-mcd" id="toc-forma-de-una-distribución-y-el-q-q-plot-complemento-para-el-examen-de-la-mcd" class="nav-link" data-scroll-target="#forma-de-una-distribución-y-el-q-q-plot-complemento-para-el-examen-de-la-mcd"><span class="header-section-number">2.4</span> Forma de una distribución y el Q-Q plot <em>(complemento para el examen de la MCD)</em></a></li>
+  <li><a href="#medidas-de-localización-dónde-está-el-centro" id="toc-medidas-de-localización-dónde-está-el-centro" class="nav-link active" data-scroll-target="#medidas-de-localización-dónde-está-el-centro"><span class="header-section-number">2.1</span> Medidas de localización: ¿dónde está el centro?</a>
+  <ul class="collapse">
+  <li><a href="#sec-lab-robustez" id="toc-sec-lab-robustez" class="nav-link" data-scroll-target="#sec-lab-robustez"><span class="header-section-number">2.1.1</span> Laboratorio: por qué la mediana es robusta</a></li>
+  </ul></li>
+  <li><a href="#medidas-de-dispersión-qué-tan-esparcidos-están" id="toc-medidas-de-dispersión-qué-tan-esparcidos-están" class="nav-link" data-scroll-target="#medidas-de-dispersión-qué-tan-esparcidos-están"><span class="header-section-number">2.2</span> Medidas de dispersión: ¿qué tan esparcidos están?</a>
+  <ul class="collapse">
+  <li><a href="#sec-descriptiva-mano" id="toc-sec-descriptiva-mano" class="nav-link" data-scroll-target="#sec-descriptiva-mano"><span class="header-section-number">2.2.1</span> El mismo cálculo a mano</a></li>
+  </ul></li>
+  <li><a href="#el-diagrama-de-caja-boxplot" id="toc-el-diagrama-de-caja-boxplot" class="nav-link" data-scroll-target="#el-diagrama-de-caja-boxplot"><span class="header-section-number">2.3</span> El diagrama de caja (boxplot)</a></li>
+  <li><a href="#forma-de-una-distribución-y-el-q-q-plot" id="toc-forma-de-una-distribución-y-el-q-q-plot" class="nav-link" data-scroll-target="#forma-de-una-distribución-y-el-q-q-plot"><span class="header-section-number">2.4</span> Forma de una distribución y el Q-Q plot</a></li>
   <li><a href="#resúmenes-por-grupo-con-dplyr" id="toc-resúmenes-por-grupo-con-dplyr" class="nav-link" data-scroll-target="#resúmenes-por-grupo-con-dplyr"><span class="header-section-number">2.5</span> Resúmenes por grupo con <code>dplyr</code></a></li>
-  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">2.6</span> Ejercicios</a></li>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen"><span class="header-section-number">2.6</span> Resumen</a></li>
+  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">2.7</span> Ejercicios</a></li>
   </ul>
 </nav>
     </div>
@@ -273,60 +389,476 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="callout callout-style-default callout-important callout-titled" title="Plantilla en construcción">
+<div class="callout callout-style-default callout-warning callout-titled" title="Capítulo en revisión">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Importante</span>Plantilla en construcción
+<span class="screen-reader-only">Advertencia</span>Capítulo en revisión
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Este capítulo corresponde a <strong>Semana 2</strong> del calendario y usa los datos de <strong>pingüinos, lagartijas</strong>. La estructura de secciones ya está fijada; el contenido se desarrolla con el mismo formato del <a href="01-exploracion.html" class="quarto-xref"><span>Capítulo 1</span></a>: pregunta real, técnica, supuestos, cómputo en R e interpretación.</p>
+<p>El contenido de este capítulo está completo, pero todavía no pasa por la revisión final de redacción. Se avisará en clase cuando quede listo para estudiar de aquí. Mientras tanto se puede consultar, con esa advertencia.</p>
 </div>
 </div>
-<section id="medidas-de-localización-media-mediana-cuartiles" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="medidas-de-localización-media-mediana-cuartiles"><span class="header-section-number">2.1</span> Medidas de localización: media, mediana, cuartiles</h2>
-<p><em>(En construcción.)</em></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Objetivos del capítulo">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Objetivos del capítulo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Resumir una variable cuantitativa con medidas de <strong>localización</strong> y de <strong>dispersión</strong>.</li>
+<li>Elegir entre <strong>media</strong> y <strong>mediana</strong> según la forma de los datos.</li>
+<li>Leer y comparar <strong>diagramas de caja</strong> entre grupos.</li>
+<li>Evaluar si unos datos parecen <strong>normales</strong> con un <strong>Q-Q plot</strong>.</li>
+<li>Producir <strong>resúmenes por grupo</strong> con <code>dplyr</code>.</li>
+</ul>
+</div>
+</div>
+<p>En el <a href="01-exploracion.html" class="quarto-xref"><span>Capítulo 1</span></a> aprendimos a <em>ver</em> la distribución de una variable con gráficas. Ahora la resumimos con <strong>números</strong>: un centro y una medida de qué tan dispersos están los datos alrededor de ese centro. Seguimos con los pingüinos y estrenamos las lagartijas.</p>
+<section id="medidas-de-localización-dónde-está-el-centro" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="medidas-de-localización-dónde-está-el-centro"><span class="header-section-number">2.1</span> Medidas de localización: ¿dónde está el centro?</h2>
+<p>Hay tres medidas de centro de uso común: la <strong>media</strong> (el promedio), la <strong>mediana</strong> (el valor que deja la mitad de los datos por debajo) y la <strong>moda</strong> (el valor que más se repite).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(penguins<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)     <span class="co"># media</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 4201.754</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(penguins<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)   <span class="co"># mediana</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 4050</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>La <strong>moda</strong> es la única de las tres que también tiene sentido en variables <strong>categóricas</strong> (la especie más frecuente, la marca más elegida). R no trae una función directa para calcularla, pero se obtiene con una tabla de frecuencias:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(penguins<span class="sc">$</span>species)                       <span class="co"># moda de una variable categórica</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Adelie Chinstrap    Gentoo </span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       152        68       124</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>frecuencias <span class="ot">&lt;-</span> <span class="fu">table</span>(galletas<span class="sc">$</span>agrado)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>frecuencias</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3  4  5  6  7  8  9 </span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 10 23 19 24 15  7</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(frecuencias)[<span class="fu">which.max</span>(frecuencias)]    <span class="co"># valor más repetido</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "7"</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Una distribución puede no tener moda (si ningún valor se repite), tener una (<strong>unimodal</strong>) o varias (<strong>bimodal</strong>, <strong>multimodal</strong>). Las dos jorobas que se veían en la masa de los pingüinos son justamente una distribución bimodal.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Los datos faltantes (NA)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Los datos faltantes (NA)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Los pingüinos tienen algunas mediciones faltantes (<code>NA</code>). Si no le decimos a R qué hacer con ellas, <code>mean()</code> devuelve <code>NA</code>. Por eso usamos <code>na.rm = TRUE</code> (“remueve los NA”). Siempre conviene preguntarse por qué faltan: no es lo mismo un dato perdido al azar que uno que falta por una razón sistemática.</p>
+</div>
+</div>
+<p>Los <strong>cuartiles</strong> parten los datos en cuatro: el primer cuartil (Q1) deja abajo el 25 %, el segundo es la mediana (50 %) y el tercero (Q3) el 75 %.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(penguins<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   0%  25%  50%  75% 100% </span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2700 3550 4050 4750 6300</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Media o mediana, ¿cuál reporto?</strong> La media usa el valor exacto de cada dato, así que un valor extremo la jala hacia sí. La mediana solo mira la posición, por lo que es <strong>robusta</strong> ante valores atípicos y colas largas. Por eso los ingresos o los precios de casas (muy sesgados a la derecha) se resumen con la mediana.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En una distribución <strong>sesgada a la derecha</strong> (cola larga hacia los valores altos, como los salarios), la media queda <strong>arriba</strong> de la mediana. En una simétrica, coinciden. Comparar media y mediana ya nos dice algo sobre la forma, sin graficar.</p>
+</div>
+</div>
+<section id="sec-lab-robustez" class="level3" data-number="2.1.1">
+<h3 data-number="2.1.1" class="anchored" data-anchor-id="sec-lab-robustez"><span class="header-section-number">2.1.1</span> Laboratorio: por qué la mediana es robusta</h3>
+<p>Aquí se ve la diferencia entre media y mediana mejor que en cualquier fórmula. Se tienen nueve datos fijos y <strong>uno</strong> que puede moverse con el deslizador. Conviene observar qué le pasa a cada medida cuando ese dato se va lejos.</p>
+<div class="cell panel-input card bg-light p-2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="72" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 71;"><span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a>viewof atipico <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">10</span><span class="op">,</span> <span class="dv">200</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">22</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"valor del dato móvil"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="77" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 76;"><span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a>fijos <span class="op">=</span> [<span class="dv">12</span><span class="op">,</span> <span class="dv">14</span><span class="op">,</span> <span class="dv">15</span><span class="op">,</span> <span class="dv">16</span><span class="op">,</span> <span class="dv">18</span><span class="op">,</span> <span class="dv">19</span><span class="op">,</span> <span class="dv">20</span><span class="op">,</span> <span class="dv">21</span><span class="op">,</span> <span class="dv">24</span>]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="82" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 81;"><span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a>datos <span class="op">=</span> fijos<span class="op">.</span><span class="fu">concat</span>([atipico])<span class="op">.</span><span class="fu">sort</span>((a<span class="op">,</span> b) <span class="kw">=&gt;</span> a <span class="op">-</span> b)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="87" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 86;"><span id="cb7-87"><a href="#cb7-87" aria-hidden="true" tabindex="-1"></a>media <span class="op">=</span> datos<span class="op">.</span><span class="fu">reduce</span>((a<span class="op">,</span> b) <span class="kw">=&gt;</span> a <span class="op">+</span> b<span class="op">,</span> <span class="dv">0</span>) <span class="op">/</span> datos<span class="op">.</span><span class="at">length</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="92" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 91;"><span id="cb8-92"><a href="#cb8-92" aria-hidden="true" tabindex="-1"></a>mediana <span class="op">=</span> (datos[<span class="dv">4</span>] <span class="op">+</span> datos[<span class="dv">5</span>]) <span class="op">/</span> <span class="dv">2</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-5" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="97" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 96;"><span id="cb9-97"><a href="#cb9-97" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb9-98"><a href="#cb9-98" aria-hidden="true" tabindex="-1"></a>  <span class="dt">height</span><span class="op">:</span> <span class="dv">130</span><span class="op">,</span></span>
+<span id="cb9-99"><a href="#cb9-99" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> { <span class="dt">label</span><span class="op">:</span> <span class="st">"valor"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">5</span><span class="op">,</span> <span class="dv">205</span>] }<span class="op">,</span></span>
+<span id="cb9-100"><a href="#cb9-100" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> { <span class="dt">axis</span><span class="op">:</span> <span class="kw">null</span> }<span class="op">,</span></span>
+<span id="cb9-101"><a href="#cb9-101" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb9-102"><a href="#cb9-102" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(datos<span class="op">,</span> { <span class="dt">x</span><span class="op">:</span> d <span class="kw">=&gt;</span> d<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> () <span class="kw">=&gt;</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="dv">5</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"#888780"</span> })<span class="op">,</span></span>
+<span id="cb9-103"><a href="#cb9-103" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>([atipico]<span class="op">,</span> { <span class="dt">x</span><span class="op">:</span> d <span class="kw">=&gt;</span> d<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> () <span class="kw">=&gt;</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="dv">6</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"#C0392B"</span> })<span class="op">,</span></span>
+<span id="cb9-104"><a href="#cb9-104" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleX</span>([media]<span class="op">,</span> { <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#C0392B"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">2</span> })<span class="op">,</span></span>
+<span id="cb9-105"><a href="#cb9-105" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleX</span>([mediana]<span class="op">,</span> { <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#1F4E79"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"4"</span> })<span class="op">,</span></span>
+<span id="cb9-106"><a href="#cb9-106" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">0</span>]<span class="op">,</span> { <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#D3D1C7"</span> })</span>
+<span id="cb9-107"><a href="#cb9-107" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb9-108"><a href="#cb9-108" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-6" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="113" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 112;"><span id="cb10-113"><a href="#cb10-113" aria-hidden="true" tabindex="-1"></a><span class="fu">md</span><span class="vs">`Media (línea roja sólida) = **</span><span class="sc">${</span>media<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">1</span>)<span class="sc">}</span><span class="vs">** · Mediana (línea azul punteada) = **</span><span class="sc">${</span>mediana<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">1</span>)<span class="sc">}</span><span class="vs">**`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-7" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Al arrastrar el dato hacia valores grandes, la <strong>media</strong> lo persigue sin límite: un solo dato extremo la arrastra. La <strong>mediana</strong> apenas se mueve y luego se queda quieta, porque solo le importa la <em>posición</em> de los datos, no su magnitud. Eso es ser <strong>robusta</strong>. Por eso, cuando alguien reporte un promedio de salarios, de precios de vivienda o de tiempos de espera, la primera pregunta debe ser: <em>¿y la mediana?</em></p>
+</div>
+</div>
 </section>
-<section id="medidas-de-dispersión-rango-varianza-desviación-estándar-ric" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="medidas-de-dispersión-rango-varianza-desviación-estándar-ric"><span class="header-section-number">2.2</span> Medidas de dispersión: rango, varianza, desviación estándar, RIC</h2>
-<p><em>(En construcción.)</em></p>
 </section>
-<section id="el-diagrama-de-caja-boxplot-y-la-comparación-entre-grupos" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="el-diagrama-de-caja-boxplot-y-la-comparación-entre-grupos"><span class="header-section-number">2.3</span> El diagrama de caja (boxplot) y la comparación entre grupos</h2>
-<p><em>(En construcción.)</em></p>
+<section id="medidas-de-dispersión-qué-tan-esparcidos-están" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="medidas-de-dispersión-qué-tan-esparcidos-están"><span class="header-section-number">2.2</span> Medidas de dispersión: ¿qué tan esparcidos están?</h2>
+<p>Dos grupos pueden tener el mismo centro y ser muy distintos. Lo que los diferencia es la <strong>dispersión</strong>:</p>
+<ul>
+<li><strong>Rango</strong>: máximo menos mínimo (sensible a un solo dato extremo).</li>
+<li><strong>Varianza</strong> y <strong>desviación estándar</strong>: qué tan lejos, en promedio, están los datos de la media. La desviación estándar (<code>sd</code>) está en las mismas unidades que los datos, así que es la más interpretable.</li>
+<li><strong>Rango intercuartílico (RIC)</strong>: <code>Q3 − Q1</code>, el ancho del 50 % central; robusto, como la mediana.</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(penguins<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)    <span class="co"># desviación estándar (g)</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 801.9545</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(penguins<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)   <span class="co"># varianza (g^2)</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 643131.1</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">IQR</span>(penguins<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)   <span class="co"># rango intercuartílico</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1200</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Dos propiedades de la varianza son útiles (y salen en exámenes):</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(x)          <span class="co"># referencia</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 6.666667</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(x <span class="sc">+</span> <span class="dv">100</span>)    <span class="co"># SUMAR una constante NO cambia la dispersión</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 6.666667</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(x <span class="sc">*</span> <span class="dv">2</span>)      <span class="co"># MULTIPLICAR por k multiplica la varianza por k^2 (aquí, x4)</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 26.66667</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="sec-descriptiva-mano" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="sec-descriptiva-mano"><span class="header-section-number">2.2.1</span> El mismo cálculo a mano</h3>
+<p>Conviene hacer una vez con lápiz y papel lo que R resuelve en una línea. Tomemos siete temperaturas de lagartijas, ya ordenadas:</p>
+<p><span class="math display">\[33.8,\; 34.2,\; 35.1,\; 35.4,\; 35.9,\; 36.3,\; 37.1\]</span></p>
+<p><strong>La media.</strong> Se suman los siete valores (<span class="math inline">\(\sum x_i = 247.8\)</span>) y se divide entre <span class="math inline">\(n = 7\)</span>:</p>
+<p><span class="math display">\[\bar{x} = \frac{247.8}{7} = 35.40\]</span></p>
+<p><strong>La varianza.</strong> En vez de restar la media a cada dato, conviene usar la <strong>fórmula de cálculo</strong>, que solo necesita dos sumas: la de los datos y la de sus cuadrados (<span class="math inline">\(\sum x_i^2 = 8780.16\)</span>):</p>
+<p><span class="math display">\[s^2 = \frac{1}{n-1}\left[\sum x_i^2 - n\bar{x}^2\right] = \frac{8780.16 - 7(35.40)^2}{6} = \frac{8.04}{6} = 1.340\]</span></p>
+<p>de donde <span class="math inline">\(s = \sqrt{1.340} = 1.158\)</span>.</p>
+<p><strong>Los cuartiles.</strong> Se localizan por su <strong>posición</strong> en los datos ordenados:</p>
+<p><span class="math display">\[\text{Pos}(q_1) = \frac{n+1}{4} = \frac{8}{4} = 2, \qquad \text{Pos}(q_2) = \frac{n+1}{2} = 4, \qquad \text{Pos}(q_3) = \frac{3(n+1)}{4} = 6\]</span></p>
+<p>Las posiciones caen en números enteros, así que se leen directo: <span class="math inline">\(q_1 = 34.2\)</span> (segundo dato), <span class="math inline">\(q_2 = 35.4\)</span> (cuarto) y <span class="math inline">\(q_3 = 36.3\)</span> (sexto). El rango intercuartílico es <span class="math inline">\(RI = 36.3 - 34.2 = 2.1\)</span>.</p>
+<p><strong>Las barreras del diagrama de caja.</strong></p>
+<p><span class="math display">\[f_1 = q_1 - 1.5\,RI = 34.2 - 3.15 = 31.05, \qquad f_3 = q_3 + 1.5\,RI = 36.3 + 3.15 = 39.45\]</span></p>
+<p>Ningún dato queda fuera de esas barreras, así que no hay valores atípicos.</p>
+<p>Comprobación en R:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>temps <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">33.8</span>, <span class="fl">34.2</span>, <span class="fl">35.1</span>, <span class="fl">35.4</span>, <span class="fl">35.9</span>, <span class="fl">36.3</span>, <span class="fl">37.1</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="at">media =</span> <span class="fu">mean</span>(temps), <span class="at">varianza =</span> <span class="fu">var</span>(temps), <span class="at">desviacion =</span> <span class="fu">sd</span>(temps))</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      media   varianza desviacion </span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  35.400000   1.340000   1.157584</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(temps)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    0%   25%   50%   75%  100% </span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 33.80 34.65 35.40 36.10 37.10</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Los valores coinciden. Dos observaciones sobre el procedimiento manual: la <strong>fórmula de cálculo</strong> de la varianza existe precisamente para hacerla con calculadora, porque solo requiere acumular <span class="math inline">\(\sum x_i\)</span> y <span class="math inline">\(\sum x_i^2\)</span> mientras se capturan los datos. Y las <strong>posiciones</strong> de los cuartiles rara vez caen en enteros; cuando no lo hacen se interpola entre los dos datos vecinos, que es lo que hace R (y por eso a veces sus cuartiles difieren ligeramente de los calculados a mano con otra convención).</p>
+<p>Nótese que el divisor de la varianza es <span class="math inline">\(n-1\)</span> y no <span class="math inline">\(n\)</span>. Esa corrección hace que <span class="math inline">\(s^2\)</span> sea un estimador insesgado de la varianza poblacional, tema que se retomará en el <a href="06-muestrales.html" class="quarto-xref"><span>Capítulo 7</span></a>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="¿Qué técnica usar?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>¿Qué técnica usar?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Para resumir <strong>una variable cuantitativa</strong>:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Si la distribución es…</th>
+<th>Centro</th>
+<th>Dispersión</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Simétrica, sin atípicos</td>
+<td>Media</td>
+<td>Desviación estándar</td>
+</tr>
+<tr class="even">
+<td>Sesgada o con atípicos</td>
+<td>Mediana</td>
+<td>RIC</td>
+</tr>
+</tbody>
+</table>
+<p>Conviene reportar siempre <strong>centro y dispersión juntos</strong>: un promedio sin su desviación cuenta media historia.</p>
+</div>
+</div>
 </section>
-<section id="forma-de-una-distribución-y-el-q-q-plot-complemento-para-el-examen-de-la-mcd" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="forma-de-una-distribución-y-el-q-q-plot-complemento-para-el-examen-de-la-mcd"><span class="header-section-number">2.4</span> Forma de una distribución y el Q-Q plot <em>(complemento para el examen de la MCD)</em></h2>
-<p><em>(En construcción.)</em></p>
+</section>
+<section id="el-diagrama-de-caja-boxplot" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="el-diagrama-de-caja-boxplot"><span class="header-section-number">2.3</span> El diagrama de caja (boxplot)</h2>
+<p>El boxplot resume una variable con cinco números: mínimo, Q1, mediana, Q3 y máximo. La caja abarca el 50 % central (su alto es el RIC), la línea de en medio es la mediana, y los puntos fuera de los “bigotes” son posibles <strong>valores atípicos</strong> (más allá de 1.5 × RIC).</p>
+<p>Su verdadero poder es <strong>comparar grupos</strong>. Veámoslo con las lagartijas: temperatura corporal en zona urbana vs.&nbsp;campo abierto.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>lagartijas <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"datos/lagartijas.csv"</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(lagartijas, <span class="fu">aes</span>(<span class="at">x =</span> habitat, <span class="at">y =</span> temp_corporal, <span class="at">fill =</span> habitat)) <span class="sc">+</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Hábitat"</span>, <span class="at">y =</span> <span class="st">"Temperatura corporal (°C)"</span>) <span class="sc">+</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="fig-boxplot-lagartijas" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-boxplot-lagartijas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="02-descriptiva_files/figure-html/fig-boxplot-lagartijas-1.png" class="img-fluid figure-img" width="480">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-boxplot-lagartijas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.1: Temperatura corporal de lagartijas por hábitat.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La caja urbana está claramente <strong>más arriba</strong>: las lagartijas de ciudad son más cálidas (isla de calor urbana). También parece un poco <strong>más alta</strong> (más dispersión). Esto es <em>descripción</em>: en el <a href="08-dos-muestras.html" class="quarto-xref"><span>Capítulo 9</span></a> pondremos a prueba si esa diferencia es estadísticamente significativa. Un boxplot es el mejor preludio de una comparación de dos grupos.</p>
+</div>
+</div>
+</section>
+<section id="forma-de-una-distribución-y-el-q-q-plot" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="forma-de-una-distribución-y-el-q-q-plot"><span class="header-section-number">2.4</span> Forma de una distribución y el Q-Q plot</h2>
+<p>Además del centro y la dispersión, nos importa la <strong>forma</strong>: ¿simétrica?, ¿sesgada?, ¿acampanada? Muchas técnicas que veremos (pruebas t, ANOVA, regresión) suponen que los datos —o los residuos— son aproximadamente <strong>normales</strong>. El <strong>Q-Q plot</strong> (“cuantil-cuantil”) es la herramienta para revisarlo: si los puntos caen cerca de la recta, los datos son compatibles con una normal.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">sample =</span> flipper_length_mm)) <span class="sc">+</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>(<span class="at">color =</span> <span class="st">"#1F4E79"</span>) <span class="sc">+</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Cuantiles teóricos"</span>, <span class="at">y =</span> <span class="st">"Cuantiles de los datos"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="fig-qqplot" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-qqplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="02-descriptiva_files/figure-html/fig-qqplot-1.png" class="img-fluid figure-img" width="441">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-qqplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.2: Q-Q plot del largo de la aleta de los pingüinos.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si los puntos siguen la recta, no hay evidencia contra la normalidad. Desviaciones sistemáticas en los extremos indican <strong>colas</strong> más pesadas o ligeras; una curvatura en forma de “S” o “C” delata <strong>sesgo</strong>. El Q-Q plot será nuestro chequeo de rutina antes de cualquier prueba que suponga normalidad.</p>
+</div>
+</div>
 </section>
 <section id="resúmenes-por-grupo-con-dplyr" class="level2" data-number="2.5">
 <h2 data-number="2.5" class="anchored" data-anchor-id="resúmenes-por-grupo-con-dplyr"><span class="header-section-number">2.5</span> Resúmenes por grupo con <code>dplyr</code></h2>
-<p><em>(En construcción.)</em></p>
-<div class="callout callout-style-default callout-tip callout-titled" title="¿Qué técnica uso?">
+<p>Casi siempre queremos resumir <strong>por grupo</strong>, no en bloque. El patrón de <code>dplyr</code> es <code>group_by()</code> seguido de <code>summarise()</code>, encadenados con el operador <code>|&gt;</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">n       =</span> <span class="fu">n</span>(),</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">media   =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">de      =</span> <span class="fu">sd</span>(body_mass_g,   <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">mediana =</span> <span class="fu">median</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["species"],"name":[1],"type":["fct"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]},{"label":["media"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["de"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["mediana"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"Adelie","2":"152","3":"3700.662","4":"458.5661","5":"3700"},{"1":"Chinstrap","2":"68","3":"3733.088","4":"384.3351","5":"3700"},{"1":"Gentoo","2":"124","3":"5076.016","4":"504.1162","5":"5000"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled" title="El renglón que aparece de más">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>¿Qué técnica uso?
+<span class="screen-reader-only">Advertencia</span>El renglón que aparece de más
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Resumir una variable cuantitativa: ¿centro? → media/mediana; ¿dispersión? → desviación/RIC; ¿comparar grupos? → boxplot.</p>
+<p>Si la variable por la que se agrupa tiene faltantes, <code>group_by()</code> deja un renglón adicional etiquetado <code>NA</code> con los casos sin clasificar. La función <code>tapply()</code> de R base, en cambio, los descarta sin avisar. Por eso las dos herramientas pueden devolver un número distinto de renglones aunque las medias coincidan exactamente.</p>
+<p>Que el resumen avise de los casos sin clasificar es una ventaja, no un defecto. Si se prefiere excluirlos, conviene hacerlo explícito con <code>filter(!is.na(sex))</code> antes de agrupar, donde el signo <code>!</code> significa <em>no</em>.</p>
 </div>
 </div>
+<p>La misma receta compara las lagartijas por hábitat:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>lagartijas <span class="sc">|&gt;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(habitat) <span class="sc">|&gt;</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">n          =</span> <span class="fu">n</span>(),</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">temp_media =</span> <span class="fu">mean</span>(temp_corporal),</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">temp_de    =</span> <span class="fu">sd</span>(temp_corporal)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["habitat"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]},{"label":["temp_media"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["temp_de"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"campo","2":"30","3":"33.98000","4":"1.171030"},{"1":"urbana","2":"32","3":"35.41875","4":"1.633409"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Este pequeño cuadro (medias y desviaciones lado a lado) es el resumen que acompañará a toda comparación de grupos en la Parte III.</p>
 </section>
-<section id="ejercicios" class="level2" data-number="2.6">
-<h2 data-number="2.6" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">2.6</span> Ejercicios</h2>
-<p><em>Por desarrollar (banco de la Dra. Figueroa reorganizado + reactivos nuevos).</em></p>
+<section id="resumen" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="resumen"><span class="header-section-number">2.6</span> Resumen</h2>
+<p>Aprendimos a describir una variable cuantitativa con un <strong>centro</strong> (media o mediana) y una <strong>dispersión</strong> (desviación estándar o RIC), a elegir entre ellas según la forma, a <strong>comparar grupos</strong> con boxplots y a revisar la <strong>normalidad</strong> con un Q-Q plot. Con <code>dplyr</code> producimos resúmenes por grupo en dos líneas. Ya sabemos <em>ver</em> y <em>resumir</em> datos; en el <a href="03-relaciones.html" class="quarto-xref"><span>Capítulo 3</span></a> estudiaremos la <strong>relación entre dos variables</strong>.</p>
+</section>
+<section id="ejercicios" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">2.7</span> Ejercicios</h2>
+<ol type="1">
+<li><p><strong>Traslación de la varianza.</strong> Un conjunto de datos tiene varianza muestral 9. Si a cada valor se le suma 3, ¿cuánto vale la nueva varianza? Verifícalo en R con un vector de la elección.</p></li>
+<li><p><strong>Escalamiento de la varianza.</strong> Si a cada valor de un conjunto con varianza 16 se le multiplica por 2, ¿cuál es la nueva varianza? Justificar con la propiedad correspondiente.</p></li>
+<li><p><strong>Varianza cero.</strong> Si un conjunto de datos tiene varianza igual a cero, ¿qué puede afirmarse sobre sus valores? Da un ejemplo.</p></li>
+<li><p><strong>Media, mediana y moda.</strong> En una distribución de salarios sesgada a la derecha, ordena de menor a mayor la media, la mediana y la moda, y explicar por qué.</p></li>
+<li><p><strong>Cuartiles en R.</strong> Con <code>datos/lagartijas.csv</code>, calcular la mediana y el RIC de <code>masa_g</code> para cada hábitat usando <code>group_by()</code> + <code>summarise()</code>. ¿Cuál grupo es más disperso?</p></li>
+<li><p><strong>Boxplot e interpretación.</strong> Hacer un boxplot de <code>frec_cardiaca</code> por hábitat. Describir en dos frases lo observado, como si se le explicara a una bióloga.</p></li>
+<li><p><strong>Normalidad.</strong> Hacer el Q-Q plot de <code>eficiencia_biologica</code> de <code>datos/hongos_sustrato.csv</code>. ¿Los datos parecen normales? ¿Cambia la conclusión al hacerlo por separado para el sustrato <code>aserrin</code>?</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Soluciones y retroalimentación">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Soluciones y retroalimentación
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>1.</strong> La nueva varianza sigue siendo <strong>9</strong>. Sumar una constante <strong>desplaza</strong> todos los datos por igual, sin cambiar sus distancias mutuas, y la varianza mide precisamente esas distancias. En R: <code>var(x)</code> y <code>var(x + 3)</code> dan lo mismo. <em>Regla: <span class="math inline">\(\text{Var}(X + c) = \text{Var}(X)\)</span>.</em></p>
+<p><strong>2.</strong> La nueva varianza es <strong>64</strong>, es decir <span class="math inline">\(16 \times 2^2\)</span>. Multiplicar por <span class="math inline">\(k\)</span> multiplica la varianza por <span class="math inline">\(k^2\)</span> (y la desviación estándar por <span class="math inline">\(|k|\)</span>). <em>Regla: <span class="math inline">\(\text{Var}(kX) = k^2\,\text{Var}(X)\)</span>. Error típico: contestar 32, olvidando que el factor va al cuadrado.</em></p>
+<p><strong>3.</strong> Varianza cero significa que <strong>todos los valores son idénticos</strong>: no hay dispersión alguna. Ejemplo: <code>c(7, 7, 7, 7)</code>. Geométricamente, todos los datos coinciden con la media, así que todas las desviaciones son cero. <em>Es el único caso en que la varianza puede valer cero: nunca es negativa.</em></p>
+<p><strong>4.</strong> El orden es <strong>moda &lt; mediana &lt; media</strong>. En un sesgo a la derecha, la cola larga de salarios altos jala la media hacia arriba; la mediana se mueve menos y la moda se queda en el pico de la distribución. <em>Truco para recordar: la media es la más “sensible” y siempre se va hacia la cola.</em></p>
+<p><strong>5.</strong> Con <code>group_by(habitat) |&gt; summarise(mediana = median(masa_g), ric = IQR(masa_g))</code> se observa que el grupo <strong>urbano</strong> tiene mayor RIC: es el más disperso, además de tener mayor masa mediana. <em>Interpretación biológica: la ciudad ofrece condiciones más heterogéneas —zonas de sombra, calor, alimento variable—, lo que se refleja en mayor variabilidad.</em></p>
+<p><strong>6.</strong> Se observan cajas con centros distintos, la urbana por encima. Una redacción adecuada: <em>“Las lagartijas urbanas presentan una frecuencia cardiaca mediana mayor que las de campo abierto, y sus valores están algo más dispersos; ambos grupos se traslapan, así que la diferencia es de tendencia, no absoluta.”</em> <em>Lo importante aquí es no afirmar que “todas” las urbanas superan a las de campo: los boxplots se traslapan.</em></p>
+<p><strong>7.</strong> El Q-Q plot del conjunto completo muestra desviaciones de la recta, porque los datos <strong>mezclan cuatro sustratos con medias distintas</strong> (no es una sola población). Al analizar solo <code>aserrin</code>, los puntos se alinean mucho mejor con la recta. <em>Lección clave para todo el curso: la normalidad se verifica <strong>dentro de cada grupo</strong> (o sobre los residuos del modelo), no sobre la mezcla. Este es exactamente el chequeo que haremos antes del ANOVA en el <a href="10-anova.html" class="quarto-xref"><span>Capítulo 11</span></a>.</em></p>
+</div>
+</div>
+</div>
 
 
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+W10=
+</script>
 </section>
 
 </main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBhdGlwaWNvID0gSW5wdXRzLnJhbmdlKFsxMCwgMjAwXSwge3ZhbHVlOiAyMiwgc3RlcDogMSwgbGFiZWw6IFwidmFsb3IgZGVsIGRhdG8gbcOzdmlsXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0yIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiZmlqb3MgPSBbMTIsIDE0LCAxNSwgMTYsIDE4LCAxOSwgMjAsIDIxLCAyNF1cbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMyIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImRhdG9zID0gZmlqb3MuY29uY2F0KFthdGlwaWNvXSkuc29ydCgoYSwgYikgPT4gYSAtIGIpXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTQiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJtZWRpYSA9IGRhdG9zLnJlZHVjZSgoYSwgYikgPT4gYSArIGIsIDApIC8gZGF0b3MubGVuZ3RoXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTUiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJtZWRpYW5hID0gKGRhdG9zWzRdICsgZGF0b3NbNV0pIC8gMlxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC02IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiUGxvdC5wbG90KHtcbiAgaGVpZ2h0OiAxMzAsXG4gIHg6IHsgbGFiZWw6IFwidmFsb3JcIiwgZG9tYWluOiBbNSwgMjA1XSB9LFxuICB5OiB7IGF4aXM6IG51bGwgfSxcbiAgbWFya3M6IFtcbiAgICBQbG90LmRvdChkYXRvcywgeyB4OiBkID0+IGQsIHk6ICgpID0+IDAsIHI6IDUsIGZpbGw6IFwiIzg4ODc4MFwiIH0pLFxuICAgIFBsb3QuZG90KFthdGlwaWNvXSwgeyB4OiBkID0+IGQsIHk6ICgpID0+IDAsIHI6IDYsIGZpbGw6IFwiI0MwMzkyQlwiIH0pLFxuICAgIFBsb3QucnVsZVgoW21lZGlhXSwgeyBzdHJva2U6IFwiI0MwMzkyQlwiLCBzdHJva2VXaWR0aDogMiB9KSxcbiAgICBQbG90LnJ1bGVYKFttZWRpYW5hXSwgeyBzdHJva2U6IFwiIzFGNEU3OVwiLCBzdHJva2VXaWR0aDogMiwgc3Ryb2tlRGFzaGFycmF5OiBcIjRcIiB9KSxcbiAgICBQbG90LnJ1bGVZKFswXSwgeyBzdHJva2U6IFwiI0QzRDFDN1wiIH0pXG4gIF1cbn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTciLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJtZGBNZWRpYSAobMOtbmVhIHJvamEgc8OzbGlkYSkgPSAqKiR7bWVkaWEudG9GaXhlZCgxKX0qKiDCtyBNZWRpYW5hIChsw61uZWEgYXp1bCBwdW50ZWFkYSkgPSAqKiR7bWVkaWFuYS50b0ZpeGVkKDEpfSoqYFxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdhdGlwaWNvJykifV19
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../..";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

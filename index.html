@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Rosalía Hernández">
+<meta name="author" content="Rosalía Gpe. Hernández Amador">
 
 <title>Estadística para Ciencias de la Computación</title>
 <style>
@@ -79,7 +79,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-e671ceb1ec85f3bd6fb682ad87dd4085.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-22a2d3c8fd5a3a2e3c4a69971a64c298.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -107,6 +109,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Buscar"
   }
 }</script>
+<script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 <link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
@@ -225,38 +229,44 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./laboratorio-estandarizacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Laboratorio interactivo: la estandarización</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./06-muestrales.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Distribuciones muestrales y TCL</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Distribuciones muestrales y TCL</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./07-estimacion-pruebas.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Estimación y prueba de hipótesis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estimación y prueba de hipótesis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./08-dos-muestras.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Inferencia para dos parámetros</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Inferencia para dos parámetros</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./09-enumerativos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Inferencia para datos enumerativos</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Inferencia para datos enumerativos</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10-anova.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Análisis de varianza (ANOVA)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Análisis de varianza (ANOVA)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./11-regresion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Inferencia en regresión</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Inferencia en regresión</span></span></a>
   </div>
 </li>
       </ul>
@@ -267,6 +277,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Referencias</span></a>
   </div>
 </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Apéndices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mapa-decision.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mapa de decisión</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./formulario.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Formulario</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./apendice-python.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">R y Python, lado a lado</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./laboratorio-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Practicar R sin instalar nada</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -281,7 +326,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#cómo-están-pensadas-estas-notas" id="toc-cómo-están-pensadas-estas-notas" class="nav-link" data-scroll-target="#cómo-están-pensadas-estas-notas">Cómo están pensadas estas notas</a></li>
   <li><a href="#los-conjuntos-de-datos-del-curso" id="toc-los-conjuntos-de-datos-del-curso" class="nav-link" data-scroll-target="#los-conjuntos-de-datos-del-curso">Los conjuntos de datos del curso</a></li>
-  <li><a href="#sec-preparacion" id="toc-sec-preparacion" class="nav-link" data-scroll-target="#sec-preparacion">Preparar tu computadora</a></li>
+  <li><a href="#sec-preparacion" id="toc-sec-preparacion" class="nav-link" data-scroll-target="#sec-preparacion">Preparar la computadora</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -300,16 +345,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-title-meta">
 
     <div>
-    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-heading">Profesora</div>
     <div class="quarto-title-meta-contents">
-             <p>Rosalía Hernández </p>
+             <p>Rosalía Gpe. Hernández Amador </p>
           </div>
   </div>
     
     <div>
     <div class="quarto-title-meta-heading">Fecha de publicación</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">julio 2026</p>
+      <p class="date">agosto 2026</p>
     </div>
   </div>
   
@@ -323,45 +368,64 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="presentación" class="level1 unnumbered">
 <h1 class="unnumbered">Presentación</h1>
-<p>Estas notas acompañan el curso de <strong>Estadística</strong> de la Licenciatura en Ciencias de la Computación de la Universidad de Sonora (5.º semestre). Son la continuación natural del curso de Probabilidad y la antesala de <em>Introducción al Aprendizaje Automático</em>: aquí es donde aprendemos a <strong>mirar datos, producir datos y hacer inferencia sobre ellos</strong> con criterio.</p>
-<section id="cómo-están-pensadas-estas-notas" class="level2">
-<h2 class="anchored" data-anchor-id="cómo-están-pensadas-estas-notas">Cómo están pensadas estas notas</h2>
-<p>El curso descansa en cuatro ideas, y el libro también:</p>
-<ol type="1">
-<li><p><strong>Interpretar antes que calcular.</strong> Cada técnica se presenta con la misma secuencia: una pregunta real, la técnica que le corresponde, los supuestos que hay que verificar, el cálculo en R y —lo más importante— la interpretación en español dirigida a alguien que no es estadístico.</p></li>
-<li><p><strong>Saber <em>qué</em> técnica usar.</strong> A lo largo del libro se construye un <strong>mapa de decisión</strong>: dado el tipo de pregunta y el tipo de datos, ¿qué técnica corresponde? Cada vez que aparezca este recuadro, estamos agregando una pieza a ese mapa.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="¿Qué técnica uso?">
+<div class="callout callout-style-default callout-note callout-titled" title="Sobre el origen de estas notas">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>¿Qué técnica uso?
+<span class="screen-reader-only">Nota</span>Sobre el origen de estas notas
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La estructura y buena parte de los ejercicios provienen de las <strong>Notas de Estadística</strong> de la <strong>Dra. Gudelia Figueroa Preciado</strong> y el <strong>M.C. Marco Antonio Valencia Arvizu</strong>, material de referencia de esta asignatura en el Departamento de Matemáticas de la Universidad de Sonora. Esta versión conserva su organización y la desarrolla incorporando software estadístico, datos actuales y un énfasis explícito en la interpretación de resultados.</p>
+</div>
+</div>
+<p>Estas notas acompañan el curso de <strong>Estadística</strong> de la Licenciatura en Ciencias de la Computación de la Universidad de Sonora (5.º semestre). Son la continuación natural del curso de Probabilidad y la antesala de <em>Introducción al Aprendizaje Automático</em>: aquí es donde aprendemos a <strong>mirar datos, producir datos y hacer inferencia sobre ellos</strong> con criterio.</p>
+<section id="cómo-están-pensadas-estas-notas" class="level2">
+<h2 class="anchored" data-anchor-id="cómo-están-pensadas-estas-notas">Cómo están pensadas estas notas</h2>
+<p>El curso descansa en cuatro ideas, y el libro también:</p>
+<ol type="1">
+<li><p><strong>Interpretar antes que calcular.</strong> Cada técnica se presenta con la misma secuencia: una pregunta real, la técnica que le corresponde, los supuestos que hay que verificar, el cálculo en R y (lo más importante) la interpretación en español dirigida a alguien que no es estadístico.</p></li>
+<li><p><strong>Saber <em>qué</em> técnica usar.</strong> A lo largo del libro se construye un <strong>mapa de decisión</strong>: dado el tipo de pregunta y el tipo de datos, ¿qué técnica corresponde? Cada vez que aparezca este recuadro, estamos agregando una pieza a ese mapa.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="¿Qué técnica usar?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>¿Qué técnica usar?
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <p>Estos recuadros conectan una <strong>pregunta</strong> con una <strong>técnica</strong>. Al final del curso, juntos forman una guía para elegir el procedimiento correcto sin memorizar.</p>
 </div>
 </div></li>
-<li><p><strong>Pocos contextos, muchas veces.</strong> En lugar de cambiar de problema en cada ejemplo, trabajamos sobre unos pocos conjuntos de datos que reaparecen en todo el curso. Los conocerás desde hoy y los verás madurar: primero los describimos, luego entendemos cómo se produjeron y al final les hacemos inferencia.</p></li>
-<li><p><strong>R desde el primer día.</strong> Todo el cómputo se hace en R. No necesitas saber estadística para empezar a usarlo, ni saber programar (eso ya lo sabes): solo aprender el vocabulario de R que iremos usando.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Interpreta">
+<li><p><strong>Pocos contextos, muchas veces.</strong> En lugar de cambiar de problema en cada ejemplo, trabajamos sobre unos pocos conjuntos de datos que reaparecen en todo el curso. Se conocen desde hoy y se los verá madurar. Primero los describimos, luego entendemos cómo se produjeron y al final les hacemos inferencia.</p></li>
+<li><p><strong>R desde el primer día.</strong> Todo el cómputo se hace en R. No se necesita saber estadística para empezar a usarlo, ni saber programar (eso ya se sabe): solo aprender el vocabulario de R que iremos usando.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Interpreta
+<span class="screen-reader-only">Nota</span>Interpretación
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Cuando veas este recuadro, el reto no es calcular sino <strong>leer</strong> el resultado: ¿qué le dirías a la persona que trajo el problema?</p>
+<p>Cuando aparezca este recuadro, el reto no es calcular sino <strong>leer</strong> el resultado: ¿qué habría que decirle a la persona que trajo el problema?</p>
 </div>
 </div></li>
 </ol>
 </section>
 <section id="los-conjuntos-de-datos-del-curso" class="level2">
 <h2 class="anchored" data-anchor-id="los-conjuntos-de-datos-del-curso">Los conjuntos de datos del curso</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/lter_penguins.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<figcaption>Las tres especies de pingüinos del archipiélago Palmer. Ilustración: <em>Artwork by @allison_horst</em>.</figcaption>
+</figure>
+</div>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -393,12 +457,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="even">
 <td><strong>Rickettsiosis</strong></td>
-<td>Factores asociados a un resultado de laboratorio</td>
+<td>Zona de residencia, contacto con perros y garrapatas frente al resultado de laboratorio</td>
 <td>Proporciones y ji-cuadrada</td>
 </tr>
 <tr class="odd">
 <td><strong>Algoritmos</strong></td>
-<td>Tiempos de ejecución según el tamaño de entrada</td>
+<td>Tiempos de ejecución de un algoritmo, según el tamaño de la entrada y según el equipo</td>
 <td>Regresión y pruebas A/B</td>
 </tr>
 <tr class="even">
@@ -411,8 +475,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Los conjuntos aplicados están en la carpeta <code>datos/</code> de este proyecto. Los pingüinos vienen en un paquete de R.</p>
 </section>
 <section id="sec-preparacion" class="level2">
-<h2 class="anchored" data-anchor-id="sec-preparacion">Preparar tu computadora</h2>
-<p>Necesitas <strong>R</strong> y <strong>RStudio</strong> (o <strong>Posit Cloud</strong>, que corre en el navegador y no requiere instalar nada). Una sola vez, instala los paquetes que usaremos:</p>
+<h2 class="anchored" data-anchor-id="sec-preparacion">Preparar la computadora</h2>
+<p>Se necesita <strong>R</strong> y <strong>RStudio</strong> (o <strong>Posit Cloud</strong>, que corre en el navegador y no requiere instalar nada). Una sola vez, instala los paquetes que usaremos:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"tidyverse"</span>, <span class="st">"palmerpenguins"</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -420,26 +484,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><code>tidyverse</code> reúne las herramientas para manipular datos (<code>dplyr</code>) y graficar (<code>ggplot2</code>).</li>
 <li><code>palmerpenguins</code> trae el conjunto de pingüinos.</li>
 </ul>
-<p>Con eso listo, pasa al <a href="01-exploracion.html" class="quarto-xref"><span>1&nbsp; Exploración de los datos</span></a>.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Sobre el origen de estas notas">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Sobre el origen de estas notas
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>La estructura y muchos ejercicios provienen de las notas que la Dra. Gudelia Figueroa desarrolló durante tres décadas para este curso. Esta versión conserva ese esqueleto y lo actualiza con software estadístico, datos actuales y un énfasis explícito en la interpretación.</p>
-</div>
-</div>
+<p>Con eso listo, se puede pasar al <a href="01-exploracion.html" class="quarto-xref"><span>1&nbsp; Exploración de los datos</span></a>.</p>
 
 
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+W10=
+</script>
 </section>
 </section>
 
 </main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../..";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

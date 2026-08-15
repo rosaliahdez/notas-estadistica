@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>5&nbsp; Producción de datos: diseño de experimentos – Estadística para Ciencias de la Computación</title>
+<title>R y Python, lado a lado – Estadística para Ciencias de la Computación</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -68,8 +68,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./laboratorio-estandarizacion.html" rel="next">
-<link href="./04-muestreo.html" rel="prev">
+<link href="./laboratorio-r.html" rel="next">
+<link href="./formulario.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -111,11 +111,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
 <link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
-<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 
-<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -128,7 +153,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04-muestreo.html">II. Producción de los datos</a></li><li class="breadcrumb-item"><a href="./05-experimentos.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Producción de datos: diseño de experimentos</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./mapa-decision.html">Apéndices</a></li><li class="breadcrumb-item"><a href="./apendice-python.html">R y Python, lado a lado</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -212,7 +237,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./05-experimentos.html" class="sidebar-item-text sidebar-link active">
+  <a href="./05-experimentos.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Producción de datos: diseño de experimentos</span></span></a>
   </div>
 </li>
@@ -300,7 +325,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./apendice-python.html" class="sidebar-item-text sidebar-link">
+  <a href="./apendice-python.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">R y Python, lado a lado</span></a>
   </div>
 </li>
@@ -322,23 +347,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">En este capítulo</h2>
    
   <ul>
-  <li><a href="#observar-no-basta-por-qué-experimentamos" id="toc-observar-no-basta-por-qué-experimentamos" class="nav-link active" data-scroll-target="#observar-no-basta-por-qué-experimentamos"><span class="header-section-number">5.1</span> Observar no basta: por qué experimentamos</a></li>
-  <li><a href="#el-vocabulario-del-diseño" id="toc-el-vocabulario-del-diseño" class="nav-link" data-scroll-target="#el-vocabulario-del-diseño"><span class="header-section-number">5.2</span> El vocabulario del diseño</a></li>
-  <li><a href="#los-tres-principios-del-diseño" id="toc-los-tres-principios-del-diseño" class="nav-link" data-scroll-target="#los-tres-principios-del-diseño"><span class="header-section-number">5.3</span> Los tres principios del diseño</a></li>
-  <li><a href="#sesgos-en-experimentos-con-personas" id="toc-sesgos-en-experimentos-con-personas" class="nav-link" data-scroll-target="#sesgos-en-experimentos-con-personas"><span class="header-section-number">5.4</span> Sesgos en experimentos con personas</a></li>
-  <li><a href="#armar-el-plan-de-aleatorización-en-r" id="toc-armar-el-plan-de-aleatorización-en-r" class="nav-link" data-scroll-target="#armar-el-plan-de-aleatorización-en-r"><span class="header-section-number">5.5</span> Armar el plan de aleatorización en R</a></li>
-  <li><a href="#la-sesión-en-clase" id="toc-la-sesión-en-clase" class="nav-link" data-scroll-target="#la-sesión-en-clase"><span class="header-section-number">5.6</span> La sesión en clase</a></li>
-  <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen"><span class="header-section-number">5.7</span> Resumen</a></li>
-  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">5.8</span> Ejercicios</a></li>
+  <li><a href="#preparar-el-entorno" id="toc-preparar-el-entorno" class="nav-link active" data-scroll-target="#preparar-el-entorno">Preparar el entorno</a></li>
+  <li><a href="#explorar-y-describir" id="toc-explorar-y-describir" class="nav-link" data-scroll-target="#explorar-y-describir">Explorar y describir</a></li>
+  <li><a href="#gráficas" id="toc-gráficas" class="nav-link" data-scroll-target="#gráficas">Gráficas</a></li>
+  <li><a href="#distribuciones" id="toc-distribuciones" class="nav-link" data-scroll-target="#distribuciones">Distribuciones</a></li>
+  <li><a href="#inferencia" id="toc-inferencia" class="nav-link" data-scroll-target="#inferencia">Inferencia</a></li>
+  <li><a href="#un-ejemplo-completo-en-los-dos-lenguajes" id="toc-un-ejemplo-completo-en-los-dos-lenguajes" class="nav-link" data-scroll-target="#un-ejemplo-completo-en-los-dos-lenguajes">Un ejemplo completo, en los dos lenguajes</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04-muestreo.html">II. Producción de los datos</a></li><li class="breadcrumb-item"><a href="./05-experimentos.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Producción de datos: diseño de experimentos</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./mapa-decision.html">Apéndices</a></li><li class="breadcrumb-item"><a href="./apendice-python.html">R y Python, lado a lado</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-cap5" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Producción de datos: diseño de experimentos</span></span></h1>
+<h1 class="title"><span id="sec-python" class="quarto-section-identifier">R y Python, lado a lado</span></h1>
 </div>
 
 
@@ -355,45 +378,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div class="callout callout-style-default callout-warning callout-titled" title="Capítulo en revisión">
+<p>El curso usa <strong>R</strong>, pero muchos estudiantes de la licenciatura llegan con más experiencia en <strong>Python</strong>. Este apéndice pone las dos versiones del mismo cálculo una junto a la otra.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Para qué sirve esta tabla">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Advertencia</span>Capítulo en revisión
+<span class="screen-reader-only">Nota</span>Para qué sirve esta tabla
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>El contenido de este capítulo está completo, pero todavía no pasa por la revisión final de redacción. Se avisará en clase cuando quede listo para estudiar de aquí. Mientras tanto se puede consultar, con esa advertencia.</p>
+<p>No para trabajar en Python durante el curso (las prácticas y el proyecto se entregan en R), sino para que quien ya conoce Python reconozca lo que está viendo y para que quede claro que <strong>las técnicas son las mismas</strong>: lo que cambia es la sintaxis.</p>
+<p>En Python los equivalentes viven en tres bibliotecas: <code>pandas</code> para manipular datos, <code>scipy.stats</code> para las pruebas y <code>statsmodels</code> para modelos.</p>
 </div>
 </div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Objetivos del capítulo">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+<section id="preparar-el-entorno" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="preparar-el-entorno">Preparar el entorno</h2>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="" aria-current="page">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Python</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"datos/galletas.csv"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Objetivos del capítulo
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>datos <span class="op">=</span> pd.read_csv(<span class="st">"datos/galletas.csv"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
-<div class="callout-body-container callout-body">
-<ul>
-<li>Nombrar las piezas de un experimento: <strong>unidad experimental, factor, niveles, tratamiento y respuesta</strong>.</li>
-<li>Aplicar los tres principios: <strong>control, aleatorización y réplicas</strong>.</li>
-<li>Prevenir los sesgos típicos de experimentos con personas: <strong>orden, cegado y contaminación</strong>.</li>
-<li>Armar un <strong>plan de aleatorización</strong> en R.</li>
-</ul>
 </div>
-</div>
-<p>En el <a href="04-muestreo.html" class="quarto-xref"><span>Capítulo 4</span></a> vimos una forma de producir datos: el muestreo, que observa sin intervenir. La otra es el <strong>experimento</strong>, donde el investigador <strong>aplica tratamientos</strong> y mide la respuesta. La diferencia es enorme: un experimento bien diseñado es lo único que permite hablar de <strong>causa y efecto</strong>. Este capítulo es el corazón del proyecto del curso: la cata de galletas.</p>
-<section id="observar-no-basta-por-qué-experimentamos" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="observar-no-basta-por-qué-experimentamos"><span class="header-section-number">5.1</span> Observar no basta: por qué experimentamos</h2>
-<p>Un estudio observacional puede mostrar que dos cosas van juntas, pero no cuál causa a cuál, ni si las une una tercera variable oculta (lo vimos con la correlación en el <a href="03-relaciones.html" class="quarto-xref"><span>Capítulo 3</span></a>). En un experimento <strong>nosotros</strong> decidimos qué tratamiento recibe cada unidad, y al hacerlo por azar rompemos el vínculo con esas variables ocultas. Por eso, para preguntas del tipo “¿la marca influye en el agrado?”, diseñamos un experimento.</p>
 </section>
-<section id="el-vocabulario-del-diseño" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="el-vocabulario-del-diseño"><span class="header-section-number">5.2</span> El vocabulario del diseño</h2>
-<p>Todo experimento se describe con las mismas piezas. Veámoslas en nuestros dos contextos:</p>
+<section id="explorar-y-describir" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="explorar-y-describir">Explorar y describir</h2>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -402,198 +426,365 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </colgroup>
 <thead>
 <tr class="header">
-<th>Pieza</th>
-<th>Cata de galletas</th>
-<th>Cultivo de setas</th>
+<th>Qué se quiere</th>
+<th>R</th>
+<th>Python</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>Unidad experimental</strong></td>
-<td>Cada cata (un juez probando una galleta)</td>
-<td>Cada bolsa de sustrato</td>
+<td>Primeros renglones</td>
+<td><code>head(datos)</code></td>
+<td><code>datos.head()</code></td>
 </tr>
 <tr class="even">
-<td><strong>Factor</strong></td>
-<td>La marca</td>
-<td>El sustrato</td>
+<td>Estructura</td>
+<td><code>glimpse(datos)</code></td>
+<td><code>datos.info()</code></td>
 </tr>
 <tr class="odd">
-<td><strong>Niveles</strong></td>
-<td>Oreo, Chokis, Lors, Great Value</td>
-<td>Paja, pulpa de café, olote, aserrín</td>
+<td>Resumen general</td>
+<td><code>summary(datos)</code></td>
+<td><code>datos.describe()</code></td>
 </tr>
 <tr class="even">
-<td><strong>Tratamiento</strong></td>
-<td>Probar una marca</td>
-<td>Sembrar en un sustrato</td>
+<td>Media</td>
+<td><code>mean(x)</code></td>
+<td><code>x.mean()</code></td>
 </tr>
 <tr class="odd">
-<td><strong>Variable respuesta</strong></td>
-<td>Agrado (escala 1–9)</td>
-<td>Eficiencia biológica (%)</td>
+<td>Mediana</td>
+<td><code>median(x)</code></td>
+<td><code>x.median()</code></td>
+</tr>
+<tr class="even">
+<td>Desviación estándar</td>
+<td><code>sd(x)</code></td>
+<td><code>x.std()</code></td>
+</tr>
+<tr class="odd">
+<td>Varianza</td>
+<td><code>var(x)</code></td>
+<td><code>x.var()</code></td>
+</tr>
+<tr class="even">
+<td>Cuartiles</td>
+<td><code>quantile(x)</code></td>
+<td><code>x.quantile([0,.25,.5,.75,1])</code></td>
+</tr>
+<tr class="odd">
+<td>Rango intercuartílico</td>
+<td><code>IQR(x)</code></td>
+<td><code>x.quantile(.75) - x.quantile(.25)</code></td>
+</tr>
+<tr class="even">
+<td>Tabla de frecuencias</td>
+<td><code>table(g)</code></td>
+<td><code>g.value_counts()</code></td>
+</tr>
+<tr class="odd">
+<td>Tabla de contingencia</td>
+<td><code>table(a, b)</code></td>
+<td><code>pd.crosstab(a, b)</code></td>
+</tr>
+<tr class="even">
+<td>Resumen por grupo</td>
+<td><code>group_by(g) \|&gt; summarise(...)</code></td>
+<td><code>datos.groupby("g").agg(...)</code></td>
+</tr>
+<tr class="odd">
+<td>Correlación</td>
+<td><code>cor(x, y)</code></td>
+<td><code>x.corr(y)</code></td>
+</tr>
+<tr class="even">
+<td>Matriz de correlación</td>
+<td><code>cor(df)</code></td>
+<td><code>df.corr()</code></td>
 </tr>
 </tbody>
 </table>
-<p>Identificar bien estas piezas es el primer paso: define qué se compara (los niveles del factor) y qué se mide (la respuesta).</p>
+<blockquote class="blockquote">
+<p>Nótese una diferencia de estilo: en R las funciones reciben el objeto (<code>mean(x)</code>), y en Python el objeto lleva el método (<code>x.mean()</code>). Es la distinción entre programación funcional y orientada a objetos, y explica casi toda la diferencia visual entre ambos lenguajes.</p>
+</blockquote>
 </section>
-<section id="los-tres-principios-del-diseño" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="los-tres-principios-del-diseño"><span class="header-section-number">5.3</span> Los tres principios del diseño</h2>
-<p>Un buen experimento descansa en tres ideas:</p>
-<ul>
-<li><strong>Control.</strong> Mantener constante todo lo demás para que las diferencias en la respuesta se deban al tratamiento y no a otra cosa. En la cata: misma cantidad de galleta, misma iluminación, mismo vaso de agua para limpiar el paladar, misma consigna.</li>
-<li><strong>Aleatorización.</strong> Asignar los tratamientos (o su orden) <strong>al azar</strong>. Es la defensa contra las variables ocultas. Reparte de forma pareja, entre los tratamientos, cualquier factor que no controlamos.</li>
-<li><strong>Réplicas.</strong> Aplicar cada tratamiento a <strong>varias</strong> unidades. Sin réplicas no podemos distinguir el efecto del tratamiento de la variación natural entre unidades. Una sola bolsa por sustrato no dice nada.</li>
-</ul>
-<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<section id="gráficas" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="gráficas">Gráficas</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Qué se quiere</th>
+<th>R (<code>ggplot2</code>)</th>
+<th>Python (<code>matplotlib</code> / <code>seaborn</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Barras</td>
+<td><code>ggplot(d, aes(g)) + geom_bar()</code></td>
+<td><code>sns.countplot(data=d, x="g")</code></td>
+</tr>
+<tr class="even">
+<td>Histograma</td>
+<td><code>+ geom_histogram(binwidth=250)</code></td>
+<td><code>sns.histplot(d.x, binwidth=250)</code></td>
+</tr>
+<tr class="odd">
+<td>Diagrama de caja</td>
+<td><code>+ geom_boxplot()</code></td>
+<td><code>sns.boxplot(data=d, x="g", y="y")</code></td>
+</tr>
+<tr class="even">
+<td>Dispersión</td>
+<td><code>+ geom_point()</code></td>
+<td><code>sns.scatterplot(data=d, x="x", y="y")</code></td>
+</tr>
+<tr class="odd">
+<td>Q-Q plot</td>
+<td><code>stat_qq() + stat_qq_line()</code></td>
+<td><code>stats.probplot(x, plot=plt)</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="distribuciones" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="distribuciones">Distribuciones</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Qué se quiere</th>
+<th>R</th>
+<th>Python (<code>scipy.stats</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(P(X \leq x)\)</span> en la normal</td>
+<td><code>pnorm(x, mu, sigma)</code></td>
+<td><code>stats.norm.cdf(x, mu, sigma)</code></td>
+</tr>
+<tr class="even">
+<td>Cuantil de la normal</td>
+<td><code>qnorm(q, mu, sigma)</code></td>
+<td><code>stats.norm.ppf(q, mu, sigma)</code></td>
+</tr>
+<tr class="odd">
+<td>Densidad normal</td>
+<td><code>dnorm(x, mu, sigma)</code></td>
+<td><code>stats.norm.pdf(x, mu, sigma)</code></td>
+</tr>
+<tr class="even">
+<td>Simular normales</td>
+<td><code>rnorm(n, mu, sigma)</code></td>
+<td><code>stats.norm.rvs(mu, sigma, size=n)</code></td>
+</tr>
+<tr class="odd">
+<td>Binomial puntual</td>
+<td><code>dbinom(x, n, p)</code></td>
+<td><code>stats.binom.pmf(x, n, p)</code></td>
+</tr>
+<tr class="even">
+<td>Cuantil de la <span class="math inline">\(t\)</span></td>
+<td><code>qt(q, gl)</code></td>
+<td><code>stats.t.ppf(q, gl)</code></td>
+</tr>
+<tr class="odd">
+<td>Cuantil de <span class="math inline">\(\chi^2\)</span></td>
+<td><code>qchisq(q, gl)</code></td>
+<td><code>stats.chi2.ppf(q, gl)</code></td>
+</tr>
+<tr class="even">
+<td>Cuantil de la <span class="math inline">\(F\)</span></td>
+<td><code>qf(q, gl1, gl2)</code></td>
+<td><code>stats.f.ppf(q, gl1, gl2)</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="inferencia" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="inferencia">Inferencia</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Técnica</th>
+<th>R</th>
+<th>Python</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Prueba <span class="math inline">\(t\)</span> para una media</td>
+<td><code>t.test(x, mu = m0)</code></td>
+<td><code>stats.ttest_1samp(x, m0)</code></td>
+</tr>
+<tr class="even">
+<td>Dos muestras independientes</td>
+<td><code>t.test(y ~ g)</code></td>
+<td><code>stats.ttest_ind(a, b, equal_var=False)</code></td>
+</tr>
+<tr class="odd">
+<td>Datos pareados</td>
+<td><code>t.test(x, y, paired = TRUE)</code></td>
+<td><code>stats.ttest_rel(x, y)</code></td>
+</tr>
+<tr class="even">
+<td>Una proporción</td>
+<td><code>prop.test(x, n, p = p0)</code></td>
+<td><code>proportions_ztest(x, n, p0)</code> (de <code>statsmodels</code>)</td>
+</tr>
+<tr class="odd">
+<td>Dos proporciones</td>
+<td><code>prop.test(c(x1,x2), c(n1,n2))</code></td>
+<td><code>proportions_ztest([x1,x2], [n1,n2])</code></td>
+</tr>
+<tr class="even">
+<td>Ji-cuadrada</td>
+<td><code>chisq.test(tabla)</code></td>
+<td><code>stats.chi2_contingency(tabla)</code></td>
+</tr>
+<tr class="odd">
+<td>Prueba exacta de Fisher</td>
+<td><code>fisher.test(tabla)</code></td>
+<td><code>stats.fisher_exact(tabla)</code></td>
+</tr>
+<tr class="even">
+<td>Cociente de varianzas</td>
+<td><code>var.test(y ~ g)</code></td>
+<td><code>stats.f_oneway</code> no aplica; se calcula a mano</td>
+</tr>
+<tr class="odd">
+<td>ANOVA de un factor</td>
+<td><code>aov(y ~ g)</code></td>
+<td><code>stats.f_oneway(g1, g2, g3)</code></td>
+</tr>
+<tr class="even">
+<td>ANOVA (tabla completa)</td>
+<td><code>summary(aov(y ~ g))</code></td>
+<td><code>sm.stats.anova_lm(smf.ols("y ~ g", d).fit())</code></td>
+</tr>
+<tr class="odd">
+<td>Post-hoc de Tukey</td>
+<td><code>TukeyHSD(modelo)</code></td>
+<td><code>pairwise_tukeyhsd(d.y, d.g)</code></td>
+</tr>
+<tr class="even">
+<td>Normalidad (Shapiro)</td>
+<td><code>shapiro.test(x)</code></td>
+<td><code>stats.shapiro(x)</code></td>
+</tr>
+<tr class="odd">
+<td>Homogeneidad (Bartlett)</td>
+<td><code>bartlett.test(y ~ g)</code></td>
+<td><code>stats.bartlett(g1, g2, g3)</code></td>
+</tr>
+<tr class="even">
+<td>Levene</td>
+<td><code>leveneTest(y ~ g)</code> (paquete <code>car</code>)</td>
+<td><code>stats.levene(g1, g2, g3)</code></td>
+</tr>
+<tr class="odd">
+<td>Regresión lineal</td>
+<td><code>lm(y ~ x)</code></td>
+<td><code>smf.ols("y ~ x", data=d).fit()</code></td>
+</tr>
+<tr class="even">
+<td>Resumen del modelo</td>
+<td><code>summary(modelo)</code></td>
+<td><code>modelo.summary()</code></td>
+</tr>
+<tr class="odd">
+<td>Intervalos de los coeficientes</td>
+<td><code>confint(modelo)</code></td>
+<td><code>modelo.conf_int()</code></td>
+</tr>
+<tr class="even">
+<td>Predicción</td>
+<td><code>predict(modelo, newdata)</code></td>
+<td><code>modelo.predict(nuevos)</code></td>
+</tr>
+<tr class="odd">
+<td>Potencia de una prueba</td>
+<td><code>power.t.test(...)</code></td>
+<td><code>TTestPower().power(...)</code> (de <code>statsmodels</code>)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="un-ejemplo-completo-en-los-dos-lenguajes" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="un-ejemplo-completo-en-los-dos-lenguajes">Un ejemplo completo, en los dos lenguajes</h2>
+<p>La misma pregunta (¿difiere el agrado entre las marcas de galletas?) resuelta de las dos formas:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Python</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>galletas <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"datos/galletas.csv"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># descripción</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>galletas <span class="sc">|&gt;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(marca) <span class="sc">|&gt;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">media =</span> <span class="fu">mean</span>(agrado), <span class="at">de =</span> <span class="fu">sd</span>(agrado))</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># ANOVA y post-hoc</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">aov</span>(agrado <span class="sc">~</span> marca, <span class="at">data =</span> galletas)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(modelo)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># supuestos</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(<span class="fu">residuals</span>(modelo))</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="fu">bartlett.test</span>(agrado <span class="sc">~</span> marca, <span class="at">data =</span> galletas)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.stats.multicomp <span class="im">import</span> pairwise_tukeyhsd</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>galletas <span class="op">=</span> pd.read_csv(<span class="st">"datos/galletas.csv"</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># descripción</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(galletas.groupby(<span class="st">"marca"</span>)[<span class="st">"agrado"</span>].agg([<span class="st">"count"</span>, <span class="st">"mean"</span>, <span class="st">"std"</span>]))</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># ANOVA y post-hoc</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>modelo <span class="op">=</span> smf.ols(<span class="st">"agrado ~ C(marca)"</span>, data<span class="op">=</span>galletas).fit()</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sm.stats.anova_lm(modelo, typ<span class="op">=</span><span class="dv">2</span>))</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pairwise_tukeyhsd(galletas.agrado, galletas.marca))</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co"># supuestos</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(stats.shapiro(modelo.resid))</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>grupos <span class="op">=</span> [g[<span class="st">"agrado"</span>].values <span class="cf">for</span> _, g <span class="kw">in</span> galletas.groupby(<span class="st">"marca"</span>)]</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(stats.bartlett(<span class="op">*</span>grupos))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="La conclusión de fondo">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Interpretación
+<span class="screen-reader-only">Tip</span>La conclusión de fondo
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Los tres trabajan juntos. El <strong>control</strong> reduce el ruido, la <strong>aleatorización</strong> evita el sesgo y las <strong>réplicas</strong> nos dejan medir cuánta variación es “normal” (justo lo que el ANOVA del <a href="10-anova.html" class="quarto-xref"><span>Capítulo 11</span></a> necesita para decidir si las diferencias entre marcas son reales).</p>
-</div>
-</div>
-</section>
-<section id="sesgos-en-experimentos-con-personas" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="sesgos-en-experimentos-con-personas"><span class="header-section-number">5.4</span> Sesgos en experimentos con personas</h2>
-<p>Cuando quienes responden son personas, aparecen sesgos que hay que anticipar en el diseño. Son los que descubriremos en la sesión de la cata:</p>
-<ul>
-<li><strong>Efecto de orden y fatiga de paladar.</strong> La galleta que se prueba al final se juzga con el paladar cansado y la memoria de las anteriores (arrastre). Solución: <strong>aleatorizar el orden</strong> de cata para cada juez y limpiar el paladar entre marcas.</li>
-<li><strong>Falta de cegado.</strong> Si el juez sabe qué marca prueba, su expectativa contamina la calificación (“es Oreo, debe gustarme”). Solución: cata <strong>a ciegas</strong>; idealmente, que quien reparte tampoco sepa cuál es (doble ciego).</li>
-<li><strong>Contaminación entre jueces.</strong> Un gesto o un comentario en voz alta arrastra la opinión de los demás. Solución: catar en silencio, sin expresiones, y capturar cada quien su hoja.</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="¿Qué técnica usar?">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>¿Qué técnica usar?
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Antes de recolectar, conviene revisar esta lista de diseño:</p>
-<ol type="1">
-<li>¿Cuál es la <strong>unidad experimental</strong>, el <strong>factor</strong>, sus <strong>niveles</strong> y la <strong>respuesta</strong>?</li>
-<li>¿Qué mantengo <strong>bajo control</strong>?</li>
-<li>¿Qué <strong>aleatorizo</strong> (tratamientos u orden)?</li>
-<li>¿Cuántas <strong>réplicas</strong> por tratamiento?</li>
-<li>Si hay personas, ¿cómo aseguro <strong>cegado</strong> y evito <strong>contaminación</strong>?</li>
-</ol>
-<p>Si se puede responder las cinco, el experimento está bien diseñado.</p>
-</div>
-</div>
-</section>
-<section id="armar-el-plan-de-aleatorización-en-r" class="level2" data-number="5.5">
-<h2 data-number="5.5" class="anchored" data-anchor-id="armar-el-plan-de-aleatorización-en-r"><span class="header-section-number">5.5</span> Armar el plan de aleatorización en R</h2>
-<p>Aleatorizar no se hace “a ojo”: se hace con el azar de la computadora, y se documenta. Para la cata, cada juez debe probar las cuatro marcas en un <strong>orden distinto y al azar</strong>. Así se genera el plan:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>marcas <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Oreo"</span>, <span class="st">"Chokis"</span>, <span class="st">"Lors"</span>, <span class="st">"GreatValue"</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>plan <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="cf">function</span>(j) {</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">juez =</span> j, <span class="at">orden =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">marca =</span> <span class="fu">sample</span>(marcas))</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>plan <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(plan)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(plan, <span class="dv">8</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["juez"],"name":[1],"type":["int"],"align":["right"]},{"label":["orden"],"name":[2],"type":["int"],"align":["right"]},{"label":["marca"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"1","3":"Oreo","_rn_":"1"},{"1":"1","2":"2","3":"GreatValue","_rn_":"2"},{"1":"1","2":"3","3":"Lors","_rn_":"3"},{"1":"1","2":"4","3":"Chokis","_rn_":"4"},{"1":"2","2":"1","3":"Oreo","_rn_":"5"},{"1":"2","2":"2","3":"Lors","_rn_":"6"},{"1":"2","2":"3","3":"GreatValue","_rn_":"7"},{"1":"2","2":"4","3":"Chokis","_rn_":"8"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-</div>
-</div>
-<p>Cada juez recibe una permutación diferente de las marcas: nadie las prueba en el mismo orden, y así el efecto de orden se reparte parejo entre las cuatro marcas en lugar de perjudicar siempre a la misma.</p>
-<p>El experimento produce una tabla <strong>ordenada</strong>, con un renglón por cata, lista para analizarse después:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>galletas <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"datos/galletas.csv"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(galletas)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["juez"],"name":[1],"type":["int"],"align":["right"]},{"label":["orden"],"name":[2],"type":["int"],"align":["right"]},{"label":["marca"],"name":[3],"type":["chr"],"align":["left"]},{"label":["agrado"],"name":[4],"type":["int"],"align":["right"]}],"data":[{"1":"1","2":"1","3":"Oreo","4":"8","_rn_":"1"},{"1":"1","2":"2","3":"Chokis","4":"7","_rn_":"2"},{"1":"1","2":"3","3":"Lors","4":"5","_rn_":"3"},{"1":"1","2":"4","3":"GreatValue","4":"4","_rn_":"4"},{"1":"2","2":"1","3":"Oreo","4":"8","_rn_":"5"},{"1":"2","2":"2","3":"Chokis","4":"7","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-</div>
-</div>
-<p>Aquí solo <strong>diseñamos</strong> y <strong>recolectamos</strong>. El análisis (¿difieren de verdad las marcas?) es un ANOVA de un factor, y lo haremos en el <a href="10-anova.html" class="quarto-xref"><span>Capítulo 11</span></a> con estos mismos datos.</p>
-</section>
-<section id="la-sesión-en-clase" class="level2" data-number="5.6">
-<h2 data-number="5.6" class="anchored" data-anchor-id="la-sesión-en-clase"><span class="header-section-number">5.6</span> La sesión en clase</h2>
-<div class="callout callout-style-default callout-note callout-titled" title="Protocolo de la cata (actividad de la semana 5)">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Protocolo de la cata (actividad de la semana 5)
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Antes:</strong> se preparan las galletas en platos rotulados con códigos neutros (no la marca), agua para limpiar el paladar y una <strong>hoja de cata</strong> con una escala hedónica de 1 (me disgusta mucho) a 9 (me gusta mucho).</p>
-<p><strong>Diseño (en grupo):</strong> antes de probar nada, la clase propone cómo hacer la cata justa. La idea es que <em>emerjan</em> de la discusión el orden aleatorizado, el cegado, el silencio y las réplicas (los principios de este capítulo).</p>
-<p><strong>Ejecución:</strong> la mitad del grupo cata (jueces), la otra mitad aplica y captura (experimentadores). Cada juez sigue su orden del plan de aleatorización y anota su agrado por marca.</p>
-<p><strong>Después:</strong> se capturan los datos y se guardan para el análisis del <a href="10-anova.html" class="quarto-xref"><span>Capítulo 11</span></a>. Si no coincidieran con los del respaldo, mejor: se discute por qué.</p>
-</div>
-</div>
-</section>
-<section id="resumen" class="level2" data-number="5.7">
-<h2 data-number="5.7" class="anchored" data-anchor-id="resumen"><span class="header-section-number">5.7</span> Resumen</h2>
-<p>El experimento es la forma de producir datos que permite hablar de <strong>causa</strong>. Se describe con unidad experimental, factor, niveles, tratamiento y respuesta, y descansa en tres principios: <strong>control, aleatorización y réplicas</strong>. Con personas, hay que blindar el diseño contra el <strong>orden</strong>, la falta de <strong>cegado</strong> y la <strong>contaminación</strong> entre participantes. Aleatorizar se hace con la computadora y se documenta. Con esto cierra la Parte II: ya sabemos producir datos por muestreo y por experimento. La Parte III nos enseña a <strong>inferir</strong> a partir de ellos.</p>
-</section>
-<section id="ejercicios" class="level2" data-number="5.8">
-<h2 data-number="5.8" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">5.8</span> Ejercicios</h2>
-<ol type="1">
-<li><p><strong>Anatomía de un experimento.</strong> Para el cultivo de setas (<code>datos/hongos_sustrato.csv</code>), identificar la unidad experimental, el factor, sus niveles, un tratamiento y la variable respuesta.</p></li>
-<li><p><strong>Observacional o experimental.</strong> Clasificar cada estudio y di si permite concluir causa y efecto:</p>
-<ol type="a">
-<li>Un estudiante de medicina compara la mejoría de pacientes que <em>eligieron</em> tomar un suplemento contra los que no.</li>
-<li>Se asignan al azar tres fertilizantes a parcelas de trigo y se compara el rendimiento.</li>
-<li>Se registran las calificaciones de quienes asistieron o no, por decisión propia, a asesorías.</li>
-</ol></li>
-<li><p><strong>¿Qué principio falta?</strong> En cada diseño defectuoso, di cuál de los tres principios se viola:</p>
-<ol type="a">
-<li>Se prueba un solo germinado por cada sustrato.</li>
-<li>Todos los jueces prueban primero Oreo y al final Great Value.</li>
-<li>Se compara la marca nueva medida hoy con la vieja medida el año pasado, en otro laboratorio.</li>
-</ol></li>
-<li><p><strong>¿Por qué aleatorizar el orden?</strong> Explicar, con el efecto de fatiga de paladar, qué problema evita que cada juez cate en un orden distinto.</p></li>
-<li><p><strong>Cegado.</strong> Describir cómo se haría una cata <strong>doble ciego</strong> de galletas y qué sesgo evita cada capa del cegado.</p></li>
-<li><p><strong>Aleatoriza en R.</strong> Generar un plan de aleatorización para un experimento de setas con 4 sustratos y 5 réplicas por sustrato (20 bolsas), asignando al azar qué bolsa recibe cada sustrato.</p></li>
-</ol>
-<div class="callout callout-style-default callout-tip callout-titled" title="Soluciones y retroalimentación">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Soluciones y retroalimentación
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p><strong>1.</strong> Unidad experimental: <strong>cada bolsa</strong> de cultivo. Factor: el <strong>sustrato</strong>. Niveles: paja de trigo, pulpa de café, olote de maíz y aserrín. Un tratamiento: sembrar en pulpa de café. Variable respuesta: la <strong>eficiencia biológica (%)</strong>; <code>dias_cosecha</code> es una segunda respuesta y <code>contaminado</code> una respuesta categórica. <em>Un experimento puede tener varias variables respuesta; lo que lo define como de un factor es que se manipula una sola cosa.</em></p>
-<p><strong>2.</strong> (a) <strong>Observacional</strong>: los pacientes eligieron tomar el suplemento, así que los grupos pueden diferir en otras cosas (quien lo elige quizá cuida más su salud). No permite concluir causa. (b) <strong>Experimental</strong>: la asignación es aleatoria, sí permite concluir causa. (c) <strong>Observacional</strong>: la asistencia fue por decisión propia. <em>En (a) y (c) el fenómeno se llama <strong>autoselección</strong>, la fuente más común de confusión en estudios de salud y educación.</em></p>
-<p><strong>3.</strong> (a) Falla <strong>réplicas</strong>: con una sola bolsa no hay forma de estimar la variación natural entre bolsas del mismo sustrato. (b) Falla <strong>aleatorización</strong>: el orden fijo hace que la fatiga de paladar perjudique siempre a Great Value y favorezca a Oreo. (c) Falla <strong>control</strong>: las condiciones cambiaron entre mediciones (año y laboratorio distintos), así que la diferencia observada podría deberse a eso y no a la marca. <em>En (c) se dice que el efecto de la marca está <strong>confundido</strong> con el del laboratorio y el tiempo. No hay manera de separarlos.</em></p>
-<p><strong>4.</strong> Como el paladar se cansa y arrastra sabores, las últimas posiciones tienden a recibir calificaciones más bajas. Si todos los jueces catan en el mismo orden, ese castigo cae <strong>siempre sobre la misma marca</strong>, y no podríamos distinguir si esa marca gustó menos por su sabor o por su posición. Al aleatorizar, cada marca ocupa todas las posiciones aproximadamente por igual y el efecto se reparte parejo. <em>La aleatorización no elimina el efecto de orden: lo convierte en ruido en lugar de sesgo.</em></p>
-<p><strong>5.</strong> Cata doble ciego: (i) las galletas se sirven en platos con <strong>códigos neutros</strong> (por ejemplo, 3 dígitos al azar), de modo que el <strong>juez</strong> no sabe qué marca prueba —esto evita el sesgo de expectativa por la fama de la marca—; (ii) quien <strong>reparte y recoge</strong> las hojas tampoco sabe qué código corresponde a qué marca —esto evita que transmita pistas involuntarias con gestos, tonos o comentarios—. La correspondencia código–marca la guarda una persona ajena hasta el análisis. <em>La segunda capa es la que suele olvidarse y es justo la que protege del sesgo del experimentador.</em></p>
-<p><strong>6.</strong> Una solución en R:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>sustratos <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"paja_trigo"</span>, <span class="st">"pulpa_cafe"</span>, <span class="st">"olote_maiz"</span>, <span class="st">"aserrin"</span>), <span class="at">each =</span> <span class="dv">5</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>plan_setas <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">bolsa    =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">sustrato =</span> <span class="fu">sample</span>(sustratos)   <span class="co"># permuta la asignación al azar</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>plan_setas</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<p>La clave es <code>sample()</code>, que permuta las asignaciones: así, si las bolsas ocupan posiciones distintas en el invernadero (unas con más luz o humedad), esa variación no queda ligada sistemáticamente a un sustrato. <em>Documenta siempre la semilla (<code>set.seed</code>) para que el plan sea reproducible y auditable.</em></p>
-</div>
+<p>Los dos bloques hacen exactamente lo mismo y dan exactamente los mismos números. La estadística no cambia con el lenguaje.</p>
+<p>Lo que se aprende en este curso (qué técnica corresponde, qué supuestos verificar, cómo interpretar el resultado) es transferible a cualquier herramienta. La sintaxis se consulta; el criterio, no.</p>
 </div>
 </div>
 
@@ -1028,13 +1219,13 @@ window._ojs.runtime.interpretFromScriptTags();
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./04-muestreo.html" class="pagination-link" aria-label="Producción de datos: muestreo">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Producción de datos: muestreo</span></span>
+      <a href="./formulario.html" class="pagination-link" aria-label="Formulario">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Formulario</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./laboratorio-estandarizacion.html" class="pagination-link" aria-label="Laboratorio interactivo: la estandarización">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Laboratorio interactivo: la estandarización</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./laboratorio-r.html" class="pagination-link" aria-label="Practicar R sin instalar nada">
+        <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Practicar R sin instalar nada</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

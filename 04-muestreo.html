@@ -23,6 +23,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -44,7 +79,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-e671ceb1ec85f3bd6fb682ad87dd4085.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-22a2d3c8fd5a3a2e3c4a69971a64c298.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -72,11 +109,42 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Buscar"
   }
 }</script>
+<script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 <link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -190,38 +258,44 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./laboratorio-estandarizacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Laboratorio interactivo: la estandarización</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./06-muestrales.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Distribuciones muestrales y TCL</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Distribuciones muestrales y TCL</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./07-estimacion-pruebas.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Estimación y prueba de hipótesis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estimación y prueba de hipótesis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./08-dos-muestras.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Inferencia para dos parámetros</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Inferencia para dos parámetros</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./09-enumerativos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Inferencia para datos enumerativos</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Inferencia para datos enumerativos</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10-anova.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Análisis de varianza (ANOVA)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Análisis de varianza (ANOVA)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./11-regresion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Inferencia en regresión</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Inferencia en regresión</span></span></a>
   </div>
 </li>
       </ul>
@@ -232,6 +306,41 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Referencias</span></a>
   </div>
 </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Apéndices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mapa-decision.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mapa de decisión</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./formulario.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Formulario</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./apendice-python.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">R y Python, lado a lado</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./laboratorio-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Practicar R sin instalar nada</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -243,10 +352,16 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#población-muestra-y-unidad-de-muestreo" id="toc-población-muestra-y-unidad-de-muestreo" class="nav-link active" data-scroll-target="#población-muestra-y-unidad-de-muestreo"><span class="header-section-number">4.1</span> Población, muestra y unidad de muestreo</a></li>
-  <li><a href="#sesgo-de-selección-y-sesgo-de-medición" id="toc-sesgo-de-selección-y-sesgo-de-medición" class="nav-link" data-scroll-target="#sesgo-de-selección-y-sesgo-de-medición"><span class="header-section-number">4.2</span> Sesgo de selección y sesgo de medición</a></li>
-  <li><a href="#margen-de-error-errores-de-muestreo-y-no-de-muestreo" id="toc-margen-de-error-errores-de-muestreo-y-no-de-muestreo" class="nav-link" data-scroll-target="#margen-de-error-errores-de-muestreo-y-no-de-muestreo"><span class="header-section-number">4.3</span> Margen de error; errores de muestreo y no de muestreo</a></li>
-  <li><a href="#muestreo-aleatorio-simple-estratificado-por-conglomerados-sistemático-y-multietápico" id="toc-muestreo-aleatorio-simple-estratificado-por-conglomerados-sistemático-y-multietápico" class="nav-link" data-scroll-target="#muestreo-aleatorio-simple-estratificado-por-conglomerados-sistemático-y-multietápico"><span class="header-section-number">4.4</span> Muestreo aleatorio simple, estratificado, por conglomerados, sistemático y multietápico</a></li>
-  <li><a href="#simular-muestreos-en-r-y-ver-el-efecto-del-sesgo" id="toc-simular-muestreos-en-r-y-ver-el-efecto-del-sesgo" class="nav-link" data-scroll-target="#simular-muestreos-en-r-y-ver-el-efecto-del-sesgo"><span class="header-section-number">4.5</span> Simular muestreos en R y ver el efecto del sesgo</a></li>
+  <li><a href="#sesgos-cuando-la-muestra-miente" id="toc-sesgos-cuando-la-muestra-miente" class="nav-link" data-scroll-target="#sesgos-cuando-la-muestra-miente"><span class="header-section-number">4.2</span> Sesgos: cuando la muestra miente</a></li>
+  <li><a href="#error-de-muestreo-y-error-no-de-muestreo" id="toc-error-de-muestreo-y-error-no-de-muestreo" class="nav-link" data-scroll-target="#error-de-muestreo-y-error-no-de-muestreo"><span class="header-section-number">4.3</span> Error de muestreo y error no de muestreo</a>
+  <ul class="collapse">
+  <li><a href="#sec-lab-n" id="toc-sec-lab-n" class="nav-link" data-scroll-target="#sec-lab-n"><span class="header-section-number">4.3.1</span> Laboratorio: el tamaño de la muestra y el sesgo</a></li>
+  </ul></li>
+  <li><a href="#métodos-de-muestreo-aleatorio" id="toc-métodos-de-muestreo-aleatorio" class="nav-link" data-scroll-target="#métodos-de-muestreo-aleatorio"><span class="header-section-number">4.4</span> Métodos de muestreo aleatorio</a>
+  <ul class="collapse">
+  <li><a href="#sec-lab-metodos" id="toc-sec-lab-metodos" class="nav-link" data-scroll-target="#sec-lab-metodos"><span class="header-section-number">4.4.1</span> Laboratorio: los cuatro métodos, lado a lado</a></li>
+  </ul></li>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen"><span class="header-section-number">4.5</span> Resumen</a></li>
   <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">4.6</span> Ejercicios</a></li>
   </ul>
 </nav>
@@ -273,60 +388,562 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="callout callout-style-default callout-important callout-titled" title="Plantilla en construcción">
+<div class="callout callout-style-default callout-warning callout-titled" title="Capítulo en revisión">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Importante</span>Plantilla en construcción
+<span class="screen-reader-only">Advertencia</span>Capítulo en revisión
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Este capítulo corresponde a <strong>Semana 4</strong> del calendario y usa los datos de <strong>rickettsiosis (marco poblacional)</strong>. La estructura de secciones ya está fijada; el contenido se desarrolla con el mismo formato del <a href="01-exploracion.html" class="quarto-xref"><span>Capítulo 1</span></a>: pregunta real, técnica, supuestos, cómputo en R e interpretación.</p>
+<p>El contenido de este capítulo está completo, pero todavía no pasa por la revisión final de redacción. Se avisará en clase cuando quede listo para estudiar de aquí. Mientras tanto se puede consultar, con esa advertencia.</p>
 </div>
 </div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Objetivos del capítulo">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Objetivos del capítulo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Distinguir <strong>población</strong>, <strong>muestra</strong> y <strong>unidad de muestreo</strong>.</li>
+<li>Reconocer <strong>sesgos de selección y de medición</strong>, y por qué una muestra grande no los corrige.</li>
+<li>Separar el <strong>error de muestreo</strong> del <strong>error no de muestreo</strong>.</li>
+<li>Elegir entre los métodos de <strong>muestreo aleatorio</strong> y simularlos en R.</li>
+</ul>
+</div>
+</div>
+<p>Empieza la Parte II. Las técnicas de inferencia que veremos después son tan buenas como los datos que las alimentan: <strong>de dónde vienen los datos importa tanto como qué hacemos con ellos</strong>. Este capítulo trata de cómo obtener una muestra que realmente represente a la población.</p>
 <section id="población-muestra-y-unidad-de-muestreo" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="población-muestra-y-unidad-de-muestreo"><span class="header-section-number">4.1</span> Población, muestra y unidad de muestreo</h2>
-<p><em>(En construcción.)</em></p>
+<ul>
+<li>La <strong>población</strong> es el conjunto completo de individuos sobre los que queremos concluir.</li>
+<li>La <strong>muestra</strong> es la parte de la población que efectivamente observamos.</li>
+<li>La <strong>unidad de muestreo</strong> es cada individuo que puede ser seleccionado.</li>
+</ul>
+<p>Casi nunca podemos medir a toda la población (un <strong>censo</strong> es caro y a veces imposible), así que tomamos una muestra y, a partir de ella, estimamos. Un valor calculado sobre la población es un <strong>parámetro</strong> (lo que quisiéramos conocer); el mismo valor calculado sobre la muestra es un <strong>estadístico</strong> (lo que sí podemos calcular). El arte del muestreo es que el estadístico se parezca al parámetro.</p>
+<p>Para <em>ver</em> cómo funciona el muestreo haremos algo que en la vida real no podemos: tratar un conjunto de datos como si fuera <strong>toda la población</strong>. Usaremos el registro de rickettsiosis (420 personas) y, como lo tenemos completo, conocemos el “parámetro verdadero”:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>rick <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"datos/rickettsiosis.csv"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>p_pob <span class="ot">&lt;-</span> <span class="fu">mean</span>(rick<span class="sc">$</span>resultado <span class="sc">==</span> <span class="st">"positivo"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>p_pob   <span class="co"># proporción verdadera de positivos en la población</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.25</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </section>
-<section id="sesgo-de-selección-y-sesgo-de-medición" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="sesgo-de-selección-y-sesgo-de-medición"><span class="header-section-number">4.2</span> Sesgo de selección y sesgo de medición</h2>
-<p><em>(En construcción.)</em></p>
-</section>
-<section id="margen-de-error-errores-de-muestreo-y-no-de-muestreo" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="margen-de-error-errores-de-muestreo-y-no-de-muestreo"><span class="header-section-number">4.3</span> Margen de error; errores de muestreo y no de muestreo</h2>
-<p><em>(En construcción.)</em></p>
-</section>
-<section id="muestreo-aleatorio-simple-estratificado-por-conglomerados-sistemático-y-multietápico" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="muestreo-aleatorio-simple-estratificado-por-conglomerados-sistemático-y-multietápico"><span class="header-section-number">4.4</span> Muestreo aleatorio simple, estratificado, por conglomerados, sistemático y multietápico</h2>
-<p><em>(En construcción.)</em></p>
-</section>
-<section id="simular-muestreos-en-r-y-ver-el-efecto-del-sesgo" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="simular-muestreos-en-r-y-ver-el-efecto-del-sesgo"><span class="header-section-number">4.5</span> Simular muestreos en R y ver el efecto del sesgo</h2>
-<p><em>(En construcción.)</em></p>
-<div class="callout callout-style-default callout-tip callout-titled" title="¿Qué técnica uso?">
+<section id="sesgos-cuando-la-muestra-miente" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="sesgos-cuando-la-muestra-miente"><span class="header-section-number">4.2</span> Sesgos: cuando la muestra miente</h2>
+<p>Una muestra es <strong>sesgada</strong> cuando tiende, sistemáticamente, a dar valores alejados del parámetro. Hay dos fuentes principales:</p>
+<ul>
+<li><strong>Sesgo de selección</strong>: la forma de elegir favorece a ciertos individuos. Encuestar solo a quien contesta el teléfono fijo deja fuera a los jóvenes.</li>
+<li><strong>Sesgo de medición</strong>: el instrumento o la pregunta distorsionan la respuesta. Una pregunta sugerente, una báscula descalibrada.</li>
+</ul>
+<p>Veamos el sesgo de selección en acción. Si por comodidad tomáramos la muestra solo de la zona urbana marginada (donde la positividad es más alta), sobreestimaríamos:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>sesgada <span class="ot">&lt;-</span> rick <span class="sc">|&gt;</span> <span class="fu">filter</span>(zona <span class="sc">==</span> <span class="st">"urbana_marginada"</span>) <span class="sc">|&gt;</span> <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">40</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(sesgada<span class="sc">$</span>resultado <span class="sc">==</span> <span class="st">"positivo"</span>)   <span class="co"># muy por encima del parámetro real</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.35</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Una muestra grande NO corrige el sesgo">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>¿Qué técnica uso?
+<span class="screen-reader-only">Importante</span>Una muestra grande NO corrige el sesgo
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Antes de recolectar: ¿la muestra representa a la población? Un buen muestreo previene sesgos que ningún análisis posterior corrige.</p>
+<p>Es el error más común. Si el método de selección está sesgado, tomar más individuos solo da una respuesta equivocada con más decimales. La famosa encuesta de 1936 que predijo (mal) la elección presidencial de EE. UU. tenía <strong>millones</strong> de respuestas: su problema no era el tamaño, era el sesgo de selección. Contra el sesgo, lo que sirve es la <strong>aleatorización</strong>, no el tamaño.</p>
 </div>
 </div>
+</section>
+<section id="error-de-muestreo-y-error-no-de-muestreo" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="error-de-muestreo-y-error-no-de-muestreo"><span class="header-section-number">4.3</span> Error de muestreo y error no de muestreo</h2>
+<p>Aunque el muestreo sea perfecto, dos muestras distintas dan resultados distintos. A eso se le llama <strong>error de muestreo</strong>, la variación natural de una muestra a otra. Es inevitable, pero <strong>se reduce al aumentar el tamaño de la muestra</strong> y se puede cuantificar (el <strong>margen de error</strong>, que formalizaremos en el <a href="07-estimacion-pruebas.html" class="quarto-xref"><span>Capítulo 8</span></a>).</p>
+<p>El <strong>error no de muestreo</strong> es todo lo demás: sesgos, no-respuesta, errores de captura. No se arregla con más datos y suele ser el más peligroso porque no aparece en las fórmulas.</p>
+<p>Simulemos el error de muestreo. Tomemos muchas muestras aleatorias de tamaño 40 y veamos cómo varía la proporción estimada alrededor del parámetro real:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>estimaciones <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">1000</span>, {</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  m <span class="ot">&lt;-</span> <span class="fu">slice_sample</span>(rick, <span class="at">n =</span> <span class="dv">40</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(m<span class="sc">$</span>resultado <span class="sc">==</span> <span class="st">"positivo"</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="at">p =</span> estimaciones), <span class="fu">aes</span>(<span class="at">x =</span> p)) <span class="sc">+</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.025</span>, <span class="at">fill =</span> <span class="st">"#1F4E79"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> p_pob, <span class="at">color =</span> <span class="st">"#C0392B"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Proporción estimada"</span>, <span class="at">y =</span> <span class="st">"Frecuencia"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="fig-variabilidad" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-variabilidad-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="04-muestreo_files/figure-html/fig-variabilidad-1.png" class="img-fluid figure-img" width="480">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-variabilidad-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4.1: Proporción de positivos en 1000 muestras aleatorias de tamaño 40.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(estimaciones)   <span class="co"># el promedio de las estimaciones cae junto al parámetro real</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.24965</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Las estimaciones se reparten <strong>alrededor</strong> del valor verdadero (línea roja): ninguna muestra da exactamente el parámetro, pero en promedio aciertan y la mayoría cae cerca. Eso es un muestreo <strong>sin sesgo</strong>: yerra por azar, no por sistema. Si repitieras el ejercicio con muestras de tamaño 150, el histograma sería más angosto (menos error de muestreo). Esta idea es la semilla de las <strong>distribuciones muestrales</strong> del <a href="06-muestrales.html" class="quarto-xref"><span>Capítulo 7</span></a>.</p>
+</div>
+</div>
+<section id="sec-lab-n" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="sec-lab-n"><span class="header-section-number">4.3.1</span> Laboratorio: el tamaño de la muestra y el sesgo</h3>
+<p>Este laboratorio junta las dos ideas centrales del capítulo. El primer deslizador cambia el <strong>tamaño de muestra</strong> y muestra cómo se angosta la distribución de estimaciones. El segundo introduce un <strong>sesgo</strong> en el método de selección, y revela algo incómodo. Por más que crezca la muestra, las estimaciones se apretujan alrededor del valor <strong>equivocado</strong>.</p>
+<div class="cell panel-input card bg-light p-2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="100" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 99;"><span id="cb5-100"><a href="#cb5-100" aria-hidden="true" tabindex="-1"></a>viewof nmuestra <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">10</span><span class="op">,</span> <span class="dv">300</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">40</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"tamaño de muestra n"</span>})</span>
+<span id="cb5-101"><a href="#cb5-101" aria-hidden="true" tabindex="-1"></a>viewof sesgo <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">0</span><span class="op">,</span> <span class="fl">0.20</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.01</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"sesgo del método"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="105" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 104;"><span id="cb6-105"><a href="#cb6-105" aria-hidden="true" tabindex="-1"></a>pReal <span class="op">=</span> <span class="fl">0.25</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="110" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 109;"><span id="cb7-110"><a href="#cb7-110" aria-hidden="true" tabindex="-1"></a>simulaciones <span class="op">=</span> {</span>
+<span id="cb7-111"><a href="#cb7-111" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> reps <span class="op">=</span> <span class="dv">600</span><span class="op">;</span></span>
+<span id="cb7-112"><a href="#cb7-112" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> p <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(<span class="fl">0.99</span><span class="op">,</span> pReal <span class="op">+</span> sesgo)<span class="op">;</span></span>
+<span id="cb7-113"><a href="#cb7-113" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> out <span class="op">=</span> []<span class="op">;</span></span>
+<span id="cb7-114"><a href="#cb7-114" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">let</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> reps<span class="op">;</span> i<span class="op">++</span>) {</span>
+<span id="cb7-115"><a href="#cb7-115" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> exitos <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb7-116"><a href="#cb7-116" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="kw">let</span> j <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> j <span class="op">&lt;</span> nmuestra<span class="op">;</span> j<span class="op">++</span>) <span class="cf">if</span> (<span class="bu">Math</span><span class="op">.</span><span class="fu">random</span>() <span class="op">&lt;</span> p) exitos<span class="op">++;</span></span>
+<span id="cb7-117"><a href="#cb7-117" aria-hidden="true" tabindex="-1"></a>    out<span class="op">.</span><span class="fu">push</span>(exitos <span class="op">/</span> nmuestra)<span class="op">;</span></span>
+<span id="cb7-118"><a href="#cb7-118" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb7-119"><a href="#cb7-119" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> out<span class="op">;</span></span>
+<span id="cb7-120"><a href="#cb7-120" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="125" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 124;"><span id="cb8-125"><a href="#cb8-125" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb8-126"><a href="#cb8-126" aria-hidden="true" tabindex="-1"></a>  <span class="dt">height</span><span class="op">:</span> <span class="dv">240</span><span class="op">,</span></span>
+<span id="cb8-127"><a href="#cb8-127" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> { <span class="dt">label</span><span class="op">:</span> <span class="st">"proporción estimada"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="fl">0.6</span>] }<span class="op">,</span></span>
+<span id="cb8-128"><a href="#cb8-128" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> { <span class="dt">label</span><span class="op">:</span> <span class="st">"frecuencia"</span> }<span class="op">,</span></span>
+<span id="cb8-129"><a href="#cb8-129" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb8-130"><a href="#cb8-130" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">rectY</span>(simulaciones<span class="op">,</span> Plot<span class="op">.</span><span class="fu">binX</span>({<span class="dt">y</span><span class="op">:</span> <span class="st">"count"</span>}<span class="op">,</span></span>
+<span id="cb8-131"><a href="#cb8-131" aria-hidden="true" tabindex="-1"></a>      {<span class="dt">x</span><span class="op">:</span> d <span class="kw">=&gt;</span> d<span class="op">,</span> <span class="dt">thresholds</span><span class="op">:</span> <span class="dv">40</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"#1F4E79"</span>}))<span class="op">,</span></span>
+<span id="cb8-132"><a href="#cb8-132" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleX</span>([pReal]<span class="op">,</span> { <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#C0392B"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">2</span> })<span class="op">,</span></span>
+<span id="cb8-133"><a href="#cb8-133" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">0</span>])</span>
+<span id="cb8-134"><a href="#cb8-134" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb8-135"><a href="#cb8-135" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-4" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="140" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 139;"><span id="cb9-140"><a href="#cb9-140" aria-hidden="true" tabindex="-1"></a><span class="fu">md</span><span class="vs">`Valor verdadero (línea roja) = **0.25** · Promedio de las estimaciones = **</span><span class="sc">${</span>(simulaciones<span class="op">.</span><span class="fu">reduce</span>((a<span class="op">,</span>b)<span class="kw">=&gt;</span>a<span class="op">+</span>b<span class="op">,</span><span class="dv">0</span>)<span class="op">/</span>simulaciones<span class="op">.</span><span class="at">length</span>)<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">3</span>)<span class="sc">}</span><span class="vs">**`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-5" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Con <strong>sesgo en cero</strong>, aumentar <span class="math inline">\(n\)</span> angosta el histograma alrededor de la línea roja: más datos, más precisión. Al subir el sesgo a 0.10 y aumentar luego <span class="math inline">\(n\)</span> hasta 300: el histograma se vuelve <strong>angosto pero centrado en el lugar equivocado</strong>. Ahí está, en una imagen, la lección del capítulo. El tamaño de muestra reduce el <strong>error de muestreo</strong>, nunca el <strong>sesgo</strong>. Una estimación sesgada con muestra grande es peligrosa justamente porque <em>parece</em> precisa.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="métodos-de-muestreo-aleatorio" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="métodos-de-muestreo-aleatorio"><span class="header-section-number">4.4</span> Métodos de muestreo aleatorio</h2>
+<p>La defensa contra el sesgo de selección es dejar que <strong>el azar</strong> elija. Hay varias formas:</p>
+<ul>
+<li><strong>Aleatorio simple (MAS)</strong>: cada individuo tiene la misma probabilidad de ser elegido, como sacar nombres de una urna.</li>
+<li><strong>Estratificado</strong>: se divide la población en <strong>estratos</strong> homogéneos (por zona, por sexo) y se muestrea dentro de cada uno. Asegura representación de todos los grupos y suele dar estimaciones más precisas.</li>
+<li><strong>Sistemático</strong>: se elige cada k-ésimo individuo de una lista (uno de cada diez). Simple, pero riesgoso si la lista tiene un patrón periódico.</li>
+<li><strong>Por conglomerados</strong>: la población se agrupa en conglomerados (colonias, escuelas), se eligen algunos <strong>conglomerados completos</strong> al azar y se mide a todos sus miembros. Barato cuando la población está dispersa.</li>
+<li><strong>Multietápico</strong>: combina los anteriores en etapas (elegir municipios, luego colonias, luego hogares). Es lo que usan las grandes encuestas nacionales.</li>
+</ul>
+<p>En R, el muestreo <strong>aleatorio simple</strong> es <code>slice_sample()</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>mas <span class="ot">&lt;-</span> <span class="fu">slice_sample</span>(rick, <span class="at">n =</span> <span class="dv">40</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(mas<span class="sc">$</span>resultado <span class="sc">==</span> <span class="st">"positivo"</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.175</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>El <strong>estratificado</strong> por zona se logra agrupando antes de muestrear:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>estratificada <span class="ot">&lt;-</span> rick <span class="sc">|&gt;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(zona) <span class="sc">|&gt;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">prop =</span> <span class="fl">0.10</span>) <span class="sc">|&gt;</span>   <span class="co"># 10 % de cada zona</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(estratificada, zona)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["zona"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"rural","2":"10"},{"1":"urbana","2":"14"},{"1":"urbana_marginada","2":"18"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Y el <strong>sistemático</strong>, tomando uno de cada <code>k</code> de la lista:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>sistematica <span class="ot">&lt;-</span> rick[<span class="fu">seq</span>(<span class="dv">1</span>, <span class="fu">nrow</span>(rick), <span class="at">by =</span> k), ]</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(sistematica)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 42</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="sec-lab-metodos" class="level3" data-number="4.4.1">
+<h3 data-number="4.4.1" class="anchored" data-anchor-id="sec-lab-metodos"><span class="header-section-number">4.4.1</span> Laboratorio: los cuatro métodos, lado a lado</h3>
+<p>Este campo tiene 96 lagartijas de tres especies, cada una ocupando <strong>su propia zona</strong> del terreno: la A la mitad izquierda (48 individuos, 50 %), la B la franja central (32, 33 %) y la C la orilla derecha (16, 17 %). Al elegir un método y cambiar el tamaño de muestra conviene observar dos cosas: <strong>dónde</strong> caen los individuos seleccionados y qué tan bien la <strong>composición de la muestra</strong> reproduce la de la población.</p>
+<div class="cell panel-input card bg-light p-2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb13" data-startfrom="195" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 194;"><span id="cb13-195"><a href="#cb13-195" aria-hidden="true" tabindex="-1"></a>viewof metodo <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>(</span>
+<span id="cb13-196"><a href="#cb13-196" aria-hidden="true" tabindex="-1"></a>  [<span class="st">"aleatorio simple"</span><span class="op">,</span> <span class="st">"estratificado"</span><span class="op">,</span> <span class="st">"conglomerados"</span><span class="op">,</span> <span class="st">"sistemático"</span>]<span class="op">,</span></span>
+<span id="cb13-197"><a href="#cb13-197" aria-hidden="true" tabindex="-1"></a>  {<span class="dt">value</span><span class="op">:</span> <span class="st">"aleatorio simple"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"método"</span>})</span>
+<span id="cb13-198"><a href="#cb13-198" aria-hidden="true" tabindex="-1"></a>viewof nSim <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">8</span><span class="op">,</span> <span class="dv">48</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">24</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">4</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"tamaño de muestra"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-6-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-6-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb14" data-startfrom="202" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 201;"><span id="cb14-202"><a href="#cb14-202" aria-hidden="true" tabindex="-1"></a>campo <span class="op">=</span> {</span>
+<span id="cb14-203"><a href="#cb14-203" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> COLS <span class="op">=</span> <span class="dv">12</span><span class="op">,</span> ROWS <span class="op">=</span> <span class="dv">8</span><span class="op">,</span> out <span class="op">=</span> []<span class="op">;</span></span>
+<span id="cb14-204"><a href="#cb14-204" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">let</span> r <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> r <span class="op">&lt;</span> ROWS<span class="op">;</span> r<span class="op">++</span>) <span class="cf">for</span> (<span class="kw">let</span> c <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> c <span class="op">&lt;</span> COLS<span class="op">;</span> c<span class="op">++</span>) {</span>
+<span id="cb14-205"><a href="#cb14-205" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> especie <span class="op">=</span> c <span class="op">&lt;=</span> <span class="dv">5</span> <span class="op">?</span> <span class="st">"A"</span> <span class="op">:</span> (c <span class="op">&lt;=</span> <span class="dv">9</span> <span class="op">?</span> <span class="st">"B"</span> <span class="op">:</span> <span class="st">"C"</span>)<span class="op">;</span>   <span class="co">// cada especie en su zona</span></span>
+<span id="cb14-206"><a href="#cb14-206" aria-hidden="true" tabindex="-1"></a>    out<span class="op">.</span><span class="fu">push</span>({ <span class="dt">i</span><span class="op">:</span> r <span class="op">*</span> COLS <span class="op">+</span> c<span class="op">,</span> r<span class="op">,</span> c<span class="op">,</span> especie<span class="op">,</span></span>
+<span id="cb14-207"><a href="#cb14-207" aria-hidden="true" tabindex="-1"></a>               <span class="dt">parcela</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">floor</span>(r <span class="op">/</span> <span class="dv">4</span>) <span class="op">*</span> <span class="dv">3</span> <span class="op">+</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">floor</span>(c <span class="op">/</span> <span class="dv">4</span>) })<span class="op">;</span></span>
+<span id="cb14-208"><a href="#cb14-208" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb14-209"><a href="#cb14-209" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> out<span class="op">;</span></span>
+<span id="cb14-210"><a href="#cb14-210" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-7" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb15" data-startfrom="215" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 214;"><span id="cb15-215"><a href="#cb15-215" aria-hidden="true" tabindex="-1"></a>revuelto <span class="op">=</span> (arr) <span class="kw">=&gt;</span> {</span>
+<span id="cb15-216"><a href="#cb15-216" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> a <span class="op">=</span> arr<span class="op">.</span><span class="fu">slice</span>()<span class="op">;</span></span>
+<span id="cb15-217"><a href="#cb15-217" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">let</span> i <span class="op">=</span> a<span class="op">.</span><span class="at">length</span> <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&gt;</span> <span class="dv">0</span><span class="op">;</span> i<span class="op">--</span>) {</span>
+<span id="cb15-218"><a href="#cb15-218" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> j <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">floor</span>(<span class="bu">Math</span><span class="op">.</span><span class="fu">random</span>() <span class="op">*</span> (i <span class="op">+</span> <span class="dv">1</span>))<span class="op">;</span></span>
+<span id="cb15-219"><a href="#cb15-219" aria-hidden="true" tabindex="-1"></a>    [a[i]<span class="op">,</span> a[j]] <span class="op">=</span> [a[j]<span class="op">,</span> a[i]]<span class="op">;</span></span>
+<span id="cb15-220"><a href="#cb15-220" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb15-221"><a href="#cb15-221" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> a<span class="op">;</span></span>
+<span id="cb15-222"><a href="#cb15-222" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-8" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb16" data-startfrom="227" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 226;"><span id="cb16-227"><a href="#cb16-227" aria-hidden="true" tabindex="-1"></a>seleccion <span class="op">=</span> {</span>
+<span id="cb16-228"><a href="#cb16-228" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> N <span class="op">=</span> campo<span class="op">.</span><span class="at">length</span><span class="op">,</span> s <span class="op">=</span> <span class="kw">new</span> <span class="bu">Set</span>()<span class="op">;</span></span>
+<span id="cb16-229"><a href="#cb16-229" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (metodo <span class="op">===</span> <span class="st">"aleatorio simple"</span>) {</span>
+<span id="cb16-230"><a href="#cb16-230" aria-hidden="true" tabindex="-1"></a>    <span class="fu">revuelto</span>(campo)<span class="op">.</span><span class="fu">slice</span>(<span class="dv">0</span><span class="op">,</span> nSim)<span class="op">.</span><span class="fu">forEach</span>(d <span class="kw">=&gt;</span> s<span class="op">.</span><span class="fu">add</span>(d<span class="op">.</span><span class="at">i</span>))<span class="op">;</span></span>
+<span id="cb16-231"><a href="#cb16-231" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (metodo <span class="op">===</span> <span class="st">"estratificado"</span>) {</span>
+<span id="cb16-232"><a href="#cb16-232" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="kw">const</span> e <span class="kw">of</span> [<span class="st">"A"</span><span class="op">,</span> <span class="st">"B"</span><span class="op">,</span> <span class="st">"C"</span>]) {</span>
+<span id="cb16-233"><a href="#cb16-233" aria-hidden="true" tabindex="-1"></a>      <span class="kw">const</span> g <span class="op">=</span> campo<span class="op">.</span><span class="fu">filter</span>(d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">especie</span> <span class="op">===</span> e)<span class="op">;</span></span>
+<span id="cb16-234"><a href="#cb16-234" aria-hidden="true" tabindex="-1"></a>      <span class="kw">const</span> cuota <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">round</span>(nSim <span class="op">*</span> g<span class="op">.</span><span class="at">length</span> <span class="op">/</span> N)<span class="op">;</span></span>
+<span id="cb16-235"><a href="#cb16-235" aria-hidden="true" tabindex="-1"></a>      <span class="fu">revuelto</span>(g)<span class="op">.</span><span class="fu">slice</span>(<span class="dv">0</span><span class="op">,</span> cuota)<span class="op">.</span><span class="fu">forEach</span>(d <span class="kw">=&gt;</span> s<span class="op">.</span><span class="fu">add</span>(d<span class="op">.</span><span class="at">i</span>))<span class="op">;</span></span>
+<span id="cb16-236"><a href="#cb16-236" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb16-237"><a href="#cb16-237" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (metodo <span class="op">===</span> <span class="st">"conglomerados"</span>) {</span>
+<span id="cb16-238"><a href="#cb16-238" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> k <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="dv">1</span><span class="op">,</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">round</span>(nSim <span class="op">/</span> <span class="dv">16</span>))<span class="op">;</span></span>
+<span id="cb16-239"><a href="#cb16-239" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> elegidas <span class="op">=</span> <span class="kw">new</span> <span class="bu">Set</span>(<span class="fu">revuelto</span>(d3<span class="op">.</span><span class="fu">range</span>(<span class="dv">6</span>))<span class="op">.</span><span class="fu">slice</span>(<span class="dv">0</span><span class="op">,</span> k))<span class="op">;</span></span>
+<span id="cb16-240"><a href="#cb16-240" aria-hidden="true" tabindex="-1"></a>    campo<span class="op">.</span><span class="fu">forEach</span>(d <span class="kw">=&gt;</span> { <span class="cf">if</span> (elegidas<span class="op">.</span><span class="fu">has</span>(d<span class="op">.</span><span class="at">parcela</span>)) s<span class="op">.</span><span class="fu">add</span>(d<span class="op">.</span><span class="at">i</span>)<span class="op">;</span> })<span class="op">;</span></span>
+<span id="cb16-241"><a href="#cb16-241" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb16-242"><a href="#cb16-242" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> paso <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="dv">1</span><span class="op">,</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">floor</span>(N <span class="op">/</span> nSim))<span class="op">;</span></span>
+<span id="cb16-243"><a href="#cb16-243" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> inicio <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">floor</span>(<span class="bu">Math</span><span class="op">.</span><span class="fu">random</span>() <span class="op">*</span> paso)<span class="op">;</span></span>
+<span id="cb16-244"><a href="#cb16-244" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="kw">let</span> i <span class="op">=</span> inicio<span class="op">;</span> i <span class="op">&lt;</span> N<span class="op">;</span> i <span class="op">+=</span> paso) s<span class="op">.</span><span class="fu">add</span>(i)<span class="op">;</span></span>
+<span id="cb16-245"><a href="#cb16-245" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb16-246"><a href="#cb16-246" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> s<span class="op">;</span></span>
+<span id="cb16-247"><a href="#cb16-247" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-9" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb17" data-startfrom="252" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 251;"><span id="cb17-252"><a href="#cb17-252" aria-hidden="true" tabindex="-1"></a>parcelas <span class="op">=</span> d3<span class="op">.</span><span class="fu">range</span>(<span class="dv">6</span>)<span class="op">.</span><span class="fu">map</span>(p <span class="kw">=&gt;</span> ({</span>
+<span id="cb17-253"><a href="#cb17-253" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x0</span><span class="op">:</span> (p <span class="op">%</span> <span class="dv">3</span>) <span class="op">*</span> <span class="dv">4</span> <span class="op">-</span> <span class="fl">0.5</span><span class="op">,</span> <span class="dt">x1</span><span class="op">:</span> (p <span class="op">%</span> <span class="dv">3</span>) <span class="op">*</span> <span class="dv">4</span> <span class="op">+</span> <span class="fl">3.5</span><span class="op">,</span></span>
+<span id="cb17-254"><a href="#cb17-254" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y0</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">floor</span>(p <span class="op">/</span> <span class="dv">3</span>) <span class="op">*</span> <span class="dv">4</span> <span class="op">-</span> <span class="fl">0.5</span><span class="op">,</span> <span class="dt">y1</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">floor</span>(p <span class="op">/</span> <span class="dv">3</span>) <span class="op">*</span> <span class="dv">4</span> <span class="op">+</span> <span class="fl">3.5</span></span>
+<span id="cb17-255"><a href="#cb17-255" aria-hidden="true" tabindex="-1"></a>}))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-10" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb18" data-startfrom="260" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 259;"><span id="cb18-260"><a href="#cb18-260" aria-hidden="true" tabindex="-1"></a>zonas <span class="op">=</span> [</span>
+<span id="cb18-261"><a href="#cb18-261" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">especie</span><span class="op">:</span> <span class="st">"A"</span><span class="op">,</span> <span class="dt">x0</span><span class="op">:</span> <span class="op">-</span><span class="fl">0.5</span><span class="op">,</span> <span class="dt">x1</span><span class="op">:</span> <span class="fl">5.5</span> }<span class="op">,</span></span>
+<span id="cb18-262"><a href="#cb18-262" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">especie</span><span class="op">:</span> <span class="st">"B"</span><span class="op">,</span> <span class="dt">x0</span><span class="op">:</span> <span class="fl">5.5</span><span class="op">,</span>  <span class="dt">x1</span><span class="op">:</span> <span class="fl">9.5</span> }<span class="op">,</span></span>
+<span id="cb18-263"><a href="#cb18-263" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">especie</span><span class="op">:</span> <span class="st">"C"</span><span class="op">,</span> <span class="dt">x0</span><span class="op">:</span> <span class="fl">9.5</span><span class="op">,</span>  <span class="dt">x1</span><span class="op">:</span> <span class="fl">11.5</span> }</span>
+<span id="cb18-264"><a href="#cb18-264" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-11" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb19" data-startfrom="269" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 268;"><span id="cb19-269"><a href="#cb19-269" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb19-270"><a href="#cb19-270" aria-hidden="true" tabindex="-1"></a>  <span class="dt">height</span><span class="op">:</span> <span class="dv">250</span><span class="op">,</span></span>
+<span id="cb19-271"><a href="#cb19-271" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">20</span><span class="op">,</span></span>
+<span id="cb19-272"><a href="#cb19-272" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> { <span class="dt">axis</span><span class="op">:</span> <span class="kw">null</span> }<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> { <span class="dt">axis</span><span class="op">:</span> <span class="kw">null</span><span class="op">,</span> <span class="dt">reverse</span><span class="op">:</span> <span class="kw">true</span> }<span class="op">,</span></span>
+<span id="cb19-273"><a href="#cb19-273" aria-hidden="true" tabindex="-1"></a>  <span class="dt">color</span><span class="op">:</span> { <span class="dt">legend</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="st">"A"</span><span class="op">,</span> <span class="st">"B"</span><span class="op">,</span> <span class="st">"C"</span>]<span class="op">,</span></span>
+<span id="cb19-274"><a href="#cb19-274" aria-hidden="true" tabindex="-1"></a>           <span class="dt">range</span><span class="op">:</span> [<span class="st">"#7F77DD"</span><span class="op">,</span> <span class="st">"#1D9E75"</span><span class="op">,</span> <span class="st">"#BA7517"</span>]<span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"especie"</span> }<span class="op">,</span></span>
+<span id="cb19-275"><a href="#cb19-275" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb19-276"><a href="#cb19-276" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">rect</span>(zonas<span class="op">,</span> { <span class="dt">x1</span><span class="op">:</span> <span class="st">"x0"</span><span class="op">,</span> <span class="dt">x2</span><span class="op">:</span> <span class="st">"x1"</span><span class="op">,</span> <span class="dt">y1</span><span class="op">:</span> <span class="op">-</span><span class="fl">0.6</span><span class="op">,</span> <span class="dt">y2</span><span class="op">:</span> <span class="fl">7.6</span><span class="op">,</span></span>
+<span id="cb19-277"><a href="#cb19-277" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fill</span><span class="op">:</span> <span class="st">"especie"</span><span class="op">,</span> <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.07</span> })<span class="op">,</span></span>
+<span id="cb19-278"><a href="#cb19-278" aria-hidden="true" tabindex="-1"></a>    metodo <span class="op">===</span> <span class="st">"conglomerados"</span></span>
+<span id="cb19-279"><a href="#cb19-279" aria-hidden="true" tabindex="-1"></a>      <span class="op">?</span> Plot<span class="op">.</span><span class="fu">rect</span>(parcelas<span class="op">,</span> { <span class="dt">x1</span><span class="op">:</span> <span class="st">"x0"</span><span class="op">,</span> <span class="dt">x2</span><span class="op">:</span> <span class="st">"x1"</span><span class="op">,</span> <span class="dt">y1</span><span class="op">:</span> <span class="st">"y0"</span><span class="op">,</span> <span class="dt">y2</span><span class="op">:</span> <span class="st">"y1"</span><span class="op">,</span></span>
+<span id="cb19-280"><a href="#cb19-280" aria-hidden="true" tabindex="-1"></a>          <span class="dt">fill</span><span class="op">:</span> <span class="st">"none"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#B4B2A9"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"3"</span> })</span>
+<span id="cb19-281"><a href="#cb19-281" aria-hidden="true" tabindex="-1"></a>      <span class="op">:</span> <span class="kw">null</span><span class="op">,</span></span>
+<span id="cb19-282"><a href="#cb19-282" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(campo<span class="op">.</span><span class="fu">filter</span>(d <span class="kw">=&gt;</span> <span class="op">!</span>seleccion<span class="op">.</span><span class="fu">has</span>(d<span class="op">.</span><span class="at">i</span>))<span class="op">,</span></span>
+<span id="cb19-283"><a href="#cb19-283" aria-hidden="true" tabindex="-1"></a>      { <span class="dt">x</span><span class="op">:</span> <span class="st">"c"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"r"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"especie"</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="dv">4</span><span class="op">,</span> <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.25</span> })<span class="op">,</span></span>
+<span id="cb19-284"><a href="#cb19-284" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(campo<span class="op">.</span><span class="fu">filter</span>(d <span class="kw">=&gt;</span> seleccion<span class="op">.</span><span class="fu">has</span>(d<span class="op">.</span><span class="at">i</span>))<span class="op">,</span></span>
+<span id="cb19-285"><a href="#cb19-285" aria-hidden="true" tabindex="-1"></a>      { <span class="dt">x</span><span class="op">:</span> <span class="st">"c"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"r"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"especie"</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="dv">7</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"especie"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">2</span> })</span>
+<span id="cb19-286"><a href="#cb19-286" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">.</span><span class="fu">filter</span>(m <span class="kw">=&gt;</span> m)</span>
+<span id="cb19-287"><a href="#cb19-287" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-12" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb20" data-startfrom="292" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 291;"><span id="cb20-292"><a href="#cb20-292" aria-hidden="true" tabindex="-1"></a>comparacion <span class="op">=</span> {</span>
+<span id="cb20-293"><a href="#cb20-293" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> muestra <span class="op">=</span> campo<span class="op">.</span><span class="fu">filter</span>(d <span class="kw">=&gt;</span> seleccion<span class="op">.</span><span class="fu">has</span>(d<span class="op">.</span><span class="at">i</span>))<span class="op">;</span></span>
+<span id="cb20-294"><a href="#cb20-294" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> [<span class="st">"A"</span><span class="op">,</span> <span class="st">"B"</span><span class="op">,</span> <span class="st">"C"</span>]<span class="op">.</span><span class="fu">map</span>(e <span class="kw">=&gt;</span> ({</span>
+<span id="cb20-295"><a href="#cb20-295" aria-hidden="true" tabindex="-1"></a>    <span class="dt">especie</span><span class="op">:</span> e<span class="op">,</span></span>
+<span id="cb20-296"><a href="#cb20-296" aria-hidden="true" tabindex="-1"></a>    <span class="st">"en la población"</span><span class="op">:</span> (campo<span class="op">.</span><span class="fu">filter</span>(d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">especie</span> <span class="op">===</span> e)<span class="op">.</span><span class="at">length</span> <span class="op">/</span> campo<span class="op">.</span><span class="at">length</span> <span class="op">*</span> <span class="dv">100</span>)<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">0</span>) <span class="op">+</span> <span class="st">" %"</span><span class="op">,</span></span>
+<span id="cb20-297"><a href="#cb20-297" aria-hidden="true" tabindex="-1"></a>    <span class="st">"en la muestra"</span><span class="op">:</span> muestra<span class="op">.</span><span class="at">length</span></span>
+<span id="cb20-298"><a href="#cb20-298" aria-hidden="true" tabindex="-1"></a>      <span class="op">?</span> (muestra<span class="op">.</span><span class="fu">filter</span>(d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">especie</span> <span class="op">===</span> e)<span class="op">.</span><span class="at">length</span> <span class="op">/</span> muestra<span class="op">.</span><span class="at">length</span> <span class="op">*</span> <span class="dv">100</span>)<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">0</span>) <span class="op">+</span> <span class="st">" %"</span></span>
+<span id="cb20-299"><a href="#cb20-299" aria-hidden="true" tabindex="-1"></a>      <span class="op">:</span> <span class="st">"—"</span></span>
+<span id="cb20-300"><a href="#cb20-300" aria-hidden="true" tabindex="-1"></a>  }))<span class="op">;</span></span>
+<span id="cb20-301"><a href="#cb20-301" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-13" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb21" data-startfrom="306" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 305;"><span id="cb21-306"><a href="#cb21-306" aria-hidden="true" tabindex="-1"></a>Inputs<span class="op">.</span><span class="fu">table</span>(comparacion<span class="op">,</span> {<span class="dt">rows</span><span class="op">:</span> <span class="dv">3</span><span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">110</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-14" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb22" data-startfrom="311" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 310;"><span id="cb22-311"><a href="#cb22-311" aria-hidden="true" tabindex="-1"></a><span class="fu">md</span><span class="vs">`Seleccionados: **</span><span class="sc">${</span>seleccion<span class="op">.</span><span class="at">size</span><span class="sc">}</span><span class="vs">** de </span><span class="sc">${</span>campo<span class="op">.</span><span class="at">length</span><span class="sc">}</span><span class="vs"> individuos.`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-15" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Con el <strong>aleatorio simple</strong>, los seleccionados caen por todo el campo, en las tres zonas, sin que nadie se lo indique: el azar solito tiende a repartirlos. La composición sale parecida a la real, con algo de variación.</p>
+<p>Con el <strong>estratificado</strong>, se toma una cuota de cada zona proporcional a su tamaño. Con <span class="math inline">\(n = 24\)</span> toca exactamente <strong>12 de la A, 8 de la B y 4 de la C</strong>, y las dos columnas de la tabla coinciden casi perfecto. Se muestrea <strong>dentro de todas</strong> las zonas.</p>
+<p>Con <strong>conglomerados</strong>, se eligen <strong>parcelas completas</strong> al azar (los recuadros punteados) y se mide todo lo que hay dentro. Es mucho más barato en campo (basta desplazarse a dos parcelas en vez de recorrer las 96 posiciones), pero como cada parcela cae casi por completo dentro de una zona, la muestra puede quedar compuesta <strong>casi de una sola especie</strong>. Vuelve a elegir este método varias veces y se observa saltar las barras.</p>
+<p>Con el <strong>sistemático</strong>, se recorre el campo en orden tomando uno de cada <span class="math inline">\(k\)</span>; al avanzar por renglones va pasando por las tres zonas, así que representa bien. Sería riesgoso solo si el recorrido tuviera un patrón periódico que coincidiera con <span class="math inline">\(k\)</span>.</p>
+<p><strong>La distinción que más se confunde</strong>, y aquí se ve de golpe porque ambos métodos usan la misma partición del campo. En el <strong>estratificado</strong> se toman <em>algunos de cada grupo</em>; en <strong>conglomerados</strong> se toman <em>todos los de algunos grupos</em>. El estratificado busca <strong>precisión</strong>; los conglomerados buscan <strong>economía</strong>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="¿Qué técnica usar?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>¿Qué técnica usar?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Para elegir un método de muestreo:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Situación</th>
+<th>Método</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Lista completa y sencilla de la población</td>
+<td>Aleatorio simple</td>
+</tr>
+<tr class="even">
+<td>Grupos claros que se quiere representar bien</td>
+<td>Estratificado</td>
+</tr>
+<tr class="odd">
+<td>Una lista ordenada, sin patrones periódicos</td>
+<td>Sistemático</td>
+</tr>
+<tr class="even">
+<td>Población dispersa; medir todo un grupo es barato</td>
+<td>Por conglomerados</td>
+</tr>
+<tr class="odd">
+<td>Encuestas grandes a varias escalas</td>
+<td>Multietápico</td>
+</tr>
+</tbody>
+</table>
+<p>En <strong>todos</strong>, la clave es que interviene el azar. Eso es lo que protege del sesgo de selección.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="resumen" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="resumen"><span class="header-section-number">4.5</span> Resumen</h2>
+<p>Antes de analizar, hay que <strong>producir</strong> bien los datos. Distinguimos población, muestra y unidad de muestreo, y vimos que el enemigo es el <strong>sesgo</strong> (de selección o de medición), que ninguna cantidad de datos corrige. El <strong>error de muestreo</strong> es la variación natural entre muestras y se reduce con el tamaño; el <strong>error no de muestreo</strong> no. La aleatorización, en sus distintas formas (simple, estratificado, sistemático, por conglomerados, multietápico), es la herramienta que hace que una muestra represente a su población. En el <a href="05-experimentos.html" class="quarto-xref"><span>Capítulo 5</span></a> veremos la otra forma de producir datos: los <strong>experimentos</strong>.</p>
 </section>
 <section id="ejercicios" class="level2" data-number="4.6">
 <h2 data-number="4.6" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">4.6</span> Ejercicios</h2>
-<p><em>Por desarrollar (banco de la Dra. Figueroa reorganizado + reactivos nuevos).</em></p>
+<ol type="1">
+<li><p><strong>Identificar el método.</strong> Para cada caso, decir qué tipo de muestreo se usó:</p>
+<ol type="a">
+<li>Se numeran los 100 sucursales de una cadena y se eligen 8 al azar, encuestando a todos los clientes de esas 8.</li>
+<li>De un padrón estudiantil se elige a una persona al azar cada 25 de la lista.</li>
+<li>Se divide a la población por sexo y se toma una muestra aleatoria dentro de cada grupo.</li>
+</ol></li>
+<li><p><strong>Población y unidad.</strong> En una encuesta de satisfacción a estudiantes de la LCC, identificar la población, la unidad de muestreo y un posible parámetro de interés.</p></li>
+<li><p><strong>Tipo de sesgo.</strong> Clasificar cada situación como sesgo de selección o de medición y explicar:</p>
+<ol type="a">
+<li>Una encuesta de ingresos aplicada solo en un centro comercial de lujo.</li>
+<li>Preguntar “¿No es cierto que el nuevo sistema es excelente?”.</li>
+</ol></li>
+<li><p><strong>El tamaño no salva.</strong> Explicar con palabras propias por qué una encuesta con un millón de respuestas puede ser peor que una de mil bien muestreada.</p></li>
+<li><p><strong>Simulación en R.</strong> Repetir la simulación de proporciones del capítulo pero con muestras de tamaño 150 en lugar de 40. Comparar el ancho de los dos histogramas. ¿Qué error disminuyó: el de muestreo o el no de muestreo?</p></li>
+<li><p><strong>Diseñar un muestreo.</strong> Se desea estimar la preferencia por una nueva bebida entre los clientes de una cadena de cafeterías con 100 sucursales en la ciudad. Proponer un método de muestreo, justifícalo y señala un sesgo que el diseño ayude a evitar.</p></li>
+<li><p><strong>Experimenta con el simulador.</strong> En el laboratorio del <a href="#sec-lab-metodos" class="quarto-xref"><span>Sección 4.4.1</span></a>, fijar el tamaño de muestra en 24 y elegir <strong>cinco veces</strong> el muestreo por conglomerados, anotando cada vez el porcentaje de la especie C en la muestra. Repetir con el estratificado. ¿Cuál de los dos da resultados más estables, y por qué? Relacionar la respuesta con el hecho de que cada especie ocupa su propia zona del campo.</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Soluciones y retroalimentación">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Soluciones y retroalimentación
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>1.</strong> (a) <strong>Por conglomerados</strong>: los conglomerados son las sucursales; se eligen algunas completas y se mide a todos sus clientes. (b) <strong>Sistemático</strong>: se toma cada k-ésimo elemento de una lista. (c) <strong>Estratificado</strong>: se divide en estratos (sexo) y se muestrea dentro de cada uno. <em>Distinción clave: en el estratificado se muestrea <strong>dentro de todos</strong> los grupos; en conglomerados se eligen <strong>algunos grupos completos</strong>.</em></p>
+<p><strong>2.</strong> Población: todos los estudiantes inscritos en la LCC. Unidad de muestreo: cada estudiante. Parámetro de interés: por ejemplo, la <strong>proporción</strong> de estudiantes satisfechos con las actividades extracurriculares, o la <strong>media</strong> de una calificación de satisfacción del 1 al 10. <em>El parámetro se refiere siempre a la población, no a la muestra.</em></p>
+<p><strong>3.</strong> (a) <strong>Sesgo de selección</strong>: el lugar donde se aplica la encuesta favorece sistemáticamente a personas de mayores ingresos, que no representan a la población general. (b) <strong>Sesgo de medición</strong>: la redacción de la pregunta induce la respuesta; el instrumento distorsiona lo que se mide. <em>Truco para distinguirlos: conviene preguntarse si el problema está en <strong>a quién le pregunto</strong> (selección) o en <strong>cómo le pregunto</strong> (medición).</em></p>
+<p><strong>4.</strong> Porque el tamaño solo reduce el error de muestreo, mientras que el sesgo es un error <strong>sistemático</strong> que no se promedia hacia cero. Con un método sesgado, un millón de respuestas dan una estimación muy precisa de un número equivocado, y encima la precisión aparente genera una falsa confianza. Mil respuestas bien aleatorizadas estiman el valor correcto con un margen de error honesto. <em>Puede comprobarse en el laboratorio del <a href="#sec-lab-n" class="quarto-xref"><span>Sección 4.3.1</span></a> subiendo el sesgo y luego n.</em></p>
+<p><strong>5.</strong> El histograma con <span class="math inline">\(n = 150\)</span> es visiblemente <strong>más angosto</strong> que el de <span class="math inline">\(n = 40\)</span>, y sigue centrado en el mismo lugar. Disminuyó el <strong>error de muestreo</strong>; el error no de muestreo no se ve afectado por el tamaño (en esta simulación no hay sesgo, así que no hay error no de muestreo que reducir). <em>La regla precisa: la dispersión de las estimaciones se reduce en proporción a <span class="math inline">\(1/\sqrt{n}\)</span>, así que cuadruplicar la muestra reduce el error a la mitad.</em></p>
+<p><strong>6.</strong> Una buena propuesta es un <strong>muestreo por conglomerados o multietápico</strong>: elegir al azar, digamos, 15 de las 100 sucursales y dentro de cada una encuestar a clientes seleccionados al azar durante distintos días y horarios. Justificación: recorrer las 100 sucursales es caro, y los conglomerados hacen el trabajo de campo viable. Sesgos que evita: al aleatorizar <strong>sucursales</strong> se evita el sesgo de elegir solo las de zonas céntricas o de mayor ingreso; al variar <strong>días y horarios</strong> se evita sobrerrepresentar a quienes van los fines de semana o por la mañana. <em>Una respuesta que solo diga “encuestar a los clientes de la sucursal más cercana” describe un muestreo por conveniencia, que es precisamente lo que queremos evitar.</em></p>
+<p><strong>7.</strong> El <strong>estratificado</strong> da resultados perfectamente estables: al fijar la cuota por especie (50 %, 33 % y 17 %), el porcentaje en la muestra reproduce el de la población en <strong>todas</strong> las corridas. El de <strong>conglomerados</strong> salta muchísimo, porque cada parcela cae casi por completo dentro de una sola zona. Si el azar elige la parcela de la izquierda, la muestra queda compuesta casi solo de especie A y la C no aparece. <em>Este fenómeno se llama <strong>efecto de diseño</strong>: cuando los individuos de un mismo conglomerado se parecen entre sí, el conglomerado aporta menos información que el mismo número de individuos elegidos por separado, y la estimación pierde precisión. Por eso las encuestas por conglomerados requieren muestras más grandes para alcanzar la misma precisión que un aleatorio simple — el precio que se paga por el ahorro en trabajo de campo.</em></p>
+</div>
+</div>
+</div>
 
 
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+W10=
+</script>
 </section>
 
 </main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBubXVlc3RyYSA9IElucHV0cy5yYW5nZShbMTAsIDMwMF0sIHt2YWx1ZTogNDAsIHN0ZXA6IDEwLCBsYWJlbDogXCJ0YW1hw7FvIGRlIG11ZXN0cmEgblwifSlcbnZpZXdvZiBzZXNnbyA9IElucHV0cy5yYW5nZShbMCwgMC4yMF0sIHt2YWx1ZTogMCwgc3RlcDogMC4wMSwgbGFiZWw6IFwic2VzZ28gZGVsIG3DqXRvZG9cIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJwUmVhbCA9IDAuMjVcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMyIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InNpbXVsYWNpb25lcyA9IHtcbiAgY29uc3QgcmVwcyA9IDYwMDtcbiAgY29uc3QgcCA9IE1hdGgubWluKDAuOTksIHBSZWFsICsgc2VzZ28pO1xuICBjb25zdCBvdXQgPSBbXTtcbiAgZm9yIChsZXQgaSA9IDA7IGkgPCByZXBzOyBpKyspIHtcbiAgICBsZXQgZXhpdG9zID0gMDtcbiAgICBmb3IgKGxldCBqID0gMDsgaiA8IG5tdWVzdHJhOyBqKyspIGlmIChNYXRoLnJhbmRvbSgpIDwgcCkgZXhpdG9zKys7XG4gICAgb3V0LnB1c2goZXhpdG9zIC8gbm11ZXN0cmEpO1xuICB9XG4gIHJldHVybiBvdXQ7XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTQiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJQbG90LnBsb3Qoe1xuICBoZWlnaHQ6IDI0MCxcbiAgeDogeyBsYWJlbDogXCJwcm9wb3JjacOzbiBlc3RpbWFkYVwiLCBkb21haW46IFswLCAwLjZdIH0sXG4gIHk6IHsgbGFiZWw6IFwiZnJlY3VlbmNpYVwiIH0sXG4gIG1hcmtzOiBbXG4gICAgUGxvdC5yZWN0WShzaW11bGFjaW9uZXMsIFBsb3QuYmluWCh7eTogXCJjb3VudFwifSxcbiAgICAgIHt4OiBkID0+IGQsIHRocmVzaG9sZHM6IDQwLCBmaWxsOiBcIiMxRjRFNzlcIn0pKSxcbiAgICBQbG90LnJ1bGVYKFtwUmVhbF0sIHsgc3Ryb2tlOiBcIiNDMDM5MkJcIiwgc3Ryb2tlV2lkdGg6IDIgfSksXG4gICAgUGxvdC5ydWxlWShbMF0pXG4gIF1cbn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTUiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJtZGBWYWxvciB2ZXJkYWRlcm8gKGzDrW5lYSByb2phKSA9ICoqMC4yNSoqIMK3IFByb21lZGlvIGRlIGxhcyBlc3RpbWFjaW9uZXMgPSAqKiR7KHNpbXVsYWNpb25lcy5yZWR1Y2UoKGEsYik9PmErYiwwKS9zaW11bGFjaW9uZXMubGVuZ3RoKS50b0ZpeGVkKDMpfSoqYFxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC02IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIG1ldG9kbyA9IElucHV0cy5yYWRpbyhcbiAgW1wiYWxlYXRvcmlvIHNpbXBsZVwiLCBcImVzdHJhdGlmaWNhZG9cIiwgXCJjb25nbG9tZXJhZG9zXCIsIFwic2lzdGVtw6F0aWNvXCJdLFxuICB7dmFsdWU6IFwiYWxlYXRvcmlvIHNpbXBsZVwiLCBsYWJlbDogXCJtw6l0b2RvXCJ9KVxudmlld29mIG5TaW0gPSBJbnB1dHMucmFuZ2UoWzgsIDQ4XSwge3ZhbHVlOiAyNCwgc3RlcDogNCwgbGFiZWw6IFwidGFtYcOxbyBkZSBtdWVzdHJhXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC03IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiY2FtcG8gPSB7XG4gIGNvbnN0IENPTFMgPSAxMiwgUk9XUyA9IDgsIG91dCA9IFtdO1xuICBmb3IgKGxldCByID0gMDsgciA8IFJPV1M7IHIrKykgZm9yIChsZXQgYyA9IDA7IGMgPCBDT0xTOyBjKyspIHtcbiAgICBjb25zdCBlc3BlY2llID0gYyA8PSA1ID8gXCJBXCIgOiAoYyA8PSA5ID8gXCJCXCIgOiBcIkNcIik7ICAgLy8gY2FkYSBlc3BlY2llIGVuIHN1IHpvbmFcbiAgICBvdXQucHVzaCh7IGk6IHIgKiBDT0xTICsgYywgciwgYywgZXNwZWNpZSxcbiAgICAgICAgICAgICAgIHBhcmNlbGE6IE1hdGguZmxvb3IociAvIDQpICogMyArIE1hdGguZmxvb3IoYyAvIDQpIH0pO1xuICB9XG4gIHJldHVybiBvdXQ7XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTgiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJyZXZ1ZWx0byA9IChhcnIpID0+IHtcbiAgY29uc3QgYSA9IGFyci5zbGljZSgpO1xuICBmb3IgKGxldCBpID0gYS5sZW5ndGggLSAxOyBpID4gMDsgaS0tKSB7XG4gICAgY29uc3QgaiA9IE1hdGguZmxvb3IoTWF0aC5yYW5kb20oKSAqIChpICsgMSkpO1xuICAgIFthW2ldLCBhW2pdXSA9IFthW2pdLCBhW2ldXTtcbiAgfVxuICByZXR1cm4gYTtcbn1cbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtOSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InNlbGVjY2lvbiA9IHtcbiAgY29uc3QgTiA9IGNhbXBvLmxlbmd0aCwgcyA9IG5ldyBTZXQoKTtcbiAgaWYgKG1ldG9kbyA9PT0gXCJhbGVhdG9yaW8gc2ltcGxlXCIpIHtcbiAgICByZXZ1ZWx0byhjYW1wbykuc2xpY2UoMCwgblNpbSkuZm9yRWFjaChkID0+IHMuYWRkKGQuaSkpO1xuICB9IGVsc2UgaWYgKG1ldG9kbyA9PT0gXCJlc3RyYXRpZmljYWRvXCIpIHtcbiAgICBmb3IgKGNvbnN0IGUgb2YgW1wiQVwiLCBcIkJcIiwgXCJDXCJdKSB7XG4gICAgICBjb25zdCBnID0gY2FtcG8uZmlsdGVyKGQgPT4gZC5lc3BlY2llID09PSBlKTtcbiAgICAgIGNvbnN0IGN1b3RhID0gTWF0aC5yb3VuZChuU2ltICogZy5sZW5ndGggLyBOKTtcbiAgICAgIHJldnVlbHRvKGcpLnNsaWNlKDAsIGN1b3RhKS5mb3JFYWNoKGQgPT4gcy5hZGQoZC5pKSk7XG4gICAgfVxuICB9IGVsc2UgaWYgKG1ldG9kbyA9PT0gXCJjb25nbG9tZXJhZG9zXCIpIHtcbiAgICBjb25zdCBrID0gTWF0aC5tYXgoMSwgTWF0aC5yb3VuZChuU2ltIC8gMTYpKTtcbiAgICBjb25zdCBlbGVnaWRhcyA9IG5ldyBTZXQocmV2dWVsdG8oZDMucmFuZ2UoNikpLnNsaWNlKDAsIGspKTtcbiAgICBjYW1wby5mb3JFYWNoKGQgPT4geyBpZiAoZWxlZ2lkYXMuaGFzKGQucGFyY2VsYSkpIHMuYWRkKGQuaSk7IH0pO1xuICB9IGVsc2Uge1xuICAgIGNvbnN0IHBhc28gPSBNYXRoLm1heCgxLCBNYXRoLmZsb29yKE4gLyBuU2ltKSk7XG4gICAgY29uc3QgaW5pY2lvID0gTWF0aC5mbG9vcihNYXRoLnJhbmRvbSgpICogcGFzbyk7XG4gICAgZm9yIChsZXQgaSA9IGluaWNpbzsgaSA8IE47IGkgKz0gcGFzbykgcy5hZGQoaSk7XG4gIH1cbiAgcmV0dXJuIHM7XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTEwIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoicGFyY2VsYXMgPSBkMy5yYW5nZSg2KS5tYXAocCA9PiAoe1xuICB4MDogKHAgJSAzKSAqIDQgLSAwLjUsIHgxOiAocCAlIDMpICogNCArIDMuNSxcbiAgeTA6IE1hdGguZmxvb3IocCAvIDMpICogNCAtIDAuNSwgeTE6IE1hdGguZmxvb3IocCAvIDMpICogNCArIDMuNVxufSkpXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTExIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiem9uYXMgPSBbXG4gIHsgZXNwZWNpZTogXCJBXCIsIHgwOiAtMC41LCB4MTogNS41IH0sXG4gIHsgZXNwZWNpZTogXCJCXCIsIHgwOiA1LjUsICB4MTogOS41IH0sXG4gIHsgZXNwZWNpZTogXCJDXCIsIHgwOiA5LjUsICB4MTogMTEuNSB9XG5dXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTEyIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiUGxvdC5wbG90KHtcbiAgaGVpZ2h0OiAyNTAsXG4gIG1hcmdpbkxlZnQ6IDIwLFxuICB4OiB7IGF4aXM6IG51bGwgfSwgeTogeyBheGlzOiBudWxsLCByZXZlcnNlOiB0cnVlIH0sXG4gIGNvbG9yOiB7IGxlZ2VuZDogdHJ1ZSwgZG9tYWluOiBbXCJBXCIsIFwiQlwiLCBcIkNcIl0sXG4gICAgICAgICAgIHJhbmdlOiBbXCIjN0Y3N0REXCIsIFwiIzFEOUU3NVwiLCBcIiNCQTc1MTdcIl0sIGxhYmVsOiBcImVzcGVjaWVcIiB9LFxuICBtYXJrczogW1xuICAgIFBsb3QucmVjdCh6b25hcywgeyB4MTogXCJ4MFwiLCB4MjogXCJ4MVwiLCB5MTogLTAuNiwgeTI6IDcuNixcbiAgICAgIGZpbGw6IFwiZXNwZWNpZVwiLCBmaWxsT3BhY2l0eTogMC4wNyB9KSxcbiAgICBtZXRvZG8gPT09IFwiY29uZ2xvbWVyYWRvc1wiXG4gICAgICA/IFBsb3QucmVjdChwYXJjZWxhcywgeyB4MTogXCJ4MFwiLCB4MjogXCJ4MVwiLCB5MTogXCJ5MFwiLCB5MjogXCJ5MVwiLFxuICAgICAgICAgIGZpbGw6IFwibm9uZVwiLCBzdHJva2U6IFwiI0I0QjJBOVwiLCBzdHJva2VEYXNoYXJyYXk6IFwiM1wiIH0pXG4gICAgICA6IG51bGwsXG4gICAgUGxvdC5kb3QoY2FtcG8uZmlsdGVyKGQgPT4gIXNlbGVjY2lvbi5oYXMoZC5pKSksXG4gICAgICB7IHg6IFwiY1wiLCB5OiBcInJcIiwgZmlsbDogXCJlc3BlY2llXCIsIHI6IDQsIGZpbGxPcGFjaXR5OiAwLjI1IH0pLFxuICAgIFBsb3QuZG90KGNhbXBvLmZpbHRlcihkID0+IHNlbGVjY2lvbi5oYXMoZC5pKSksXG4gICAgICB7IHg6IFwiY1wiLCB5OiBcInJcIiwgZmlsbDogXCJlc3BlY2llXCIsIHI6IDcsIHN0cm9rZTogXCJlc3BlY2llXCIsIHN0cm9rZVdpZHRoOiAyIH0pXG4gIF0uZmlsdGVyKG0gPT4gbSlcbn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTEzIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiY29tcGFyYWNpb24gPSB7XG4gIGNvbnN0IG11ZXN0cmEgPSBjYW1wby5maWx0ZXIoZCA9PiBzZWxlY2Npb24uaGFzKGQuaSkpO1xuICByZXR1cm4gW1wiQVwiLCBcIkJcIiwgXCJDXCJdLm1hcChlID0+ICh7XG4gICAgZXNwZWNpZTogZSxcbiAgICBcImVuIGxhIHBvYmxhY2nDs25cIjogKGNhbXBvLmZpbHRlcihkID0+IGQuZXNwZWNpZSA9PT0gZSkubGVuZ3RoIC8gY2FtcG8ubGVuZ3RoICogMTAwKS50b0ZpeGVkKDApICsgXCIgJVwiLFxuICAgIFwiZW4gbGEgbXVlc3RyYVwiOiBtdWVzdHJhLmxlbmd0aFxuICAgICAgPyAobXVlc3RyYS5maWx0ZXIoZCA9PiBkLmVzcGVjaWUgPT09IGUpLmxlbmd0aCAvIG11ZXN0cmEubGVuZ3RoICogMTAwKS50b0ZpeGVkKDApICsgXCIgJVwiXG4gICAgICA6IFwi4oCUXCJcbiAgfSkpO1xufVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0xNCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IklucHV0cy50YWJsZShjb21wYXJhY2lvbiwge3Jvd3M6IDMsIGhlaWdodDogMTEwfSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMTUiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJtZGBTZWxlY2Npb25hZG9zOiAqKiR7c2VsZWNjaW9uLnNpemV9KiogZGUgJHtjYW1wby5sZW5ndGh9IGluZGl2aWR1b3MuYFxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdubXVlc3RyYScpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdzZXNnbycpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdtZXRvZG8nKSJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnblNpbScpIn1dfQ==
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../..";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>9&nbsp; Inferencia para datos enumerativos – Estadística para Ciencias de la Computación</title>
+<title>10&nbsp; Inferencia para datos enumerativos – Estadística para Ciencias de la Computación</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -22,6 +22,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -44,7 +79,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-e671ceb1ec85f3bd6fb682ad87dd4085.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-22a2d3c8fd5a3a2e3c4a69971a64c298.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -72,11 +109,42 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Buscar"
   }
 }</script>
+<script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 <link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -89,7 +157,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06-muestrales.html">III. Inferencia estadística</a></li><li class="breadcrumb-item"><a href="./09-enumerativos.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Inferencia para datos enumerativos</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./laboratorio-estandarizacion.html">III. Inferencia estadística</a></li><li class="breadcrumb-item"><a href="./09-enumerativos.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Inferencia para datos enumerativos</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -190,38 +258,44 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./laboratorio-estandarizacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Laboratorio interactivo: la estandarización</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./06-muestrales.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Distribuciones muestrales y TCL</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Distribuciones muestrales y TCL</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./07-estimacion-pruebas.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Estimación y prueba de hipótesis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estimación y prueba de hipótesis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./08-dos-muestras.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Inferencia para dos parámetros</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Inferencia para dos parámetros</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./09-enumerativos.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Inferencia para datos enumerativos</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Inferencia para datos enumerativos</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10-anova.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Análisis de varianza (ANOVA)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Análisis de varianza (ANOVA)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./11-regresion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Inferencia en regresión</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Inferencia en regresión</span></span></a>
   </div>
 </li>
       </ul>
@@ -232,6 +306,41 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Referencias</span></a>
   </div>
 </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Apéndices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mapa-decision.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mapa de decisión</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./formulario.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Formulario</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./apendice-python.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">R y Python, lado a lado</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./laboratorio-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Practicar R sin instalar nada</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -242,20 +351,29 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">En este capítulo</h2>
    
   <ul>
-  <li><a href="#intervalo-y-prueba-para-una-proporción" id="toc-intervalo-y-prueba-para-una-proporción" class="nav-link active" data-scroll-target="#intervalo-y-prueba-para-una-proporción"><span class="header-section-number">9.1</span> Intervalo y prueba para una proporción</a></li>
-  <li><a href="#diferencia-de-dos-proporciones" id="toc-diferencia-de-dos-proporciones" class="nav-link" data-scroll-target="#diferencia-de-dos-proporciones"><span class="header-section-number">9.2</span> Diferencia de dos proporciones</a></li>
-  <li><a href="#tablas-de-contingencia" id="toc-tablas-de-contingencia" class="nav-link" data-scroll-target="#tablas-de-contingencia"><span class="header-section-number">9.3</span> Tablas de contingencia</a></li>
-  <li><a href="#la-prueba-ji-cuadrada-de-independencia" id="toc-la-prueba-ji-cuadrada-de-independencia" class="nav-link" data-scroll-target="#la-prueba-ji-cuadrada-de-independencia"><span class="header-section-number">9.4</span> La prueba ji-cuadrada de independencia</a></li>
-  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">9.5</span> Ejercicios</a></li>
+  <li><a href="#inferencia-para-una-proporción" id="toc-inferencia-para-una-proporción" class="nav-link active" data-scroll-target="#inferencia-para-una-proporción"><span class="header-section-number">10.1</span> Inferencia para una proporción</a></li>
+  <li><a href="#comparación-de-dos-proporciones" id="toc-comparación-de-dos-proporciones" class="nav-link" data-scroll-target="#comparación-de-dos-proporciones"><span class="header-section-number">10.2</span> Comparación de dos proporciones</a></li>
+  <li><a href="#tablas-de-contingencia-y-la-prueba-ji-cuadrada" id="toc-tablas-de-contingencia-y-la-prueba-ji-cuadrada" class="nav-link" data-scroll-target="#tablas-de-contingencia-y-la-prueba-ji-cuadrada"><span class="header-section-number">10.3</span> Tablas de contingencia y la prueba ji-cuadrada</a>
+  <ul class="collapse">
+  <li><a href="#sec-lab-chi" id="toc-sec-lab-chi" class="nav-link" data-scroll-target="#sec-lab-chi"><span class="header-section-number">10.3.1</span> Laboratorio: observado contra esperado</a></li>
+  </ul></li>
+  <li><a href="#sec-categoricos-mano" id="toc-sec-categoricos-mano" class="nav-link" data-scroll-target="#sec-categoricos-mano"><span class="header-section-number">10.4</span> El mismo cálculo a mano</a>
+  <ul class="collapse">
+  <li><a href="#una-proporción" id="toc-una-proporción" class="nav-link" data-scroll-target="#una-proporción"><span class="header-section-number">10.4.1</span> Una proporción</a></li>
+  <li><a href="#una-tabla-de-contingencia" id="toc-una-tabla-de-contingencia" class="nav-link" data-scroll-target="#una-tabla-de-contingencia"><span class="header-section-number">10.4.2</span> Una tabla de contingencia</a></li>
+  </ul></li>
+  <li><a href="#una-asociación-que-no-es-significativa" id="toc-una-asociación-que-no-es-significativa" class="nav-link" data-scroll-target="#una-asociación-que-no-es-significativa"><span class="header-section-number">10.5</span> Una asociación que NO es significativa</a></li>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen"><span class="header-section-number">10.6</span> Resumen</a></li>
+  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">10.7</span> Ejercicios</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06-muestrales.html">III. Inferencia estadística</a></li><li class="breadcrumb-item"><a href="./09-enumerativos.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Inferencia para datos enumerativos</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./laboratorio-estandarizacion.html">III. Inferencia estadística</a></li><li class="breadcrumb-item"><a href="./09-enumerativos.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Inferencia para datos enumerativos</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-cap9" class="quarto-section-identifier"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Inferencia para datos enumerativos</span></span></h1>
+<h1 class="title"><span id="sec-cap9" class="quarto-section-identifier"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Inferencia para datos enumerativos</span></span></h1>
 </div>
 
 
@@ -272,56 +390,587 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="callout callout-style-default callout-important callout-titled" title="Plantilla en construcción">
+<div class="callout callout-style-default callout-warning callout-titled" title="Capítulo en revisión">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Importante</span>Plantilla en construcción
+<span class="screen-reader-only">Advertencia</span>Capítulo en revisión
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Este capítulo corresponde a <strong>Semana 11</strong> del calendario y usa los datos de <strong>rickettsiosis</strong>. La estructura de secciones ya está fijada; el contenido se desarrolla con el mismo formato del <a href="01-exploracion.html" class="quarto-xref"><span>Capítulo 1</span></a>: pregunta real, técnica, supuestos, cómputo en R e interpretación.</p>
+<p>El contenido de este capítulo está completo, pero todavía no pasa por la revisión final de redacción. Se avisará en clase cuando quede listo para estudiar de aquí. Mientras tanto se puede consultar, con esa advertencia.</p>
 </div>
 </div>
-<section id="intervalo-y-prueba-para-una-proporción" class="level2" data-number="9.1">
-<h2 data-number="9.1" class="anchored" data-anchor-id="intervalo-y-prueba-para-una-proporción"><span class="header-section-number">9.1</span> Intervalo y prueba para una proporción</h2>
-<p><em>(En construcción.)</em></p>
-</section>
-<section id="diferencia-de-dos-proporciones" class="level2" data-number="9.2">
-<h2 data-number="9.2" class="anchored" data-anchor-id="diferencia-de-dos-proporciones"><span class="header-section-number">9.2</span> Diferencia de dos proporciones</h2>
-<p><em>(En construcción.)</em></p>
-</section>
-<section id="tablas-de-contingencia" class="level2" data-number="9.3">
-<h2 data-number="9.3" class="anchored" data-anchor-id="tablas-de-contingencia"><span class="header-section-number">9.3</span> Tablas de contingencia</h2>
-<p><em>(En construcción.)</em></p>
-</section>
-<section id="la-prueba-ji-cuadrada-de-independencia" class="level2" data-number="9.4">
-<h2 data-number="9.4" class="anchored" data-anchor-id="la-prueba-ji-cuadrada-de-independencia"><span class="header-section-number">9.4</span> La prueba ji-cuadrada de independencia</h2>
-<p><em>(En construcción.)</em></p>
-<div class="callout callout-style-default callout-tip callout-titled" title="¿Qué técnica uso?">
+<div class="callout callout-style-default callout-tip callout-titled" title="Objetivos del capítulo">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>¿Qué técnica uso?
+<span class="screen-reader-only">Tip</span>Objetivos del capítulo
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Datos de conteo o categóricos: ¿una proporción? → prueba para p; ¿asociación entre dos categóricas? → ji-cuadrada.</p>
+<ul>
+<li>Estimar y probar hipótesis sobre <strong>una proporción</strong>.</li>
+<li>Comparar <strong>dos proporciones</strong> con un intervalo y una prueba.</li>
+<li>Construir e interpretar <strong>tablas de contingencia</strong>.</li>
+<li>Aplicar la <strong>prueba ji-cuadrada</strong> de independencia y verificar sus condiciones.</li>
+</ul>
+</div>
+</div>
+<p>Hasta aquí las variables respuesta fueron cuantitativas. Pero muchísimas preguntas reales son de <strong>conteo</strong>: ¿qué porcentaje de pacientes resultó positivo?, ¿la proporción de defectuosos bajó?, ¿el resultado de laboratorio está asociado al contacto con perros? Este capítulo trata de datos categóricos.</p>
+<p>Usaremos el registro de <strong>rickettsiosis</strong>, enfermedad transmitida por garrapatas y endémica en Sonora: 420 personas evaluadas, con su zona de residencia, contacto con perros, presencia de garrapatas y resultado de laboratorio.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(rick)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Rows: 420</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Columns: 5</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ id             &lt;chr&gt; "P001", "P002", "P003", "P004", "P005", "P006", "P007",…</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ zona           &lt;chr&gt; "urbana_marginada", "urbana_marginada", "urbana", "urba…</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ contacto_perro &lt;chr&gt; "si", "si", "no", "no", "no", "si", "si", "si", "si", "…</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ garrapatas     &lt;chr&gt; "si", "no", "no", "no", "no", "no", "no", "si", "si", "…</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ resultado      &lt;chr&gt; "negativo", "positivo", "negativo", "negativo", "negati…</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(rick<span class="sc">$</span>resultado)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; negativo positivo </span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      315      105</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="inferencia-para-una-proporción" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="inferencia-para-una-proporción"><span class="header-section-number">10.1</span> Inferencia para una proporción</h2>
+<p>La <strong>proporción muestral</strong> <span class="math inline">\(\hat{p}\)</span> estima la proporción poblacional <span class="math inline">\(p\)</span>. Por el TCL (<a href="06-muestrales.html" class="quarto-xref"><span>Capítulo 7</span></a>), su distribución muestral es aproximadamente normal con error estándar <span class="math inline">\(\sqrt{p(1-p)/n}\)</span>, siempre que haya suficientes casos en ambas categorías.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Condiciones para la aproximación normal">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Condiciones para la aproximación normal
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Se requiere que <strong>al menos 10 casos</strong> caigan en cada categoría: <span class="math inline">\(n\hat{p} \geq 10\)</span> y <span class="math inline">\(n(1-\hat{p}) \geq 10\)</span>. Aquí tenemos 105 positivos y 315 negativos, así que estamos holgados. Cuando la proporción es muy cercana a 0 o a 1 —eventos raros—, esta aproximación falla y hay que usar métodos exactos (<code>binom.test</code>).</p>
+</div>
+</div>
+<p>En R, <code>prop.test()</code> da intervalo y prueba a la vez:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>positivos <span class="ot">&lt;-</span> <span class="fu">sum</span>(rick<span class="sc">$</span>resultado <span class="sc">==</span> <span class="st">"positivo"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(rick)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="at">positivos =</span> positivos, <span class="at">n =</span> n, <span class="at">proporcion =</span> positivos <span class="sc">/</span> n)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  positivos          n proporcion </span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     105.00     420.00       0.25</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.test</span>(positivos, n)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1-sample proportions test with continuity correction</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  positivos out of n, null probability 0.5</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; X-squared = 104, df = 1, p-value &lt; 2.2e-16</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; alternative hypothesis: true p is not equal to 0.5</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 95 percent confidence interval:</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  0.2098652 0.2947960</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sample estimates:</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    p </span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0.25</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La proporción estimada de positivos es del <strong>25 %</strong>, con un intervalo de confianza del 95 % que va aproximadamente de <strong>21 % a 29 %</strong>. Redacción para la autoridad sanitaria: <em>“En la población evaluada, uno de cada cuatro resultados fue positivo; con 95 % de confianza, la proporción real está entre el 21 % y el 29 %.”</em></p>
+<p>Ese ancho de ±4 puntos es el <strong>margen de error</strong> del que hablamos en el <a href="04-muestreo.html" class="quarto-xref"><span>Capítulo 4</span></a>. Si se quisiera reducir a la mitad habría que cuadruplicar la muestra.</p>
 </div>
 </div>
 </section>
-<section id="ejercicios" class="level2" data-number="9.5">
-<h2 data-number="9.5" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">9.5</span> Ejercicios</h2>
-<p><em>Por desarrollar (banco de la Dra. Figueroa reorganizado + reactivos nuevos).</em></p>
+<section id="comparación-de-dos-proporciones" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="comparación-de-dos-proporciones"><span class="header-section-number">10.2</span> Comparación de dos proporciones</h2>
+<p>La pregunta interesante casi nunca es una proporción aislada, sino si <strong>difiere entre grupos</strong>. ¿Es distinta la positividad entre quienes tienen contacto con perros y quienes no?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>tabla_perro <span class="ot">&lt;-</span> <span class="fu">table</span>(rick<span class="sc">$</span>contacto_perro, rick<span class="sc">$</span>resultado)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>tabla_perro</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     </span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      negativo positivo</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   no      131       13</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   si      184       92</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.test</span>(tabla_perro[, <span class="st">"positivo"</span>], <span class="fu">rowSums</span>(tabla_perro))</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2-sample test for equality of proportions with continuity correction</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  tabla_perro[, "positivo"] out of rowSums(tabla_perro)</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; X-squared = 28.533, df = 1, p-value = 9.213e-08</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; alternative hypothesis: two.sided</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 95 percent confidence interval:</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  -0.3210296 -0.1650815</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sample estimates:</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     prop 1     prop 2 </span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0.09027778 0.33333333</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La positividad es del <strong>33.3 %</strong> entre quienes tienen contacto con perros y del <strong>9.0 %</strong> entre quienes no: una diferencia de <strong>24 puntos porcentuales</strong>, con un intervalo de confianza aproximado de <strong>17 a 32 puntos</strong> y un valor p minúsculo.</p>
+<p>Nótese que el intervalo está lejos del cero, y que reportar la <strong>diferencia con su intervalo</strong> dice mucho más que el solo “es significativo”. Una advertencia importante: estos son datos <strong>observacionales</strong> (<a href="05-experimentos.html" class="quarto-xref"><span>Capítulo 5</span></a>), así que hablamos de <strong>asociación</strong>, no de causa. El contacto con perros probablemente sea un indicador de exposición a garrapatas, que son el vector real de la enfermedad.</p>
+</div>
+</div>
+</section>
+<section id="tablas-de-contingencia-y-la-prueba-ji-cuadrada" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="tablas-de-contingencia-y-la-prueba-ji-cuadrada"><span class="header-section-number">10.3</span> Tablas de contingencia y la prueba ji-cuadrada</h2>
+<p>Cuando ambas variables son categóricas (y sobre todo si alguna tiene más de dos niveles), la herramienta general es la <strong>tabla de contingencia</strong> y la <strong>prueba ji-cuadrada de independencia</strong>.</p>
+<p>La lógica es la de siempre. Bajo <span class="math inline">\(H_0\)</span> las dos variables son <strong>independientes</strong>; a partir de ese supuesto se calculan las <strong>frecuencias esperadas</strong>, y el estadístico mide cuánto se apartan las observadas de ellas:</p>
+<p><span class="math display">\[\chi^2 = \sum \frac{(\text{observada} - \text{esperada})^2}{\text{esperada}}\]</span></p>
+<p>Si las observaciones se parecen a lo esperado bajo independencia, <span class="math inline">\(\chi^2\)</span> es pequeño; si se apartan mucho, crece.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>prueba <span class="ot">&lt;-</span> <span class="fu">chisq.test</span>(<span class="fu">table</span>(rick<span class="sc">$</span>contacto_perro, rick<span class="sc">$</span>resultado))</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>prueba</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Pearson's Chi-squared test with Yates' continuity correction</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  table(rick$contacto_perro, rick$resultado)</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; X-squared = 28.533, df = 1, p-value = 9.213e-08</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>prueba<span class="sc">$</span>expected   <span class="co"># lo que esperaríamos si NO hubiera asociación</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     </span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      negativo positivo</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   no      108       36</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   si      207       69</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Se esperarían 36 positivos entre quienes no tienen contacto con perros, pero solo se observaron 13; y se esperaban 69 entre quienes sí, pero se observaron 92. Esas desviaciones producen <span class="math inline">\(\chi^2 \approx 29.8\)</span> con 1 grado de libertad y un valor p del orden de <span class="math inline">\(10^{-8}\)</span>: se rechaza la independencia. <strong>Hay asociación</strong> entre el contacto con perros y el resultado.</p>
+<p>Los <strong>grados de libertad</strong> de una tabla son <span class="math inline">\((\text{renglones}-1)\times(\text{columnas}-1)\)</span>: aquí <span class="math inline">\((2-1)(2-1) = 1\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Condición de la prueba ji-cuadrada">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Condición de la prueba ji-cuadrada
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La aproximación exige que <strong>todas las frecuencias esperadas sean al menos 5</strong> (algunos textos permiten que unas pocas bajen de 5 si ninguna es menor que 1). Revísalo siempre con <code>prueba$expected</code>. Si la condición falla —tablas con celdas muy chicas—, se usa la <strong>prueba exacta de Fisher</strong> (<code>fisher.test</code>).</p>
+</div>
+</div>
+<section id="sec-lab-chi" class="level3" data-number="10.3.1">
+<h3 data-number="10.3.1" class="anchored" data-anchor-id="sec-lab-chi"><span class="header-section-number">10.3.1</span> Laboratorio: observado contra esperado</h3>
+<p>Al mover las cuatro celdas de la tabla se observa cómo cambian las frecuencias <strong>esperadas bajo independencia</strong>, cada contribución al estadístico y el valor p.&nbsp;Conviene intentar primero lograr un <span class="math inline">\(\chi^2\)</span> casi nulo (proporciones parecidas entre renglones) y luego una asociación fuerte.</p>
+<div class="cell panel-input card bg-light p-2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="113" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 112;"><span id="cb6-113"><a href="#cb6-113" aria-hidden="true" tabindex="-1"></a>viewof a <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">0</span><span class="op">,</span> <span class="dv">150</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">92</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"expuestos y positivos"</span>})</span>
+<span id="cb6-114"><a href="#cb6-114" aria-hidden="true" tabindex="-1"></a>viewof b <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">0</span><span class="op">,</span> <span class="dv">300</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">184</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"expuestos y negativos"</span>})</span>
+<span id="cb6-115"><a href="#cb6-115" aria-hidden="true" tabindex="-1"></a>viewof c <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">0</span><span class="op">,</span> <span class="dv">150</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">13</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"no expuestos y positivos"</span>})</span>
+<span id="cb6-116"><a href="#cb6-116" aria-hidden="true" tabindex="-1"></a>viewof d <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">0</span><span class="op">,</span> <span class="dv">300</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">131</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"no expuestos y negativos"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="120" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 119;"><span id="cb7-120"><a href="#cb7-120" aria-hidden="true" tabindex="-1"></a>chi <span class="op">=</span> {</span>
+<span id="cb7-121"><a href="#cb7-121" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> obs <span class="op">=</span> [[a<span class="op">,</span> b]<span class="op">,</span> [c<span class="op">,</span> d]]<span class="op">;</span></span>
+<span id="cb7-122"><a href="#cb7-122" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> f <span class="op">=</span> [a <span class="op">+</span> b<span class="op">,</span> c <span class="op">+</span> d]<span class="op">,</span> col <span class="op">=</span> [a <span class="op">+</span> c<span class="op">,</span> b <span class="op">+</span> d]<span class="op">,</span> N <span class="op">=</span> a <span class="op">+</span> b <span class="op">+</span> c <span class="op">+</span> d<span class="op">;</span></span>
+<span id="cb7-123"><a href="#cb7-123" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (N <span class="op">===</span> <span class="dv">0</span> <span class="op">||</span> f[<span class="dv">0</span>] <span class="op">===</span> <span class="dv">0</span> <span class="op">||</span> f[<span class="dv">1</span>] <span class="op">===</span> <span class="dv">0</span> <span class="op">||</span> col[<span class="dv">0</span>] <span class="op">===</span> <span class="dv">0</span> <span class="op">||</span> col[<span class="dv">1</span>] <span class="op">===</span> <span class="dv">0</span>)</span>
+<span id="cb7-124"><a href="#cb7-124" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> { <span class="dt">X2</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">p</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">celdas</span><span class="op">:</span> []<span class="op">,</span> <span class="dt">N</span><span class="op">:</span> <span class="dv">0</span> }<span class="op">;</span></span>
+<span id="cb7-125"><a href="#cb7-125" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> celdas <span class="op">=</span> []<span class="op">;</span></span>
+<span id="cb7-126"><a href="#cb7-126" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> X2 <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb7-127"><a href="#cb7-127" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> etiquetas <span class="op">=</span> [[<span class="st">"expuestos"</span><span class="op">,</span> <span class="st">"positivos"</span>]<span class="op">,</span> [<span class="st">"expuestos"</span><span class="op">,</span> <span class="st">"negativos"</span>]<span class="op">,</span></span>
+<span id="cb7-128"><a href="#cb7-128" aria-hidden="true" tabindex="-1"></a>                     [<span class="st">"no expuestos"</span><span class="op">,</span> <span class="st">"positivos"</span>]<span class="op">,</span> [<span class="st">"no expuestos"</span><span class="op">,</span> <span class="st">"negativos"</span>]]<span class="op">;</span></span>
+<span id="cb7-129"><a href="#cb7-129" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> k <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb7-130"><a href="#cb7-130" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">let</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">2</span><span class="op">;</span> i<span class="op">++</span>) <span class="cf">for</span> (<span class="kw">let</span> j <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> j <span class="op">&lt;</span> <span class="dv">2</span><span class="op">;</span> j<span class="op">++</span>) {</span>
+<span id="cb7-131"><a href="#cb7-131" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> <span class="cn">E</span> <span class="op">=</span> f[i] <span class="op">*</span> col[j] <span class="op">/</span> N<span class="op">;</span></span>
+<span id="cb7-132"><a href="#cb7-132" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> contrib <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">pow</span>(obs[i][j] <span class="op">-</span> <span class="cn">E</span><span class="op">,</span> <span class="dv">2</span>) <span class="op">/</span> <span class="cn">E</span><span class="op">;</span></span>
+<span id="cb7-133"><a href="#cb7-133" aria-hidden="true" tabindex="-1"></a>    X2 <span class="op">+=</span> contrib<span class="op">;</span></span>
+<span id="cb7-134"><a href="#cb7-134" aria-hidden="true" tabindex="-1"></a>    celdas<span class="op">.</span><span class="fu">push</span>({ <span class="dt">fila</span><span class="op">:</span> etiquetas[k][<span class="dv">0</span>]<span class="op">,</span> <span class="dt">columna</span><span class="op">:</span> etiquetas[k][<span class="dv">1</span>]<span class="op">,</span></span>
+<span id="cb7-135"><a href="#cb7-135" aria-hidden="true" tabindex="-1"></a>                  <span class="dt">observada</span><span class="op">:</span> obs[i][j]<span class="op">,</span> <span class="dt">esperada</span><span class="op">:</span> <span class="op">+</span><span class="cn">E</span><span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">1</span>)<span class="op">,</span></span>
+<span id="cb7-136"><a href="#cb7-136" aria-hidden="true" tabindex="-1"></a>                  <span class="dt">contribucion</span><span class="op">:</span> <span class="op">+</span>contrib<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">2</span>) })<span class="op">;</span></span>
+<span id="cb7-137"><a href="#cb7-137" aria-hidden="true" tabindex="-1"></a>    k<span class="op">++;</span></span>
+<span id="cb7-138"><a href="#cb7-138" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb7-139"><a href="#cb7-139" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> { X2<span class="op">,</span> <span class="dt">p</span><span class="op">:</span> <span class="fu">pChi</span>(X2)<span class="op">,</span> celdas<span class="op">,</span> N }<span class="op">;</span></span>
+<span id="cb7-140"><a href="#cb7-140" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="145" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 144;"><span id="cb8-145"><a href="#cb8-145" aria-hidden="true" tabindex="-1"></a>pChi <span class="op">=</span> (x) <span class="kw">=&gt;</span> {</span>
+<span id="cb8-146"><a href="#cb8-146" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (x <span class="op">&lt;=</span> <span class="dv">0</span>) <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb8-147"><a href="#cb8-147" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">2</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> <span class="fu">pnormAux</span>(<span class="bu">Math</span><span class="op">.</span><span class="fu">sqrt</span>(x)))<span class="op">;</span>   <span class="co">// gl = 1: P(X2 &gt; x) = 2(1 - Phi(sqrt(x)))</span></span>
+<span id="cb8-148"><a href="#cb8-148" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="153" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 152;"><span id="cb9-153"><a href="#cb9-153" aria-hidden="true" tabindex="-1"></a>pnormAux <span class="op">=</span> (z) <span class="kw">=&gt;</span> {</span>
+<span id="cb9-154"><a href="#cb9-154" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> s <span class="op">=</span> z <span class="op">&lt;</span> <span class="dv">0</span> <span class="op">?</span> <span class="op">-</span><span class="dv">1</span> <span class="op">:</span> <span class="dv">1</span><span class="op">;</span> z <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(z)<span class="op">;</span></span>
+<span id="cb9-155"><a href="#cb9-155" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> t <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> <span class="fl">0.3275911</span> <span class="op">*</span> z <span class="op">/</span> <span class="bu">Math</span><span class="op">.</span><span class="cn">SQRT2</span>)<span class="op">;</span></span>
+<span id="cb9-156"><a href="#cb9-156" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> y <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> ((((<span class="fl">1.061405429</span> <span class="op">*</span> t <span class="op">-</span> <span class="fl">1.453152027</span>) <span class="op">*</span> t <span class="op">+</span> <span class="fl">1.421413741</span>) <span class="op">*</span> t</span>
+<span id="cb9-157"><a href="#cb9-157" aria-hidden="true" tabindex="-1"></a>            <span class="op">-</span> <span class="fl">0.284496736</span>) <span class="op">*</span> t <span class="op">+</span> <span class="fl">0.254829592</span>) <span class="op">*</span> t <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">exp</span>(<span class="op">-</span>z <span class="op">*</span> z <span class="op">/</span> <span class="dv">2</span>)<span class="op">;</span></span>
+<span id="cb9-158"><a href="#cb9-158" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="fl">0.5</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">+</span> s <span class="op">*</span> y)<span class="op">;</span></span>
+<span id="cb9-159"><a href="#cb9-159" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="164" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 163;"><span id="cb10-164"><a href="#cb10-164" aria-hidden="true" tabindex="-1"></a>Inputs<span class="op">.</span><span class="fu">table</span>(chi<span class="op">.</span><span class="at">celdas</span><span class="op">,</span> { <span class="dt">rows</span><span class="op">:</span> <span class="dv">4</span><span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">140</span> })</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-5" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb11" data-startfrom="169" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 168;"><span id="cb11-169"><a href="#cb11-169" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb11-170"><a href="#cb11-170" aria-hidden="true" tabindex="-1"></a>  <span class="dt">height</span><span class="op">:</span> <span class="dv">150</span><span class="op">,</span></span>
+<span id="cb11-171"><a href="#cb11-171" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">120</span><span class="op">,</span></span>
+<span id="cb11-172"><a href="#cb11-172" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> { <span class="dt">label</span><span class="op">:</span> <span class="st">"frecuencia"</span> }<span class="op">,</span></span>
+<span id="cb11-173"><a href="#cb11-173" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> { <span class="dt">label</span><span class="op">:</span> <span class="kw">null</span> }<span class="op">,</span></span>
+<span id="cb11-174"><a href="#cb11-174" aria-hidden="true" tabindex="-1"></a>  <span class="dt">color</span><span class="op">:</span> { <span class="dt">legend</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="st">"observada"</span><span class="op">,</span> <span class="st">"esperada"</span>]<span class="op">,</span></span>
+<span id="cb11-175"><a href="#cb11-175" aria-hidden="true" tabindex="-1"></a>           <span class="dt">range</span><span class="op">:</span> [<span class="st">"#1F4E79"</span><span class="op">,</span> <span class="st">"#B4B2A9"</span>] }<span class="op">,</span></span>
+<span id="cb11-176"><a href="#cb11-176" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb11-177"><a href="#cb11-177" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">barX</span>(</span>
+<span id="cb11-178"><a href="#cb11-178" aria-hidden="true" tabindex="-1"></a>      chi<span class="op">.</span><span class="at">celdas</span><span class="op">.</span><span class="fu">flatMap</span>(d <span class="kw">=&gt;</span> [</span>
+<span id="cb11-179"><a href="#cb11-179" aria-hidden="true" tabindex="-1"></a>        { <span class="dt">celda</span><span class="op">:</span> <span class="vs">`</span><span class="sc">${</span>d<span class="op">.</span><span class="at">fila</span><span class="sc">}</span><span class="vs"> · </span><span class="sc">${</span>d<span class="op">.</span><span class="at">columna</span><span class="sc">}</span><span class="vs">`</span><span class="op">,</span> <span class="dt">tipo</span><span class="op">:</span> <span class="st">"observada"</span><span class="op">,</span> <span class="dt">v</span><span class="op">:</span> d<span class="op">.</span><span class="at">observada</span> }<span class="op">,</span></span>
+<span id="cb11-180"><a href="#cb11-180" aria-hidden="true" tabindex="-1"></a>        { <span class="dt">celda</span><span class="op">:</span> <span class="vs">`</span><span class="sc">${</span>d<span class="op">.</span><span class="at">fila</span><span class="sc">}</span><span class="vs"> · </span><span class="sc">${</span>d<span class="op">.</span><span class="at">columna</span><span class="sc">}</span><span class="vs">`</span><span class="op">,</span> <span class="dt">tipo</span><span class="op">:</span> <span class="st">"esperada"</span><span class="op">,</span> <span class="dt">v</span><span class="op">:</span> d<span class="op">.</span><span class="at">esperada</span> }</span>
+<span id="cb11-181"><a href="#cb11-181" aria-hidden="true" tabindex="-1"></a>      ])<span class="op">,</span></span>
+<span id="cb11-182"><a href="#cb11-182" aria-hidden="true" tabindex="-1"></a>      { <span class="dt">x</span><span class="op">:</span> <span class="st">"v"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"celda"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"tipo"</span><span class="op">,</span> <span class="dt">fy</span><span class="op">:</span> <span class="kw">null</span><span class="op">,</span> <span class="dt">dy</span><span class="op">:</span> d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">tipo</span> <span class="op">===</span> <span class="st">"esperada"</span> <span class="op">?</span> <span class="dv">7</span> <span class="op">:</span> <span class="op">-</span><span class="dv">7</span><span class="op">,</span></span>
+<span id="cb11-183"><a href="#cb11-183" aria-hidden="true" tabindex="-1"></a>        <span class="dt">height</span><span class="op">:</span> <span class="dv">12</span> }</span>
+<span id="cb11-184"><a href="#cb11-184" aria-hidden="true" tabindex="-1"></a>    )<span class="op">,</span></span>
+<span id="cb11-185"><a href="#cb11-185" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleX</span>([<span class="dv">0</span>])</span>
+<span id="cb11-186"><a href="#cb11-186" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb11-187"><a href="#cb11-187" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-6" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb12" data-startfrom="192" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 191;"><span id="cb12-192"><a href="#cb12-192" aria-hidden="true" tabindex="-1"></a><span class="fu">md</span><span class="vs">`χ² = **</span><span class="sc">${</span>chi<span class="op">.</span><span class="at">X2</span><span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">2</span>)<span class="sc">}</span><span class="vs">** (gl = 1) · valor p = **</span><span class="sc">${</span>chi<span class="op">.</span><span class="at">p</span> <span class="op">&lt;</span> <span class="fl">0.0001</span> <span class="op">?</span> <span class="st">"&lt; 0.0001"</span> <span class="op">:</span> chi<span class="op">.</span><span class="at">p</span><span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">4</span>)<span class="sc">}</span><span class="vs">** · </span><span class="sc">${</span>chi<span class="op">.</span><span class="at">p</span> <span class="op">&lt;</span> <span class="fl">0.05</span> <span class="op">?</span> <span class="st">"**se rechaza la independencia**"</span> <span class="op">:</span> <span class="st">"no se rechaza la independencia"</span><span class="sc">}</span><span class="vs">`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-7" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Al poner 50, 150, 50, 150: los dos renglones tienen exactamente la misma proporción de positivos, las frecuencias observadas coinciden con las esperadas y <span class="math inline">\(\chi^2\)</span> vale casi cero. Al subir los “expuestos y positivos”: las barras azules se despegan de las grises y el estadístico crece.</p>
+<p>Dos observaciones importantes. Primera: lo que importa no son las <strong>cantidades</strong> sino las <strong>proporciones dentro de cada renglón</strong>; 10 de 20 y 100 de 200 son la misma proporción. Segunda: si multiplicas las cuatro celdas por 10 conservando las proporciones, el <span class="math inline">\(\chi^2\)</span> también se multiplica por 10 (la misma asociación, medida con más datos, se vuelve más significativa). Es, otra vez, la lección de que el valor p depende del tamaño de muestra tanto como del efecto.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="sec-categoricos-mano" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="sec-categoricos-mano"><span class="header-section-number">10.4</span> El mismo cálculo a mano</h2>
+<p>Las dos técnicas de este capítulo se calculan con facilidad en papel, y conviene hacerlo una vez.</p>
+<section id="una-proporción" class="level3" data-number="10.4.1">
+<h3 data-number="10.4.1" class="anchored" data-anchor-id="una-proporción"><span class="header-section-number">10.4.1</span> Una proporción</h3>
+<p>En una muestra de 150 personas, 45 resultaron positivas. ¿Es compatible con una proporción de referencia del 25 %?</p>
+<p>Con <span class="math inline">\(H_0: p = 0.25\)</span> contra <span class="math inline">\(H_1: p \neq 0.25\)</span> y <span class="math inline">\(\hat{p} = 45/150 = 0.30\)</span>:</p>
+<p><span class="math display">\[z_c = \frac{\hat{p} - p_0}{\sqrt{\dfrac{p_0(1-p_0)}{n}}} = \frac{0.30 - 0.25}{\sqrt{\dfrac{(0.25)(0.75)}{150}}} = \frac{0.05}{0.03536} = 1.414\]</span></p>
+<p>Como <span class="math inline">\(|1.414| &lt; 1.96\)</span>, <strong>no se rechaza</strong> <span class="math inline">\(H_0\)</span>: la diferencia de cinco puntos porcentuales es compatible con el azar.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.test</span>(<span class="dv">45</span>, <span class="dv">150</span>, <span class="at">p =</span> <span class="fl">0.25</span>, <span class="at">correct =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1-sample proportions test without continuity correction</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  45 out of 150, null probability 0.25</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; X-squared = 2, df = 1, p-value = 0.1573</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; alternative hypothesis: true p is not equal to 0.25</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 95 percent confidence interval:</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  0.2324083 0.3775798</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sample estimates:</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   p </span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0.3</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="una-tabla-de-contingencia" class="level3" data-number="10.4.2">
+<h3 data-number="10.4.2" class="anchored" data-anchor-id="una-tabla-de-contingencia"><span class="header-section-number">10.4.2</span> Una tabla de contingencia</h3>
+<p>Consideremos esta tabla de 100 personas:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th>Positivos</th>
+<th>Negativos</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Expuestos</strong></td>
+<td>30</td>
+<td>20</td>
+<td>50</td>
+</tr>
+<tr class="even">
+<td><strong>No expuestos</strong></td>
+<td>10</td>
+<td>40</td>
+<td>50</td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td>40</td>
+<td>60</td>
+<td>100</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Paso 1. Las frecuencias esperadas</strong> bajo independencia. Cada una es el producto de sus totales marginales entre el total general:</p>
+<p><span class="math display">\[e_{11} = \frac{50 \times 40}{100} = 20, \qquad e_{12} = \frac{50 \times 60}{100} = 30\]</span> <span class="math display">\[e_{21} = \frac{50 \times 40}{100} = 20, \qquad e_{22} = \frac{50 \times 60}{100} = 30\]</span></p>
+<p><strong>Paso 2. La contribución de cada celda</strong>, <span class="math inline">\((o - e)^2/e\)</span>:</p>
+<p><span class="math display">\[\frac{(30-20)^2}{20} = 5.00, \qquad \frac{(20-30)^2}{30} = 3.33, \qquad \frac{(10-20)^2}{20} = 5.00, \qquad \frac{(40-30)^2}{30} = 3.33\]</span></p>
+<p><strong>Paso 3. El estadístico</strong> es su suma:</p>
+<p><span class="math display">\[\chi^2 = 5.00 + 3.33 + 5.00 + 3.33 = 16.67\]</span></p>
+<p>Con <span class="math inline">\((2-1)(2-1) = 1\)</span> grado de libertad, el valor crítico al 5 % es 3.841. Como <span class="math inline">\(16.67 &gt; 3.841\)</span>, se rechaza la independencia.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>tabla <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">20</span>, <span class="dv">10</span>, <span class="dv">40</span>), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(tabla, <span class="at">correct =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Pearson's Chi-squared test</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  tabla</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; X-squared = 16.667, df = 1, p-value = 4.456e-05</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Coinciden ambos: <span class="math inline">\(z = 1.414\)</span> y <span class="math inline">\(\chi^2 = 16.67\)</span>.</p>
+<p>Dos observaciones. Primera, sobre las <strong>frecuencias esperadas</strong>: la regla “renglón por columna entre el total” no es un truco, es la definición de independencia traducida a conteos. Si el 40 % del total es positivo y la exposición no influye, entonces se esperaría que el 40 % de cada grupo lo fuera: <span class="math inline">\(0.40 \times 50 = 20\)</span>. Entender eso hace innecesario memorizar la fórmula.</p>
+<p>Segunda, sobre el argumento <code>correct = FALSE</code>: por omisión R aplica la <strong>corrección de continuidad de Yates</strong> en tablas de 2×2, que ajusta ligeramente el estadístico. Es más conservadora y suele preferirse, pero produce un número distinto del calculado a mano. Se desactiva solo para verificar la coincidencia; en el trabajo real conviene dejar el valor por omisión.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="una-asociación-que-no-es-significativa" class="level2" data-number="10.5">
+<h2 data-number="10.5" class="anchored" data-anchor-id="una-asociación-que-no-es-significativa"><span class="header-section-number">10.5</span> Una asociación que NO es significativa</h2>
+<p>Tan importante como detectar asociaciones es no inventarlas. Veamos la positividad por zona de residencia:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>tabla_zona <span class="ot">&lt;-</span> <span class="fu">table</span>(rick<span class="sc">$</span>zona, rick<span class="sc">$</span>resultado)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">prop.table</span>(tabla_zona, <span class="at">margin =</span> <span class="dv">1</span>), <span class="dv">3</span>)   <span class="co"># proporciones por renglón</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                   </span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                    negativo positivo</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   rural               0.750    0.250</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   urbana              0.800    0.200</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   urbana_marginada    0.711    0.289</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(tabla_zona)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Pearson's Chi-squared test</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  tabla_zona</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; X-squared = 3.3185, df = 2, p-value = 0.1903</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Cuidado con leer tendencias en el ruido">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Cuidado con leer tendencias en el ruido
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A simple vista parece haber un patrón: 28.9 % de positivos en zona urbana marginada, 25.0 % en rural y 20.0 % en urbana. Es tentador construir una explicación. Pero la prueba da <span class="math inline">\(\chi^2 \approx 3.3\)</span> con 2 grados de libertad y un valor p de <strong>0.19</strong>: esas diferencias son perfectamente compatibles con el azar.</p>
+<p>Este es uno de los hábitos más valiosos que puede dejar el curso: <strong>antes de explicar un patrón, hay que verificar que el patrón exista</strong>. Con muestras de este tamaño, diferencias de varios puntos porcentuales aparecen solas.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="¿Qué técnica usar?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>¿Qué técnica usar?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Con <strong>variables categóricas</strong>:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Mi pregunta</th>
+<th>Técnica en R</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>¿Cuánto vale una proporción?</td>
+<td><code>prop.test(x, n)</code> — da IC y prueba</td>
+</tr>
+<tr class="even">
+<td>¿Difieren dos proporciones?</td>
+<td><code>prop.test(c(x1, x2), c(n1, n2))</code></td>
+</tr>
+<tr class="odd">
+<td>¿Están asociadas dos variables categóricas?</td>
+<td><code>chisq.test(table(v1, v2))</code></td>
+</tr>
+<tr class="even">
+<td>Tabla con celdas muy pequeñas (esperadas &lt; 5)</td>
+<td><code>fisher.test(tabla)</code></td>
+</tr>
+<tr class="odd">
+<td>Proporción muy cercana a 0 o 1</td>
+<td><code>binom.test(x, n)</code> (exacta)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Conviene verificar siempre</strong> las condiciones: al menos 10 casos por categoría para proporciones, y frecuencias esperadas de al menos 5 para ji-cuadrada.</p>
+</div>
+</div>
+</section>
+<section id="resumen" class="level2" data-number="10.6">
+<h2 data-number="10.6" class="anchored" data-anchor-id="resumen"><span class="header-section-number">10.6</span> Resumen</h2>
+<p>Para datos categóricos, el parámetro es una <strong>proporción</strong>. Su estimación viene con intervalo de confianza, y su comparación entre dos grupos se hace con <code>prop.test()</code>, reportando siempre la <strong>diferencia y su intervalo</strong>. Cuando ambas variables son categóricas, la <strong>tabla de contingencia</strong> y la prueba <strong>ji-cuadrada</strong> contrastan lo observado con lo esperado bajo independencia; sus grados de libertad son <span class="math inline">\((f-1)(c-1)\)</span> y exige frecuencias esperadas de al menos 5. Rechazar la independencia indica <strong>asociación</strong>, no causa —sobre todo con datos observacionales—. Y un patrón visible en las proporciones puede no ser significativo. Hay que probarlo antes de explicarlo. En el <a href="10-anova.html" class="quarto-xref"><span>Capítulo 11</span></a> volvemos a variables cuantitativas, ahora comparando <strong>tres o más grupos</strong>.</p>
+</section>
+<section id="ejercicios" class="level2" data-number="10.7">
+<h2 data-number="10.7" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">10.7</span> Ejercicios</h2>
+<ol type="1">
+<li><p><strong>Una proporción.</strong> ¿Qué proporción de las personas del registro tuvo contacto con garrapatas? Calcular su intervalo de confianza del 95 % e interprétalo.</p></li>
+<li><p><strong>Dos proporciones.</strong> Comparar la positividad entre quienes tuvieron garrapatas y quienes no. Reportar la diferencia con su intervalo e interpretar.</p></li>
+<li><p><strong>Condiciones.</strong> Para la tabla de <code>garrapatas</code> contra <code>resultado</code>, verificar con <code>chisq.test(...)$expected</code> que se cumple la condición de frecuencias esperadas. ¿Qué hacer si no se cumpliera?</p></li>
+<li><p><strong>Grados de libertad.</strong> ¿Cuántos grados de libertad tiene la prueba ji-cuadrada para una tabla de 3 zonas × 2 resultados? ¿Y para una de 4 sustratos × 2 estados de contaminación?</p></li>
+<li><p><strong>Hongos.</strong> Con <code>datos/hongos_sustrato.csv</code>, prueba si la contaminación está asociada al sustrato. Interpretar el resultado para el responsable del laboratorio.</p></li>
+<li><p><strong>Interpretación cuidadosa.</strong> Un compañero concluye: <em>“la prueba demuestra que el contacto con perros causa rickettsiosis”</em>. ¿Qué está mal en esa afirmación? Escribir una versión correcta.</p></li>
+<li><p><strong>Efecto del tamaño de muestra.</strong> En el <a href="#sec-lab-chi" class="quarto-xref"><span>Sección 10.3.1</span></a>, poner las celdas en 20, 30, 10, 40 y anotar el valor p; después multiplicar las cuatro por 5 (100, 150, 50, 200) y anotarlo de nuevo. ¿Cambiaron las proporciones? ¿Cambió el valor p? Explicar el resultado.</p></li>
+<li><p><strong>Prueba unilateral para una proporción.</strong> Un laboratorio afirma que su nueva tableta produce efectos secundarios en una proporción <strong>menor</strong> que el 12 % del medicamento actual. En una muestra aleatoria de 1000 pacientes, 100 presentaron efectos secundarios.</p>
+<ol type="a">
+<li>Plantear <span class="math inline">\(H_0\)</span> y <span class="math inline">\(H_1\)</span>. ¿La prueba es uni o bilateral?</li>
+<li>Verificar las condiciones para la aproximación normal.</li>
+<li>Efectuar la prueba con <span class="math inline">\(\alpha = 0.05\)</span> e interpretar el resultado en el contexto del problema.</li>
+<li>Repetir el cálculo a mano con el estadístico <span class="math inline">\(z_c = \dfrac{\hat{p} - p_0}{\sqrt{p_0(1-p_0)/n}}\)</span> y comparar con la salida de R.</li>
+</ol></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Soluciones y retroalimentación">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Soluciones y retroalimentación
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>1.</strong> Con <code>prop.test(sum(rick$garrapatas == "si"), nrow(rick))</code> se obtiene una proporción cercana al <strong>42 %</strong>, con un intervalo aproximado de 38 % a 47 %. Interpretación: <em>“Con 95 % de confianza, entre el 38 % y el 47 % de la población evaluada tuvo contacto con garrapatas.”</em> <em>Conviene recordar que el nivel de confianza describe la tasa de acierto del procedimiento, no la probabilidad de este intervalo concreto (<a href="07-estimacion-pruebas.html" class="quarto-xref"><span>Capítulo 8</span></a>).</em></p>
+<p><strong>2.</strong> La positividad es del <strong>38.2 %</strong> con garrapatas contra <strong>15.3 %</strong> sin ellas: una diferencia cercana a <strong>23 puntos porcentuales</strong>, con valor p del orden de <span class="math inline">\(10^{-8}\)</span>. Interpretación: <em>“Las personas con contacto con garrapatas presentaron una positividad más de dos veces mayor.”</em> <em>Este resultado es coherente con la biología de la enfermedad. La garrapata es el vector. Aun así, sigue siendo un estudio observacional, así que la palabra correcta es asociación.</em></p>
+<p><strong>3.</strong> Las frecuencias esperadas son todas superiores a 20, muy por encima del mínimo de 5, así que la aproximación es válida. Si alguna esperada fuera menor que 5 (por ejemplo con una enfermedad muy rara o una muestra pequeña), la alternativa correcta es la <strong>prueba exacta de Fisher</strong> (<code>fisher.test</code>), que no depende de aproximaciones. <em>Otra opción, cuando tiene sentido sustantivo, es agrupar categorías poco frecuentes; pero eso debe decidirse antes de ver los resultados, no después.</em></p>
+<p><strong>4.</strong> Para 3 × 2: <span class="math inline">\((3-1)(2-1) = 2\)</span> grados de libertad. Para 4 × 2: <span class="math inline">\((4-1)(2-1) = 3\)</span>. <em>Los grados de libertad reflejan cuántas celdas se puede llenar libremente antes de que los totales marginales determinen el resto; por eso dependen de la forma de la tabla y no del tamaño de muestra.</em></p>
+<p><strong>5.</strong> Con <code>chisq.test(table(hongos$sustrato, hongos$contaminado))</code> se obtiene <span class="math inline">\(\chi^2 \approx 13.6\)</span> con 3 grados de libertad y <span class="math inline">\(p \approx 0.004\)</span>: <strong>sí hay asociación</strong> entre el sustrato y la contaminación. El aserrín se contamina bastante más que la paja de trigo. Interpretación para el laboratorio: <em>“El tipo de sustrato está asociado al riesgo de contaminación; el aserrín presenta la tasa más alta y la paja de trigo la más baja, por lo que conviene revisar su manejo o su esterilización.”</em> <em>Nótese que aquí el estudio <strong>sí</strong> es experimental —el sustrato se asignó a las bolsas—, así que en este caso la interpretación causal es defendible, a diferencia del caso de la rickettsiosis.</em></p>
+<p><strong>6.</strong> El error es saltar de <strong>asociación</strong> a <strong>causa</strong> con datos observacionales. Nadie asignó al azar quién convive con perros; las personas que lo hacen pueden diferir sistemáticamente en otras cosas (viven en zonas con más garrapatas, pasan más tiempo al aire libre), y el perro puede ser simplemente un <strong>indicador de exposición</strong> al verdadero vector. Versión correcta: <em>“Se encontró una asociación estadísticamente significativa entre el contacto con perros y un resultado positivo; el contacto con perros podría estar actuando como indicador de exposición a garrapatas.”</em> <em>La única forma de establecer causa sería un experimento aleatorizado, que aquí sería imposible y poco ético; en epidemiología se recurre entonces a criterios adicionales y al control de variables de confusión.</em></p>
+<p><strong>7.</strong> Las <strong>proporciones no cambian</strong> (en ambos casos 40 % y 20 % de positivos por renglón), pero el <strong>valor p sí baja</strong> drásticamente: al multiplicar por 5, el estadístico <span class="math inline">\(\chi^2\)</span> también se multiplica por 5. La conclusión es la misma que en el <a href="07-estimacion-pruebas.html" class="quarto-xref"><span>Capítulo 8</span></a>: la significancia estadística mezcla el <strong>tamaño del efecto</strong> con el <strong>tamaño de la muestra</strong>. Con pocos datos, una asociación real puede pasar inadvertida; con muchos, una asociación trivial se vuelve significativa. <em>Por eso conviene acompañar la prueba con una medida del tamaño de la asociación (como la diferencia de proporciones y su intervalo) y no reportar solo el valor p.</em> <strong>8.</strong> (a) <span class="math inline">\(H_0: p = 0.12\)</span> contra <span class="math inline">\(H_1: p &lt; 0.12\)</span>, prueba <strong>unilateral izquierda</strong>, porque la afirmación es que la proporción es <em>menor</em>. (b) Las condiciones se cumplen holgadamente: <span class="math inline">\(np_0 = 120\)</span> y <span class="math inline">\(n(1-p_0) = 880\)</span>, ambos muy por encima de 10. (c) Con <code>prop.test(100, 1000, p = 0.12, alternative = "less")</code> se obtiene <span class="math inline">\(\hat{p} = 0.10\)</span> y un valor p cercano a <strong>0.026</strong>, menor que 0.05: se <strong>rechaza</strong> <span class="math inline">\(H_0\)</span>. Interpretación: <em>“Los datos aportan evidencia de que la nueva tableta produce efectos secundarios en una proporción menor que el 12 % del medicamento actual.”</em> (d) A mano: <span class="math display">\[z_c = \frac{0.10 - 0.12}{\sqrt{0.12 \times 0.88 / 1000}} \approx -1.95\]</span> Como <span class="math inline">\(-1.95 &lt; -1.645\)</span>, se rechaza <span class="math inline">\(H_0\)</span>, misma conclusión. <em>Dos observaciones para la interpretación. Primera: si la prueba se hubiera planteado bilateral, el valor p sería aproximadamente 0.052 y <strong>no</strong> se habría rechazado (de ahí la importancia de fijar la dirección desde la pregunta, y no después de ver los datos). Segunda: la reducción estimada es de 12 % a 10 %, es decir dos puntos porcentuales; conviene preguntarse si esa diferencia es clínicamente relevante y no solo estadísticamente significativa.</em></p>
+</div>
+</div>
+</div>
 
 
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+W10=
+</script>
 </section>
 
 </main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBhID0gSW5wdXRzLnJhbmdlKFswLCAxNTBdLCB7dmFsdWU6IDkyLCBzdGVwOiAxLCBsYWJlbDogXCJleHB1ZXN0b3MgeSBwb3NpdGl2b3NcIn0pXG52aWV3b2YgYiA9IElucHV0cy5yYW5nZShbMCwgMzAwXSwge3ZhbHVlOiAxODQsIHN0ZXA6IDEsIGxhYmVsOiBcImV4cHVlc3RvcyB5IG5lZ2F0aXZvc1wifSlcbnZpZXdvZiBjID0gSW5wdXRzLnJhbmdlKFswLCAxNTBdLCB7dmFsdWU6IDEzLCBzdGVwOiAxLCBsYWJlbDogXCJubyBleHB1ZXN0b3MgeSBwb3NpdGl2b3NcIn0pXG52aWV3b2YgZCA9IElucHV0cy5yYW5nZShbMCwgMzAwXSwge3ZhbHVlOiAxMzEsIHN0ZXA6IDEsIGxhYmVsOiBcIm5vIGV4cHVlc3RvcyB5IG5lZ2F0aXZvc1wifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImNoaSA9IHtcbiAgY29uc3Qgb2JzID0gW1thLCBiXSwgW2MsIGRdXTtcbiAgY29uc3QgZiA9IFthICsgYiwgYyArIGRdLCBjb2wgPSBbYSArIGMsIGIgKyBkXSwgTiA9IGEgKyBiICsgYyArIGQ7XG4gIGlmIChOID09PSAwIHx8IGZbMF0gPT09IDAgfHwgZlsxXSA9PT0gMCB8fCBjb2xbMF0gPT09IDAgfHwgY29sWzFdID09PSAwKVxuICAgIHJldHVybiB7IFgyOiAwLCBwOiAxLCBjZWxkYXM6IFtdLCBOOiAwIH07XG4gIGNvbnN0IGNlbGRhcyA9IFtdO1xuICBsZXQgWDIgPSAwO1xuICBjb25zdCBldGlxdWV0YXMgPSBbW1wiZXhwdWVzdG9zXCIsIFwicG9zaXRpdm9zXCJdLCBbXCJleHB1ZXN0b3NcIiwgXCJuZWdhdGl2b3NcIl0sXG4gICAgICAgICAgICAgICAgICAgICBbXCJubyBleHB1ZXN0b3NcIiwgXCJwb3NpdGl2b3NcIl0sIFtcIm5vIGV4cHVlc3Rvc1wiLCBcIm5lZ2F0aXZvc1wiXV07XG4gIGxldCBrID0gMDtcbiAgZm9yIChsZXQgaSA9IDA7IGkgPCAyOyBpKyspIGZvciAobGV0IGogPSAwOyBqIDwgMjsgaisrKSB7XG4gICAgY29uc3QgRSA9IGZbaV0gKiBjb2xbal0gLyBOO1xuICAgIGNvbnN0IGNvbnRyaWIgPSBNYXRoLnBvdyhvYnNbaV1bal0gLSBFLCAyKSAvIEU7XG4gICAgWDIgKz0gY29udHJpYjtcbiAgICBjZWxkYXMucHVzaCh7IGZpbGE6IGV0aXF1ZXRhc1trXVswXSwgY29sdW1uYTogZXRpcXVldGFzW2tdWzFdLFxuICAgICAgICAgICAgICAgICAgb2JzZXJ2YWRhOiBvYnNbaV1bal0sIGVzcGVyYWRhOiArRS50b0ZpeGVkKDEpLFxuICAgICAgICAgICAgICAgICAgY29udHJpYnVjaW9uOiArY29udHJpYi50b0ZpeGVkKDIpIH0pO1xuICAgIGsrKztcbiAgfVxuICByZXR1cm4geyBYMiwgcDogcENoaShYMiksIGNlbGRhcywgTiB9O1xufVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0zIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoicENoaSA9ICh4KSA9PiB7XG4gIGlmICh4IDw9IDApIHJldHVybiAxO1xuICByZXR1cm4gMiAqICgxIC0gcG5vcm1BdXgoTWF0aC5zcXJ0KHgpKSk7ICAgLy8gZ2wgPSAxOiBQKFgyID4geCkgPSAyKDEgLSBQaGkoc3FydCh4KSkpXG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTQiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJwbm9ybUF1eCA9ICh6KSA9PiB7XG4gIGNvbnN0IHMgPSB6IDwgMCA/IC0xIDogMTsgeiA9IE1hdGguYWJzKHopO1xuICBjb25zdCB0ID0gMSAvICgxICsgMC4zMjc1OTExICogeiAvIE1hdGguU1FSVDIpO1xuICBjb25zdCB5ID0gMSAtICgoKCgxLjA2MTQwNTQyOSAqIHQgLSAxLjQ1MzE1MjAyNykgKiB0ICsgMS40MjE0MTM3NDEpICogdFxuICAgICAgICAgICAgLSAwLjI4NDQ5NjczNikgKiB0ICsgMC4yNTQ4Mjk1OTIpICogdCAqIE1hdGguZXhwKC16ICogeiAvIDIpO1xuICByZXR1cm4gMC41ICogKDEgKyBzICogeSk7XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTUiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJJbnB1dHMudGFibGUoY2hpLmNlbGRhcywgeyByb3dzOiA0LCBoZWlnaHQ6IDE0MCB9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC02IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiUGxvdC5wbG90KHtcbiAgaGVpZ2h0OiAxNTAsXG4gIG1hcmdpbkxlZnQ6IDEyMCxcbiAgeDogeyBsYWJlbDogXCJmcmVjdWVuY2lhXCIgfSxcbiAgeTogeyBsYWJlbDogbnVsbCB9LFxuICBjb2xvcjogeyBsZWdlbmQ6IHRydWUsIGRvbWFpbjogW1wib2JzZXJ2YWRhXCIsIFwiZXNwZXJhZGFcIl0sXG4gICAgICAgICAgIHJhbmdlOiBbXCIjMUY0RTc5XCIsIFwiI0I0QjJBOVwiXSB9LFxuICBtYXJrczogW1xuICAgIFBsb3QuYmFyWChcbiAgICAgIGNoaS5jZWxkYXMuZmxhdE1hcChkID0+IFtcbiAgICAgICAgeyBjZWxkYTogYCR7ZC5maWxhfSDCtyAke2QuY29sdW1uYX1gLCB0aXBvOiBcIm9ic2VydmFkYVwiLCB2OiBkLm9ic2VydmFkYSB9LFxuICAgICAgICB7IGNlbGRhOiBgJHtkLmZpbGF9IMK3ICR7ZC5jb2x1bW5hfWAsIHRpcG86IFwiZXNwZXJhZGFcIiwgdjogZC5lc3BlcmFkYSB9XG4gICAgICBdKSxcbiAgICAgIHsgeDogXCJ2XCIsIHk6IFwiY2VsZGFcIiwgZmlsbDogXCJ0aXBvXCIsIGZ5OiBudWxsLCBkeTogZCA9PiBkLnRpcG8gPT09IFwiZXNwZXJhZGFcIiA/IDcgOiAtNyxcbiAgICAgICAgaGVpZ2h0OiAxMiB9XG4gICAgKSxcbiAgICBQbG90LnJ1bGVYKFswXSlcbiAgXVxufSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNyIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Im1kYM+HwrIgPSAqKiR7Y2hpLlgyLnRvRml4ZWQoMil9KiogKGdsID0gMSkgwrcgdmFsb3IgcCA9ICoqJHtjaGkucCA8IDAuMDAwMSA/IFwiPCAwLjAwMDFcIiA6IGNoaS5wLnRvRml4ZWQoNCl9KiogwrcgJHtjaGkucCA8IDAuMDUgPyBcIioqc2UgcmVjaGF6YSBsYSBpbmRlcGVuZGVuY2lhKipcIiA6IFwibm8gc2UgcmVjaGF6YSBsYSBpbmRlcGVuZGVuY2lhXCJ9YFxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdhJykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ2InKSJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnYycpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdkJykifV19
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../..";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -725,12 +1374,12 @@ ul.task-list li input[type="checkbox"] {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./08-dos-muestras.html" class="pagination-link" aria-label="Inferencia para dos parámetros">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Inferencia para dos parámetros</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Inferencia para dos parámetros</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./10-anova.html" class="pagination-link" aria-label="Análisis de varianza (ANOVA)">
-        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Análisis de varianza (ANOVA)</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Análisis de varianza (ANOVA)</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

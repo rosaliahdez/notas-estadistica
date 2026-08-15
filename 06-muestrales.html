@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>6&nbsp; Distribuciones muestrales y TCL – Estadística para Ciencias de la Computación</title>
+<title>7&nbsp; Distribuciones muestrales y TCL – Estadística para Ciencias de la Computación</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -23,6 +23,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -34,7 +69,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./07-estimacion-pruebas.html" rel="next">
-<link href="./05-experimentos.html" rel="prev">
+<link href="./laboratorio-estandarizacion.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -44,7 +79,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-e671ceb1ec85f3bd6fb682ad87dd4085.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-22a2d3c8fd5a3a2e3c4a69971a64c298.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -72,11 +109,42 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Buscar"
   }
 }</script>
+<script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 <link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -89,7 +157,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06-muestrales.html">III. Inferencia estadística</a></li><li class="breadcrumb-item"><a href="./06-muestrales.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Distribuciones muestrales y TCL</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./laboratorio-estandarizacion.html">III. Inferencia estadística</a></li><li class="breadcrumb-item"><a href="./06-muestrales.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Distribuciones muestrales y TCL</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -190,38 +258,44 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./laboratorio-estandarizacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Laboratorio interactivo: la estandarización</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./06-muestrales.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Distribuciones muestrales y TCL</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Distribuciones muestrales y TCL</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./07-estimacion-pruebas.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Estimación y prueba de hipótesis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estimación y prueba de hipótesis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./08-dos-muestras.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Inferencia para dos parámetros</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Inferencia para dos parámetros</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./09-enumerativos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Inferencia para datos enumerativos</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Inferencia para datos enumerativos</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10-anova.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Análisis de varianza (ANOVA)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Análisis de varianza (ANOVA)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./11-regresion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Inferencia en regresión</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Inferencia en regresión</span></span></a>
   </div>
 </li>
       </ul>
@@ -232,6 +306,41 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Referencias</span></a>
   </div>
 </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Apéndices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mapa-decision.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mapa de decisión</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./formulario.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Formulario</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./apendice-python.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">R y Python, lado a lado</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./laboratorio-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Practicar R sin instalar nada</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -242,22 +351,26 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">En este capítulo</h2>
    
   <ul>
-  <li><a href="#parámetros-y-estadísticos" id="toc-parámetros-y-estadísticos" class="nav-link active" data-scroll-target="#parámetros-y-estadísticos"><span class="header-section-number">6.1</span> Parámetros y estadísticos</a></li>
-  <li><a href="#el-concepto-de-distribución-muestral" id="toc-el-concepto-de-distribución-muestral" class="nav-link" data-scroll-target="#el-concepto-de-distribución-muestral"><span class="header-section-number">6.2</span> El concepto de distribución muestral</a></li>
-  <li><a href="#distribución-muestral-de-la-media" id="toc-distribución-muestral-de-la-media" class="nav-link" data-scroll-target="#distribución-muestral-de-la-media"><span class="header-section-number">6.3</span> Distribución muestral de la media</a></li>
-  <li><a href="#teorema-central-del-límite" id="toc-teorema-central-del-límite" class="nav-link" data-scroll-target="#teorema-central-del-límite"><span class="header-section-number">6.4</span> Teorema Central del Límite</a></li>
-  <li><a href="#distribución-muestral-de-una-proporción" id="toc-distribución-muestral-de-una-proporción" class="nav-link" data-scroll-target="#distribución-muestral-de-una-proporción"><span class="header-section-number">6.5</span> Distribución muestral de una proporción</a></li>
-  <li><a href="#ilustrar-el-tcl-por-simulación-en-r" id="toc-ilustrar-el-tcl-por-simulación-en-r" class="nav-link" data-scroll-target="#ilustrar-el-tcl-por-simulación-en-r"><span class="header-section-number">6.6</span> Ilustrar el TCL por simulación en R</a></li>
-  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">6.7</span> Ejercicios</a></li>
+  <li><a href="#parámetros-y-estadísticos" id="toc-parámetros-y-estadísticos" class="nav-link active" data-scroll-target="#parámetros-y-estadísticos"><span class="header-section-number">7.1</span> Parámetros y estadísticos</a></li>
+  <li><a href="#la-distribución-muestral" id="toc-la-distribución-muestral" class="nav-link" data-scroll-target="#la-distribución-muestral"><span class="header-section-number">7.2</span> La distribución muestral</a></li>
+  <li><a href="#la-distribución-muestral-de-la-media" id="toc-la-distribución-muestral-de-la-media" class="nav-link" data-scroll-target="#la-distribución-muestral-de-la-media"><span class="header-section-number">7.3</span> La distribución muestral de la media</a></li>
+  <li><a href="#el-teorema-central-del-límite" id="toc-el-teorema-central-del-límite" class="nav-link" data-scroll-target="#el-teorema-central-del-límite"><span class="header-section-number">7.4</span> El Teorema Central del Límite</a>
+  <ul class="collapse">
+  <li><a href="#sec-lab-tcl" id="toc-sec-lab-tcl" class="nav-link" data-scroll-target="#sec-lab-tcl"><span class="header-section-number">7.4.1</span> Laboratorio: ver el TCL en acción</a></li>
+  </ul></li>
+  <li><a href="#trabajar-con-la-normal-probabilidades-y-cuantiles" id="toc-trabajar-con-la-normal-probabilidades-y-cuantiles" class="nav-link" data-scroll-target="#trabajar-con-la-normal-probabilidades-y-cuantiles"><span class="header-section-number">7.5</span> Trabajar con la normal: probabilidades y cuantiles</a></li>
+  <li><a href="#la-distribución-muestral-de-una-proporción" id="toc-la-distribución-muestral-de-una-proporción" class="nav-link" data-scroll-target="#la-distribución-muestral-de-una-proporción"><span class="header-section-number">7.6</span> La distribución muestral de una proporción</a></li>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen"><span class="header-section-number">7.7</span> Resumen</a></li>
+  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">7.8</span> Ejercicios</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06-muestrales.html">III. Inferencia estadística</a></li><li class="breadcrumb-item"><a href="./06-muestrales.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Distribuciones muestrales y TCL</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./laboratorio-estandarizacion.html">III. Inferencia estadística</a></li><li class="breadcrumb-item"><a href="./06-muestrales.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Distribuciones muestrales y TCL</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-cap6" class="quarto-section-identifier"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Distribuciones muestrales y TCL</span></span></h1>
+<h1 class="title"><span id="sec-cap6" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Distribuciones muestrales y TCL</span></span></h1>
 </div>
 
 
@@ -274,64 +387,437 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="callout callout-style-default callout-important callout-titled" title="Plantilla en construcción">
+<div class="callout callout-style-default callout-warning callout-titled" title="Capítulo en revisión">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Importante</span>Plantilla en construcción
+<span class="screen-reader-only">Advertencia</span>Capítulo en revisión
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Este capítulo corresponde a <strong>Semana 7</strong> del calendario y usa los datos de <strong>simulación</strong>. La estructura de secciones ya está fijada; el contenido se desarrolla con el mismo formato del <a href="01-exploracion.html" class="quarto-xref"><span>Capítulo 1</span></a>: pregunta real, técnica, supuestos, cómputo en R e interpretación.</p>
+<p>El contenido de este capítulo está completo, pero todavía no pasa por la revisión final de redacción. Se avisará en clase cuando quede listo para estudiar de aquí. Mientras tanto se puede consultar, con esa advertencia.</p>
 </div>
 </div>
-<section id="parámetros-y-estadísticos" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="parámetros-y-estadísticos"><span class="header-section-number">6.1</span> Parámetros y estadísticos</h2>
-<p><em>(En construcción.)</em></p>
-</section>
-<section id="el-concepto-de-distribución-muestral" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="el-concepto-de-distribución-muestral"><span class="header-section-number">6.2</span> El concepto de distribución muestral</h2>
-<p><em>(En construcción.)</em></p>
-</section>
-<section id="distribución-muestral-de-la-media" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="distribución-muestral-de-la-media"><span class="header-section-number">6.3</span> Distribución muestral de la media</h2>
-<p><em>(En construcción.)</em></p>
-</section>
-<section id="teorema-central-del-límite" class="level2" data-number="6.4">
-<h2 data-number="6.4" class="anchored" data-anchor-id="teorema-central-del-límite"><span class="header-section-number">6.4</span> Teorema Central del Límite</h2>
-<p><em>(En construcción.)</em></p>
-</section>
-<section id="distribución-muestral-de-una-proporción" class="level2" data-number="6.5">
-<h2 data-number="6.5" class="anchored" data-anchor-id="distribución-muestral-de-una-proporción"><span class="header-section-number">6.5</span> Distribución muestral de una proporción</h2>
-<p><em>(En construcción.)</em></p>
-</section>
-<section id="ilustrar-el-tcl-por-simulación-en-r" class="level2" data-number="6.6">
-<h2 data-number="6.6" class="anchored" data-anchor-id="ilustrar-el-tcl-por-simulación-en-r"><span class="header-section-number">6.6</span> Ilustrar el TCL por simulación en R</h2>
-<p><em>(En construcción.)</em></p>
-<div class="callout callout-style-default callout-tip callout-titled" title="¿Qué técnica uso?">
+<div class="callout callout-style-default callout-tip callout-titled" title="Objetivos del capítulo">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>¿Qué técnica uso?
+<span class="screen-reader-only">Tip</span>Objetivos del capítulo
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>La distribución muestral es el puente entre una muestra y la población: nos dice cuánto varía un estadístico de muestra en muestra.</p>
+<ul>
+<li>Distinguir <strong>parámetro</strong> de <strong>estadístico</strong>.</li>
+<li>Explicar qué es una <strong>distribución muestral</strong> y por qué es la pieza clave de la inferencia.</li>
+<li>Enunciar y reconocer el <strong>Teorema Central del Límite (TCL)</strong>.</li>
+<li>Describir la distribución muestral de la <strong>media</strong> y de una <strong>proporción</strong>.</li>
+</ul>
+</div>
+</div>
+<p>Empieza la Parte III. Ya sabemos explorar datos (Parte I) y producirlos bien (Parte II). Ahora viene la pregunta que da sentido a toda la estadística: <strong>¿qué puedo decir sobre la población si solo vi una muestra?</strong> La respuesta descansa en una sola idea, la de este capítulo.</p>
+<section id="parámetros-y-estadísticos" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="parámetros-y-estadísticos"><span class="header-section-number">7.1</span> Parámetros y estadísticos</h2>
+<p>Un <strong>parámetro</strong> es un número que describe a la <strong>población</strong>: la proporción real de positivos, la masa media de todos los pingüinos. Casi nunca lo conocemos (es justo lo que queremos averiguar).</p>
+<p>Un <strong>estadístico</strong> es el mismo número calculado sobre la <strong>muestra</strong>: la proporción de positivos <em>en mi muestra</em>, la masa media <em>de los pingüinos que medí</em>. Ese sí lo podemos calcular.</p>
+<p>Por convención se usan letras distintas:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Cantidad</th>
+<th>Parámetro (población)</th>
+<th>Estadístico (muestra)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Media</td>
+<td><span class="math inline">\(\mu\)</span></td>
+<td><span class="math inline">\(\bar{x}\)</span></td>
+</tr>
+<tr class="even">
+<td>Desviación estándar</td>
+<td><span class="math inline">\(\sigma\)</span></td>
+<td><span class="math inline">\(s\)</span></td>
+</tr>
+<tr class="odd">
+<td>Proporción</td>
+<td><span class="math inline">\(p\)</span></td>
+<td><span class="math inline">\(\hat{p}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Toda la inferencia consiste en usar el estadístico para decir algo sobre el parámetro. Y para eso necesitamos saber <strong>cuánto varía</strong> el estadístico de una muestra a otra.</p>
+</section>
+<section id="la-distribución-muestral" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="la-distribución-muestral"><span class="header-section-number">7.2</span> La distribución muestral</h2>
+<p>Ya vimos este fenómeno en el <a href="04-muestreo.html" class="quarto-xref"><span>Capítulo 4</span></a>: cada muestra da un resultado distinto. Si tomáramos todas las muestras posibles de tamaño <span class="math inline">\(n\)</span> y calculáramos el estadístico en cada una, la distribución de esos valores es la <strong>distribución muestral</strong> del estadístico.</p>
+<p>Es una idea sutil, así que vale la pena decirla con cuidado: no es la distribución de <strong>los datos</strong>, sino la distribución de <strong>un resumen de los datos</strong> a lo largo de muchas muestras hipotéticas. Es lo que nos permite decir “mi estimación típicamente se aleja del valor real en tanto”.</p>
+<p>Simulémosla. Tomamos muchas muestras de tamaño 30 de una población normal y guardamos la media de cada una:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>medias <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">1000</span>, <span class="fu">mean</span>(<span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="at">mean =</span> <span class="dv">100</span>, <span class="at">sd =</span> <span class="dv">15</span>)))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="at">m =</span> medias), <span class="fu">aes</span>(<span class="at">x =</span> m)) <span class="sc">+</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>, <span class="at">fill =</span> <span class="st">"#1F4E79"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">100</span>, <span class="at">color =</span> <span class="st">"#C0392B"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Media muestral"</span>, <span class="at">y =</span> <span class="st">"Frecuencia"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="fig-dist-muestral" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dist-muestral-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="06-muestrales_files/figure-html/fig-dist-muestral-1.png" class="img-fluid figure-img" width="480">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dist-muestral-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;7.1: Distribución muestral de la media (1000 muestras de tamaño 30).
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(medias)   <span class="co"># se centra en mu = 100</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 100.1214</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(medias)     <span class="co"># mucho menor que sigma = 15</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 2.766057</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="la-distribución-muestral-de-la-media" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="la-distribución-muestral-de-la-media"><span class="header-section-number">7.3</span> La distribución muestral de la media</h2>
+<p>La simulación anterior ilustra un resultado exacto. Si tomamos muestras de tamaño <span class="math inline">\(n\)</span> de una población con media <span class="math inline">\(\mu\)</span> y desviación <span class="math inline">\(\sigma\)</span>, la media muestral <span class="math inline">\(\bar{X}\)</span> cumple:</p>
+<ul>
+<li>Su <strong>media</strong> es <span class="math inline">\(\mu\)</span>. En promedio, la media muestral acierta: es un estimador <strong>insesgado</strong>.</li>
+<li>Su <strong>desviación estándar</strong> es <span class="math inline">\(\dfrac{\sigma}{\sqrt{n}}\)</span>, llamada <strong>error estándar</strong>.</li>
+</ul>
+<p>El error estándar es la fórmula que explica todo lo que vimos en el laboratorio del <a href="04-muestreo.html#sec-lab-n" class="quarto-xref"><span>Sección 4.3.1</span></a>: la precisión mejora con <span class="math inline">\(\sqrt{n}\)</span>, no con <span class="math inline">\(n\)</span>. Para <strong>duplicar</strong> la precisión hay que <strong>cuadruplicar</strong> la muestra.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dv">15</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">30</span>)   <span class="co"># error estándar teórico</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 2.738613</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(medias)      <span class="co"># el que salió de la simulación: casi idéntico</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 2.766057</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="el-teorema-central-del-límite" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="el-teorema-central-del-límite"><span class="header-section-number">7.4</span> El Teorema Central del Límite</h2>
+<p>Lo anterior vale siempre. Pero, ¿de qué <strong>forma</strong> es la distribución muestral? Si la población es normal, <span class="math inline">\(\bar{X}\)</span> es normal exactamente. Lo asombroso es lo que ocurre cuando la población <strong>no</strong> es normal:</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Teorema Central del Límite">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Teorema Central del Límite
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Para muestras <strong>suficientemente grandes</strong>, la distribución muestral de la media es aproximadamente <strong>normal</strong>, sin importar la forma de la población de origen.</p>
+</div>
+</div>
+<p>Esto es lo que hace posible casi toda la inferencia del curso. Aunque no sepamos cómo se distribuyen los datos, sí sabemos cómo se comporta su media. Como regla práctica, <span class="math inline">\(n \geq 30\)</span> suele bastar; con poblaciones muy sesgadas hace falta más.</p>
+<section id="sec-lab-tcl" class="level3" data-number="7.4.1">
+<h3 data-number="7.4.1" class="anchored" data-anchor-id="sec-lab-tcl"><span class="header-section-number">7.4.1</span> Laboratorio: ver el TCL en acción</h3>
+<p>Aquí el deslizador vale más que mil palabras. Conviene elegir una población <strong>deliberadamente no normal</strong> (sesgada, uniforme o bimodal) y luego aumentar <span class="math inline">\(n\)</span>. Se observa cómo la distribución de las medias se vuelve acampanada y se angosta, aunque la población de origen no tenga nada de campana.</p>
+<div class="cell panel-input card bg-light p-2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="98" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 97;"><span id="cb4-98"><a href="#cb4-98" aria-hidden="true" tabindex="-1"></a>viewof forma <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">select</span>(</span>
+<span id="cb4-99"><a href="#cb4-99" aria-hidden="true" tabindex="-1"></a>  [<span class="st">"sesgada (exponencial)"</span><span class="op">,</span> <span class="st">"uniforme"</span><span class="op">,</span> <span class="st">"bimodal"</span><span class="op">,</span> <span class="st">"normal"</span>]<span class="op">,</span></span>
+<span id="cb4-100"><a href="#cb4-100" aria-hidden="true" tabindex="-1"></a>  {<span class="dt">value</span><span class="op">:</span> <span class="st">"sesgada (exponencial)"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"forma de la población"</span>})</span>
+<span id="cb4-101"><a href="#cb4-101" aria-hidden="true" tabindex="-1"></a>viewof nTcl <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">1</span><span class="op">,</span> <span class="dv">100</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"tamaño de muestra n"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="105" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 104;"><span id="cb5-105"><a href="#cb5-105" aria-hidden="true" tabindex="-1"></a>generar <span class="op">=</span> {</span>
+<span id="cb5-106"><a href="#cb5-106" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> normal <span class="op">=</span> d3<span class="op">.</span><span class="fu">randomNormal</span>(<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span>)<span class="op">;</span></span>
+<span id="cb5-107"><a href="#cb5-107" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="kw">function</span>() {</span>
+<span id="cb5-108"><a href="#cb5-108" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (forma <span class="op">===</span> <span class="st">"sesgada (exponencial)"</span>) <span class="cf">return</span> <span class="op">-</span><span class="bu">Math</span><span class="op">.</span><span class="fu">log</span>(<span class="dv">1</span> <span class="op">-</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">random</span>()) <span class="op">*</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb5-109"><a href="#cb5-109" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (forma <span class="op">===</span> <span class="st">"uniforme"</span>) <span class="cf">return</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">random</span>() <span class="op">*</span> <span class="dv">6</span><span class="op">;</span></span>
+<span id="cb5-110"><a href="#cb5-110" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (forma <span class="op">===</span> <span class="st">"bimodal"</span>) <span class="cf">return</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">random</span>() <span class="op">&lt;</span> <span class="fl">0.5</span> <span class="op">?</span> <span class="fu">normal</span>() <span class="op">*</span> <span class="fl">0.6</span> <span class="op">+</span> <span class="dv">1</span> <span class="op">:</span> <span class="fu">normal</span>() <span class="op">*</span> <span class="fl">0.6</span> <span class="op">+</span> <span class="dv">5</span><span class="op">;</span></span>
+<span id="cb5-111"><a href="#cb5-111" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fu">normal</span>() <span class="op">*</span> <span class="fl">1.2</span> <span class="op">+</span> <span class="dv">3</span><span class="op">;</span></span>
+<span id="cb5-112"><a href="#cb5-112" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb5-113"><a href="#cb5-113" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="118" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 117;"><span id="cb6-118"><a href="#cb6-118" aria-hidden="true" tabindex="-1"></a>poblacion <span class="op">=</span> <span class="bu">Array</span><span class="op">.</span><span class="fu">from</span>({<span class="dt">length</span><span class="op">:</span> <span class="dv">3000</span>}<span class="op">,</span> generar)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="123" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 122;"><span id="cb7-123"><a href="#cb7-123" aria-hidden="true" tabindex="-1"></a>mediasTcl <span class="op">=</span> <span class="bu">Array</span><span class="op">.</span><span class="fu">from</span>({<span class="dt">length</span><span class="op">:</span> <span class="dv">1200</span>}<span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb7-124"><a href="#cb7-124" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> s <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb7-125"><a href="#cb7-125" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">let</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> nTcl<span class="op">;</span> i<span class="op">++</span>) s <span class="op">+=</span> <span class="fu">generar</span>()<span class="op">;</span></span>
+<span id="cb7-126"><a href="#cb7-126" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> s <span class="op">/</span> nTcl<span class="op">;</span></span>
+<span id="cb7-127"><a href="#cb7-127" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="132" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 131;"><span id="cb8-132"><a href="#cb8-132" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb8-133"><a href="#cb8-133" aria-hidden="true" tabindex="-1"></a>  <span class="dt">height</span><span class="op">:</span> <span class="dv">170</span><span class="op">,</span></span>
+<span id="cb8-134"><a href="#cb8-134" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marginTop</span><span class="op">:</span> <span class="dv">24</span><span class="op">,</span></span>
+<span id="cb8-135"><a href="#cb8-135" aria-hidden="true" tabindex="-1"></a>  <span class="dt">title</span><span class="op">:</span> <span class="st">"La población (los datos individuales)"</span><span class="op">,</span></span>
+<span id="cb8-136"><a href="#cb8-136" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> { <span class="dt">label</span><span class="op">:</span> <span class="st">"valor"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="op">-</span><span class="dv">1</span><span class="op">,</span> <span class="dv">9</span>] }<span class="op">,</span></span>
+<span id="cb8-137"><a href="#cb8-137" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> { <span class="dt">label</span><span class="op">:</span> <span class="st">"frecuencia"</span> }<span class="op">,</span></span>
+<span id="cb8-138"><a href="#cb8-138" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb8-139"><a href="#cb8-139" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">rectY</span>(poblacion<span class="op">,</span> Plot<span class="op">.</span><span class="fu">binX</span>({<span class="dt">y</span><span class="op">:</span> <span class="st">"count"</span>}<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> d <span class="kw">=&gt;</span> d<span class="op">,</span> <span class="dt">thresholds</span><span class="op">:</span> <span class="dv">45</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"#888780"</span>}))<span class="op">,</span></span>
+<span id="cb8-140"><a href="#cb8-140" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">0</span>])</span>
+<span id="cb8-141"><a href="#cb8-141" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb8-142"><a href="#cb8-142" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-5" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="147" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 146;"><span id="cb9-147"><a href="#cb9-147" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb9-148"><a href="#cb9-148" aria-hidden="true" tabindex="-1"></a>  <span class="dt">height</span><span class="op">:</span> <span class="dv">190</span><span class="op">,</span></span>
+<span id="cb9-149"><a href="#cb9-149" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marginTop</span><span class="op">:</span> <span class="dv">24</span><span class="op">,</span></span>
+<span id="cb9-150"><a href="#cb9-150" aria-hidden="true" tabindex="-1"></a>  <span class="dt">title</span><span class="op">:</span> <span class="vs">`Distribución de la media muestral (n = </span><span class="sc">${</span>nTcl<span class="sc">}</span><span class="vs">)`</span><span class="op">,</span></span>
+<span id="cb9-151"><a href="#cb9-151" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> { <span class="dt">label</span><span class="op">:</span> <span class="st">"media muestral"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="op">-</span><span class="dv">1</span><span class="op">,</span> <span class="dv">9</span>] }<span class="op">,</span></span>
+<span id="cb9-152"><a href="#cb9-152" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> { <span class="dt">label</span><span class="op">:</span> <span class="st">"frecuencia"</span> }<span class="op">,</span></span>
+<span id="cb9-153"><a href="#cb9-153" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb9-154"><a href="#cb9-154" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">rectY</span>(mediasTcl<span class="op">,</span> Plot<span class="op">.</span><span class="fu">binX</span>({<span class="dt">y</span><span class="op">:</span> <span class="st">"count"</span>}<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> d <span class="kw">=&gt;</span> d<span class="op">,</span> <span class="dt">thresholds</span><span class="op">:</span> <span class="dv">45</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"#1F4E79"</span>}))<span class="op">,</span></span>
+<span id="cb9-155"><a href="#cb9-155" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">0</span>])</span>
+<span id="cb9-156"><a href="#cb9-156" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb9-157"><a href="#cb9-157" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-6" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Con <span class="math inline">\(n = 1\)</span> las dos gráficas son iguales. Una muestra de tamaño uno <em>es</em> un dato individual. Al subir a <span class="math inline">\(n = 5\)</span> la asimetría ya se suaviza; hacia <span class="math inline">\(n = 30\)</span> la distribución de las medias es prácticamente una campana simétrica, <strong>aunque la población de arriba siga siendo sesgada o bimodal</strong>. Nótese también que la campana se va <strong>angostando</strong>: es el error estándar <span class="math inline">\(\sigma/\sqrt{n}\)</span> encogiéndose. Vale la pena el caso más contraintuitivo, “bimodal”: la población tiene dos jorobas y las medias forman una sola campana.</p>
 </div>
 </div>
 </section>
-<section id="ejercicios" class="level2" data-number="6.7">
-<h2 data-number="6.7" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">6.7</span> Ejercicios</h2>
-<p><em>Por desarrollar (banco de la Dra. Figueroa reorganizado + reactivos nuevos).</em></p>
+</section>
+<section id="trabajar-con-la-normal-probabilidades-y-cuantiles" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="trabajar-con-la-normal-probabilidades-y-cuantiles"><span class="header-section-number">7.5</span> Trabajar con la normal: probabilidades y cuantiles</h2>
+<p>Como la normal aparecerá en todo lo que sigue, conviene tener a la mano las dos operaciones que se hacen con ella, que son <strong>inversas</strong> entre sí.</p>
+<p><strong>De un valor a una probabilidad.</strong> ¿Qué proporción de individuos queda por debajo de cierto valor? Se estandariza con <span class="math inline">\(z = \dfrac{x - \mu}{\sigma}\)</span> (<a href="laboratorio-estandarizacion.html" class="quarto-xref"><span>Capítulo 6</span></a>) y se consulta la normal estándar. En R, <code>pnorm()</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Girasoles con media 185 cm y desviación 17 cm:</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ¿qué proporción mide menos de 200 cm?</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="dv">200</span>, <span class="at">mean =</span> <span class="dv">185</span>, <span class="at">sd =</span> <span class="dv">17</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.811207</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co"># ¿qué proporción supera los 200 cm?</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="dv">200</span>, <span class="at">mean =</span> <span class="dv">185</span>, <span class="at">sd =</span> <span class="dv">17</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.188793</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>De una probabilidad a un valor.</strong> La pregunta inversa: ¿qué valor deja por debajo cierta proporción? Ese valor es un <strong>cuantil</strong> (o percentil), y en R se obtiene con <code>qnorm()</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ¿Qué altura es superada por el 10 % de los girasoles?</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Es el cuantil que deja el 90 % por debajo.</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.90</span>, <span class="at">mean =</span> <span class="dv">185</span>, <span class="at">sd =</span> <span class="dv">17</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 206.7864</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La respuesta ronda los 207 cm. La clave para no equivocarse es traducir bien el enunciado: <em>“superada por el 10 %”</em> significa que el 10 % está <strong>por encima</strong>, es decir el 90 % <strong>por debajo</strong>, así que el cuantil que se busca es el 0.90 y no el 0.10.</p>
+<p>Sin computadora, este cálculo se hace en dos pasos con una tabla de la normal estándar. Primero se busca el valor <span class="math inline">\(z\)</span> que deja el 90 % por debajo (<span class="math inline">\(z \approx 1.282\)</span>) y luego se deshace la estandarización, <span class="math inline">\(x = \mu + z\sigma = 185 + 1.282 \times 17 \approx 206.8\)</span> cm. Conviene practicar ambas vías, porque en un examen sin computadora solo se dispone de la tabla.</p>
+</div>
+</div>
+<p>Los cuantiles de la normal estándar que más se repiten son estos, y vale la pena reconocerlos:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Proporción por debajo</th>
+<th><span class="math inline">\(z\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0.90</td>
+<td>1.282</td>
+</tr>
+<tr class="even">
+<td>0.95</td>
+<td>1.645</td>
+</tr>
+<tr class="odd">
+<td>0.975</td>
+<td>1.960</td>
+</tr>
+<tr class="even">
+<td>0.99</td>
+<td>2.326</td>
+</tr>
+<tr class="odd">
+<td>0.995</td>
+<td>2.576</td>
+</tr>
+</tbody>
+</table>
+<p>Los dos últimos renglones reaparecerán en el <a href="07-estimacion-pruebas.html" class="quarto-xref"><span>Capítulo 8</span></a> como los valores críticos de los intervalos de confianza al 95 % y al 99 %.</p>
+</section>
+<section id="la-distribución-muestral-de-una-proporción" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="la-distribución-muestral-de-una-proporción"><span class="header-section-number">7.6</span> La distribución muestral de una proporción</h2>
+<p>Cuando la variable es categórica, el estadístico natural es la <strong>proporción muestral</strong> <span class="math inline">\(\hat{p}\)</span>. El mismo razonamiento aplica: si el muestreo es aleatorio, <span class="math inline">\(\hat{p}\)</span> se centra en <span class="math inline">\(p\)</span> y su error estándar es</p>
+<p><span class="math display">\[\sqrt{\frac{p(1-p)}{n}}\]</span></p>
+<p>y, por el TCL, para <span class="math inline">\(n\)</span> suficientemente grande su distribución es aproximadamente normal. La regla práctica usual es que <span class="math inline">\(np \geq 10\)</span> y <span class="math inline">\(n(1-p) \geq 10\)</span>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">0.25</span>; n <span class="ot">&lt;-</span> <span class="dv">80</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>props <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">1000</span>, <span class="fu">mean</span>(<span class="fu">rbinom</span>(n, <span class="dv">1</span>, p)))</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(p <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p) <span class="sc">/</span> n)   <span class="co"># error estándar teórico</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.04841229</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(props)               <span class="co"># simulado</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.04860169</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="¿Qué técnica usar?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>¿Qué técnica usar?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La distribución muestral es el puente entre la muestra y la población:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Estadístico</th>
+<th>Se centra en</th>
+<th>Error estándar</th>
+<th>Forma (n grande)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Media <span class="math inline">\(\bar{x}\)</span></td>
+<td><span class="math inline">\(\mu\)</span></td>
+<td><span class="math inline">\(\sigma/\sqrt{n}\)</span></td>
+<td>Normal (por el TCL)</td>
+</tr>
+<tr class="even">
+<td>Proporción <span class="math inline">\(\hat{p}\)</span></td>
+<td><span class="math inline">\(p\)</span></td>
+<td><span class="math inline">\(\sqrt{p(1-p)/n}\)</span></td>
+<td>Normal (si <span class="math inline">\(np \ge 10\)</span> y <span class="math inline">\(n(1-p) \ge 10\)</span>)</td>
+</tr>
+</tbody>
+</table>
+<p>Todo lo que sigue en el curso (intervalos de confianza y pruebas de hipótesis) se construye sobre esta tabla.</p>
+</div>
+</div>
+</section>
+<section id="resumen" class="level2" data-number="7.7">
+<h2 data-number="7.7" class="anchored" data-anchor-id="resumen"><span class="header-section-number">7.7</span> Resumen</h2>
+<p>Distinguimos <strong>parámetro</strong> (población, desconocido) de <strong>estadístico</strong> (muestra, calculable), y conocimos la <strong>distribución muestral</strong>: cómo varía un estadístico de una muestra a otra. Para la media, se centra en <span class="math inline">\(\mu\)</span> y tiene error estándar <span class="math inline">\(\sigma/\sqrt{n}\)</span>; para la proporción, se centra en <span class="math inline">\(p\)</span> con error estándar <span class="math inline">\(\sqrt{p(1-p)/n}\)</span>. El <strong>Teorema Central del Límite</strong> garantiza que, con muestras suficientemente grandes, ambas son aproximadamente normales aunque la población no lo sea. Con esta maquinaria ya podemos, en el <a href="07-estimacion-pruebas.html" class="quarto-xref"><span>Capítulo 8</span></a>, construir <strong>intervalos de confianza</strong> y <strong>pruebas de hipótesis</strong>.</p>
+</section>
+<section id="ejercicios" class="level2" data-number="7.8">
+<h2 data-number="7.8" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">7.8</span> Ejercicios</h2>
+<ol type="1">
+<li><p><strong>Parámetro o estadístico.</strong> Clasificar cada cantidad: (a) la masa media de los 344 pingüinos medidos; (b) la proporción de positivos de todas las personas de Sonora; (c) la desviación estándar de la temperatura de las 32 lagartijas urbanas de nuestra base.</p></li>
+<li><p><strong>Error estándar.</strong> Una población tiene <span class="math inline">\(\sigma = 20\)</span>. Calcular el error estándar de la media para <span class="math inline">\(n = 25\)</span>, <span class="math inline">\(n = 100\)</span> y <span class="math inline">\(n = 400\)</span>. ¿Cuánto hay que aumentar la muestra para reducir el error estándar a la mitad?</p></li>
+<li><p><strong>¿TCL o no?</strong> ¿En cuáles de estos casos se puede suponer que la media muestral es aproximadamente normal? (a) <span class="math inline">\(n = 50\)</span> de una población muy sesgada; (b) <span class="math inline">\(n = 4\)</span> de una población muy sesgada; (c) <span class="math inline">\(n = 4\)</span> de una población normal.</p></li>
+<li><p><strong>Simulación.</strong> Repetir la simulación de la media muestral con <span class="math inline">\(n = 5\)</span> y con <span class="math inline">\(n = 80\)</span>, usando <code>rexp(n, rate = 1)</code> como población (exponencial, muy sesgada). Comparar los histogramas y las desviaciones estándar.</p></li>
+<li><p><strong>Proporción.</strong> En una población con <span class="math inline">\(p = 0.4\)</span> se toman muestras de <span class="math inline">\(n = 100\)</span>. ¿Cuál es el error estándar de <span class="math inline">\(\hat{p}\)</span>? ¿Se cumplen las condiciones para usar la aproximación normal?</p></li>
+<li><p><strong>Interpretación.</strong> Explicar en dos frases, para alguien que no sabe estadística, por qué una encuesta a 1000 personas puede describir a un país entero.</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Soluciones y retroalimentación">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Soluciones y retroalimentación
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>1.</strong> (a) <strong>Estadístico</strong>: se calculó sobre los pingüinos observados (la muestra). (b) <strong>Parámetro</strong>: describe a toda la población de Sonora. (c) <strong>Estadístico</strong>: se calculó sobre las lagartijas de nuestra base. <em>Regla rápida: si lo pudiste calcular con los datos, es un estadístico; si te gustaría conocerlo pero no lo se tiene, es un parámetro.</em></p>
+<p><strong>2.</strong> Error estándar <span class="math inline">\(= \sigma/\sqrt{n}\)</span>: para <span class="math inline">\(n=25\)</span> es <span class="math inline">\(20/5 = 4\)</span>; para <span class="math inline">\(n=100\)</span> es <span class="math inline">\(20/10 = 2\)</span>; para <span class="math inline">\(n=400\)</span> es <span class="math inline">\(20/20 = 1\)</span>. Hay que <strong>cuadruplicar</strong> la muestra para reducir el error a la mitad. <em>Esta es la consecuencia práctica más importante del capítulo. La precisión es cara, porque crece con <span class="math inline">\(\sqrt{n}\)</span> y no con <span class="math inline">\(n\)</span>. Pasar de 400 a 800 encuestas mejora poco; para el doble de precisión harían falta 1600.</em></p>
+<p><strong>3.</strong> (a) <strong>Sí</strong>: con <span class="math inline">\(n = 50\)</span> el TCL ya suele funcionar bien incluso con sesgo. (b) <strong>No</strong>: con <span class="math inline">\(n = 4\)</span> y población sesgada, la media muestral hereda el sesgo. (c) <strong>Sí</strong>: si la población es normal, la media es normal <strong>exactamente</strong>, para cualquier <span class="math inline">\(n\)</span>, sin necesidad del TCL. <em>El caso (c) es el que más se olvida. El TCL es para poblaciones no normales; si ya es normal, no hace falta.</em></p>
+<p><strong>4.</strong> Ambos histogramas se centran cerca de 1 (la media de una exponencial con <code>rate = 1</code>). Con <span class="math inline">\(n = 5\)</span> la distribución de medias sigue <strong>notoriamente sesgada a la derecha</strong>; con <span class="math inline">\(n = 80\)</span> es simétrica y acampanada. Las desviaciones estándar son aproximadamente <span class="math inline">\(1/\sqrt{5} \approx 0.45\)</span> y <span class="math inline">\(1/\sqrt{80} \approx 0.11\)</span>. <em>Es el mismo fenómeno del laboratorio del <a href="#sec-lab-tcl" class="quarto-xref"><span>Sección 7.4.1</span></a>, ahora reproducido en R.</em></p>
+<p><strong>5.</strong> Error estándar <span class="math inline">\(= \sqrt{0.4 \times 0.6 / 100} = \sqrt{0.0024} \approx 0.049\)</span>. Condiciones: <span class="math inline">\(np = 40 \geq 10\)</span> y <span class="math inline">\(n(1-p) = 60 \geq 10\)</span>; <strong>sí se cumplen</strong>, así que la aproximación normal es adecuada. <em>Cuando <span class="math inline">\(p\)</span> es muy cercana a 0 o a 1, estas condiciones fallan y hay que recurrir a métodos exactos.</em></p>
+<p><strong>6.</strong> Una redacción posible: <em>“Cada encuesta da un resultado ligeramente distinto, pero esos resultados se agrupan de manera predecible alrededor del valor real, y qué tan agrupados están depende del tamaño de la muestra, no del tamaño del país. Con 1000 personas bien elegidas al azar, el resultado típico se aleja del valor verdadero solo unos tres puntos porcentuales.”</em> <em>Lo esencial es transmitir dos ideas: que lo que importa es el <strong>tamaño de la muestra</strong> y no la fracción de la población, y que la selección debe ser <strong>aleatoria</strong> (si no lo es, ni un millón de respuestas sirven, como vimos en el <a href="04-muestreo.html" class="quarto-xref"><span>Capítulo 4</span></a>).</em></p>
+</div>
+</div>
+</div>
 
 
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+W10=
+</script>
 </section>
 
 </main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBmb3JtYSA9IElucHV0cy5zZWxlY3QoXG4gIFtcInNlc2dhZGEgKGV4cG9uZW5jaWFsKVwiLCBcInVuaWZvcm1lXCIsIFwiYmltb2RhbFwiLCBcIm5vcm1hbFwiXSxcbiAge3ZhbHVlOiBcInNlc2dhZGEgKGV4cG9uZW5jaWFsKVwiLCBsYWJlbDogXCJmb3JtYSBkZSBsYSBwb2JsYWNpw7NuXCJ9KVxudmlld29mIG5UY2wgPSBJbnB1dHMucmFuZ2UoWzEsIDEwMF0sIHt2YWx1ZTogMSwgc3RlcDogMSwgbGFiZWw6IFwidGFtYcOxbyBkZSBtdWVzdHJhIG5cIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJnZW5lcmFyID0ge1xuICBjb25zdCBub3JtYWwgPSBkMy5yYW5kb21Ob3JtYWwoMCwgMSk7XG4gIHJldHVybiBmdW5jdGlvbigpIHtcbiAgICBpZiAoZm9ybWEgPT09IFwic2VzZ2FkYSAoZXhwb25lbmNpYWwpXCIpIHJldHVybiAtTWF0aC5sb2coMSAtIE1hdGgucmFuZG9tKCkpICogMjtcbiAgICBpZiAoZm9ybWEgPT09IFwidW5pZm9ybWVcIikgcmV0dXJuIE1hdGgucmFuZG9tKCkgKiA2O1xuICAgIGlmIChmb3JtYSA9PT0gXCJiaW1vZGFsXCIpIHJldHVybiBNYXRoLnJhbmRvbSgpIDwgMC41ID8gbm9ybWFsKCkgKiAwLjYgKyAxIDogbm9ybWFsKCkgKiAwLjYgKyA1O1xuICAgIHJldHVybiBub3JtYWwoKSAqIDEuMiArIDM7XG4gIH07XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTMiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJwb2JsYWNpb24gPSBBcnJheS5mcm9tKHtsZW5ndGg6IDMwMDB9LCBnZW5lcmFyKVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC00IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoibWVkaWFzVGNsID0gQXJyYXkuZnJvbSh7bGVuZ3RoOiAxMjAwfSwgKCkgPT4ge1xuICBsZXQgcyA9IDA7XG4gIGZvciAobGV0IGkgPSAwOyBpIDwgblRjbDsgaSsrKSBzICs9IGdlbmVyYXIoKTtcbiAgcmV0dXJuIHMgLyBuVGNsO1xufSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IlBsb3QucGxvdCh7XG4gIGhlaWdodDogMTcwLFxuICBtYXJnaW5Ub3A6IDI0LFxuICB0aXRsZTogXCJMYSBwb2JsYWNpw7NuIChsb3MgZGF0b3MgaW5kaXZpZHVhbGVzKVwiLFxuICB4OiB7IGxhYmVsOiBcInZhbG9yXCIsIGRvbWFpbjogWy0xLCA5XSB9LFxuICB5OiB7IGxhYmVsOiBcImZyZWN1ZW5jaWFcIiB9LFxuICBtYXJrczogW1xuICAgIFBsb3QucmVjdFkocG9ibGFjaW9uLCBQbG90LmJpblgoe3k6IFwiY291bnRcIn0sIHt4OiBkID0+IGQsIHRocmVzaG9sZHM6IDQ1LCBmaWxsOiBcIiM4ODg3ODBcIn0pKSxcbiAgICBQbG90LnJ1bGVZKFswXSlcbiAgXVxufSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IlBsb3QucGxvdCh7XG4gIGhlaWdodDogMTkwLFxuICBtYXJnaW5Ub3A6IDI0LFxuICB0aXRsZTogYERpc3RyaWJ1Y2nDs24gZGUgbGEgbWVkaWEgbXVlc3RyYWwgKG4gPSAke25UY2x9KWAsXG4gIHg6IHsgbGFiZWw6IFwibWVkaWEgbXVlc3RyYWxcIiwgZG9tYWluOiBbLTEsIDldIH0sXG4gIHk6IHsgbGFiZWw6IFwiZnJlY3VlbmNpYVwiIH0sXG4gIG1hcmtzOiBbXG4gICAgUGxvdC5yZWN0WShtZWRpYXNUY2wsIFBsb3QuYmluWCh7eTogXCJjb3VudFwifSwge3g6IGQgPT4gZCwgdGhyZXNob2xkczogNDUsIGZpbGw6IFwiIzFGNEU3OVwifSkpLFxuICAgIFBsb3QucnVsZVkoWzBdKVxuICBdXG59KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdmb3JtYScpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCduVGNsJykifV19
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../..";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -734,13 +1220,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./05-experimentos.html" class="pagination-link" aria-label="Producción de datos: diseño de experimentos">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Producción de datos: diseño de experimentos</span></span>
+      <a href="./laboratorio-estandarizacion.html" class="pagination-link" aria-label="Laboratorio interactivo: la estandarización">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Laboratorio interactivo: la estandarización</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./07-estimacion-pruebas.html" class="pagination-link" aria-label="Estimación y prueba de hipótesis">
-        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Estimación y prueba de hipótesis</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estimación y prueba de hipótesis</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

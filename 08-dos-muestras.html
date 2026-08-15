@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>8&nbsp; Inferencia para dos parámetros – Estadística para Ciencias de la Computación</title>
+<title>9&nbsp; Inferencia para dos parámetros – Estadística para Ciencias de la Computación</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -22,6 +22,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -44,7 +79,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-e671ceb1ec85f3bd6fb682ad87dd4085.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-22a2d3c8fd5a3a2e3c4a69971a64c298.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -72,11 +109,42 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Buscar"
   }
 }</script>
+<script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 <link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -89,7 +157,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06-muestrales.html">III. Inferencia estadística</a></li><li class="breadcrumb-item"><a href="./08-dos-muestras.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Inferencia para dos parámetros</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./laboratorio-estandarizacion.html">III. Inferencia estadística</a></li><li class="breadcrumb-item"><a href="./08-dos-muestras.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Inferencia para dos parámetros</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -190,38 +258,44 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./laboratorio-estandarizacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Laboratorio interactivo: la estandarización</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./06-muestrales.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Distribuciones muestrales y TCL</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Distribuciones muestrales y TCL</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./07-estimacion-pruebas.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Estimación y prueba de hipótesis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estimación y prueba de hipótesis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./08-dos-muestras.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Inferencia para dos parámetros</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Inferencia para dos parámetros</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./09-enumerativos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Inferencia para datos enumerativos</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Inferencia para datos enumerativos</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10-anova.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Análisis de varianza (ANOVA)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Análisis de varianza (ANOVA)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./11-regresion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Inferencia en regresión</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Inferencia en regresión</span></span></a>
   </div>
 </li>
       </ul>
@@ -232,6 +306,41 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Referencias</span></a>
   </div>
 </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Apéndices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mapa-decision.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mapa de decisión</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./formulario.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Formulario</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./apendice-python.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">R y Python, lado a lado</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./laboratorio-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Practicar R sin instalar nada</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -242,20 +351,29 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">En este capítulo</h2>
    
   <ul>
-  <li><a href="#intervalo-y-prueba-para-la-diferencia-de-dos-medias-independientes-y-pareadas" id="toc-intervalo-y-prueba-para-la-diferencia-de-dos-medias-independientes-y-pareadas" class="nav-link active" data-scroll-target="#intervalo-y-prueba-para-la-diferencia-de-dos-medias-independientes-y-pareadas"><span class="header-section-number">8.1</span> Intervalo y prueba para la diferencia de dos medias (independientes y pareadas)</a></li>
-  <li><a href="#la-prueba-ab-como-comparación-de-dos-grupos" id="toc-la-prueba-ab-como-comparación-de-dos-grupos" class="nav-link" data-scroll-target="#la-prueba-ab-como-comparación-de-dos-grupos"><span class="header-section-number">8.2</span> La prueba A/B como comparación de dos grupos</a></li>
-  <li><a href="#comparación-de-varianzas-complemento-para-el-examen-de-la-mcd" id="toc-comparación-de-varianzas-complemento-para-el-examen-de-la-mcd" class="nav-link" data-scroll-target="#comparación-de-varianzas-complemento-para-el-examen-de-la-mcd"><span class="header-section-number">8.3</span> Comparación de varianzas <em>(complemento para el examen de la MCD)</em></a></li>
-  <li><a href="#verificación-de-supuestos" id="toc-verificación-de-supuestos" class="nav-link" data-scroll-target="#verificación-de-supuestos"><span class="header-section-number">8.4</span> Verificación de supuestos</a></li>
-  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">8.5</span> Ejercicios</a></li>
+  <li><a href="#dos-grupos-independientes" id="toc-dos-grupos-independientes" class="nav-link active" data-scroll-target="#dos-grupos-independientes"><span class="header-section-number">9.1</span> Dos grupos independientes</a>
+  <ul class="collapse">
+  <li><a href="#sec-dosmedias-mano" id="toc-sec-dosmedias-mano" class="nav-link" data-scroll-target="#sec-dosmedias-mano"><span class="header-section-number">9.1.1</span> El mismo cálculo a mano</a></li>
+  </ul></li>
+  <li><a href="#cuando-no-hay-diferencia" id="toc-cuando-no-hay-diferencia" class="nav-link" data-scroll-target="#cuando-no-hay-diferencia"><span class="header-section-number">9.2</span> Cuando NO hay diferencia</a>
+  <ul class="collapse">
+  <li><a href="#sec-lab-traslape" id="toc-sec-lab-traslape" class="nav-link" data-scroll-target="#sec-lab-traslape"><span class="header-section-number">9.2.1</span> Laboratorio: traslape y significancia</a></li>
+  </ul></li>
+  <li><a href="#muestras-pareadas" id="toc-muestras-pareadas" class="nav-link" data-scroll-target="#muestras-pareadas"><span class="header-section-number">9.3</span> Muestras pareadas</a></li>
+  <li><a href="#la-prueba-ab" id="toc-la-prueba-ab" class="nav-link" data-scroll-target="#la-prueba-ab"><span class="header-section-number">9.4</span> La prueba A/B</a></li>
+  <li><a href="#comparación-de-varianzas" id="toc-comparación-de-varianzas" class="nav-link" data-scroll-target="#comparación-de-varianzas"><span class="header-section-number">9.5</span> Comparación de varianzas</a></li>
+  <li><a href="#verificación-de-supuestos" id="toc-verificación-de-supuestos" class="nav-link" data-scroll-target="#verificación-de-supuestos"><span class="header-section-number">9.6</span> Verificación de supuestos</a></li>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen"><span class="header-section-number">9.7</span> Resumen</a></li>
+  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">9.8</span> Ejercicios</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06-muestrales.html">III. Inferencia estadística</a></li><li class="breadcrumb-item"><a href="./08-dos-muestras.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Inferencia para dos parámetros</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./laboratorio-estandarizacion.html">III. Inferencia estadística</a></li><li class="breadcrumb-item"><a href="./08-dos-muestras.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Inferencia para dos parámetros</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-cap8" class="quarto-section-identifier"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Inferencia para dos parámetros</span></span></h1>
+<h1 class="title"><span id="sec-cap8" class="quarto-section-identifier"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Inferencia para dos parámetros</span></span></h1>
 </div>
 
 
@@ -272,56 +390,635 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="callout callout-style-default callout-important callout-titled" title="Plantilla en construcción">
+<div class="callout callout-style-default callout-warning callout-titled" title="Capítulo en revisión">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Importante</span>Plantilla en construcción
+<span class="screen-reader-only">Advertencia</span>Capítulo en revisión
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Este capítulo corresponde a <strong>Semana 10</strong> del calendario y usa los datos de <strong>lagartijas, algoritmos (A/B)</strong>. La estructura de secciones ya está fijada; el contenido se desarrolla con el mismo formato del <a href="01-exploracion.html" class="quarto-xref"><span>Capítulo 1</span></a>: pregunta real, técnica, supuestos, cómputo en R e interpretación.</p>
+<p>El contenido de este capítulo está completo, pero todavía no pasa por la revisión final de redacción. Se avisará en clase cuando quede listo para estudiar de aquí. Mientras tanto se puede consultar, con esa advertencia.</p>
 </div>
 </div>
-<section id="intervalo-y-prueba-para-la-diferencia-de-dos-medias-independientes-y-pareadas" class="level2" data-number="8.1">
-<h2 data-number="8.1" class="anchored" data-anchor-id="intervalo-y-prueba-para-la-diferencia-de-dos-medias-independientes-y-pareadas"><span class="header-section-number">8.1</span> Intervalo y prueba para la diferencia de dos medias (independientes y pareadas)</h2>
-<p><em>(En construcción.)</em></p>
-</section>
-<section id="la-prueba-ab-como-comparación-de-dos-grupos" class="level2" data-number="8.2">
-<h2 data-number="8.2" class="anchored" data-anchor-id="la-prueba-ab-como-comparación-de-dos-grupos"><span class="header-section-number">8.2</span> La prueba A/B como comparación de dos grupos</h2>
-<p><em>(En construcción.)</em></p>
-</section>
-<section id="comparación-de-varianzas-complemento-para-el-examen-de-la-mcd" class="level2" data-number="8.3">
-<h2 data-number="8.3" class="anchored" data-anchor-id="comparación-de-varianzas-complemento-para-el-examen-de-la-mcd"><span class="header-section-number">8.3</span> Comparación de varianzas <em>(complemento para el examen de la MCD)</em></h2>
-<p><em>(En construcción.)</em></p>
-</section>
-<section id="verificación-de-supuestos" class="level2" data-number="8.4">
-<h2 data-number="8.4" class="anchored" data-anchor-id="verificación-de-supuestos"><span class="header-section-number">8.4</span> Verificación de supuestos</h2>
-<p><em>(En construcción.)</em></p>
-<div class="callout callout-style-default callout-tip callout-titled" title="¿Qué técnica uso?">
+<div class="callout callout-style-default callout-tip callout-titled" title="Objetivos del capítulo">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>¿Qué técnica uso?
+<span class="screen-reader-only">Tip</span>Objetivos del capítulo
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Dos grupos, una variable cuantitativa: prueba t para la diferencia de medias. Es exactamente lo que hay detrás de una prueba A/B.</p>
+<ul>
+<li>Comparar las medias de <strong>dos grupos independientes</strong> con un intervalo y una prueba.</li>
+<li>Reconocer cuándo los datos están <strong>pareados</strong> y por qué eso cambia el análisis.</li>
+<li>Entender una <strong>prueba A/B</strong> como lo que es: una comparación de dos muestras.</li>
+<li>Comparar <strong>varianzas</strong> de dos poblaciones.</li>
+<li>Verificar los <strong>supuestos</strong> antes de confiar en el resultado.</li>
+</ul>
+</div>
+</div>
+<p>En el <a href="07-estimacion-pruebas.html" class="quarto-xref"><span>Capítulo 8</span></a> comparamos una muestra contra un valor de referencia. Pero la pregunta más común en la práctica es otra: <strong>¿estos dos grupos difieren?</strong> ¿Las lagartijas urbanas son más cálidas que las de campo? ¿La versión nueva del sistema es más rápida que la anterior? Ese es el tema de este capítulo.</p>
+<section id="dos-grupos-independientes" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="dos-grupos-independientes"><span class="header-section-number">9.1</span> Dos grupos independientes</h2>
+<p>Dos muestras son <strong>independientes</strong> cuando los individuos de una no tienen relación con los de la otra: lagartijas distintas, usuarios distintos, parcelas distintas. El parámetro de interés es la <strong>diferencia de medias</strong> <span class="math inline">\(\mu_1 - \mu_2\)</span>, y el procedimiento es el mismo de siempre: un estimador (la diferencia de medias muestrales), su error estándar, y a partir de ahí el intervalo y la prueba.</p>
+<p>Empecemos como siempre: <strong>mirando</strong> los datos.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(lagartijas, <span class="fu">aes</span>(<span class="at">x =</span> habitat, <span class="at">y =</span> temp_corporal, <span class="at">fill =</span> habitat)) <span class="sc">+</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Hábitat"</span>, <span class="at">y =</span> <span class="st">"Temperatura corporal (°C)"</span>) <span class="sc">+</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="fig-box-temp" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-box-temp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="08-dos-muestras_files/figure-html/fig-box-temp-1.png" class="img-fluid figure-img" width="441">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-box-temp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;9.1: Temperatura corporal por hábitat.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>lagartijas <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(habitat) <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">media =</span> <span class="fu">mean</span>(temp_corporal), <span class="at">de =</span> <span class="fu">sd</span>(temp_corporal))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["habitat"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]},{"label":["media"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["de"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"campo","2":"30","3":"33.98000","4":"1.171030"},{"1":"urbana","2":"32","3":"35.41875","4":"1.633409"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Ahora la inferencia. Las hipótesis son <span class="math inline">\(H_0: \mu_1 = \mu_2\)</span> (equivalente a <span class="math inline">\(\mu_1 - \mu_2 = 0\)</span>) contra <span class="math inline">\(H_1: \mu_1 \neq \mu_2\)</span>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(temp_corporal <span class="sc">~</span> habitat, <span class="at">data =</span> lagartijas)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Welch Two Sample t-test</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  temp_corporal by habitat</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; t = -4.0045, df = 56.239, p-value = 0.0001842</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; alternative hypothesis: true difference in means between group campo and group urbana is not equal to 0</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 95 percent confidence interval:</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  -2.1584179 -0.7190821</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sample estimates:</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  mean in group campo mean in group urbana </span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             33.98000             35.41875</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El valor p es muy pequeño, así que rechazamos <span class="math inline">\(H_0\)</span>: las lagartijas urbanas son significativamente más cálidas. Pero lo más informativo es el <strong>intervalo de confianza de la diferencia</strong>: nos dice que la diferencia real ronda 1.4 °C. Redacción para una bióloga: <em>“Las lagartijas de zona urbana presentan una temperatura corporal media aproximadamente 1.4 °C mayor que las de campo abierto (p &lt; 0.001), diferencia compatible con el efecto de isla de calor urbana.”</em></p>
+<p>Nótese que R usa por omisión la <strong>prueba t de Welch</strong>, que no exige que las dos poblaciones tengan la misma varianza. Es la opción segura y la recomendable por defecto.</p>
+</div>
+</div>
+<section id="sec-dosmedias-mano" class="level3" data-number="9.1.1">
+<h3 data-number="9.1.1" class="anchored" data-anchor-id="sec-dosmedias-mano"><span class="header-section-number">9.1.1</span> El mismo cálculo a mano</h3>
+<p>Con cinco lagartijas de cada hábitat, la comparación cabe en una hoja:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Urbanas</th>
+<th>35.1</th>
+<th>36.4</th>
+<th>35.8</th>
+<th>36.0</th>
+<th>34.7</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Campo</strong></td>
+<td>33.8</td>
+<td>34.2</td>
+<td>33.5</td>
+<td>34.4</td>
+<td>33.1</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Paso 1. Resumir cada grupo por separado</strong>, con la fórmula de cálculo del <a href="02-descriptiva.html#sec-descriptiva-mano" class="quarto-xref"><span>Sección 2.2.1</span></a>:</p>
+<p><span class="math display">\[\bar{x}_1 = 35.60, \quad s_1^2 = 0.475 \qquad\qquad \bar{x}_2 = 33.80, \quad s_2^2 = 0.275\]</span></p>
+<p><strong>Paso 2. El error estándar de la diferencia.</strong> No se suman las desviaciones sino las <strong>varianzas divididas entre sus tamaños</strong>:</p>
+<p><span class="math display">\[\text{EE} = \sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}} = \sqrt{\frac{0.475}{5} + \frac{0.275}{5}} = \sqrt{0.15} = 0.3873\]</span></p>
+<p><strong>Paso 3. El estadístico</strong>, con la misma estructura de siempre:</p>
+<p><span class="math display">\[t = \frac{\bar{x}_1 - \bar{x}_2}{\text{EE}} = \frac{35.60 - 33.80}{0.3873} = \frac{1.80}{0.3873} = 4.648\]</span></p>
+<p><strong>Paso 4. La decisión.</strong> Con la aproximación de Welch los grados de libertad son aproximadamente 7.5; el valor crítico bilateral al 5 % ronda 2.36. Como <span class="math inline">\(4.648 &gt; 2.36\)</span>, se rechaza <span class="math inline">\(H_0\)</span>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>urb <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">35.1</span>, <span class="fl">36.4</span>, <span class="fl">35.8</span>, <span class="fl">36.0</span>, <span class="fl">34.7</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>cam <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">33.8</span>, <span class="fl">34.2</span>, <span class="fl">33.5</span>, <span class="fl">34.4</span>, <span class="fl">33.1</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(urb, cam)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Welch Two Sample t-test</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  urb and cam</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; t = 4.6476, df = 7.4689, p-value = 0.001979</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; alternative hypothesis: true difference in means is not equal to 0</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 95 percent confidence interval:</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  0.8957119 2.7042881</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sample estimates:</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; mean of x mean of y </span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      35.6      33.8</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Coinciden: <span class="math inline">\(t = 4.648\)</span> y <span class="math inline">\(p \approx 0.002\)</span>.</p>
+<p>Lo revelador es comparar esta fórmula con la del <a href="07-estimacion-pruebas.html#sec-t-mano" class="quarto-xref"><span>Sección 8.6.1</span></a>. Son la misma idea: <strong>una diferencia dividida entre su error estándar</strong>. Lo único que cambia es qué diferencia se mide (contra un valor de referencia, o entre dos grupos) y cómo se calcula el error estándar correspondiente. Casi todos los estadísticos de prueba del curso tienen esta forma, y reconocerla vale más que memorizar cada variante.</p>
+<p>Un detalle que suele confundir: los grados de libertad de Welch salen de una fórmula fea que da un número <strong>no entero</strong> (aquí 7.5). No hay que calcularla a mano; basta saber que quedan entre el menor de los <span class="math inline">\(n_i - 1\)</span> y su suma, y usar el valor crítico correspondiente.</p>
 </div>
 </div>
 </section>
-<section id="ejercicios" class="level2" data-number="8.5">
-<h2 data-number="8.5" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">8.5</span> Ejercicios</h2>
-<p><em>Por desarrollar (banco de la Dra. Figueroa reorganizado + reactivos nuevos).</em></p>
+</section>
+<section id="cuando-no-hay-diferencia" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="cuando-no-hay-diferencia"><span class="header-section-number">9.2</span> Cuando NO hay diferencia</h2>
+<p>Un resultado no significativo también es un resultado, y saber reportarlo es parte del oficio. Comparemos ahora la longitud hocico–cloaca:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(lhc_mm <span class="sc">~</span> habitat, <span class="at">data =</span> lagartijas)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Welch Two Sample t-test</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  lhc_mm by habitat</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; t = -1.1542, df = 59.985, p-value = 0.253</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; alternative hypothesis: true difference in means between group campo and group urbana is not equal to 0</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 95 percent confidence interval:</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  -4.284754  1.149337</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sample estimates:</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  mean in group campo mean in group urbana </span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             62.41667             63.98438</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Ausencia de evidencia no es evidencia de ausencia">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Ausencia de evidencia no es evidencia de ausencia
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Aquí el valor p ronda 0.25: <strong>no rechazamos</strong> <span class="math inline">\(H_0\)</span>. La redacción correcta es <em>“no encontramos evidencia de que la longitud difiera entre hábitats”</em>, y <strong>no</strong> <em>“se demostró que son iguales”</em>.</p>
+<p>Obsérvese el intervalo de confianza de la diferencia: incluye al cero, pero también valores de varios milímetros en ambas direcciones. Es decir, los datos son compatibles con “no hay diferencia” y también con “hay una diferencia moderada”: simplemente no tenemos precisión suficiente para distinguirlas. Por eso el intervalo es más honesto que el valor p.</p>
+</div>
+</div>
+<section id="sec-lab-traslape" class="level3" data-number="9.2.1">
+<h3 data-number="9.2.1" class="anchored" data-anchor-id="sec-lab-traslape"><span class="header-section-number">9.2.1</span> Laboratorio: traslape y significancia</h3>
+<p>Aquí se corrige una intuición muy extendida: <em>“si las cajas se traslapan, no hay diferencia”</em>. Falso. Al mover la diferencia real entre grupos y el tamaño de muestra se observa que con <span class="math inline">\(n\)</span> grande dos cajas que se traslapan bastante pueden resultar claramente significativas.</p>
+<div class="cell panel-input card bg-light p-2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="121" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 120;"><span id="cb6-121"><a href="#cb6-121" aria-hidden="true" tabindex="-1"></a>viewof dif <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">0</span><span class="op">,</span> <span class="dv">3</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.8</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.1</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"diferencia real entre medias"</span>})</span>
+<span id="cb6-122"><a href="#cb6-122" aria-hidden="true" tabindex="-1"></a>viewof nGrupo <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">5</span><span class="op">,</span> <span class="dv">200</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">20</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">5</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"n por grupo"</span>})</span>
+<span id="cb6-123"><a href="#cb6-123" aria-hidden="true" tabindex="-1"></a>viewof remuestrear <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">button</span>(<span class="st">"Nuevas muestras"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="127" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 126;"><span id="cb7-127"><a href="#cb7-127" aria-hidden="true" tabindex="-1"></a>muestras <span class="op">=</span> {</span>
+<span id="cb7-128"><a href="#cb7-128" aria-hidden="true" tabindex="-1"></a>  remuestrear<span class="op">;</span></span>
+<span id="cb7-129"><a href="#cb7-129" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> nA <span class="op">=</span> d3<span class="op">.</span><span class="fu">randomNormal</span>(<span class="dv">10</span><span class="op">,</span> <span class="dv">2</span>)<span class="op">,</span> nB <span class="op">=</span> d3<span class="op">.</span><span class="fu">randomNormal</span>(<span class="dv">10</span> <span class="op">+</span> dif<span class="op">,</span> <span class="dv">2</span>)<span class="op">;</span></span>
+<span id="cb7-130"><a href="#cb7-130" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> [</span>
+<span id="cb7-131"><a href="#cb7-131" aria-hidden="true" tabindex="-1"></a>    <span class="op">...</span><span class="bu">Array</span><span class="op">.</span><span class="fu">from</span>({<span class="dt">length</span><span class="op">:</span> nGrupo}<span class="op">,</span> () <span class="kw">=&gt;</span> ({ <span class="dt">grupo</span><span class="op">:</span> <span class="st">"A"</span><span class="op">,</span> <span class="dt">valor</span><span class="op">:</span> <span class="fu">nA</span>() }))<span class="op">,</span></span>
+<span id="cb7-132"><a href="#cb7-132" aria-hidden="true" tabindex="-1"></a>    <span class="op">...</span><span class="bu">Array</span><span class="op">.</span><span class="fu">from</span>({<span class="dt">length</span><span class="op">:</span> nGrupo}<span class="op">,</span> () <span class="kw">=&gt;</span> ({ <span class="dt">grupo</span><span class="op">:</span> <span class="st">"B"</span><span class="op">,</span> <span class="dt">valor</span><span class="op">:</span> <span class="fu">nB</span>() }))</span>
+<span id="cb7-133"><a href="#cb7-133" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">;</span></span>
+<span id="cb7-134"><a href="#cb7-134" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="139" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 138;"><span id="cb8-139"><a href="#cb8-139" aria-hidden="true" tabindex="-1"></a>gammlnJS <span class="op">=</span> (x) <span class="kw">=&gt;</span> {</span>
+<span id="cb8-140"><a href="#cb8-140" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> cof <span class="op">=</span> [<span class="fl">76.18009172947146</span><span class="op">,</span> <span class="op">-</span><span class="fl">86.50532032941677</span><span class="op">,</span> <span class="fl">24.01409824083091</span><span class="op">,</span></span>
+<span id="cb8-141"><a href="#cb8-141" aria-hidden="true" tabindex="-1"></a>               <span class="op">-</span><span class="fl">1.231739572450155</span><span class="op">,</span> <span class="fl">0.1208650973866179e-2</span><span class="op">,</span> <span class="op">-</span><span class="fl">0.5395239384953e-5</span>]<span class="op">;</span></span>
+<span id="cb8-142"><a href="#cb8-142" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> y <span class="op">=</span> x<span class="op">,</span> tmp <span class="op">=</span> x <span class="op">+</span> <span class="fl">5.5</span><span class="op">;</span></span>
+<span id="cb8-143"><a href="#cb8-143" aria-hidden="true" tabindex="-1"></a>  tmp <span class="op">-=</span> (x <span class="op">+</span> <span class="fl">0.5</span>) <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">log</span>(tmp)<span class="op">;</span></span>
+<span id="cb8-144"><a href="#cb8-144" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> ser <span class="op">=</span> <span class="fl">1.000000000190015</span><span class="op">;</span></span>
+<span id="cb8-145"><a href="#cb8-145" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">let</span> j <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> j <span class="op">&lt;</span> <span class="dv">6</span><span class="op">;</span> j<span class="op">++</span>) ser <span class="op">+=</span> cof[j] <span class="op">/</span> <span class="op">++</span>y<span class="op">;</span></span>
+<span id="cb8-146"><a href="#cb8-146" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="op">-</span>tmp <span class="op">+</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">log</span>(<span class="fl">2.5066282746310005</span> <span class="op">*</span> ser <span class="op">/</span> x)<span class="op">;</span></span>
+<span id="cb8-147"><a href="#cb8-147" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="152" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 151;"><span id="cb9-152"><a href="#cb9-152" aria-hidden="true" tabindex="-1"></a>betacf <span class="op">=</span> (a<span class="op">,</span> b<span class="op">,</span> x) <span class="kw">=&gt;</span> {</span>
+<span id="cb9-153"><a href="#cb9-153" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> qab <span class="op">=</span> a <span class="op">+</span> b<span class="op">,</span> qap <span class="op">=</span> a <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> qam <span class="op">=</span> a <span class="op">-</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb9-154"><a href="#cb9-154" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> c <span class="op">=</span> <span class="dv">1</span><span class="op">,</span> d <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> qab <span class="op">*</span> x <span class="op">/</span> qap<span class="op">;</span></span>
+<span id="cb9-155"><a href="#cb9-155" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(d) <span class="op">&lt;</span> <span class="fl">1e-300</span>) d <span class="op">=</span> <span class="fl">1e-300</span><span class="op">;</span></span>
+<span id="cb9-156"><a href="#cb9-156" aria-hidden="true" tabindex="-1"></a>  d <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> d<span class="op">;</span></span>
+<span id="cb9-157"><a href="#cb9-157" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> h <span class="op">=</span> d<span class="op">;</span></span>
+<span id="cb9-158"><a href="#cb9-158" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">let</span> m <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> m <span class="op">&lt;=</span> <span class="dv">300</span><span class="op">;</span> m<span class="op">++</span>) {</span>
+<span id="cb9-159"><a href="#cb9-159" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> m2 <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> m<span class="op">;</span></span>
+<span id="cb9-160"><a href="#cb9-160" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> aa <span class="op">=</span> m <span class="op">*</span> (b <span class="op">-</span> m) <span class="op">*</span> x <span class="op">/</span> ((qam <span class="op">+</span> m2) <span class="op">*</span> (a <span class="op">+</span> m2))<span class="op">;</span></span>
+<span id="cb9-161"><a href="#cb9-161" aria-hidden="true" tabindex="-1"></a>    d <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> aa <span class="op">*</span> d<span class="op">;</span> <span class="cf">if</span> (<span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(d) <span class="op">&lt;</span> <span class="fl">1e-300</span>) d <span class="op">=</span> <span class="fl">1e-300</span><span class="op">;</span></span>
+<span id="cb9-162"><a href="#cb9-162" aria-hidden="true" tabindex="-1"></a>    c <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> aa <span class="op">/</span> c<span class="op">;</span> <span class="cf">if</span> (<span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(c) <span class="op">&lt;</span> <span class="fl">1e-300</span>) c <span class="op">=</span> <span class="fl">1e-300</span><span class="op">;</span></span>
+<span id="cb9-163"><a href="#cb9-163" aria-hidden="true" tabindex="-1"></a>    d <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> d<span class="op">;</span> h <span class="op">*=</span> d <span class="op">*</span> c<span class="op">;</span></span>
+<span id="cb9-164"><a href="#cb9-164" aria-hidden="true" tabindex="-1"></a>    aa <span class="op">=</span> <span class="op">-</span>(a <span class="op">+</span> m) <span class="op">*</span> (qab <span class="op">+</span> m) <span class="op">*</span> x <span class="op">/</span> ((a <span class="op">+</span> m2) <span class="op">*</span> (qap <span class="op">+</span> m2))<span class="op">;</span></span>
+<span id="cb9-165"><a href="#cb9-165" aria-hidden="true" tabindex="-1"></a>    d <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> aa <span class="op">*</span> d<span class="op">;</span> <span class="cf">if</span> (<span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(d) <span class="op">&lt;</span> <span class="fl">1e-300</span>) d <span class="op">=</span> <span class="fl">1e-300</span><span class="op">;</span></span>
+<span id="cb9-166"><a href="#cb9-166" aria-hidden="true" tabindex="-1"></a>    c <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> aa <span class="op">/</span> c<span class="op">;</span> <span class="cf">if</span> (<span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(c) <span class="op">&lt;</span> <span class="fl">1e-300</span>) c <span class="op">=</span> <span class="fl">1e-300</span><span class="op">;</span></span>
+<span id="cb9-167"><a href="#cb9-167" aria-hidden="true" tabindex="-1"></a>    d <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> d<span class="op">;</span></span>
+<span id="cb9-168"><a href="#cb9-168" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> del <span class="op">=</span> d <span class="op">*</span> c<span class="op">;</span> h <span class="op">*=</span> del<span class="op">;</span></span>
+<span id="cb9-169"><a href="#cb9-169" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(del <span class="op">-</span> <span class="dv">1</span>) <span class="op">&lt;</span> <span class="fl">1e-12</span>) <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb9-170"><a href="#cb9-170" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb9-171"><a href="#cb9-171" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> h<span class="op">;</span></span>
+<span id="cb9-172"><a href="#cb9-172" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="177" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 176;"><span id="cb10-177"><a href="#cb10-177" aria-hidden="true" tabindex="-1"></a>betai <span class="op">=</span> (a<span class="op">,</span> b<span class="op">,</span> x) <span class="kw">=&gt;</span> {</span>
+<span id="cb10-178"><a href="#cb10-178" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (x <span class="op">&lt;=</span> <span class="dv">0</span>) <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb10-179"><a href="#cb10-179" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (x <span class="op">&gt;=</span> <span class="dv">1</span>) <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb10-180"><a href="#cb10-180" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> bt <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">exp</span>(<span class="fu">gammlnJS</span>(a <span class="op">+</span> b) <span class="op">-</span> <span class="fu">gammlnJS</span>(a) <span class="op">-</span> <span class="fu">gammlnJS</span>(b)</span>
+<span id="cb10-181"><a href="#cb10-181" aria-hidden="true" tabindex="-1"></a>             <span class="op">+</span> a <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">log</span>(x) <span class="op">+</span> b <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">log</span>(<span class="dv">1</span> <span class="op">-</span> x))<span class="op">;</span></span>
+<span id="cb10-182"><a href="#cb10-182" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> x <span class="op">&lt;</span> (a <span class="op">+</span> <span class="dv">1</span>) <span class="op">/</span> (a <span class="op">+</span> b <span class="op">+</span> <span class="dv">2</span>)</span>
+<span id="cb10-183"><a href="#cb10-183" aria-hidden="true" tabindex="-1"></a>    <span class="op">?</span> bt <span class="op">*</span> <span class="fu">betacf</span>(a<span class="op">,</span> b<span class="op">,</span> x) <span class="op">/</span> a</span>
+<span id="cb10-184"><a href="#cb10-184" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span> <span class="dv">1</span> <span class="op">-</span> bt <span class="op">*</span> <span class="fu">betacf</span>(b<span class="op">,</span> a<span class="op">,</span> <span class="dv">1</span> <span class="op">-</span> x) <span class="op">/</span> b<span class="op">;</span></span>
+<span id="cb10-185"><a href="#cb10-185" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-5" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb11" data-startfrom="190" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 189;"><span id="cb11-190"><a href="#cb11-190" aria-hidden="true" tabindex="-1"></a>prueba <span class="op">=</span> {</span>
+<span id="cb11-191"><a href="#cb11-191" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> A <span class="op">=</span> muestras<span class="op">.</span><span class="fu">filter</span>(d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">grupo</span> <span class="op">===</span> <span class="st">"A"</span>)<span class="op">.</span><span class="fu">map</span>(d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">valor</span>)<span class="op">;</span></span>
+<span id="cb11-192"><a href="#cb11-192" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> B <span class="op">=</span> muestras<span class="op">.</span><span class="fu">filter</span>(d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">grupo</span> <span class="op">===</span> <span class="st">"B"</span>)<span class="op">.</span><span class="fu">map</span>(d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">valor</span>)<span class="op">;</span></span>
+<span id="cb11-193"><a href="#cb11-193" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> m1 <span class="op">=</span> d3<span class="op">.</span><span class="fu">mean</span>(A)<span class="op">,</span> m2 <span class="op">=</span> d3<span class="op">.</span><span class="fu">mean</span>(B)<span class="op">;</span></span>
+<span id="cb11-194"><a href="#cb11-194" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> v1 <span class="op">=</span> d3<span class="op">.</span><span class="fu">variance</span>(A)<span class="op">,</span> v2 <span class="op">=</span> d3<span class="op">.</span><span class="fu">variance</span>(B)<span class="op">;</span></span>
+<span id="cb11-195"><a href="#cb11-195" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> n1 <span class="op">=</span> A<span class="op">.</span><span class="at">length</span><span class="op">,</span> n2 <span class="op">=</span> B<span class="op">.</span><span class="at">length</span><span class="op">;</span></span>
+<span id="cb11-196"><a href="#cb11-196" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> t <span class="op">=</span> (m2 <span class="op">-</span> m1) <span class="op">/</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">sqrt</span>(v1 <span class="op">/</span> n1 <span class="op">+</span> v2 <span class="op">/</span> n2)<span class="op">;</span></span>
+<span id="cb11-197"><a href="#cb11-197" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> gl <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">pow</span>(v1 <span class="op">/</span> n1 <span class="op">+</span> v2 <span class="op">/</span> n2<span class="op">,</span> <span class="dv">2</span>) <span class="op">/</span></span>
+<span id="cb11-198"><a href="#cb11-198" aria-hidden="true" tabindex="-1"></a>             (<span class="bu">Math</span><span class="op">.</span><span class="fu">pow</span>(v1 <span class="op">/</span> n1<span class="op">,</span> <span class="dv">2</span>) <span class="op">/</span> (n1 <span class="op">-</span> <span class="dv">1</span>) <span class="op">+</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">pow</span>(v2 <span class="op">/</span> n2<span class="op">,</span> <span class="dv">2</span>) <span class="op">/</span> (n2 <span class="op">-</span> <span class="dv">1</span>))<span class="op">;</span></span>
+<span id="cb11-199"><a href="#cb11-199" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> { t<span class="op">,</span> gl<span class="op">,</span> <span class="dt">p</span><span class="op">:</span> <span class="fu">betai</span>(gl <span class="op">/</span> <span class="dv">2</span><span class="op">,</span> <span class="fl">0.5</span><span class="op">,</span> gl <span class="op">/</span> (gl <span class="op">+</span> t <span class="op">*</span> t)) }<span class="op">;</span></span>
+<span id="cb11-200"><a href="#cb11-200" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-6" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb12" data-startfrom="205" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 204;"><span id="cb12-205"><a href="#cb12-205" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb12-206"><a href="#cb12-206" aria-hidden="true" tabindex="-1"></a>  <span class="dt">height</span><span class="op">:</span> <span class="dv">250</span><span class="op">,</span></span>
+<span id="cb12-207"><a href="#cb12-207" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> { <span class="dt">label</span><span class="op">:</span> <span class="st">"grupo"</span> }<span class="op">,</span></span>
+<span id="cb12-208"><a href="#cb12-208" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> { <span class="dt">label</span><span class="op">:</span> <span class="st">"valor"</span> }<span class="op">,</span></span>
+<span id="cb12-209"><a href="#cb12-209" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb12-210"><a href="#cb12-210" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">boxY</span>(muestras<span class="op">,</span> { <span class="dt">x</span><span class="op">:</span> <span class="st">"grupo"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"valor"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"#DCE6F1"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#1F4E79"</span> })<span class="op">,</span></span>
+<span id="cb12-211"><a href="#cb12-211" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(muestras<span class="op">,</span> { <span class="dt">x</span><span class="op">:</span> <span class="st">"grupo"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"valor"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"#1F4E79"</span><span class="op">,</span></span>
+<span id="cb12-212"><a href="#cb12-212" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.35</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="fl">2.5</span><span class="op">,</span> <span class="dt">dx</span><span class="op">:</span> () <span class="kw">=&gt;</span> (<span class="bu">Math</span><span class="op">.</span><span class="fu">random</span>() <span class="op">-</span> <span class="fl">0.5</span>) <span class="op">*</span> <span class="dv">14</span> })</span>
+<span id="cb12-213"><a href="#cb12-213" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb12-214"><a href="#cb12-214" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-7" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb13" data-startfrom="219" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 218;"><span id="cb13-219"><a href="#cb13-219" aria-hidden="true" tabindex="-1"></a><span class="fu">md</span><span class="vs">`t = **</span><span class="sc">${</span>prueba<span class="op">.</span><span class="at">t</span><span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">2</span>)<span class="sc">}</span><span class="vs">** · valor p = **</span><span class="sc">${</span>prueba<span class="op">.</span><span class="at">p</span> <span class="op">&lt;</span> <span class="fl">0.0001</span> <span class="op">?</span> <span class="st">"&lt; 0.0001"</span> <span class="op">:</span> prueba<span class="op">.</span><span class="at">p</span><span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">4</span>)<span class="sc">}</span><span class="vs">** · </span><span class="sc">${</span>prueba<span class="op">.</span><span class="at">p</span> <span class="op">&lt;</span> <span class="fl">0.05</span> <span class="op">?</span> <span class="st">"**diferencia significativa** (α = 0.05)"</span> <span class="op">:</span> <span class="st">"no significativa (α = 0.05)"</span><span class="sc">}</span><span class="vs">`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-8" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Con la diferencia en 0.8 y el tamaño en 10 por grupo. Las cajas se traslapan y el resultado casi nunca es significativo. Al <strong>subir <span class="math inline">\(n\)</span> a 150 sin tocar la diferencia</strong>: las cajas se traslapan prácticamente igual, pero el valor p se desploma y la diferencia se vuelve significativa.</p>
+<p>¿Por qué? Porque la caja describe la dispersión de <strong>los datos individuales</strong>, mientras que la prueba se refiere a la precisión de <strong>las medias</strong>, que mejora con <span class="math inline">\(\sqrt{n}\)</span>. Son cosas distintas. Por eso el traslape de cajas no es criterio para decidir significancia (y, en el otro sentido, tampoco basta con que las cajas se separen si <span class="math inline">\(n\)</span> es minúsculo).</p>
+<p>Vale la pena el caso incómodo: diferencia en <strong>0</strong> con <span class="math inline">\(n = 200\)</span>. De vez en cuando saldrá “significativo”: es el error tipo I, ocurriendo el 5 % de las veces, tal como está diseñado.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="muestras-pareadas" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="muestras-pareadas"><span class="header-section-number">9.3</span> Muestras pareadas</h2>
+<p>A veces las observaciones <strong>vienen en parejas naturales</strong>: el mismo paciente antes y después, el mismo terreno con dos tratamientos, o (como en nuestro proyecto) <strong>el mismo juez calificando dos marcas</strong>. Ignorar ese emparejamiento desperdicia información.</p>
+<p>La solución es elegante: se calcula la <strong>diferencia dentro de cada par</strong> y se le aplica la prueba de <strong>una</strong> muestra del <a href="07-estimacion-pruebas.html" class="quarto-xref"><span>Capítulo 8</span></a>, con <span class="math inline">\(H_0: \mu_d = 0\)</span>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>galletas <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"datos/galletas.csv"</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>pares <span class="ot">&lt;-</span> galletas <span class="sc">|&gt;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(marca <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Oreo"</span>, <span class="st">"GreatValue"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> juez, <span class="at">names_from =</span> marca, <span class="at">values_from =</span> agrado)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(pares<span class="sc">$</span>Oreo, pares<span class="sc">$</span>GreatValue, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Paired t-test</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  pares$Oreo and pares$GreatValue</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; t = 8.195, df = 24, p-value = 2.055e-08</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; alternative hypothesis: true mean difference is not equal to 0</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 95 percent confidence interval:</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1.765635 2.954365</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sample estimates:</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; mean difference </span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;            2.36</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La diferencia media es de unos <strong>2.4 puntos</strong> de agrado a favor de Oreo, con un intervalo aproximado de 1.8 a 3.0 y un valor p minúsculo.</p>
+<p>La ventaja del análisis pareado es que <strong>elimina la variabilidad entre jueces</strong>: no importa que Juan califique todo alto y María todo bajo, porque a cada quien se le resta consigo mismo. Al quitar esa fuente de ruido, la prueba gana potencia. Aplicar por error una prueba de muestras independientes aquí daría un resultado más débil y sería metodológicamente incorrecto.</p>
+<p><strong>La regla:</strong> si se puede trazar una línea que una cada dato de un grupo con exactamente un dato del otro, los datos son pareados.</p>
+</div>
+</div>
+</section>
+<section id="la-prueba-ab" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="la-prueba-ab"><span class="header-section-number">9.4</span> La prueba A/B</h2>
+<p>En la industria del software, comparar dos versiones de un sistema con usuarios asignados al azar se llama <strong>prueba A/B</strong>. Estadísticamente <strong>no es nada nuevo</strong>: es un experimento aleatorizado (<a href="05-experimentos.html" class="quarto-xref"><span>Capítulo 5</span></a>) analizado con una comparación de dos muestras.</p>
+<p>Comparemos el tiempo de ejecución del mismo algoritmo en dos entornos:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>ab <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"datos/algoritmos_ab.csv"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>ab <span class="sc">|&gt;</span> <span class="fu">group_by</span>(entorno) <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">media =</span> <span class="fu">mean</span>(tiempo_ms), <span class="at">de =</span> <span class="fu">sd</span>(tiempo_ms))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["entorno"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]},{"label":["media"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["de"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"Mac","2":"30","3":"10.58367","4":"1.284731"},{"1":"Windows","2":"30","3":"12.58533","4":"1.892229"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(tiempo_ms <span class="sc">~</span> entorno, <span class="at">data =</span> ab)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Welch Two Sample t-test</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  tiempo_ms by entorno</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; t = -4.7936, df = 51.051, p-value = 1.457e-05</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; alternative hypothesis: true difference in means between group Mac and group Windows is not equal to 0</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 95 percent confidence interval:</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  -2.839963 -1.163370</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sample estimates:</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     mean in group Mac mean in group Windows </span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              10.58367              12.58533</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Windows resulta unos <strong>2 ms más lento</strong> en promedio, con un valor p muy pequeño. Reportar solo “es significativo” sería insuficiente: lo que decide si vale la pena migrar es el <strong>tamaño del efecto</strong> y su intervalo, junto con el costo de cambiar. Es la misma lección del <a href="07-estimacion-pruebas.html" class="quarto-xref"><span>Capítulo 8</span></a>: significancia estadística no es relevancia práctica.</p>
+</div>
+</div>
+</section>
+<section id="comparación-de-varianzas" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="comparación-de-varianzas"><span class="header-section-number">9.5</span> Comparación de varianzas</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Tema complementario">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Tema complementario
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Este tema queda fuera del temario básico del curso, pero aparece con frecuencia en la práctica (y en las evaluaciones de posgrado) y motiva el chequeo de supuestos del ANOVA (<a href="10-anova.html" class="quarto-xref"><span>Capítulo 11</span></a>).</p>
+</div>
+</div>
+<p>A veces la pregunta no es sobre el centro sino sobre la <strong>variabilidad</strong>: ¿un proceso es más consistente que otro? Se compara mediante el <strong>cociente de varianzas</strong>, cuya distribución bajo <span class="math inline">\(H_0: \sigma_1^2 = \sigma_2^2\)</span> es una <strong>F de Fisher</strong>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var.test</span>(temp_corporal <span class="sc">~</span> habitat, <span class="at">data =</span> lagartijas)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  F test to compare two variances</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  temp_corporal by habitat</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F = 0.51398, num df = 29, denom df = 31, p-value = 0.07508</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; alternative hypothesis: true ratio of variances is not equal to 1</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 95 percent confidence interval:</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  0.2488309 1.0712082</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sample estimates:</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ratio of variances </span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;          0.5139797</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El cociente de varianzas es cercano a 2 (la desviación urbana es 1.63 °C contra 1.17 °C en el campo). Además de ser más cálidas, las lagartijas urbanas son <strong>más variables</strong>, lo cual es biológicamente razonable: la ciudad ofrece microambientes muy distintos (asfalto, sombra, jardines) mientras que el campo abierto es más homogéneo.</p>
+<p>Cuidado: la prueba F es <strong>muy sensible a la no normalidad</strong>. Si los datos no son aproximadamente normales, conviene usar la prueba de Levene, más robusta.</p>
+</div>
+</div>
+</section>
+<section id="verificación-de-supuestos" class="level2" data-number="9.6">
+<h2 data-number="9.6" class="anchored" data-anchor-id="verificación-de-supuestos"><span class="header-section-number">9.6</span> Verificación de supuestos</h2>
+<p>Antes de confiar en cualquiera de estas pruebas, hay que revisar tres cosas:</p>
+<ol type="1">
+<li><strong>Independencia</strong>: las observaciones deben ser independientes entre sí (garantizada por el diseño: muestreo aleatorio o asignación aleatoria).</li>
+<li><strong>Normalidad</strong>: importa sobre todo con muestras pequeñas; con <span class="math inline">\(n\)</span> grande el TCL nos protege. Se revisa con un Q-Q plot <strong>por grupo</strong>.</li>
+<li><strong>Igualdad de varianzas</strong>: la prueba de Welch (la de R por omisión) no la requiere, así que este supuesto deja de ser crítico.</li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(lagartijas, <span class="fu">aes</span>(<span class="at">sample =</span> temp_corporal)) <span class="sc">+</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span> <span class="fu">stat_qq_line</span>(<span class="at">color =</span> <span class="st">"#1F4E79"</span>) <span class="sc">+</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>habitat) <span class="sc">+</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Cuantiles teóricos"</span>, <span class="at">y =</span> <span class="st">"Cuantiles de los datos"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="fig-qq-supuestos" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-qq-supuestos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="08-dos-muestras_files/figure-html/fig-qq-supuestos-1.png" class="img-fluid figure-img" width="576">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-qq-supuestos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;9.2: Q-Q plot por hábitat: los puntos deben seguir la recta.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="¿Qué técnica usar?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>¿Qué técnica usar?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Con <strong>dos grupos</strong>:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Situación</th>
+<th>Técnica en R</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Dos grupos independientes, variable cuantitativa</td>
+<td><code>t.test(y ~ grupo)</code> (Welch)</td>
+</tr>
+<tr class="even">
+<td>Observaciones emparejadas (antes/después, mismo sujeto)</td>
+<td><code>t.test(x, y, paired = TRUE)</code></td>
+</tr>
+<tr class="odd">
+<td>Prueba A/B con una métrica numérica</td>
+<td>Es el primer caso: <code>t.test(y ~ version)</code></td>
+</tr>
+<tr class="even">
+<td>Comparar variabilidad entre dos grupos</td>
+<td><code>var.test(y ~ grupo)</code></td>
+</tr>
+<tr class="odd">
+<td>Los supuestos de normalidad fallan con <span class="math inline">\(n\)</span> pequeño</td>
+<td>Prueba no paramétrica (<code>wilcox.test</code>)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Siempre</strong>: primero el boxplot, luego la prueba, y reportar el <strong>intervalo de la diferencia</strong>, no solo el valor p.</p>
+</div>
+</div>
+</section>
+<section id="resumen" class="level2" data-number="9.7">
+<h2 data-number="9.7" class="anchored" data-anchor-id="resumen"><span class="header-section-number">9.7</span> Resumen</h2>
+<p>Para comparar dos grupos, el parámetro de interés es la <strong>diferencia de medias</strong>. Con grupos <strong>independientes</strong> usamos la prueba t de Welch; con datos <strong>pareados</strong>, la diferencia dentro de cada par convierte el problema en uno de una sola muestra, ganando potencia al eliminar la variabilidad entre sujetos. Una <strong>prueba A/B</strong> no es más que este análisis con vocabulario de la industria. El <strong>traslape de cajas no decide</strong> la significancia, porque las cajas describen los datos y la prueba habla de las medias. Y un resultado no significativo significa “no hay evidencia suficiente”, no “son iguales”. En el <a href="09-enumerativos.html" class="quarto-xref"><span>Capítulo 10</span></a> pasaremos a las variables <strong>categóricas</strong>: proporciones y tablas de contingencia.</p>
+</section>
+<section id="ejercicios" class="level2" data-number="9.8">
+<h2 data-number="9.8" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">9.8</span> Ejercicios</h2>
+<ol type="1">
+<li><p><strong>Dos grupos.</strong> Con <code>datos/lagartijas.csv</code>, prueba si la <strong>masa</strong> difiere entre hábitats. Reportar el intervalo de la diferencia e interpretar en una frase.</p></li>
+<li><p><strong>Pareado o independiente.</strong> Clasificar cada situación:</p>
+<ol type="a">
+<li>Se mide la presión de 30 pacientes antes y después de un medicamento.</li>
+<li>Se compara el rendimiento de 25 parcelas con fertilizante A contra otras 25 con B.</li>
+<li>Cada juez de la cata califica Oreo y Chokis.</li>
+<li>Se comparan los tiempos de 30 corridas en Mac contra 30 en Windows.</li>
+</ol></li>
+<li><p><strong>Pareado en R.</strong> Con los datos de galletas, comparar <strong>Oreo contra Chokis</strong> de forma pareada. ¿La diferencia es significativa? Compárala con la de Oreo contra Great Value.</p></li>
+<li><p><strong>El error de ignorar el emparejamiento.</strong> Correr la comparación del ejercicio 3 dos veces: una con <code>paired = TRUE</code> y otra con <code>paired = FALSE</code>. ¿En cuál el valor p es menor? Explicar por qué.</p></li>
+<li><p><strong>Laboratorio.</strong> En el <a href="#sec-lab-traslape" class="quarto-xref"><span>Sección 9.2.1</span></a>, fijar la diferencia en 0.5 y encontrar aproximadamente el <span class="math inline">\(n\)</span> mínimo con el que el resultado se vuelve consistentemente significativo. ¿Qué nos dice eso sobre el diseño de un estudio?</p></li>
+<li><p><strong>Varianzas.</strong> Aplicar <code>var.test()</code> a la longitud (<code>lhc_mm</code>) por hábitat. ¿Difieren las variabilidades? Combinar este resultado con el de la prueba de medias del capítulo para describir a los dos grupos.</p></li>
+<li><p><strong>Redacción.</strong> Una prueba A/B con 40 usuarios por grupo da <span class="math inline">\(p = 0.08\)</span> para una diferencia observada de 3 segundos. Escribir la conclusión correcta y señala qué NO se puede afirmar.</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Soluciones y retroalimentación">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Soluciones y retroalimentación
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>1.</strong> Con <code>t.test(masa_g ~ habitat, data = lagartijas)</code> se obtiene un valor p cercano a <strong>0.01</strong>: las lagartijas urbanas son significativamente más pesadas, con una diferencia media aproximada de 1.6 g y un intervalo que no incluye al cero. Interpretación: <em>“Las lagartijas urbanas pesan en promedio alrededor de 1.6 g más que las de campo abierto (p ≈ 0.01)”</em>. <em>Nótese que la evidencia aquí es más moderada que en la temperatura (p &lt; 0.001). Conviene reflejar esa diferencia de fuerza en la redacción.</em></p>
+<p><strong>2.</strong> (a) <strong>Pareado</strong>: el mismo paciente medido dos veces. (b) <strong>Independiente</strong>: son parcelas distintas. (c) <strong>Pareado</strong>: el mismo juez califica ambas marcas. (d) <strong>Independiente</strong>: corridas distintas, sin correspondencia una a una. <em>La prueba decisiva: ¿puedo unir cada dato de un grupo con exactamente uno del otro por una razón sustantiva? En (d) la corrida 7 de Mac no tiene nada que ver con la 7 de Windows, así que no.</em></p>
+<p><strong>3.</strong> La diferencia media Oreo − Chokis es de apenas <strong>0.52 puntos</strong>, con <span class="math inline">\(p \approx 0.07\)</span>: <strong>no</strong> alcanza significancia al 5 %. Compárala con Oreo − Great Value, donde la diferencia es de 2.36 puntos y <span class="math inline">\(p &lt; 0.001\)</span>. Conclusión: hay evidencia clara de que Oreo supera a Great Value, pero no de que supere a Chokis. <em>Esto ilustra algo que reaparecerá en el <a href="10-anova.html" class="quarto-xref"><span>Capítulo 11</span></a>: no basta con saber que “las marcas difieren”; hay que averiguar <strong>entre cuáles</strong> está la diferencia, y para eso servirán las pruebas post-hoc. Nótese además que un p de 0.07 no significa “casi significativo”: significa que los datos son razonablemente compatibles con que ambas marcas gusten igual.</em></p>
+<p><strong>4.</strong> El valor p es <strong>menor con <code>paired = TRUE</code></strong> (≈ 0.07 pareado contra ≈ 0.12 sin parear). Al emparejar, la variabilidad entre jueces (unos califican todo alto, otros todo bajo) desaparece del cálculo, así que el error estándar se reduce y la prueba gana <strong>potencia</strong>. <em>Aquí ninguna de las dos versiones resulta significativa, pero el ejemplo muestra el mecanismo con claridad. El análisis correcto extrae más información de los mismos datos. Y ojo: ignorar el emparejamiento no es solo perder sensibilidad, es aplicar una prueba cuyo supuesto de independencia no se cumple, porque las dos calificaciones vienen de la misma persona.</em></p>
+<p><strong>5.</strong> Con una diferencia de 0.5 y una desviación de 2 en cada grupo, se necesitan aproximadamente <strong>250 a 300 observaciones por grupo</strong> para detectar el efecto de forma consistente. Con <span class="math inline">\(n = 20\)</span> el resultado casi nunca sale significativo aunque la diferencia <strong>exista de verdad</strong>. <em>Esto es el <strong>poder estadístico</strong>, y la lección de diseño es enorme. Un estudio con muestra insuficiente puede no detectar un efecto real, lo que produce el error tipo II. Por eso el tamaño de muestra debe calcularse <strong>antes</strong> de recolectar, no lamentarse después.</em></p>
+<p><strong>6.</strong> El cociente de varianzas de <code>lhc_mm</code> es cercano a 1 (desviaciones de 5.5 y 5.2 mm), así que <strong>no</strong> hay evidencia de que las variabilidades difieran. Combinando con la prueba de medias: en longitud, los dos grupos son <strong>similares tanto en centro como en dispersión</strong>. En cambio, en temperatura difieren en ambas cosas. <em>Buen ejercicio de síntesis: describir un grupo requiere hablar de centro <strong>y</strong> de dispersión, como aprendimos en el <a href="02-descriptiva.html" class="quarto-xref"><span>Capítulo 2</span></a>.</em></p>
+<p><strong>7.</strong> Conclusión correcta: <em>“Con 40 usuarios por grupo, la diferencia observada de 3 segundos no alcanzó significancia estadística al nivel del 5 % (p = 0.08); no hay evidencia suficiente para afirmar que las versiones difieran.”</em> <strong>No</strong> se puede afirmar: que las versiones sean iguales; que “casi” hay diferencia (el valor p no mide grados de casi); ni que el efecto no exista. Lo que sí conviene añadir: el <strong>intervalo de confianza</strong> de la diferencia, que probablemente incluya tanto el cero como efectos de varios segundos, y notar que <strong>la muestra pudo ser insuficiente</strong> para detectar un efecto real. <em>Este es el escenario donde más se cae en el “casi significativo”: la respuesta profesional es reportar el intervalo y, si el efecto importa, repetir el estudio con más usuarios.</em></p>
+</div>
+</div>
+</div>
 
 
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+W10=
+</script>
 </section>
 
 </main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBkaWYgPSBJbnB1dHMucmFuZ2UoWzAsIDNdLCB7dmFsdWU6IDAuOCwgc3RlcDogMC4xLCBsYWJlbDogXCJkaWZlcmVuY2lhIHJlYWwgZW50cmUgbWVkaWFzXCJ9KVxudmlld29mIG5HcnVwbyA9IElucHV0cy5yYW5nZShbNSwgMjAwXSwge3ZhbHVlOiAyMCwgc3RlcDogNSwgbGFiZWw6IFwibiBwb3IgZ3J1cG9cIn0pXG52aWV3b2YgcmVtdWVzdHJlYXIgPSBJbnB1dHMuYnV0dG9uKFwiTnVldmFzIG11ZXN0cmFzXCIpXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJtdWVzdHJhcyA9IHtcbiAgcmVtdWVzdHJlYXI7XG4gIGNvbnN0IG5BID0gZDMucmFuZG9tTm9ybWFsKDEwLCAyKSwgbkIgPSBkMy5yYW5kb21Ob3JtYWwoMTAgKyBkaWYsIDIpO1xuICByZXR1cm4gW1xuICAgIC4uLkFycmF5LmZyb20oe2xlbmd0aDogbkdydXBvfSwgKCkgPT4gKHsgZ3J1cG86IFwiQVwiLCB2YWxvcjogbkEoKSB9KSksXG4gICAgLi4uQXJyYXkuZnJvbSh7bGVuZ3RoOiBuR3J1cG99LCAoKSA9PiAoeyBncnVwbzogXCJCXCIsIHZhbG9yOiBuQigpIH0pKVxuICBdO1xufVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0zIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiZ2FtbWxuSlMgPSAoeCkgPT4ge1xuICBjb25zdCBjb2YgPSBbNzYuMTgwMDkxNzI5NDcxNDYsIC04Ni41MDUzMjAzMjk0MTY3NywgMjQuMDE0MDk4MjQwODMwOTEsXG4gICAgICAgICAgICAgICAtMS4yMzE3Mzk1NzI0NTAxNTUsIDAuMTIwODY1MDk3Mzg2NjE3OWUtMiwgLTAuNTM5NTIzOTM4NDk1M2UtNV07XG4gIGxldCB5ID0geCwgdG1wID0geCArIDUuNTtcbiAgdG1wIC09ICh4ICsgMC41KSAqIE1hdGgubG9nKHRtcCk7XG4gIGxldCBzZXIgPSAxLjAwMDAwMDAwMDE5MDAxNTtcbiAgZm9yIChsZXQgaiA9IDA7IGogPCA2OyBqKyspIHNlciArPSBjb2Zbal0gLyArK3k7XG4gIHJldHVybiAtdG1wICsgTWF0aC5sb2coMi41MDY2MjgyNzQ2MzEwMDA1ICogc2VyIC8geCk7XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTQiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJiZXRhY2YgPSAoYSwgYiwgeCkgPT4ge1xuICBjb25zdCBxYWIgPSBhICsgYiwgcWFwID0gYSArIDEsIHFhbSA9IGEgLSAxO1xuICBsZXQgYyA9IDEsIGQgPSAxIC0gcWFiICogeCAvIHFhcDtcbiAgaWYgKE1hdGguYWJzKGQpIDwgMWUtMzAwKSBkID0gMWUtMzAwO1xuICBkID0gMSAvIGQ7XG4gIGxldCBoID0gZDtcbiAgZm9yIChsZXQgbSA9IDE7IG0gPD0gMzAwOyBtKyspIHtcbiAgICBjb25zdCBtMiA9IDIgKiBtO1xuICAgIGxldCBhYSA9IG0gKiAoYiAtIG0pICogeCAvICgocWFtICsgbTIpICogKGEgKyBtMikpO1xuICAgIGQgPSAxICsgYWEgKiBkOyBpZiAoTWF0aC5hYnMoZCkgPCAxZS0zMDApIGQgPSAxZS0zMDA7XG4gICAgYyA9IDEgKyBhYSAvIGM7IGlmIChNYXRoLmFicyhjKSA8IDFlLTMwMCkgYyA9IDFlLTMwMDtcbiAgICBkID0gMSAvIGQ7IGggKj0gZCAqIGM7XG4gICAgYWEgPSAtKGEgKyBtKSAqIChxYWIgKyBtKSAqIHggLyAoKGEgKyBtMikgKiAocWFwICsgbTIpKTtcbiAgICBkID0gMSArIGFhICogZDsgaWYgKE1hdGguYWJzKGQpIDwgMWUtMzAwKSBkID0gMWUtMzAwO1xuICAgIGMgPSAxICsgYWEgLyBjOyBpZiAoTWF0aC5hYnMoYykgPCAxZS0zMDApIGMgPSAxZS0zMDA7XG4gICAgZCA9IDEgLyBkO1xuICAgIGNvbnN0IGRlbCA9IGQgKiBjOyBoICo9IGRlbDtcbiAgICBpZiAoTWF0aC5hYnMoZGVsIC0gMSkgPCAxZS0xMikgYnJlYWs7XG4gIH1cbiAgcmV0dXJuIGg7XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTUiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJiZXRhaSA9IChhLCBiLCB4KSA9PiB7XG4gIGlmICh4IDw9IDApIHJldHVybiAwO1xuICBpZiAoeCA+PSAxKSByZXR1cm4gMTtcbiAgY29uc3QgYnQgPSBNYXRoLmV4cChnYW1tbG5KUyhhICsgYikgLSBnYW1tbG5KUyhhKSAtIGdhbW1sbkpTKGIpXG4gICAgICAgICAgICAgKyBhICogTWF0aC5sb2coeCkgKyBiICogTWF0aC5sb2coMSAtIHgpKTtcbiAgcmV0dXJuIHggPCAoYSArIDEpIC8gKGEgKyBiICsgMilcbiAgICA/IGJ0ICogYmV0YWNmKGEsIGIsIHgpIC8gYVxuICAgIDogMSAtIGJ0ICogYmV0YWNmKGIsIGEsIDEgLSB4KSAvIGI7XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTYiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJwcnVlYmEgPSB7XG4gIGNvbnN0IEEgPSBtdWVzdHJhcy5maWx0ZXIoZCA9PiBkLmdydXBvID09PSBcIkFcIikubWFwKGQgPT4gZC52YWxvcik7XG4gIGNvbnN0IEIgPSBtdWVzdHJhcy5maWx0ZXIoZCA9PiBkLmdydXBvID09PSBcIkJcIikubWFwKGQgPT4gZC52YWxvcik7XG4gIGNvbnN0IG0xID0gZDMubWVhbihBKSwgbTIgPSBkMy5tZWFuKEIpO1xuICBjb25zdCB2MSA9IGQzLnZhcmlhbmNlKEEpLCB2MiA9IGQzLnZhcmlhbmNlKEIpO1xuICBjb25zdCBuMSA9IEEubGVuZ3RoLCBuMiA9IEIubGVuZ3RoO1xuICBjb25zdCB0ID0gKG0yIC0gbTEpIC8gTWF0aC5zcXJ0KHYxIC8gbjEgKyB2MiAvIG4yKTtcbiAgY29uc3QgZ2wgPSBNYXRoLnBvdyh2MSAvIG4xICsgdjIgLyBuMiwgMikgL1xuICAgICAgICAgICAgIChNYXRoLnBvdyh2MSAvIG4xLCAyKSAvIChuMSAtIDEpICsgTWF0aC5wb3codjIgLyBuMiwgMikgLyAobjIgLSAxKSk7XG4gIHJldHVybiB7IHQsIGdsLCBwOiBiZXRhaShnbCAvIDIsIDAuNSwgZ2wgLyAoZ2wgKyB0ICogdCkpIH07XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTciLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJQbG90LnBsb3Qoe1xuICBoZWlnaHQ6IDI1MCxcbiAgeDogeyBsYWJlbDogXCJncnVwb1wiIH0sXG4gIHk6IHsgbGFiZWw6IFwidmFsb3JcIiB9LFxuICBtYXJrczogW1xuICAgIFBsb3QuYm94WShtdWVzdHJhcywgeyB4OiBcImdydXBvXCIsIHk6IFwidmFsb3JcIiwgZmlsbDogXCIjRENFNkYxXCIsIHN0cm9rZTogXCIjMUY0RTc5XCIgfSksXG4gICAgUGxvdC5kb3QobXVlc3RyYXMsIHsgeDogXCJncnVwb1wiLCB5OiBcInZhbG9yXCIsIGZpbGw6IFwiIzFGNEU3OVwiLFxuICAgICAgZmlsbE9wYWNpdHk6IDAuMzUsIHI6IDIuNSwgZHg6ICgpID0+IChNYXRoLnJhbmRvbSgpIC0gMC41KSAqIDE0IH0pXG4gIF1cbn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTgiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJtZGB0ID0gKioke3BydWViYS50LnRvRml4ZWQoMil9KiogwrcgdmFsb3IgcCA9ICoqJHtwcnVlYmEucCA8IDAuMDAwMSA/IFwiPCAwLjAwMDFcIiA6IHBydWViYS5wLnRvRml4ZWQoNCl9KiogwrcgJHtwcnVlYmEucCA8IDAuMDUgPyBcIioqZGlmZXJlbmNpYSBzaWduaWZpY2F0aXZhKiogKM6xID0gMC4wNSlcIiA6IFwibm8gc2lnbmlmaWNhdGl2YSAozrEgPSAwLjA1KVwifWBcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnZGlmJykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ25HcnVwbycpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdyZW11ZXN0cmVhcicpIn1dfQ==
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../..";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -725,12 +1422,12 @@ ul.task-list li input[type="checkbox"] {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./07-estimacion-pruebas.html" class="pagination-link" aria-label="Estimación y prueba de hipótesis">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Estimación y prueba de hipótesis</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estimación y prueba de hipótesis</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./09-enumerativos.html" class="pagination-link" aria-label="Inferencia para datos enumerativos">
-        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Inferencia para datos enumerativos</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Inferencia para datos enumerativos</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

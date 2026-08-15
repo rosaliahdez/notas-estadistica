@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>11&nbsp; Inferencia en regresión – Estadística para Ciencias de la Computación</title>
+<title>12&nbsp; Inferencia en regresión – Estadística para Ciencias de la Computación</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -22,6 +22,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -44,7 +79,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-e671ceb1ec85f3bd6fb682ad87dd4085.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-22a2d3c8fd5a3a2e3c4a69971a64c298.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -72,11 +109,42 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Buscar"
   }
 }</script>
+<script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 <link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -89,7 +157,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06-muestrales.html">III. Inferencia estadística</a></li><li class="breadcrumb-item"><a href="./11-regresion.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Inferencia en regresión</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./laboratorio-estandarizacion.html">III. Inferencia estadística</a></li><li class="breadcrumb-item"><a href="./11-regresion.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Inferencia en regresión</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -190,38 +258,44 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./laboratorio-estandarizacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Laboratorio interactivo: la estandarización</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./06-muestrales.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Distribuciones muestrales y TCL</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Distribuciones muestrales y TCL</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./07-estimacion-pruebas.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Estimación y prueba de hipótesis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estimación y prueba de hipótesis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./08-dos-muestras.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Inferencia para dos parámetros</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Inferencia para dos parámetros</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./09-enumerativos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Inferencia para datos enumerativos</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Inferencia para datos enumerativos</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10-anova.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Análisis de varianza (ANOVA)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Análisis de varianza (ANOVA)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./11-regresion.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Inferencia en regresión</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Inferencia en regresión</span></span></a>
   </div>
 </li>
       </ul>
@@ -232,6 +306,41 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Referencias</span></a>
   </div>
 </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Apéndices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mapa-decision.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mapa de decisión</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./formulario.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Formulario</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./apendice-python.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">R y Python, lado a lado</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./laboratorio-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Practicar R sin instalar nada</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -242,20 +351,28 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">En este capítulo</h2>
    
   <ul>
-  <li><a href="#prueba-de-hipótesis-para-los-coeficientes-de-la-recta" id="toc-prueba-de-hipótesis-para-los-coeficientes-de-la-recta" class="nav-link active" data-scroll-target="#prueba-de-hipótesis-para-los-coeficientes-de-la-recta"><span class="header-section-number">11.1</span> Prueba de hipótesis para los coeficientes de la recta</a></li>
-  <li><a href="#prueba-de-hipótesis-para-el-coeficiente-de-correlación" id="toc-prueba-de-hipótesis-para-el-coeficiente-de-correlación" class="nav-link" data-scroll-target="#prueba-de-hipótesis-para-el-coeficiente-de-correlación"><span class="header-section-number">11.2</span> Prueba de hipótesis para el coeficiente de correlación</a></li>
-  <li><a href="#diagnóstico-de-residuos-y-normalidad-de-los-errores" id="toc-diagnóstico-de-residuos-y-normalidad-de-los-errores" class="nav-link" data-scroll-target="#diagnóstico-de-residuos-y-normalidad-de-los-errores"><span class="header-section-number">11.3</span> Diagnóstico de residuos y normalidad de los errores</a></li>
-  <li><a href="#del-modelo-lineal-hacia-el-aprendizaje-automático-próxima-parada" id="toc-del-modelo-lineal-hacia-el-aprendizaje-automático-próxima-parada" class="nav-link" data-scroll-target="#del-modelo-lineal-hacia-el-aprendizaje-automático-próxima-parada"><span class="header-section-number">11.4</span> Del modelo lineal hacia el aprendizaje automático (próxima parada)</a></li>
-  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">11.5</span> Ejercicios</a></li>
+  <li><a href="#el-modelo-y-su-parámetro" id="toc-el-modelo-y-su-parámetro" class="nav-link active" data-scroll-target="#el-modelo-y-su-parámetro"><span class="header-section-number">12.1</span> El modelo y su parámetro</a></li>
+  <li><a href="#la-salida-completa-de-lm" id="toc-la-salida-completa-de-lm" class="nav-link" data-scroll-target="#la-salida-completa-de-lm"><span class="header-section-number">12.2</span> La salida completa de <code>lm()</code></a>
+  <ul class="collapse">
+  <li><a href="#sec-lab-pendiente" id="toc-sec-lab-pendiente" class="nav-link" data-scroll-target="#sec-lab-pendiente"><span class="header-section-number">12.2.1</span> Laboratorio: la incertidumbre de la pendiente</a></li>
+  <li><a href="#sec-pendiente-mano" id="toc-sec-pendiente-mano" class="nav-link" data-scroll-target="#sec-pendiente-mano"><span class="header-section-number">12.2.2</span> El mismo cálculo a mano</a></li>
+  </ul></li>
+  <li><a href="#prueba-para-el-coeficiente-de-correlación" id="toc-prueba-para-el-coeficiente-de-correlación" class="nav-link" data-scroll-target="#prueba-para-el-coeficiente-de-correlación"><span class="header-section-number">12.3</span> Prueba para el coeficiente de correlación</a></li>
+  <li><a href="#diagnóstico-de-residuos" id="toc-diagnóstico-de-residuos" class="nav-link" data-scroll-target="#diagnóstico-de-residuos"><span class="header-section-number">12.4</span> Diagnóstico de residuos</a></li>
+  <li><a href="#predicción-y-sus-límites" id="toc-predicción-y-sus-límites" class="nav-link" data-scroll-target="#predicción-y-sus-límites"><span class="header-section-number">12.5</span> Predicción y sus límites</a></li>
+  <li><a href="#hacia-el-aprendizaje-automático" id="toc-hacia-el-aprendizaje-automático" class="nav-link" data-scroll-target="#hacia-el-aprendizaje-automático"><span class="header-section-number">12.6</span> Hacia el aprendizaje automático</a></li>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen"><span class="header-section-number">12.7</span> Resumen</a></li>
+  <li><a href="#cierre-del-curso" id="toc-cierre-del-curso" class="nav-link" data-scroll-target="#cierre-del-curso"><span class="header-section-number">12.8</span> Cierre del curso</a></li>
+  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">12.9</span> Ejercicios</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06-muestrales.html">III. Inferencia estadística</a></li><li class="breadcrumb-item"><a href="./11-regresion.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Inferencia en regresión</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./laboratorio-estandarizacion.html">III. Inferencia estadística</a></li><li class="breadcrumb-item"><a href="./11-regresion.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Inferencia en regresión</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-cap11" class="quarto-section-identifier"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Inferencia en regresión</span></span></h1>
+<h1 class="title"><span id="sec-cap11" class="quarto-section-identifier"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Inferencia en regresión</span></span></h1>
 </div>
 
 
@@ -272,56 +389,601 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="callout callout-style-default callout-important callout-titled" title="Plantilla en construcción">
+<div class="callout callout-style-default callout-warning callout-titled" title="Capítulo en revisión">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Importante</span>Plantilla en construcción
+<span class="screen-reader-only">Advertencia</span>Capítulo en revisión
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Este capítulo corresponde a <strong>Semana 14</strong> del calendario y usa los datos de <strong>algoritmos</strong>. La estructura de secciones ya está fijada; el contenido se desarrolla con el mismo formato del <a href="01-exploracion.html" class="quarto-xref"><span>Capítulo 1</span></a>: pregunta real, técnica, supuestos, cómputo en R e interpretación.</p>
+<p>El contenido de este capítulo está completo, pero todavía no pasa por la revisión final de redacción. Se avisará en clase cuando quede listo para estudiar de aquí. Mientras tanto se puede consultar, con esa advertencia.</p>
 </div>
 </div>
-<section id="prueba-de-hipótesis-para-los-coeficientes-de-la-recta" class="level2" data-number="11.1">
-<h2 data-number="11.1" class="anchored" data-anchor-id="prueba-de-hipótesis-para-los-coeficientes-de-la-recta"><span class="header-section-number">11.1</span> Prueba de hipótesis para los coeficientes de la recta</h2>
-<p><em>(En construcción.)</em></p>
-</section>
-<section id="prueba-de-hipótesis-para-el-coeficiente-de-correlación" class="level2" data-number="11.2">
-<h2 data-number="11.2" class="anchored" data-anchor-id="prueba-de-hipótesis-para-el-coeficiente-de-correlación"><span class="header-section-number">11.2</span> Prueba de hipótesis para el coeficiente de correlación</h2>
-<p><em>(En construcción.)</em></p>
-</section>
-<section id="diagnóstico-de-residuos-y-normalidad-de-los-errores" class="level2" data-number="11.3">
-<h2 data-number="11.3" class="anchored" data-anchor-id="diagnóstico-de-residuos-y-normalidad-de-los-errores"><span class="header-section-number">11.3</span> Diagnóstico de residuos y normalidad de los errores</h2>
-<p><em>(En construcción.)</em></p>
-</section>
-<section id="del-modelo-lineal-hacia-el-aprendizaje-automático-próxima-parada" class="level2" data-number="11.4">
-<h2 data-number="11.4" class="anchored" data-anchor-id="del-modelo-lineal-hacia-el-aprendizaje-automático-próxima-parada"><span class="header-section-number">11.4</span> Del modelo lineal hacia el aprendizaje automático (próxima parada)</h2>
-<p><em>(En construcción.)</em></p>
-<div class="callout callout-style-default callout-tip callout-titled" title="¿Qué técnica uso?">
+<div class="callout callout-style-default callout-tip callout-titled" title="Objetivos del capítulo">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>¿Qué técnica uso?
+<span class="screen-reader-only">Tip</span>Objetivos del capítulo
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>¿La relación entre X e Y es real o azar? Prueba sobre la pendiente. Verificar la normalidad de los errores conecta con la validación de modelos de ML.</p>
+<ul>
+<li>Probar si la <strong>pendiente</strong> de una recta de regresión difiere de cero.</li>
+<li>Probar la significancia del <strong>coeficiente de correlación</strong>.</li>
+<li>Leer por completo la salida de <code>summary(lm())</code>, incluido el <span class="math inline">\(R^2\)</span>.</li>
+<li><strong>Diagnosticar los residuos</strong> y reconocer cuándo el modelo lineal no es adecuado.</li>
+</ul>
+</div>
+</div>
+<p>En el <a href="03-relaciones.html" class="quarto-xref"><span>Capítulo 3</span></a> ajustamos una recta y la usamos para <strong>describir</strong> una relación. Ahora la sometemos a inferencia: la pendiente que calculamos viene de una muestra, así que cabe preguntarse si la relación es <strong>real</strong> o si pudo surgir del azar. Con esto cerramos el curso, y el capítulo abre además la puerta hacia el aprendizaje automático.</p>
+<section id="el-modelo-y-su-parámetro" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="el-modelo-y-su-parámetro"><span class="header-section-number">12.1</span> El modelo y su parámetro</h2>
+<p>El modelo de regresión lineal simple supone que, en la población,</p>
+<p><span class="math display">\[Y = \beta_0 + \beta_1 X + \varepsilon, \qquad \varepsilon \sim N(0, \sigma^2)\]</span></p>
+<p>Es decir: la relación media entre <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span> es una recta, y cada observación se aparta de ella por un <strong>error aleatorio</strong> <span class="math inline">\(\varepsilon\)</span> de media cero y varianza constante.</p>
+<p>Lo que calculamos con <code>lm()</code> son <span class="math inline">\(b_0\)</span> y <span class="math inline">\(b_1\)</span>, <strong>estimaciones muestrales</strong> de <span class="math inline">\(\beta_0\)</span> y <span class="math inline">\(\beta_1\)</span>. La pregunta central es sobre la pendiente:</p>
+<ul>
+<li><span class="math inline">\(H_0: \beta_1 = 0\)</span> (no hay relación lineal: <span class="math inline">\(X\)</span> no ayuda a predecir <span class="math inline">\(Y\)</span>)</li>
+<li><span class="math inline">\(H_1: \beta_1 \neq 0\)</span></li>
+</ul>
+</section>
+<section id="la-salida-completa-de-lm" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="la-salida-completa-de-lm"><span class="header-section-number">12.2</span> La salida completa de <code>lm()</code></h2>
+<p>Trabajemos con los tiempos de ejecución del algoritmo en el entorno Mac:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(tiempo_ms <span class="sc">~</span> n, <span class="at">data =</span> mac)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; lm(formula = tiempo_ms ~ n, data = mac)</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -3.5981 -1.1344 -0.0755  1.1246  2.4619 </span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept) 1.189e+00  3.943e-01   3.016  0.00409 ** </span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; n           1.794e-03  6.355e-05  28.236  &lt; 2e-16 ***</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 1.291 on 48 degrees of freedom</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.9432, Adjusted R-squared:  0.942 </span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F-statistic: 797.3 on 1 and 48 DF,  p-value: &lt; 2.2e-16</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Vale la pena leer esta salida por partes, porque contiene casi todo el curso:</p>
+<p><strong>La tabla de coeficientes.</strong> Cada renglón trae la estimación, su error estándar, el estadístico <span class="math inline">\(t\)</span> y el valor p.&nbsp;Para <code>n</code> (la pendiente), la estimación es aproximadamente <strong>0.00179 ms por elemento</strong>, con <span class="math inline">\(t \approx 28\)</span> y un valor p del orden de <span class="math inline">\(10^{-31}\)</span>: rechazamos <span class="math inline">\(H_0\)</span> contundentemente, hay relación lineal.</p>
+<p><strong>El intercepto</strong> vale unos 1.19 ms y también resulta significativo; representa el costo fijo del algoritmo, independiente del tamaño de entrada.</p>
+<p><strong>Residual standard error</strong> (≈ 1.29 ms) estima <span class="math inline">\(\sigma\)</span>: la dispersión típica de los puntos alrededor de la recta.</p>
+<p><strong>R-squared</strong> (≈ 0.943) es el <strong>coeficiente de determinación</strong>: la proporción de la variabilidad de <span class="math inline">\(Y\)</span> explicada por el modelo. Aquí, el 94 % de la variación en los tiempos se explica por su relación lineal con el tamaño de entrada.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="La relación entre $r$ y $R^2$">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>La relación entre <span class="math inline">\(r\)</span> y <span class="math inline">\(R^2\)</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En regresión lineal simple, el coeficiente de determinación es exactamente el <strong>cuadrado</strong> del coeficiente de correlación:</p>
+<p><span class="math display">\[R^2 = r^2\]</span></p>
+<p>Conviene tenerlo presente porque los dos números se confunden con facilidad. Si un estudio reporta <span class="math inline">\(r = 0.86\)</span>, entonces <span class="math inline">\(R^2 = 0.86^2 \approx 0.74\)</span>: el modelo explica cerca del <strong>74 %</strong> de la variabilidad, no el 86 %. Y como <span class="math inline">\(R^2\)</span> nunca supera a <span class="math inline">\(|r|\)</span>, el porcentaje explicado siempre es <strong>menor</strong> que la correlación.</p>
+<p>Dos precisiones más sobre su lectura. Primera: <span class="math inline">\(R^2\)</span> mide variabilidad <strong>explicada por la relación lineal</strong>, no aciertos ni probabilidad de que el modelo sea correcto. Segunda: explicar no es causar; un <span class="math inline">\(R^2\)</span> alto en datos observacionales sigue sin autorizar conclusiones causales.</p>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">cor</span>(mac<span class="sc">$</span>n, mac<span class="sc">$</span>tiempo_ms)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="at">r =</span> r, <span class="at">r_al_cuadrado =</span> r<span class="sc">^</span><span class="dv">2</span>, <span class="at">R2_del_modelo =</span> <span class="fu">summary</span>(modelo)<span class="sc">$</span>r.squared)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             r r_al_cuadrado R2_del_modelo </span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     0.9711912     0.9432124     0.9432124</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>El estadístico F</strong> al final prueba la significancia global del modelo. En regresión simple es redundante: equivale exactamente al cuadrado del <span class="math inline">\(t\)</span> de la pendiente.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(modelo)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                  2.5 %      97.5 %</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept) 0.39633015 1.982069853</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; n           0.00166669 0.001922255</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El intervalo de confianza de la pendiente va aproximadamente de <strong>0.00167 a 0.00192 ms por elemento</strong>. Redacción para un lector técnico: <em>“Cada elemento adicional en la entrada añade entre 1.67 y 1.92 microsegundos al tiempo de ejecución (95 % de confianza).”</em></p>
+<p>Como el intervalo <strong>no contiene al cero</strong>, sabíamos de antemano que la prueba iba a rechazar <span class="math inline">\(H_0\)</span>: son, otra vez, dos caras de la misma moneda (<a href="07-estimacion-pruebas.html" class="quarto-xref"><span>Capítulo 8</span></a>). Y como siempre, el intervalo es más informativo porque cuantifica el efecto.</p>
+</div>
+</div>
+<section id="sec-lab-pendiente" class="level3" data-number="12.2.1">
+<h3 data-number="12.2.1" class="anchored" data-anchor-id="sec-lab-pendiente"><span class="header-section-number">12.2.1</span> Laboratorio: la incertidumbre de la pendiente</h3>
+<p>La recta ajustada depende de la muestra que se obtuvo. Aquí se ve cuánto: cada línea gris es la recta ajustada a una muestra distinta de la <strong>misma</strong> población. Los deslizadores de ruido y de tamaño de muestra abren o cierran el abanico.</p>
+<div class="cell panel-input card bg-light p-2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="94" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 93;"><span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a>viewof ruidoReg <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="fl">0.5</span><span class="op">,</span> <span class="dv">6</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.25</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"dispersión de los errores"</span>})</span>
+<span id="cb4-95"><a href="#cb4-95" aria-hidden="true" tabindex="-1"></a>viewof nReg <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">6</span><span class="op">,</span> <span class="dv">100</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">20</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"tamaño de muestra n"</span>})</span>
+<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a>viewof pendVerd <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">0</span><span class="op">,</span> <span class="fl">1.5</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.8</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.1</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"pendiente verdadera"</span>})</span>
+<span id="cb4-97"><a href="#cb4-97" aria-hidden="true" tabindex="-1"></a>viewof nuevasReg <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">button</span>(<span class="st">"Nuevas muestras"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="101" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 100;"><span id="cb5-101"><a href="#cb5-101" aria-hidden="true" tabindex="-1"></a>ajustes <span class="op">=</span> {</span>
+<span id="cb5-102"><a href="#cb5-102" aria-hidden="true" tabindex="-1"></a>  nuevasReg<span class="op">;</span></span>
+<span id="cb5-103"><a href="#cb5-103" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> out <span class="op">=</span> []<span class="op">;</span></span>
+<span id="cb5-104"><a href="#cb5-104" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">let</span> k <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> k <span class="op">&lt;</span> <span class="dv">40</span><span class="op">;</span> k<span class="op">++</span>) {</span>
+<span id="cb5-105"><a href="#cb5-105" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> err <span class="op">=</span> d3<span class="op">.</span><span class="fu">randomNormal</span>(<span class="dv">0</span><span class="op">,</span> ruidoReg)<span class="op">;</span></span>
+<span id="cb5-106"><a href="#cb5-106" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> xs <span class="op">=</span> <span class="bu">Array</span><span class="op">.</span><span class="fu">from</span>({<span class="dt">length</span><span class="op">:</span> nReg}<span class="op">,</span> () <span class="kw">=&gt;</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">random</span>() <span class="op">*</span> <span class="dv">10</span>)<span class="op">;</span></span>
+<span id="cb5-107"><a href="#cb5-107" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> ys <span class="op">=</span> xs<span class="op">.</span><span class="fu">map</span>(x <span class="kw">=&gt;</span> <span class="dv">5</span> <span class="op">+</span> pendVerd <span class="op">*</span> x <span class="op">+</span> <span class="fu">err</span>())<span class="op">;</span></span>
+<span id="cb5-108"><a href="#cb5-108" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> xb <span class="op">=</span> d3<span class="op">.</span><span class="fu">mean</span>(xs)<span class="op">,</span> yb <span class="op">=</span> d3<span class="op">.</span><span class="fu">mean</span>(ys)<span class="op">;</span></span>
+<span id="cb5-109"><a href="#cb5-109" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> Sxx <span class="op">=</span> d3<span class="op">.</span><span class="fu">sum</span>(xs<span class="op">,</span> x <span class="kw">=&gt;</span> (x <span class="op">-</span> xb) <span class="op">**</span> <span class="dv">2</span>)<span class="op">;</span></span>
+<span id="cb5-110"><a href="#cb5-110" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> Sxy <span class="op">=</span> d3<span class="op">.</span><span class="fu">sum</span>(xs<span class="op">.</span><span class="fu">map</span>((x<span class="op">,</span> i) <span class="kw">=&gt;</span> (x <span class="op">-</span> xb) <span class="op">*</span> (ys[i] <span class="op">-</span> yb)))<span class="op">;</span></span>
+<span id="cb5-111"><a href="#cb5-111" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> b <span class="op">=</span> Sxy <span class="op">/</span> Sxx<span class="op">,</span> a <span class="op">=</span> yb <span class="op">-</span> b <span class="op">*</span> xb<span class="op">;</span></span>
+<span id="cb5-112"><a href="#cb5-112" aria-hidden="true" tabindex="-1"></a>    out<span class="op">.</span><span class="fu">push</span>({ k<span class="op">,</span> a<span class="op">,</span> b })<span class="op">;</span></span>
+<span id="cb5-113"><a href="#cb5-113" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-114"><a href="#cb5-114" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> out<span class="op">;</span></span>
+<span id="cb5-115"><a href="#cb5-115" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="120" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 119;"><span id="cb6-120"><a href="#cb6-120" aria-hidden="true" tabindex="-1"></a>lineas <span class="op">=</span> ajustes<span class="op">.</span><span class="fu">flatMap</span>(d <span class="kw">=&gt;</span> [</span>
+<span id="cb6-121"><a href="#cb6-121" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">k</span><span class="op">:</span> d<span class="op">.</span><span class="at">k</span><span class="op">,</span> <span class="dt">x</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span>  <span class="dt">y</span><span class="op">:</span> d<span class="op">.</span><span class="at">a</span> }<span class="op">,</span></span>
+<span id="cb6-122"><a href="#cb6-122" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">k</span><span class="op">:</span> d<span class="op">.</span><span class="at">k</span><span class="op">,</span> <span class="dt">x</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> d<span class="op">.</span><span class="at">a</span> <span class="op">+</span> d<span class="op">.</span><span class="at">b</span> <span class="op">*</span> <span class="dv">10</span> }</span>
+<span id="cb6-123"><a href="#cb6-123" aria-hidden="true" tabindex="-1"></a>])</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="128" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 127;"><span id="cb7-128"><a href="#cb7-128" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb7-129"><a href="#cb7-129" aria-hidden="true" tabindex="-1"></a>  <span class="dt">height</span><span class="op">:</span> <span class="dv">260</span><span class="op">,</span></span>
+<span id="cb7-130"><a href="#cb7-130" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> { <span class="dt">label</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">10</span>] }<span class="op">,</span></span>
+<span id="cb7-131"><a href="#cb7-131" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> { <span class="dt">label</span><span class="op">:</span> <span class="st">"y"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="op">-</span><span class="dv">2</span><span class="op">,</span> <span class="dv">22</span>] }<span class="op">,</span></span>
+<span id="cb7-132"><a href="#cb7-132" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb7-133"><a href="#cb7-133" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(lineas<span class="op">,</span> { <span class="dt">x</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"y"</span><span class="op">,</span> <span class="dt">z</span><span class="op">:</span> <span class="st">"k"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#888780"</span><span class="op">,</span> <span class="dt">strokeOpacity</span><span class="op">:</span> <span class="fl">0.35</span> })<span class="op">,</span></span>
+<span id="cb7-134"><a href="#cb7-134" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>([{<span class="dt">x</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="dv">5</span>}<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="dv">5</span> <span class="op">+</span> pendVerd <span class="op">*</span> <span class="dv">10</span>}]<span class="op">,</span></span>
+<span id="cb7-135"><a href="#cb7-135" aria-hidden="true" tabindex="-1"></a>      { <span class="dt">x</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"y"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#C0392B"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.5</span> })</span>
+<span id="cb7-136"><a href="#cb7-136" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb7-137"><a href="#cb7-137" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-4" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="142" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 141;"><span id="cb8-142"><a href="#cb8-142" aria-hidden="true" tabindex="-1"></a><span class="fu">md</span><span class="vs">`Pendiente verdadera: **</span><span class="sc">${</span>pendVerd<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">1</span>)<span class="sc">}</span><span class="vs">** (línea roja) · pendientes estimadas: de **</span><span class="sc">${</span>d3<span class="op">.</span><span class="fu">min</span>(ajustes<span class="op">,</span> d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">b</span>)<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">2</span>)<span class="sc">}</span><span class="vs">** a **</span><span class="sc">${</span>d3<span class="op">.</span><span class="fu">max</span>(ajustes<span class="op">,</span> d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">b</span>)<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">2</span>)<span class="sc">}</span><span class="vs">** · desviación estándar de las estimaciones: **</span><span class="sc">${</span>d3<span class="op">.</span><span class="fu">deviation</span>(ajustes<span class="op">,</span> d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">b</span>)<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">3</span>)<span class="sc">}</span><span class="vs">**`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-5" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El abanico de rectas grises <strong>es</strong> la distribución muestral de la pendiente, dibujada. Al subir el ruido, el abanico se abre: con datos muy dispersos, la pendiente estimada es poco confiable. Al subir el tamaño de muestra, el abanico se cierra alrededor de la recta verdadera.</p>
+<p>Con la <strong>pendiente verdadera en 0</strong>, ruido alto y <span class="math inline">\(n\)</span> pequeño, aparecen rectas grises con inclinaciones visibles hacia arriba y hacia abajo, ¡aunque en la población no haya ninguna relación! Ese es exactamente el riesgo que la prueba de hipótesis nos protege: distinguir una pendiente real de una que el azar dibujó.</p>
 </div>
 </div>
 </section>
-<section id="ejercicios" class="level2" data-number="11.5">
-<h2 data-number="11.5" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">11.5</span> Ejercicios</h2>
-<p><em>Por desarrollar (banco de la Dra. Figueroa reorganizado + reactivos nuevos).</em></p>
+<section id="sec-pendiente-mano" class="level3" data-number="12.2.2">
+<h3 data-number="12.2.2" class="anchored" data-anchor-id="sec-pendiente-mano"><span class="header-section-number">12.2.2</span> El mismo cálculo a mano</h3>
+<p>Retomemos los cinco puntos con los que se calculó la recta a mano en el <a href="03-relaciones.html#sec-regresion-mano" class="quarto-xref"><span>Sección 3.3.1</span></a>, ahora para obtener la <strong>incertidumbre</strong> de la pendiente:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th><span class="math inline">\(x\)</span> (miles)</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(y\)</span> (ms)</td>
+<td>3.1</td>
+<td>4.8</td>
+<td>6.4</td>
+<td>8.3</td>
+<td>9.9</td>
+</tr>
+</tbody>
+</table>
+<p>De allá se traen <span class="math inline">\(S_{xx} = 10\)</span> y la recta <span class="math inline">\(\hat{y} = 1.37 + 1.71x\)</span>.</p>
+<p><strong>Paso 1. Los valores ajustados y los residuos.</strong> Se evalúa la recta en cada <span class="math inline">\(x\)</span> y se resta:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th><span class="math inline">\(x\)</span></th>
+<th><span class="math inline">\(y\)</span></th>
+<th><span class="math inline">\(\hat{y}\)</span></th>
+<th><span class="math inline">\(y - \hat{y}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>3.1</td>
+<td>3.08</td>
+<td>+0.02</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>4.8</td>
+<td>4.79</td>
+<td>+0.01</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>6.4</td>
+<td>6.50</td>
+<td>−0.10</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>8.3</td>
+<td>8.21</td>
+<td>+0.09</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>9.9</td>
+<td>9.92</td>
+<td>−0.02</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Paso 2. La varianza residual.</strong> Se suman los residuos al cuadrado y se divide entre <span class="math inline">\(n - 2\)</span> (se pierden dos grados de libertad por haber estimado <span class="math inline">\(\beta_0\)</span> y <span class="math inline">\(\beta_1\)</span>):</p>
+<p><span class="math display">\[SCE = \sum (y_i - \hat{y}_i)^2 = 0.019, \qquad s^2 = \frac{SCE}{n-2} = \frac{0.019}{3} = 0.00633\]</span></p>
+<p><strong>Paso 3. El error estándar de la pendiente.</strong></p>
+<p><span class="math display">\[s_{\hat{\beta}_1} = \sqrt{\frac{s^2}{S_{xx}}} = \sqrt{\frac{0.00633}{10}} = 0.02517\]</span></p>
+<p><strong>Paso 4. El estadístico</strong>, con la estructura de siempre:</p>
+<p><span class="math display">\[t = \frac{\hat{\beta}_1}{s_{\hat{\beta}_1}} = \frac{1.71}{0.02517} = 67.9\]</span></p>
+<p>Con <span class="math inline">\(n - 2 = 3\)</span> grados de libertad, el valor crítico bilateral al 5 % es 3.182. Como <span class="math inline">\(67.9 \gg 3.182\)</span>, se rechaza <span class="math inline">\(H_0: \beta_1 = 0\)</span>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>xs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>ys <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">3.1</span>, <span class="fl">4.8</span>, <span class="fl">6.4</span>, <span class="fl">8.3</span>, <span class="fl">9.9</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(ys <span class="sc">~</span> xs))</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; lm(formula = ys ~ xs)</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     1     2     3     4     5 </span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  0.02  0.01 -0.10  0.09 -0.02 </span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)  1.37000    0.08347   16.41 0.000492 ***</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; xs           1.71000    0.02517   67.95 7.02e-06 ***</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 0.07958 on 3 degrees of freedom</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.9994, Adjusted R-squared:  0.9991 </span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F-statistic:  4617 on 1 and 3 DF,  p-value: 7.024e-06</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Coinciden: pendiente 1.71, error estándar 0.0252 y <span class="math inline">\(t = 67.9\)</span>.</p>
+<p>La fórmula del error estándar merece atención, porque explica <strong>qué hace que una pendiente sea confiable</strong>:</p>
+<p><span class="math display">\[s_{\hat{\beta}_1} = \sqrt{\frac{s^2}{S_{xx}}}\]</span></p>
+<p>En el numerador está <span class="math inline">\(s^2\)</span>, la dispersión de los puntos alrededor de la recta: más ruido, pendiente menos confiable. En el denominador está <span class="math inline">\(S_{xx}\)</span>, la dispersión de los valores de <span class="math inline">\(x\)</span>: <strong>cuanto más separados estén los <span class="math inline">\(x\)</span>, más precisa es la pendiente</strong>. Esto último no es evidente y tiene una consecuencia práctica de diseño. Al planear un experimento conviene tomar mediciones en un rango amplio de <span class="math inline">\(x\)</span>, no concentrarlas. Dos puntos de apoyo muy separados determinan una recta con mucha más firmeza que dos puntos juntos.</p>
+<p>Es, otra vez, el mismo esqueleto de todo el curso: un estimador dividido entre su error estándar. Lo único que cambia entre técnicas es cómo se calcula ese error.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="prueba-para-el-coeficiente-de-correlación" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="prueba-para-el-coeficiente-de-correlación"><span class="header-section-number">12.3</span> Prueba para el coeficiente de correlación</h2>
+<p>Probar <span class="math inline">\(H_0: \rho = 0\)</span> (correlación poblacional nula) es equivalente a probar que la pendiente es cero. Ambas preguntas son “¿hay relación lineal?”.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(mac<span class="sc">$</span>n, mac<span class="sc">$</span>tiempo_ms)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Pearson's product-moment correlation</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  mac$n and mac$tiempo_ms</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; t = 28.236, df = 48, p-value &lt; 2.2e-16</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; alternative hypothesis: true correlation is not equal to 0</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 95 percent confidence interval:</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  0.9495284 0.9836342</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sample estimates:</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       cor </span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0.9711912</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El coeficiente de correlación es <span class="math inline">\(r \approx 0.97\)</span> y su prueba da el <strong>mismo estadístico <span class="math inline">\(t\)</span> y el mismo valor p</strong> que la pendiente. No es coincidencia: son formulaciones distintas de la misma hipótesis. La correlación aporta además el intervalo de confianza para <span class="math inline">\(\rho\)</span>.</p>
+<p>Cuidado con el reflejo de sobreinterpretar: un <span class="math inline">\(r\)</span> alto indica relación lineal <strong>fuerte</strong>, pero sigue sin implicar causalidad (<a href="03-relaciones.html" class="quarto-xref"><span>Capítulo 3</span></a>), y tampoco garantiza que la recta sea el modelo correcto (eso lo dicen los residuos).</p>
+</div>
+</div>
+</section>
+<section id="diagnóstico-de-residuos" class="level2" data-number="12.4">
+<h2 data-number="12.4" class="anchored" data-anchor-id="diagnóstico-de-residuos"><span class="header-section-number">12.4</span> Diagnóstico de residuos</h2>
+<p>Los supuestos del modelo se verifican <strong>en los residuos</strong>, no en los datos crudos. Son cuatro, y hay una gráfica para cada uno.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(modelo, <span class="at">which =</span> <span class="dv">1</span>)   <span class="co"># linealidad y varianza constante</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(modelo, <span class="at">which =</span> <span class="dv">2</span>)   <span class="co"># normalidad de los errores</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="fig-diagnostico" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-diagnostico-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="11-regresion_files/figure-html/fig-diagnostico-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-diagnostico-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;12.1: Diagnóstico del modelo: residuos contra ajustados y Q-Q plot.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(<span class="fu">residuals</span>(modelo))</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Shapiro-Wilk normality test</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  residuals(modelo)</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; W = 0.96426, p-value = 0.1341</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Los cuatro supuestos y cómo se ven cuando fallan">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Los cuatro supuestos y cómo se ven cuando fallan
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><strong>Linealidad.</strong> En la gráfica de residuos contra ajustados no debe haber patrón. Una <strong>curva</strong> en forma de U indica que la relación real no es lineal.</li>
+<li><strong>Varianza constante</strong> (homocedasticidad). El ancho de la nube debe ser parejo. Una forma de <strong>embudo</strong> indica que la dispersión crece con el valor ajustado; se corrige transformando <span class="math inline">\(Y\)</span> o usando errores robustos.</li>
+<li><strong>Normalidad de los errores.</strong> Los puntos del Q-Q plot deben seguir la recta. Es el supuesto <strong>menos crítico</strong> con muestras grandes, gracias al TCL.</li>
+<li><strong>Independencia.</strong> No hay gráfica que la salve: depende del diseño. Con datos tomados en el tiempo, hay que revisar que no haya autocorrelación.</li>
+</ol>
+<p>En nuestro caso los residuos insinúan una <strong>curvatura muy leve</strong> (los datos se generaron con un pequeño término cuadrático) que ilustra por qué esta gráfica no es un trámite. Es la que nos avisa de que el modelo lineal podría estar simplificando de más.</p>
+</div>
+</div>
+</section>
+<section id="predicción-y-sus-límites" class="level2" data-number="12.5">
+<h2 data-number="12.5" class="anchored" data-anchor-id="predicción-y-sus-límites"><span class="header-section-number">12.5</span> Predicción y sus límites</h2>
+<p>Con el modelo ajustado se puede predecir, pero con dos advertencias:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>nuevos <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">n =</span> <span class="fu">c</span>(<span class="dv">5000</span>, <span class="dv">12000</span>))</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(modelo, <span class="at">newdata =</span> nuevos, <span class="at">interval =</span> <span class="st">"prediction"</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        fit       lwr      upr</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 10.16156  7.539685 12.78344</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 22.72287 19.973320 25.47243</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="No extrapoles">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>No extrapoles
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El primer valor (<span class="math inline">\(n = 5000\)</span>) está dentro del rango observado: la predicción es razonable. El segundo (<span class="math inline">\(n = 12000\)</span>) queda <strong>fuera</strong> del rango con el que se ajustó el modelo (1000 a 10000). R lo calcula sin protestar, pero nada garantiza que la relación siga siendo lineal más allá de lo observado — de hecho, sabemos que hay una curvatura leve que se acentuaría.</p>
+<p>Nótese también la diferencia entre el intervalo de <strong>confianza</strong> (para la media de <span class="math inline">\(Y\)</span> dado <span class="math inline">\(X\)</span>) y el de <strong>predicción</strong> (para una observación individual): este último es mucho más ancho, porque debe incluir la variabilidad individual además de la incertidumbre de la recta.</p>
+</div>
+</div>
+</section>
+<section id="hacia-el-aprendizaje-automático" class="level2" data-number="12.6">
+<h2 data-number="12.6" class="anchored" data-anchor-id="hacia-el-aprendizaje-automático"><span class="header-section-number">12.6</span> Hacia el aprendizaje automático</h2>
+<p>Este capítulo es la frontera del curso, y conviene decir hacia dónde sigue el camino.</p>
+<p>La regresión lineal es el <strong>modelo predictivo más simple</strong>, y muchas ideas del aprendizaje automático son extensiones suyas: agregar varias variables explicativas da la <strong>regresión múltiple</strong>; cambiar la respuesta a categórica da la <strong>regresión logística</strong>; penalizar los coeficientes da <strong>ridge</strong> y <strong>lasso</strong>.</p>
+<p>Pero hay una diferencia de énfasis que vale la pena señalar. En estadística clásica nos preocupa <strong>si los coeficientes son significativos</strong> y si los supuestos se cumplen, porque queremos <em>entender</em> el fenómeno. En aprendizaje automático interesa sobre todo <strong>qué tan bien predice</strong> el modelo en datos nuevos, y para eso se usa validación cruzada más que valores p.</p>
+<p>Las dos miradas se necesitan. Al evaluar cualquier modelo predictivo, el diagnóstico de residuos visto en este capítulo sigue siendo la herramienta para detectar que algo va mal: errores con estructura, varianza que crece, valores atípicos influyentes. Saber leer esas gráficas es lo que distingue a quien entrena modelos de quien los <strong>valida</strong>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="¿Qué técnica usar?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>¿Qué técnica usar?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Con <strong>dos variables cuantitativas</strong> y una pregunta inferencial:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Mi pregunta</th>
+<th>Herramienta en R</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>¿La relación lineal es real?</td>
+<td><code>summary(lm(y ~ x))</code>, valor p de la pendiente</td>
+</tr>
+<tr class="even">
+<td>¿Cuánto cambia <span class="math inline">\(Y\)</span> por unidad de <span class="math inline">\(X\)</span>?</td>
+<td><code>confint(modelo)</code></td>
+</tr>
+<tr class="odd">
+<td>¿Qué tan fuerte es la relación?</td>
+<td><span class="math inline">\(R^2\)</span> del modelo, o <code>cor.test()</code></td>
+</tr>
+<tr class="even">
+<td>¿El modelo lineal es adecuado?</td>
+<td><code>plot(modelo)</code>: residuos y Q-Q plot</td>
+</tr>
+<tr class="odd">
+<td>¿Cuánto vale <span class="math inline">\(Y\)</span> para un <span class="math inline">\(X\)</span> nuevo?</td>
+<td><code>predict(modelo, newdata, interval = "prediction")</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Nunca</strong> debe reportarse una regresión sin haber mirado sus residuos.</p>
+</div>
+</div>
+</section>
+<section id="resumen" class="level2" data-number="12.7">
+<h2 data-number="12.7" class="anchored" data-anchor-id="resumen"><span class="header-section-number">12.7</span> Resumen</h2>
+<p>La recta ajustada proviene de una muestra, así que su pendiente tiene incertidumbre. La <strong>prueba sobre <span class="math inline">\(\beta_1\)</span></strong> decide si la relación lineal es real, y su intervalo de confianza dice <strong>cuánto</strong> cambia <span class="math inline">\(Y\)</span> por unidad de <span class="math inline">\(X\)</span>; probar la correlación es la misma prueba con otro nombre. El <span class="math inline">\(R^2\)</span> resume qué proporción de la variabilidad explica el modelo, y el <strong>diagnóstico de residuos</strong> (linealidad, varianza constante, normalidad, independencia) es lo que decide si el modelo merece confianza. Predecir fuera del rango observado es extrapolar, y eso es cosa de fe, no de estadística.</p>
+</section>
+<section id="cierre-del-curso" class="level2" data-number="12.8">
+<h2 data-number="12.8" class="anchored" data-anchor-id="cierre-del-curso"><span class="header-section-number">12.8</span> Cierre del curso</h2>
+<p>Con esto termina el recorrido. A lo largo de los once capítulos se fue construyendo, recuadro a recuadro, una guía para elegir la técnica correcta según el tipo de pregunta y el tipo de datos: el <strong>mapa de decisión</strong>, que se encuentra completo en el <span class="quarto-unresolved-ref">?sec-mapa</span>. Y las fórmulas de todos los procedimientos vistos están reunidas en el <span class="quarto-unresolved-ref">?sec-formulario</span>.</p>
+<p>Tres reglas valen para todo lo que se hizo aquí:</p>
+<ol type="1">
+<li><strong>Mirar los datos antes de calcular.</strong> Una gráfica dice si la técnica tiene sentido.</li>
+<li><strong>Verificar los supuestos.</strong> Un valor p calculado sobre supuestos rotos no significa nada.</li>
+<li><strong>Interpretar en el lenguaje del problema.</strong> Fuera de esta clase, a nadie le interesa el estadístico <span class="math inline">\(t\)</span>: les interesa saber si las galletas gustan distinto, si el tratamiento sirve, cuánto tarda el algoritmo.</li>
+</ol>
+</section>
+<section id="ejercicios" class="level2" data-number="12.9">
+<h2 data-number="12.9" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">12.9</span> Ejercicios</h2>
+<ol type="1">
+<li><p><strong>Modelo completo.</strong> Ajustar la regresión para el entorno <strong>Windows</strong> y reportar: pendiente, su intervalo de confianza, <span class="math inline">\(R^2\)</span> y la conclusión de la prueba.</p></li>
+<li><p><strong>Comparar pendientes.</strong> Contrastar la pendiente de Windows con la de Mac. ¿Cuál entorno se degrada más rápido al crecer la entrada? ¿Se traslapan sus intervalos de confianza?</p></li>
+<li><p><strong>Equivalencia.</strong> Verificar en la salida de <code>summary(lm())</code> que el estadístico <span class="math inline">\(F\)</span> es igual al cuadrado del <span class="math inline">\(t\)</span> de la pendiente. Explicar por qué.</p></li>
+<li><p><strong>Diagnóstico.</strong> Graficar los residuos del modelo de Windows. ¿Se observa algún patrón? ¿Qué supuesto quedaría en duda?</p></li>
+<li><p><strong>Interpretación de <span class="math inline">\(R^2\)</span>.</strong> El modelo tiene <span class="math inline">\(R^2 \approx 0.94\)</span>. ¿Cuál de estas lecturas es correcta?</p>
+<ol type="a">
+<li>El 94 % de las predicciones son correctas.</li>
+<li>El 94 % de la variabilidad en los tiempos se explica por el tamaño de entrada.</li>
+<li>Hay 94 % de probabilidad de que el modelo sea correcto.</li>
+</ol></li>
+<li><p><strong>Predicción y extrapolación.</strong> Predecir el tiempo para <span class="math inline">\(n = 3000\)</span> y para <span class="math inline">\(n = 50000\)</span>. ¿Cuál predicción confiarías y por qué?</p></li>
+<li><p><strong>Laboratorio.</strong> En el <a href="#sec-lab-pendiente" class="quarto-xref"><span>Sección 12.2.1</span></a>, poner la pendiente verdadera en <strong>0</strong>, el ruido en 5 y <span class="math inline">\(n\)</span> en 8, y observar el abanico de rectas. ¿Qué le ocurriría a quien ajustara <strong>una sola</strong> de esas muestras sin hacer prueba de hipótesis?</p></li>
+<li><p><strong>Síntesis del curso.</strong> Para cada situación, indicar qué técnica del mapa de decisión usarías:</p>
+<ol type="a">
+<li>Comparar la satisfacción promedio de estudiantes de tres carreras.</li>
+<li>Ver si el género está asociado con la elección de optativa.</li>
+<li>Estimar el porcentaje de egresados empleados, con margen de error.</li>
+<li>Evaluar si un nuevo método de enseñanza mejora las calificaciones frente al tradicional, con grupos asignados al azar.</li>
+</ol></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Soluciones y retroalimentación">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Soluciones y retroalimentación
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>1.</strong> Con <code>summary(lm(tiempo_ms ~ n, data = filter(alg, entorno == "Windows")))</code>: pendiente ≈ <strong>0.00212 ms por elemento</strong>, intervalo aproximado de <strong>0.00197 a 0.00228</strong>, <span class="math inline">\(R^2 \approx 0.94\)</span>, y un valor p del orden de <span class="math inline">\(10^{-31}\)</span>. Conclusión: existe una relación lineal fuerte y altamente significativa entre el tamaño de entrada y el tiempo. <em>Conviene reportar la pendiente con su intervalo, no solo el valor p.&nbsp;El intervalo es lo que permite comparar entornos.</em></p>
+<p><strong>2.</strong> La pendiente de Windows (0.00212) es mayor que la de Mac (0.00179): <strong>Windows se degrada más rápido</strong> al crecer la entrada. Sus intervalos —aproximadamente (0.00197, 0.00228) contra (0.00167, 0.00192)— <strong>no se traslapan</strong>, lo que sugiere que la diferencia es real. <em>Advertencia metodológica: comparar intervalos “a ojo” es una aproximación informal. La forma rigurosa es ajustar un modelo con interacción, <code>lm(tiempo_ms ~ n * entorno)</code>, y probar directamente si el término de interacción difiere de cero. Es un buen puente hacia la regresión múltiple.</em></p>
+<p><strong>3.</strong> <span class="math inline">\(F = t^2\)</span>: aquí <span class="math inline">\(28.24^2 \approx 797\)</span>. La razón es que en regresión <strong>simple</strong> solo hay una variable explicativa, así que “¿el modelo global sirve?” y “¿la pendiente es distinta de cero?” son la misma pregunta. <em>La equivalencia se rompe en regresión múltiple. Ahí el <span class="math inline">\(F\)</span> global prueba si <strong>al menos una</strong> de las variables aporta, mientras que cada <span class="math inline">\(t\)</span> prueba una variable en particular.</em></p>
+<p><strong>4.</strong> Los residuos de Windows muestran la misma <strong>curvatura leve</strong> que los de Mac, porque ambos conjuntos se generaron con un pequeño término cuadrático. El supuesto en duda es la <strong>linealidad</strong>: la relación real tiene una componente curva que el modelo lineal no captura. <em>Con datos de tiempos de ejecución esto es esperable. Muchos algoritmos tienen complejidad superlineal, así que un término en <span class="math inline">\(n^2\)</span> o un modelo en escala logarítmica podría ajustar mejor. Este es justo el tipo de hallazgo para el que sirve mirar los residuos.</em></p>
+<p><strong>5.</strong> La correcta es la <strong>(b)</strong>. La (a) confunde <span class="math inline">\(R^2\)</span> con una tasa de acierto —concepto que ni siquiera aplica a una respuesta continua—; la (c) le atribuye una probabilidad al modelo, que no es lo que mide. <em>Otra advertencia sobre <span class="math inline">\(R^2\)</span>: un valor alto no garantiza que el modelo sea adecuado. Se pueden tener datos claramente curvos con <span class="math inline">\(R^2\)</span> elevado; por eso el diagnóstico de residuos es indispensable, no opcional.</em></p>
+<p><strong>6.</strong> La predicción para <span class="math inline">\(n = 3000\)</span> es confiable. Está <strong>dentro</strong> del rango observado (1000 a 10000). La de <span class="math inline">\(n = 50000\)</span> es una <strong>extrapolación</strong> cinco veces más allá del máximo observado: el modelo la calcula, pero no hay evidencia de que la relación siga siendo lineal tan lejos, y la curvatura detectada en los residuos sugiere que el tiempo real crecería más rápido de lo predicho. <em>Regla práctica: predice dentro del rango de los datos; fuera de él, se está haciendo un supuesto no verificado y conviene decirlo explícitamente.</em></p>
+<p><strong>7.</strong> Vería una recta con pendiente aparente (a veces positiva, a veces negativa) y podría concluir que existe una relación <strong>que en realidad no existe</strong> (la pendiente verdadera es cero). Sin prueba de hipótesis no hay forma de distinguir una señal real del ruido, y con <span class="math inline">\(n\)</span> pequeño y mucho ruido el azar dibuja tendencias convincentes. <em>Esta es la razón de ser de todo el bloque de inferencia: nuestros ojos encuentran patrones en el ruido con demasiada facilidad, y la estadística es el antídoto contra esa tendencia.</em></p>
+<p><strong>8.</strong> (a) <strong>ANOVA</strong> de un factor con post-hoc de Tukey (<a href="10-anova.html" class="quarto-xref"><span>Capítulo 11</span></a>): una cuantitativa comparada entre tres grupos. (b) <strong>Prueba ji-cuadrada</strong> de independencia (<a href="09-enumerativos.html" class="quarto-xref"><span>Capítulo 10</span></a>): dos variables categóricas. (c) <strong>Intervalo de confianza para una proporción</strong> (<a href="09-enumerativos.html" class="quarto-xref"><span>Capítulo 10</span></a>), con <code>prop.test</code>. (d) <strong>Prueba t de dos muestras independientes</strong> (<a href="08-dos-muestras.html" class="quarto-xref"><span>Capítulo 9</span></a>) sobre un <strong>experimento aleatorizado</strong> (<a href="05-experimentos.html" class="quarto-xref"><span>Capítulo 5</span></a>); como hubo asignación al azar, aquí sí es válido hablar de causa. <em>Nótese que responder bien requiere identificar dos cosas: el tipo de variable y el número de grupos. Ese es, en el fondo, todo el mapa de decisión.</em></p>
+</div>
+</div>
+</div>
 
 
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+W10=
+</script>
 </section>
 
 </main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBydWlkb1JlZyA9IElucHV0cy5yYW5nZShbMC41LCA2XSwge3ZhbHVlOiAyLCBzdGVwOiAwLjI1LCBsYWJlbDogXCJkaXNwZXJzacOzbiBkZSBsb3MgZXJyb3Jlc1wifSlcbnZpZXdvZiBuUmVnID0gSW5wdXRzLnJhbmdlKFs2LCAxMDBdLCB7dmFsdWU6IDIwLCBzdGVwOiAyLCBsYWJlbDogXCJ0YW1hw7FvIGRlIG11ZXN0cmEgblwifSlcbnZpZXdvZiBwZW5kVmVyZCA9IElucHV0cy5yYW5nZShbMCwgMS41XSwge3ZhbHVlOiAwLjgsIHN0ZXA6IDAuMSwgbGFiZWw6IFwicGVuZGllbnRlIHZlcmRhZGVyYVwifSlcbnZpZXdvZiBudWV2YXNSZWcgPSBJbnB1dHMuYnV0dG9uKFwiTnVldmFzIG11ZXN0cmFzXCIpXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJhanVzdGVzID0ge1xuICBudWV2YXNSZWc7XG4gIGNvbnN0IG91dCA9IFtdO1xuICBmb3IgKGxldCBrID0gMDsgayA8IDQwOyBrKyspIHtcbiAgICBjb25zdCBlcnIgPSBkMy5yYW5kb21Ob3JtYWwoMCwgcnVpZG9SZWcpO1xuICAgIGNvbnN0IHhzID0gQXJyYXkuZnJvbSh7bGVuZ3RoOiBuUmVnfSwgKCkgPT4gTWF0aC5yYW5kb20oKSAqIDEwKTtcbiAgICBjb25zdCB5cyA9IHhzLm1hcCh4ID0+IDUgKyBwZW5kVmVyZCAqIHggKyBlcnIoKSk7XG4gICAgY29uc3QgeGIgPSBkMy5tZWFuKHhzKSwgeWIgPSBkMy5tZWFuKHlzKTtcbiAgICBjb25zdCBTeHggPSBkMy5zdW0oeHMsIHggPT4gKHggLSB4YikgKiogMik7XG4gICAgY29uc3QgU3h5ID0gZDMuc3VtKHhzLm1hcCgoeCwgaSkgPT4gKHggLSB4YikgKiAoeXNbaV0gLSB5YikpKTtcbiAgICBjb25zdCBiID0gU3h5IC8gU3h4LCBhID0geWIgLSBiICogeGI7XG4gICAgb3V0LnB1c2goeyBrLCBhLCBiIH0pO1xuICB9XG4gIHJldHVybiBvdXQ7XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTMiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJsaW5lYXMgPSBhanVzdGVzLmZsYXRNYXAoZCA9PiBbXG4gIHsgazogZC5rLCB4OiAwLCAgeTogZC5hIH0sXG4gIHsgazogZC5rLCB4OiAxMCwgeTogZC5hICsgZC5iICogMTAgfVxuXSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IlBsb3QucGxvdCh7XG4gIGhlaWdodDogMjYwLFxuICB4OiB7IGxhYmVsOiBcInhcIiwgZG9tYWluOiBbMCwgMTBdIH0sXG4gIHk6IHsgbGFiZWw6IFwieVwiLCBkb21haW46IFstMiwgMjJdIH0sXG4gIG1hcmtzOiBbXG4gICAgUGxvdC5saW5lKGxpbmVhcywgeyB4OiBcInhcIiwgeTogXCJ5XCIsIHo6IFwia1wiLCBzdHJva2U6IFwiIzg4ODc4MFwiLCBzdHJva2VPcGFjaXR5OiAwLjM1IH0pLFxuICAgIFBsb3QubGluZShbe3g6IDAsIHk6IDV9LCB7eDogMTAsIHk6IDUgKyBwZW5kVmVyZCAqIDEwfV0sXG4gICAgICB7IHg6IFwieFwiLCB5OiBcInlcIiwgc3Ryb2tlOiBcIiNDMDM5MkJcIiwgc3Ryb2tlV2lkdGg6IDIuNSB9KVxuICBdXG59KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC01IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoibWRgUGVuZGllbnRlIHZlcmRhZGVyYTogKioke3BlbmRWZXJkLnRvRml4ZWQoMSl9KiogKGzDrW5lYSByb2phKSDCtyBwZW5kaWVudGVzIGVzdGltYWRhczogZGUgKioke2QzLm1pbihhanVzdGVzLCBkID0+IGQuYikudG9GaXhlZCgyKX0qKiBhICoqJHtkMy5tYXgoYWp1c3RlcywgZCA9PiBkLmIpLnRvRml4ZWQoMil9KiogwrcgZGVzdmlhY2nDs24gZXN0w6FuZGFyIGRlIGxhcyBlc3RpbWFjaW9uZXM6ICoqJHtkMy5kZXZpYXRpb24oYWp1c3RlcywgZCA9PiBkLmIpLnRvRml4ZWQoMyl9KipgXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ3J1aWRvUmVnJykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ25SZWcnKSJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgncGVuZFZlcmQnKSJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnbnVldmFzUmVnJykifV19
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../..";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -725,7 +1387,7 @@ ul.task-list li input[type="checkbox"] {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./10-anova.html" class="pagination-link" aria-label="Análisis de varianza (ANOVA)">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Análisis de varianza (ANOVA)</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Análisis de varianza (ANOVA)</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

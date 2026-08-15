@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>7&nbsp; Estimación y prueba de hipótesis – Estadística para Ciencias de la Computación</title>
+<title>8&nbsp; Estimación y prueba de hipótesis – Estadística para Ciencias de la Computación</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -22,6 +22,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -44,7 +79,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-e671ceb1ec85f3bd6fb682ad87dd4085.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-22a2d3c8fd5a3a2e3c4a69971a64c298.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -72,11 +109,42 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Buscar"
   }
 }</script>
+<script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 <link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -89,7 +157,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06-muestrales.html">III. Inferencia estadística</a></li><li class="breadcrumb-item"><a href="./07-estimacion-pruebas.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Estimación y prueba de hipótesis</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./laboratorio-estandarizacion.html">III. Inferencia estadística</a></li><li class="breadcrumb-item"><a href="./07-estimacion-pruebas.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estimación y prueba de hipótesis</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -190,38 +258,44 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./laboratorio-estandarizacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Laboratorio interactivo: la estandarización</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./06-muestrales.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Distribuciones muestrales y TCL</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Distribuciones muestrales y TCL</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./07-estimacion-pruebas.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Estimación y prueba de hipótesis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estimación y prueba de hipótesis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./08-dos-muestras.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Inferencia para dos parámetros</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Inferencia para dos parámetros</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./09-enumerativos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Inferencia para datos enumerativos</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Inferencia para datos enumerativos</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10-anova.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Análisis de varianza (ANOVA)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Análisis de varianza (ANOVA)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./11-regresion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Inferencia en regresión</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Inferencia en regresión</span></span></a>
   </div>
 </li>
       </ul>
@@ -232,6 +306,41 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Referencias</span></a>
   </div>
 </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Apéndices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mapa-decision.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mapa de decisión</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./formulario.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Formulario</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./apendice-python.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">R y Python, lado a lado</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./laboratorio-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Practicar R sin instalar nada</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -242,21 +351,35 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">En este capítulo</h2>
    
   <ul>
-  <li><a href="#estimación-puntual-y-por-intervalos-de-confianza" id="toc-estimación-puntual-y-por-intervalos-de-confianza" class="nav-link active" data-scroll-target="#estimación-puntual-y-por-intervalos-de-confianza"><span class="header-section-number">7.1</span> Estimación puntual y por intervalos de confianza</a></li>
-  <li><a href="#intervalo-de-confianza-para-una-media" id="toc-intervalo-de-confianza-para-una-media" class="nav-link" data-scroll-target="#intervalo-de-confianza-para-una-media"><span class="header-section-number">7.2</span> Intervalo de confianza para una media</a></li>
-  <li><a href="#la-lógica-de-la-prueba-de-hipótesis" id="toc-la-lógica-de-la-prueba-de-hipótesis" class="nav-link" data-scroll-target="#la-lógica-de-la-prueba-de-hipótesis"><span class="header-section-number">7.3</span> La lógica de la prueba de hipótesis</a></li>
-  <li><a href="#prueba-de-hipótesis-para-una-media" id="toc-prueba-de-hipótesis-para-una-media" class="nav-link" data-scroll-target="#prueba-de-hipótesis-para-una-media"><span class="header-section-number">7.4</span> Prueba de hipótesis para una media</a></li>
-  <li><a href="#usos-y-abusos-de-la-inferencia-p-hacking-significancia-vs.-relevancia-práctica" id="toc-usos-y-abusos-de-la-inferencia-p-hacking-significancia-vs.-relevancia-práctica" class="nav-link" data-scroll-target="#usos-y-abusos-de-la-inferencia-p-hacking-significancia-vs.-relevancia-práctica"><span class="header-section-number">7.5</span> Usos y abusos de la inferencia: p-hacking, significancia vs.&nbsp;relevancia práctica</a></li>
-  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">7.6</span> Ejercicios</a></li>
+  <li><a href="#estimación-puntual" id="toc-estimación-puntual" class="nav-link active" data-scroll-target="#estimación-puntual"><span class="header-section-number">8.1</span> Estimación puntual</a></li>
+  <li><a href="#intervalos-de-confianza" id="toc-intervalos-de-confianza" class="nav-link" data-scroll-target="#intervalos-de-confianza"><span class="header-section-number">8.2</span> Intervalos de confianza</a>
+  <ul class="collapse">
+  <li><a href="#sec-lab-ic" id="toc-sec-lab-ic" class="nav-link" data-scroll-target="#sec-lab-ic"><span class="header-section-number">8.2.1</span> Laboratorio: ¿qué significa “95 % de confianza”?</a></li>
+  </ul></li>
+  <li><a href="#la-lógica-de-la-prueba-de-hipótesis" id="toc-la-lógica-de-la-prueba-de-hipótesis" class="nav-link" data-scroll-target="#la-lógica-de-la-prueba-de-hipótesis"><span class="header-section-number">8.3</span> La lógica de la prueba de hipótesis</a></li>
+  <li><a href="#hipótesis-de-una-y-de-dos-colas" id="toc-hipótesis-de-una-y-de-dos-colas" class="nav-link" data-scroll-target="#hipótesis-de-una-y-de-dos-colas"><span class="header-section-number">8.4</span> Hipótesis de una y de dos colas</a></li>
+  <li><a href="#los-dos-tipos-de-error" id="toc-los-dos-tipos-de-error" class="nav-link" data-scroll-target="#los-dos-tipos-de-error"><span class="header-section-number">8.5</span> Los dos tipos de error</a></li>
+  <li><a href="#prueba-de-hipótesis-para-una-media" id="toc-prueba-de-hipótesis-para-una-media" class="nav-link" data-scroll-target="#prueba-de-hipótesis-para-una-media"><span class="header-section-number">8.6</span> Prueba de hipótesis para una media</a>
+  <ul class="collapse">
+  <li><a href="#sec-t-mano" id="toc-sec-t-mano" class="nav-link" data-scroll-target="#sec-t-mano"><span class="header-section-number">8.6.1</span> El mismo cálculo a mano</a></li>
+  <li><a href="#sec-lab-p" id="toc-sec-lab-p" class="nav-link" data-scroll-target="#sec-lab-p"><span class="header-section-number">8.6.2</span> Laboratorio: qué es realmente el valor p</a></li>
+  </ul></li>
+  <li><a href="#usos-y-abusos-de-la-inferencia" id="toc-usos-y-abusos-de-la-inferencia" class="nav-link" data-scroll-target="#usos-y-abusos-de-la-inferencia"><span class="header-section-number">8.7</span> Usos y abusos de la inferencia</a>
+  <ul class="collapse">
+  <li><a href="#significancia-estadística-no-es-relevancia-práctica" id="toc-significancia-estadística-no-es-relevancia-práctica" class="nav-link" data-scroll-target="#significancia-estadística-no-es-relevancia-práctica"><span class="header-section-number">8.7.1</span> Significancia estadística no es relevancia práctica</a></li>
+  <li><a href="#el-p-hacking" id="toc-el-p-hacking" class="nav-link" data-scroll-target="#el-p-hacking"><span class="header-section-number">8.7.2</span> El <em>p-hacking</em></a></li>
+  </ul></li>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen"><span class="header-section-number">8.8</span> Resumen</a></li>
+  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">8.9</span> Ejercicios</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06-muestrales.html">III. Inferencia estadística</a></li><li class="breadcrumb-item"><a href="./07-estimacion-pruebas.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Estimación y prueba de hipótesis</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./laboratorio-estandarizacion.html">III. Inferencia estadística</a></li><li class="breadcrumb-item"><a href="./07-estimacion-pruebas.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estimación y prueba de hipótesis</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-cap7" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Estimación y prueba de hipótesis</span></span></h1>
+<h1 class="title"><span id="sec-cap7" class="quarto-section-identifier"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estimación y prueba de hipótesis</span></span></h1>
 </div>
 
 
@@ -273,60 +396,703 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="callout callout-style-default callout-important callout-titled" title="Plantilla en construcción">
+<div class="callout callout-style-default callout-warning callout-titled" title="Capítulo en revisión">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Importante</span>Plantilla en construcción
+<span class="screen-reader-only">Advertencia</span>Capítulo en revisión
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Este capítulo corresponde a <strong>Semana 8-9</strong> del calendario y usa los datos de <strong>lagartijas, algoritmos</strong>. La estructura de secciones ya está fijada; el contenido se desarrolla con el mismo formato del <a href="01-exploracion.html" class="quarto-xref"><span>Capítulo 1</span></a>: pregunta real, técnica, supuestos, cómputo en R e interpretación.</p>
+<p>El contenido de este capítulo está completo, pero todavía no pasa por la revisión final de redacción. Se avisará en clase cuando quede listo para estudiar de aquí. Mientras tanto se puede consultar, con esa advertencia.</p>
 </div>
 </div>
-<section id="estimación-puntual-y-por-intervalos-de-confianza" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="estimación-puntual-y-por-intervalos-de-confianza"><span class="header-section-number">7.1</span> Estimación puntual y por intervalos de confianza</h2>
-<p><em>(En construcción.)</em></p>
-</section>
-<section id="intervalo-de-confianza-para-una-media" class="level2" data-number="7.2">
-<h2 data-number="7.2" class="anchored" data-anchor-id="intervalo-de-confianza-para-una-media"><span class="header-section-number">7.2</span> Intervalo de confianza para una media</h2>
-<p><em>(En construcción.)</em></p>
-</section>
-<section id="la-lógica-de-la-prueba-de-hipótesis" class="level2" data-number="7.3">
-<h2 data-number="7.3" class="anchored" data-anchor-id="la-lógica-de-la-prueba-de-hipótesis"><span class="header-section-number">7.3</span> La lógica de la prueba de hipótesis</h2>
-<p><em>(En construcción.)</em></p>
-</section>
-<section id="prueba-de-hipótesis-para-una-media" class="level2" data-number="7.4">
-<h2 data-number="7.4" class="anchored" data-anchor-id="prueba-de-hipótesis-para-una-media"><span class="header-section-number">7.4</span> Prueba de hipótesis para una media</h2>
-<p><em>(En construcción.)</em></p>
-</section>
-<section id="usos-y-abusos-de-la-inferencia-p-hacking-significancia-vs.-relevancia-práctica" class="level2" data-number="7.5">
-<h2 data-number="7.5" class="anchored" data-anchor-id="usos-y-abusos-de-la-inferencia-p-hacking-significancia-vs.-relevancia-práctica"><span class="header-section-number">7.5</span> Usos y abusos de la inferencia: p-hacking, significancia vs.&nbsp;relevancia práctica</h2>
-<p><em>(En construcción.)</em></p>
-<div class="callout callout-style-default callout-tip callout-titled" title="¿Qué técnica uso?">
+<div class="callout callout-style-default callout-tip callout-titled" title="Objetivos del capítulo">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>¿Qué técnica uso?
+<span class="screen-reader-only">Tip</span>Objetivos del capítulo
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Una muestra, un parámetro: ¿estimarlo con margen? → intervalo de confianza; ¿contrastarlo con un valor? → prueba de hipótesis.</p>
+<ul>
+<li>Construir e <strong>interpretar correctamente</strong> un intervalo de confianza para una media.</li>
+<li>Plantear hipótesis y entender la <strong>lógica</strong> de una prueba estadística.</li>
+<li>Leer un <strong>valor p</strong> sin caer en las interpretaciones equivocadas más comunes.</li>
+<li>Distinguir <strong>significancia estadística</strong> de <strong>relevancia práctica</strong>, y reconocer el <em>p-hacking</em>.</li>
+</ul>
+</div>
+</div>
+<p>Ya tenemos la pieza que faltaba: sabemos cómo varía un estadístico de muestra a muestra (<a href="06-muestrales.html" class="quarto-xref"><span>Capítulo 7</span></a>). Con eso podemos, por fin, responder las dos preguntas centrales de la inferencia: <strong>¿cuánto vale el parámetro?</strong> (estimación) y <strong>¿es compatible con cierto valor?</strong> (prueba de hipótesis).</p>
+<section id="estimación-puntual" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="estimación-puntual"><span class="header-section-number">8.1</span> Estimación puntual</h2>
+<p>La <strong>estimación puntual</strong> es lo más simple: usar el estadístico de la muestra como estimación del parámetro. Si la media de nuestras lagartijas urbanas es 35.4 °C, esa es nuestra estimación puntual de <span class="math inline">\(\mu\)</span>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>lagartijas <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"datos/lagartijas.csv"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>urbanas <span class="ot">&lt;-</span> <span class="fu">filter</span>(lagartijas, habitat <span class="sc">==</span> <span class="st">"urbana"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(urbanas<span class="sc">$</span>temp_corporal)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 35.41875</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>El problema es evidente: un número solo, sin más, <strong>no comunica incertidumbre</strong>. Otra muestra habría dado otro valor. Necesitamos acompañarlo de un margen.</p>
+</section>
+<section id="intervalos-de-confianza" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="intervalos-de-confianza"><span class="header-section-number">8.2</span> Intervalos de confianza</h2>
+<p>Un <strong>intervalo de confianza</strong> es un rango de valores plausibles para el parámetro, construido de modo que el procedimiento acierte un porcentaje conocido de las veces. Para una media, con <span class="math inline">\(\sigma\)</span> desconocida (el caso real), es</p>
+<p><span class="math display">\[\bar{x} \pm t^* \cdot \frac{s}{\sqrt{n}}\]</span></p>
+<p>donde <span class="math inline">\(s/\sqrt{n}\)</span> es el <strong>error estándar</strong> que ya conocemos y <span class="math inline">\(t^*\)</span> es un valor crítico de la distribución <span class="math inline">\(t\)</span> de Student, que depende del nivel de confianza y de los grados de libertad (<span class="math inline">\(n-1\)</span>). Usamos <span class="math inline">\(t\)</span> en lugar de la normal porque estamos estimando <span class="math inline">\(\sigma\)</span> con <span class="math inline">\(s\)</span>, y eso agrega incertidumbre.</p>
+<p>En R, <code>t.test()</code> lo calcula:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(urbanas<span class="sc">$</span>temp_corporal, <span class="at">conf.level =</span> <span class="fl">0.95</span>)<span class="sc">$</span>conf.int</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 34.82984 36.00766</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; attr(,"conf.level")</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.95</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Qué significa (y qué NO significa) el 95 %">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Qué significa (y qué NO significa) el 95 %
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La interpretación <strong>correcta</strong> es sobre el <strong>procedimiento</strong>: si repitiéramos el estudio muchas veces y construyéramos un intervalo cada vez, alrededor del 95 % de esos intervalos contendrían el verdadero <span class="math inline">\(\mu\)</span>.</p>
+<p>Es <strong>incorrecto</strong> decir “hay 95 % de probabilidad de que <span class="math inline">\(\mu\)</span> esté en <em>este</em> intervalo”. Una vez calculado, este intervalo concreto o contiene a <span class="math inline">\(\mu\)</span> o no lo contiene (no hay azar ya); lo que tiene una tasa de éxito del 95 % es el método que lo produjo. El laboratorio siguiente vuelve tangible esta distinción.</p>
+</div>
+</div>
+<section id="sec-lab-ic" class="level3" data-number="8.2.1">
+<h3 data-number="8.2.1" class="anchored" data-anchor-id="sec-lab-ic"><span class="header-section-number">8.2.1</span> Laboratorio: ¿qué significa “95 % de confianza”?</h3>
+<p>Cada línea horizontal es un intervalo construido a partir de una muestra distinta de la <strong>misma</strong> población, cuya media verdadera conocemos (la línea roja, <span class="math inline">\(\mu = 100\)</span>). Los intervalos que <strong>no</strong> alcanzan a cubrirla aparecen en rojo. Los controles permiten cambiar el nivel de confianza y el tamaño de muestra.</p>
+<div class="cell panel-input card bg-light p-2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="64" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 63;"><span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>viewof nivel <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">select</span>([<span class="dv">90</span><span class="op">,</span> <span class="dv">95</span><span class="op">,</span> <span class="dv">99</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">95</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"nivel de confianza (%)"</span>})</span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>viewof nIC <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">5</span><span class="op">,</span> <span class="dv">100</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">25</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">5</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"tamaño de muestra n"</span>})</span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>viewof semilla <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">button</span>(<span class="st">"Nuevas muestras"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="70" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 69;"><span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a>tcrit <span class="op">=</span> ({<span class="dv">90</span><span class="op">:</span> <span class="fl">1.645</span><span class="op">,</span> <span class="dv">95</span><span class="op">:</span> <span class="fl">1.96</span><span class="op">,</span> <span class="dv">99</span><span class="op">:</span> <span class="fl">2.576</span>})[nivel]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="75" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 74;"><span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a>intervalos <span class="op">=</span> {</span>
+<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a>  semilla<span class="op">;</span>                       <span class="co">// al presionar el botón se regeneran</span></span>
+<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> normal <span class="op">=</span> d3<span class="op">.</span><span class="fu">randomNormal</span>(<span class="dv">100</span><span class="op">,</span> <span class="dv">15</span>)<span class="op">;</span></span>
+<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="bu">Array</span><span class="op">.</span><span class="fu">from</span>({<span class="dt">length</span><span class="op">:</span> <span class="dv">60</span>}<span class="op">,</span> (_<span class="op">,</span> k) <span class="kw">=&gt;</span> {</span>
+<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> x <span class="op">=</span> <span class="bu">Array</span><span class="op">.</span><span class="fu">from</span>({<span class="dt">length</span><span class="op">:</span> nIC}<span class="op">,</span> normal)<span class="op">;</span></span>
+<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> m <span class="op">=</span> d3<span class="op">.</span><span class="fu">mean</span>(x)<span class="op">,</span> s <span class="op">=</span> d3<span class="op">.</span><span class="fu">deviation</span>(x)<span class="op">;</span></span>
+<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> e <span class="op">=</span> tcrit <span class="op">*</span> s <span class="op">/</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">sqrt</span>(nIC)<span class="op">;</span></span>
+<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> { k<span class="op">,</span> <span class="dt">bajo</span><span class="op">:</span> m <span class="op">-</span> e<span class="op">,</span> <span class="dt">alto</span><span class="op">:</span> m <span class="op">+</span> e<span class="op">,</span> <span class="dt">media</span><span class="op">:</span> m<span class="op">,</span> <span class="dt">cubre</span><span class="op">:</span> (m <span class="op">-</span> e) <span class="op">&lt;=</span> <span class="dv">100</span> <span class="op">&amp;&amp;</span> <span class="dv">100</span> <span class="op">&lt;=</span> (m <span class="op">+</span> e) }<span class="op">;</span></span>
+<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="89" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 88;"><span id="cb6-89"><a href="#cb6-89" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb6-90"><a href="#cb6-90" aria-hidden="true" tabindex="-1"></a>  <span class="dt">height</span><span class="op">:</span> <span class="dv">300</span><span class="op">,</span></span>
+<span id="cb6-91"><a href="#cb6-91" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">30</span><span class="op">,</span></span>
+<span id="cb6-92"><a href="#cb6-92" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> { <span class="dt">label</span><span class="op">:</span> <span class="st">"valor del parámetro"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">85</span><span class="op">,</span> <span class="dv">115</span>] }<span class="op">,</span></span>
+<span id="cb6-93"><a href="#cb6-93" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> { <span class="dt">axis</span><span class="op">:</span> <span class="kw">null</span> }<span class="op">,</span></span>
+<span id="cb6-94"><a href="#cb6-94" aria-hidden="true" tabindex="-1"></a>  <span class="dt">color</span><span class="op">:</span> { <span class="dt">legend</span><span class="op">:</span> <span class="kw">false</span> }<span class="op">,</span></span>
+<span id="cb6-95"><a href="#cb6-95" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb6-96"><a href="#cb6-96" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>(intervalos<span class="op">,</span> {</span>
+<span id="cb6-97"><a href="#cb6-97" aria-hidden="true" tabindex="-1"></a>      <span class="dt">y</span><span class="op">:</span> <span class="st">"k"</span><span class="op">,</span> <span class="dt">x1</span><span class="op">:</span> <span class="st">"bajo"</span><span class="op">,</span> <span class="dt">x2</span><span class="op">:</span> <span class="st">"alto"</span><span class="op">,</span></span>
+<span id="cb6-98"><a href="#cb6-98" aria-hidden="true" tabindex="-1"></a>      <span class="dt">stroke</span><span class="op">:</span> d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">cubre</span> <span class="op">?</span> <span class="st">"#1F4E79"</span> <span class="op">:</span> <span class="st">"#C0392B"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.8</span></span>
+<span id="cb6-99"><a href="#cb6-99" aria-hidden="true" tabindex="-1"></a>    })<span class="op">,</span></span>
+<span id="cb6-100"><a href="#cb6-100" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(intervalos<span class="op">,</span> { <span class="dt">y</span><span class="op">:</span> <span class="st">"k"</span><span class="op">,</span> <span class="dt">x</span><span class="op">:</span> <span class="st">"media"</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span></span>
+<span id="cb6-101"><a href="#cb6-101" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fill</span><span class="op">:</span> d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">cubre</span> <span class="op">?</span> <span class="st">"#1F4E79"</span> <span class="op">:</span> <span class="st">"#C0392B"</span> })<span class="op">,</span></span>
+<span id="cb6-102"><a href="#cb6-102" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleX</span>([<span class="dv">100</span>]<span class="op">,</span> { <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#C0392B"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">2</span> })</span>
+<span id="cb6-103"><a href="#cb6-103" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb6-104"><a href="#cb6-104" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-4" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="109" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 108;"><span id="cb7-109"><a href="#cb7-109" aria-hidden="true" tabindex="-1"></a><span class="fu">md</span><span class="vs">`De estos **60** intervalos, **</span><span class="sc">${</span>intervalos<span class="op">.</span><span class="fu">filter</span>(d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">cubre</span>)<span class="op">.</span><span class="at">length</span><span class="sc">}</span><span class="vs">** contienen el valor verdadero (µ = 100). Nivel nominal: **</span><span class="sc">${</span>nivel<span class="sc">}</span><span class="vs"> %** → esperaríamos alrededor de **</span><span class="sc">${</span><span class="bu">Math</span><span class="op">.</span><span class="fu">round</span>(<span class="dv">60</span> <span class="op">*</span> nivel <span class="op">/</span> <span class="dv">100</span>)<span class="sc">}</span><span class="vs">**.`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-5" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Conviene observar tres cosas. Primero, <strong>algunos intervalos fallan</strong>, y eso es normal, no un error: con 95 % de confianza, uno de cada veinte no cubre el parámetro. Segundo, al subir el nivel a 99 % los intervalos se <strong>ensanchan</strong> y fallan menos: más confianza cuesta menos precisión. Tercero, al aumentar <span class="math inline">\(n\)</span> todos se <strong>angostan</strong>, porque el error estándar <span class="math inline">\(s/\sqrt{n}\)</span> encoge.</p>
+<p>Y lo esencial: el “95 %” describe <strong>cuántas veces acierta el método a la larga</strong>, no la probabilidad de que un intervalo particular contenga a <span class="math inline">\(\mu\)</span>.</p>
 </div>
 </div>
 </section>
-<section id="ejercicios" class="level2" data-number="7.6">
-<h2 data-number="7.6" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">7.6</span> Ejercicios</h2>
-<p><em>Por desarrollar (banco de la Dra. Figueroa reorganizado + reactivos nuevos).</em></p>
+</section>
+<section id="la-lógica-de-la-prueba-de-hipótesis" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="la-lógica-de-la-prueba-de-hipótesis"><span class="header-section-number">8.3</span> La lógica de la prueba de hipótesis</h2>
+<p>Una prueba de hipótesis responde a una pregunta distinta: ¿los datos son compatibles con cierta afirmación? Su razonamiento es el de una <strong>reducción al absurdo probabilística</strong>, en cuatro pasos:</p>
+<ol type="1">
+<li><strong>Se plantea una hipótesis nula</strong> <span class="math inline">\(H_0\)</span>: la afirmación de “no hay efecto”, “no hay diferencia”, el statu quo. Y una <strong>alternativa</strong> <span class="math inline">\(H_1\)</span>, lo que sospechamos.</li>
+<li><strong>Se supone que <span class="math inline">\(H_0\)</span> es cierta</strong> y se calcula, bajo ese supuesto, la distribución del estadístico.</li>
+<li><strong>Se mide qué tan raro</strong> sería observar unos datos como los nuestros (o más extremos) si <span class="math inline">\(H_0\)</span> fuera cierta. Esa probabilidad es el <strong>valor p</strong>.</li>
+<li><strong>Se decide</strong>: si el valor p es muy pequeño, los datos son poco compatibles con <span class="math inline">\(H_0\)</span> y la rechazamos; si no, no hay evidencia suficiente para rechazarla.</li>
+</ol>
+<div class="callout callout-style-default callout-important callout-titled" title="Dos precisiones de lenguaje que importan">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Dos precisiones de lenguaje que importan
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>No decimos “aceptamos <span class="math inline">\(H_0\)</span>”, sino “<strong>no la rechazamos</strong>”: la ausencia de evidencia no es evidencia de ausencia. Un valor p grande puede significar que no hay efecto… o que la muestra fue demasiado pequeña para detectarlo.</p>
+<p>Y el nivel de significancia <span class="math inline">\(\alpha\)</span> (típicamente 0.05) es un <strong>umbral convencional</strong>, no una ley de la naturaleza. Un p de 0.049 y uno de 0.051 dicen prácticamente lo mismo.</p>
+</div>
+</div>
+</section>
+<section id="hipótesis-de-una-y-de-dos-colas" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="hipótesis-de-una-y-de-dos-colas"><span class="header-section-number">8.4</span> Hipótesis de una y de dos colas</h2>
+<p>La forma de <span class="math inline">\(H_1\)</span> depende de la pregunta, y hay que fijarla <strong>antes</strong> de ver los datos:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Pregunta</th>
+<th><span class="math inline">\(H_1\)</span></th>
+<th>Tipo de prueba</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>¿El parámetro <strong>difiere</strong> del valor de referencia?</td>
+<td><span class="math inline">\(\mu \neq \mu_0\)</span></td>
+<td>Dos colas (bilateral)</td>
+</tr>
+<tr class="even">
+<td>¿Es <strong>mayor</strong> que el valor de referencia?</td>
+<td><span class="math inline">\(\mu &gt; \mu_0\)</span></td>
+<td>Una cola (unilateral derecha)</td>
+</tr>
+<tr class="odd">
+<td>¿Es <strong>menor</strong> que el valor de referencia?</td>
+<td><span class="math inline">\(\mu &lt; \mu_0\)</span></td>
+<td>Una cola (unilateral izquierda)</td>
+</tr>
+</tbody>
+</table>
+<p>La diferencia práctica es dónde se mide la rareza de los datos. En una prueba bilateral cuentan como “extremos” los resultados alejados en <strong>cualquiera</strong> de las dos direcciones, así que el valor p suma las dos colas; en una unilateral solo cuenta la dirección de interés.</p>
+<p>En R se indica con el argumento <code>alternative</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(x, <span class="at">mu =</span> <span class="dv">34</span>)                            <span class="co"># bilateral (por omisión)</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(x, <span class="at">mu =</span> <span class="dv">34</span>, <span class="at">alternative =</span> <span class="st">"greater"</span>)   <span class="co"># H1: mu &gt; 34</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(x, <span class="at">mu =</span> <span class="dv">34</span>, <span class="at">alternative =</span> <span class="st">"less"</span>)      <span class="co"># H1: mu &lt; 34</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="La regla de oro de las pruebas unilaterales">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>La regla de oro de las pruebas unilaterales
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La dirección de <span class="math inline">\(H_1\)</span> debe surgir de la <strong>pregunta de investigación</strong>, nunca de haber mirado los datos. Elegir la cola después de ver hacia dónde apuntan los resultados es una forma de <em>p-hacking</em>: duplica artificialmente la evidencia aparente, porque un valor p bilateral de 0.08 se convierte en 0.04 unilateral con solo cambiar la hipótesis a posteriori.</p>
+<p>Regla útil: si la pregunta es “¿mejoró?”, “¿es menor que?”, “¿superó el estándar?”, la prueba es unilateral. Si es “¿son distintos?”, es bilateral.</p>
+</div>
+</div>
+</section>
+<section id="los-dos-tipos-de-error" class="level2" data-number="8.5">
+<h2 data-number="8.5" class="anchored" data-anchor-id="los-dos-tipos-de-error"><span class="header-section-number">8.5</span> Los dos tipos de error</h2>
+<p>Toda decisión estadística puede equivocarse, y hay <strong>dos formas distintas</strong> de hacerlo:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th><span class="math inline">\(H_0\)</span> es cierta</th>
+<th><span class="math inline">\(H_0\)</span> es falsa</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Se rechaza <span class="math inline">\(H_0\)</span></strong></td>
+<td>Error tipo I (probabilidad <span class="math inline">\(\alpha\)</span>)</td>
+<td>Decisión correcta (probabilidad <span class="math inline">\(1-\beta\)</span>)</td>
+</tr>
+<tr class="even">
+<td><strong>No se rechaza <span class="math inline">\(H_0\)</span></strong></td>
+<td>Decisión correcta</td>
+<td>Error tipo II (probabilidad <span class="math inline">\(\beta\)</span>)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>El <strong>error tipo I</strong> es un <em>falso positivo</em>: declarar un efecto que no existe. Su probabilidad es exactamente el nivel de significancia <span class="math inline">\(\alpha\)</span> que elegimos, típicamente 0.05.</li>
+<li>El <strong>error tipo II</strong> es un <em>falso negativo</em>: no detectar un efecto que sí existe. Su probabilidad se denota <span class="math inline">\(\beta\)</span> y no la fijamos directamente. Depende del tamaño real del efecto, de la variabilidad y del tamaño de muestra.</li>
+<li>La <strong>potencia</strong> de la prueba es <span class="math inline">\(1 - \beta\)</span>: la probabilidad de detectar un efecto cuando de verdad lo hay.</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Una analogía útil es un juicio. <span class="math inline">\(H_0\)</span> es “la persona es inocente”. El <strong>error tipo I</strong> es condenar a un inocente; el <strong>tipo II</strong>, absolver a un culpable. Bajar <span class="math inline">\(\alpha\)</span> (exigir más evidencia para condenar) reduce el primero pero aumenta el segundo: los dos errores se compensan entre sí.</p>
+<p>Lo único que reduce <strong>ambos</strong> a la vez es aumentar el tamaño de muestra, que es como conseguir más pruebas antes de juzgar. Por eso el tamaño de muestra debe planearse <strong>antes</strong> de recolectar: un estudio con muestra insuficiente tiene poca potencia y puede no detectar un efecto real.</p>
+<p>Y aquí está el vínculo con lo dicho antes. Cuando no rechazamos <span class="math inline">\(H_0\)</span>, no sabemos si es porque no hay efecto o porque nos faltó potencia. Ese es exactamente el error tipo II, y es la razón de que no digamos “aceptamos <span class="math inline">\(H_0\)</span>”.</p>
+</div>
+</div>
+<p>En R, la potencia de una prueba para una media se calcula así:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ¿Qué potencia tiene detectar una diferencia de 0.5 desviaciones con n = 30?</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">power.t.test</span>(<span class="at">n =</span> <span class="dv">30</span>, <span class="at">delta =</span> <span class="fl">0.5</span>, <span class="at">sd =</span> <span class="dv">1</span>, <span class="at">sig.level =</span> <span class="fl">0.05</span>, <span class="at">type =</span> <span class="st">"one.sample"</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      One-sample t test power calculation </span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;               n = 30</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           delta = 0.5</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              sd = 1</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       sig.level = 0.05</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           power = 0.7539627</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     alternative = two.sided</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="prueba-de-hipótesis-para-una-media" class="level2" data-number="8.6">
+<h2 data-number="8.6" class="anchored" data-anchor-id="prueba-de-hipótesis-para-una-media"><span class="header-section-number">8.6</span> Prueba de hipótesis para una media</h2>
+<p>Preguntemos si la temperatura media de las lagartijas urbanas difiere de 34 °C, un valor de referencia:</p>
+<ul>
+<li><span class="math inline">\(H_0: \mu = 34\)</span></li>
+<li><span class="math inline">\(H_1: \mu \neq 34\)</span> (prueba de dos colas)</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(urbanas<span class="sc">$</span>temp_corporal, <span class="at">mu =</span> <span class="dv">34</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  One Sample t-test</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  urbanas$temp_corporal</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; t = 4.9134, df = 31, p-value = 2.752e-05</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; alternative hypothesis: true mean is not equal to 34</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 95 percent confidence interval:</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  34.82984 36.00766</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sample estimates:</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; mean of x </span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  35.41875</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>La salida trae todo: el estadístico <code>t</code>, los grados de libertad, el <strong>valor p</strong> y, de regalo, el intervalo de confianza. El valor p resulta minúsculo, así que rechazamos <span class="math inline">\(H_0\)</span>.</p>
+<section id="sec-t-mano" class="level3" data-number="8.6.1">
+<h3 data-number="8.6.1" class="anchored" data-anchor-id="sec-t-mano"><span class="header-section-number">8.6.1</span> El mismo cálculo a mano</h3>
+<p>Conviene hacer una vez con lápiz y papel lo que R acaba de hacer, para ver que no hay magia. Tomemos solo las <strong>ocho primeras</strong> lagartijas urbanas:</p>
+<p><span class="math display">\[34.0,\; 36.4,\; 36.3,\; 34.1,\; 37.3,\; 35.8,\; 36.1,\; 34.4\]</span></p>
+<p><strong>Paso 1. La media.</strong> <span class="math inline">\(\displaystyle \bar{x} = \frac{\sum x_i}{n} = \frac{284.4}{8} = 35.55\)</span></p>
+<p><strong>Paso 2. La desviación estándar</strong>, con la fórmula de cálculo directo:</p>
+<p><span class="math display">\[s^2 = \frac{1}{n-1}\left[\sum x_i^2 - n\bar{x}^2\right] = \frac{10120.96 - 8(35.55)^2}{7} = 1.5057\]</span></p>
+<p>de donde <span class="math inline">\(s = \sqrt{1.5057} = 1.2271\)</span>.</p>
+<p><strong>Paso 3. El error estándar.</strong> <span class="math inline">\(\displaystyle \frac{s}{\sqrt{n}} = \frac{1.2271}{\sqrt{8}} = 0.4338\)</span></p>
+<p><strong>Paso 4. El estadístico.</strong> Aquí está la idea central, y vale la pena leerla despacio:</p>
+<p><span class="math display">\[t = \frac{\bar{x} - \mu_0}{s/\sqrt{n}} = \frac{35.55 - 34}{0.4338} = 3.573\]</span></p>
+<p><strong>Paso 5. La decisión.</strong> Con <span class="math inline">\(n - 1 = 7\)</span> grados de libertad, el valor crítico bilateral al 5 % es <span class="math inline">\(t_{0.975,\,7} = 2.365\)</span>. Como <span class="math inline">\(3.573 &gt; 2.365\)</span>, se rechaza <span class="math inline">\(H_0\)</span>.</p>
+<p>Comprobación con R sobre esos mismos ocho datos:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ocho <span class="ot">&lt;-</span> <span class="fu">head</span>(urbanas<span class="sc">$</span>temp_corporal, <span class="dv">8</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(ocho, <span class="at">mu =</span> <span class="dv">34</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  One Sample t-test</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  ocho</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; t = 3.5728, df = 7, p-value = 0.009063</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; alternative hypothesis: true mean is not equal to 34</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 95 percent confidence interval:</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  34.52414 36.57586</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sample estimates:</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; mean of x </span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     35.55</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Los números coinciden: <span class="math inline">\(t = 3.573\)</span>, 7 grados de libertad, <span class="math inline">\(p \approx 0.009\)</span> y un intervalo de aproximadamente <span class="math inline">\((34.52,\ 36.58)\)</span>.</p>
+<p>Pero lo que importa no es la coincidencia, sino <strong>leer la fórmula</strong>. El estadístico <span class="math inline">\(t\)</span> es un cociente entre la <strong>señal</strong> (qué tan lejos está la media muestral del valor de referencia) y el <strong>ruido</strong> (el error estándar). Eso explica de un vistazo tres cosas que ya sabíamos por separado:</p>
+<ul>
+<li>Si la diferencia crece, <span class="math inline">\(t\)</span> crece: más señal.</li>
+<li>Si los datos son más dispersos, <span class="math inline">\(s\)</span> crece y <span class="math inline">\(t\)</span> se encoge: más ruido.</li>
+<li>Si <span class="math inline">\(n\)</span> crece, el error estándar <span class="math inline">\(s/\sqrt{n}\)</span> se encoge y <span class="math inline">\(t\)</span> crece: por eso con muestras grandes hasta diferencias triviales resultan significativas.</li>
+</ul>
+<p>Los tres fenómenos son <strong>la misma fórmula</strong> vista desde distintos ángulos. Ese es el motivo para calcularlo a mano una vez.</p>
+</div>
+</div>
+<p>Volviendo a la muestra completa:</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Redacción para un lector no técnico: <em>“La temperatura corporal media de las lagartijas urbanas (35.4 °C) es significativamente mayor que el valor de referencia de 34 °C (<span class="math inline">\(p &lt; 0.001\)</span>); con 95 % de confianza, la media real está entre los límites que reporta el intervalo.”</em></p>
+<p>Obsérvese que <strong>intervalo y prueba dan la misma información</strong>: como el 34 queda fuera del intervalo de confianza del 95 %, sabíamos de antemano que la prueba a <span class="math inline">\(\alpha = 0.05\)</span> iba a rechazar. Son dos caras de la misma moneda; el intervalo suele ser más informativo porque además dice <strong>cuánto</strong> vale el parámetro.</p>
+</div>
+</div>
+</section>
+<section id="sec-lab-p" class="level3" data-number="8.6.2">
+<h3 data-number="8.6.2" class="anchored" data-anchor-id="sec-lab-p"><span class="header-section-number">8.6.2</span> Laboratorio: qué es realmente el valor p</h3>
+<p>La curva es la distribución del estadístico <strong>suponiendo que <span class="math inline">\(H_0\)</span> es cierta</strong>. Al mover la media observada de la muestra se observa cómo el área sombreada (el valor p) se encoge conforme el resultado se aleja de lo que <span class="math inline">\(H_0\)</span> predice.</p>
+<div class="cell panel-input card bg-light p-2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb12" data-startfrom="262" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 261;"><span id="cb12-262"><a href="#cb12-262" aria-hidden="true" tabindex="-1"></a>viewof obs <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="op">-</span><span class="dv">4</span><span class="op">,</span> <span class="dv">4</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">1.2</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.05</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"estadístico observado"</span>})</span>
+<span id="cb12-263"><a href="#cb12-263" aria-hidden="true" tabindex="-1"></a>viewof alfa <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">select</span>([<span class="fl">0.10</span><span class="op">,</span> <span class="fl">0.05</span><span class="op">,</span> <span class="fl">0.01</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.05</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"nivel α"</span>})</span>
+<span id="cb12-264"><a href="#cb12-264" aria-hidden="true" tabindex="-1"></a>viewof colas <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>([<span class="st">"dos colas"</span><span class="op">,</span> <span class="st">"una cola"</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"dos colas"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"tipo de prueba"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-6-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-6-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-6-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb13" data-startfrom="268" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 267;"><span id="cb13-268"><a href="#cb13-268" aria-hidden="true" tabindex="-1"></a>dnorm2 <span class="op">=</span> (x) <span class="kw">=&gt;</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">exp</span>(<span class="op">-</span><span class="fl">0.5</span> <span class="op">*</span> x <span class="op">*</span> x) <span class="op">/</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">sqrt</span>(<span class="dv">2</span> <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="cn">PI</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-7" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb14" data-startfrom="273" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 272;"><span id="cb14-273"><a href="#cb14-273" aria-hidden="true" tabindex="-1"></a>erf <span class="op">=</span> (x) <span class="kw">=&gt;</span> {</span>
+<span id="cb14-274"><a href="#cb14-274" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> s <span class="op">=</span> x <span class="op">&lt;</span> <span class="dv">0</span> <span class="op">?</span> <span class="op">-</span><span class="dv">1</span> <span class="op">:</span> <span class="dv">1</span><span class="op">;</span> x <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(x)<span class="op">;</span></span>
+<span id="cb14-275"><a href="#cb14-275" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> t <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> <span class="fl">0.3275911</span> <span class="op">*</span> x)<span class="op">;</span></span>
+<span id="cb14-276"><a href="#cb14-276" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> y <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> ((((<span class="fl">1.061405429</span> <span class="op">*</span> t <span class="op">-</span> <span class="fl">1.453152027</span>) <span class="op">*</span> t <span class="op">+</span> <span class="fl">1.421413741</span>) <span class="op">*</span> t</span>
+<span id="cb14-277"><a href="#cb14-277" aria-hidden="true" tabindex="-1"></a>            <span class="op">-</span> <span class="fl">0.284496736</span>) <span class="op">*</span> t <span class="op">+</span> <span class="fl">0.254829592</span>) <span class="op">*</span> t <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">exp</span>(<span class="op">-</span>x <span class="op">*</span> x)<span class="op">;</span></span>
+<span id="cb14-278"><a href="#cb14-278" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> s <span class="op">*</span> y<span class="op">;</span></span>
+<span id="cb14-279"><a href="#cb14-279" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-8" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb15" data-startfrom="284" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 283;"><span id="cb15-284"><a href="#cb15-284" aria-hidden="true" tabindex="-1"></a>pnorm2 <span class="op">=</span> (x) <span class="kw">=&gt;</span> <span class="fl">0.5</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">+</span> <span class="fu">erf</span>(x <span class="op">/</span> <span class="bu">Math</span><span class="op">.</span><span class="cn">SQRT2</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-9" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb16" data-startfrom="289" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 288;"><span id="cb16-289"><a href="#cb16-289" aria-hidden="true" tabindex="-1"></a>valorP <span class="op">=</span> colas <span class="op">===</span> <span class="st">"dos colas"</span> <span class="op">?</span> <span class="dv">2</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> <span class="fu">pnorm2</span>(<span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(obs))) <span class="op">:</span> <span class="dv">1</span> <span class="op">-</span> <span class="fu">pnorm2</span>(obs)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-10" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb17" data-startfrom="294" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 293;"><span id="cb17-294"><a href="#cb17-294" aria-hidden="true" tabindex="-1"></a>rejilla <span class="op">=</span> d3<span class="op">.</span><span class="fu">range</span>(<span class="op">-</span><span class="fl">4.5</span><span class="op">,</span> <span class="fl">4.51</span><span class="op">,</span> <span class="fl">0.02</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-11" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb18" data-startfrom="299" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 298;"><span id="cb18-299"><a href="#cb18-299" aria-hidden="true" tabindex="-1"></a>cola <span class="op">=</span> colas <span class="op">===</span> <span class="st">"dos colas"</span></span>
+<span id="cb18-300"><a href="#cb18-300" aria-hidden="true" tabindex="-1"></a>  <span class="op">?</span> rejilla<span class="op">.</span><span class="fu">filter</span>(x <span class="kw">=&gt;</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(x) <span class="op">&gt;=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(obs))</span>
+<span id="cb18-301"><a href="#cb18-301" aria-hidden="true" tabindex="-1"></a>  <span class="op">:</span> rejilla<span class="op">.</span><span class="fu">filter</span>(x <span class="kw">=&gt;</span> x <span class="op">&gt;=</span> obs)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-12" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb19" data-startfrom="306" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 305;"><span id="cb19-306"><a href="#cb19-306" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb19-307"><a href="#cb19-307" aria-hidden="true" tabindex="-1"></a>  <span class="dt">height</span><span class="op">:</span> <span class="dv">250</span><span class="op">,</span></span>
+<span id="cb19-308"><a href="#cb19-308" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> { <span class="dt">label</span><span class="op">:</span> <span class="st">"valor del estadístico si H₀ fuera cierta"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="op">-</span><span class="fl">4.5</span><span class="op">,</span> <span class="fl">4.5</span>] }<span class="op">,</span></span>
+<span id="cb19-309"><a href="#cb19-309" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> { <span class="dt">label</span><span class="op">:</span> <span class="st">"densidad"</span> }<span class="op">,</span></span>
+<span id="cb19-310"><a href="#cb19-310" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb19-311"><a href="#cb19-311" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">areaY</span>(cola<span class="op">,</span> { <span class="dt">x</span><span class="op">:</span> d <span class="kw">=&gt;</span> d<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> dnorm2<span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"#C0392B"</span><span class="op">,</span> <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.28</span> })<span class="op">,</span></span>
+<span id="cb19-312"><a href="#cb19-312" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">lineY</span>(rejilla<span class="op">,</span> { <span class="dt">x</span><span class="op">:</span> d <span class="kw">=&gt;</span> d<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> dnorm2<span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#1F4E79"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">2</span> })<span class="op">,</span></span>
+<span id="cb19-313"><a href="#cb19-313" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleX</span>([obs]<span class="op">,</span> { <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#C0392B"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">2</span> })<span class="op">,</span></span>
+<span id="cb19-314"><a href="#cb19-314" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">0</span>])</span>
+<span id="cb19-315"><a href="#cb19-315" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb19-316"><a href="#cb19-316" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-13" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb20" data-startfrom="321" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 320;"><span id="cb20-321"><a href="#cb20-321" aria-hidden="true" tabindex="-1"></a><span class="fu">md</span><span class="vs">`Valor p = **</span><span class="sc">${</span>valorP<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">4</span>)<span class="sc">}</span><span class="vs">** · Decisión con α = </span><span class="sc">${</span>alfa<span class="sc">}</span><span class="vs">: **</span><span class="sc">${</span>valorP <span class="op">&lt;</span> alfa <span class="op">?</span> <span class="st">"se rechaza H₀"</span> <span class="op">:</span> <span class="st">"no se rechaza H₀"</span><span class="sc">}</span><span class="vs">**`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-14" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Las tres lecturas equivocadas del valor p">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Las tres lecturas equivocadas del valor p
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El valor p <strong>es</strong> la probabilidad de observar datos tan extremos como los nuestros <em>si <span class="math inline">\(H_0\)</span> fuera cierta</em>. En cambio, <strong>no es</strong>:</p>
+<ol type="1">
+<li><strong>La probabilidad de que <span class="math inline">\(H_0\)</span> sea cierta.</strong> El cálculo <em>supone</em> <span class="math inline">\(H_0\)</span>; no puede a la vez medir su probabilidad.</li>
+<li><strong>La probabilidad de haberse equivocado</strong> al rechazar.</li>
+<li><strong>Una medida del tamaño del efecto.</strong> Un p diminuto puede corresponder a un efecto trivial si la muestra es enorme (el tema de la siguiente sección).</li>
+</ol>
+</div>
+</div>
+</section>
+</section>
+<section id="usos-y-abusos-de-la-inferencia" class="level2" data-number="8.7">
+<h2 data-number="8.7" class="anchored" data-anchor-id="usos-y-abusos-de-la-inferencia"><span class="header-section-number">8.7</span> Usos y abusos de la inferencia</h2>
+<section id="significancia-estadística-no-es-relevancia-práctica" class="level3" data-number="8.7.1">
+<h3 data-number="8.7.1" class="anchored" data-anchor-id="significancia-estadística-no-es-relevancia-práctica"><span class="header-section-number">8.7.1</span> Significancia estadística no es relevancia práctica</h3>
+<p>Con una muestra suficientemente grande, <strong>cualquier</strong> diferencia por minúscula que sea se vuelve estadísticamente significativa. Que un medicamento baje la presión 0.3 mmHg puede tener <span class="math inline">\(p &lt; 0.001\)</span> y no servirle a nadie.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Diferencia real ridícula (0.05) pero muestra enorme</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>grande <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">50000</span>, <span class="at">mean =</span> <span class="fl">100.05</span>, <span class="at">sd =</span> <span class="dv">15</span>)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(grande, <span class="at">mu =</span> <span class="dv">100</span>)<span class="sc">$</span>p.value</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.1877995</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Por eso hay que reportar <strong>siempre</strong> el tamaño del efecto y su intervalo de confianza, no solo el valor p.&nbsp;La pregunta no es “¿es significativo?”, sino “<strong>¿es lo bastante grande como para importar?</strong>”.</p>
+</section>
+<section id="el-p-hacking" class="level3" data-number="8.7.2">
+<h3 data-number="8.7.2" class="anchored" data-anchor-id="el-p-hacking"><span class="header-section-number">8.7.2</span> El <em>p-hacking</em></h3>
+<p>Si uno prueba muchas hipótesis, algunas saldrán “significativas” por puro azar. Con <span class="math inline">\(\alpha = 0.05\)</span>, una de cada veinte pruebas sobre datos sin ningún efecto real dará <span class="math inline">\(p &lt; 0.05\)</span>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 20 pruebas sobre datos SIN ningún efecto real</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>p_valores <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">20</span>, <span class="fu">t.test</span>(<span class="fu">rnorm</span>(<span class="dv">30</span>), <span class="at">mu =</span> <span class="dv">0</span>)<span class="sc">$</span>p.value)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(p_valores, <span class="dv">3</span>)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] 0.720 0.305 0.865 0.265 0.114 0.831 0.384 0.579 0.336 0.503 0.819 0.564</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [13] 0.548 0.925 0.902 0.209 0.378 0.599 0.550 0.222</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(p_valores <span class="sc">&lt;</span> <span class="fl">0.05</span>)   <span class="co"># casi siempre sale alguna "significativa"</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Buscar entre muchos análisis hasta encontrar uno significativo, y reportar solo ese, se llama <strong>p-hacking</strong>, y es una de las causas de la crisis de replicabilidad en varias ciencias. La defensa: decidir las hipótesis <strong>antes</strong> de ver los datos, reportar todos los análisis realizados y ajustar por comparaciones múltiples (lo veremos con las pruebas post-hoc en el <a href="10-anova.html" class="quarto-xref"><span>Capítulo 11</span></a>).</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="¿Qué técnica usar?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>¿Qué técnica usar?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Con <strong>una muestra y un parámetro</strong>:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Mi pregunta</th>
+<th>Herramienta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>¿Cuánto vale <span class="math inline">\(\mu\)</span>, con margen de error?</td>
+<td>Intervalo de confianza para la media</td>
+</tr>
+<tr class="even">
+<td>¿Es <span class="math inline">\(\mu\)</span> compatible con un valor de referencia?</td>
+<td>Prueba de hipótesis para una media (<code>t.test(x, mu = ...)</code>)</td>
+</tr>
+<tr class="odd">
+<td>¿Cuál de las dos reporto?</td>
+<td>Idealmente <strong>ambas</strong>: la prueba decide, el intervalo cuantifica</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Supuestos</strong>: muestra aleatoria y, o bien población aproximadamente normal, o bien <span class="math inline">\(n\)</span> suficientemente grande para que aplique el TCL. Verifícalos con un boxplot y un Q-Q plot (<a href="02-descriptiva.html" class="quarto-xref"><span>Capítulo 2</span></a>) antes de confiar en el resultado.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="resumen" class="level2" data-number="8.8">
+<h2 data-number="8.8" class="anchored" data-anchor-id="resumen"><span class="header-section-number">8.8</span> Resumen</h2>
+<p>La <strong>estimación puntual</strong> da un número; el <strong>intervalo de confianza</strong> le agrega la incertidumbre, y su nivel describe la tasa de acierto del <strong>procedimiento</strong>, no la probabilidad de un intervalo concreto. La <strong>prueba de hipótesis</strong> supone <span class="math inline">\(H_0\)</span>, mide qué tan raros serían nuestros datos bajo ese supuesto (el <strong>valor p</strong>) y decide. Un valor p pequeño indica incompatibilidad con <span class="math inline">\(H_0\)</span>, pero no dice qué tan grande es el efecto ni qué probabilidad tiene <span class="math inline">\(H_0\)</span> de ser cierta. Con muestras grandes, lo trivial se vuelve significativo; con muchas pruebas, el azar fabrica significancia. Por eso el buen análisis reporta <strong>efecto, intervalo y contexto</strong>, no solo un p.&nbsp;En el <a href="08-dos-muestras.html" class="quarto-xref"><span>Capítulo 9</span></a> llevaremos estas ideas a la comparación de <strong>dos</strong> grupos.</p>
+</section>
+<section id="ejercicios" class="level2" data-number="8.9">
+<h2 data-number="8.9" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">8.9</span> Ejercicios</h2>
+<ol type="1">
+<li><p><strong>Intervalo en R.</strong> Calcular el intervalo de confianza del 95 % para la temperatura media de las lagartijas <strong>de campo</strong> y escribir su interpretación correcta en una frase.</p></li>
+<li><p><strong>Efecto del nivel.</strong> Para esos mismos datos, calcular los intervalos al 90 %, 95 % y 99 %. ¿Cuál es más ancho? ¿Por qué tiene sentido?</p></li>
+<li><p><strong>Interpretación correcta.</strong> ¿Cuáles de estas afirmaciones sobre un IC del 95 % <span class="math inline">\((34.1,\ 34.7)\)</span> son correctas?</p>
+<ol type="a">
+<li>Hay 95 % de probabilidad de que <span class="math inline">\(\mu\)</span> esté entre 34.1 y 34.7.</li>
+<li>El 95 % de los datos están entre 34.1 y 34.7.</li>
+<li>Si repitiéramos el estudio muchas veces, el 95 % de los intervalos así construidos contendrían a <span class="math inline">\(\mu\)</span>.</li>
+</ol></li>
+<li><p><strong>Prueba de una media.</strong> Con <code>datos/algoritmos_ab.csv</code>, prueba si el tiempo medio del entorno Mac difiere de 10 ms. Plantear <span class="math inline">\(H_0\)</span> y <span class="math inline">\(H_1\)</span>, correr la prueba e interpretar.</p></li>
+<li><p><strong>Valor p.</strong> Un estudio reporta <span class="math inline">\(p = 0.03\)</span>. ¿Cuáles afirmaciones son incorrectas y por qué?</p>
+<ol type="a">
+<li>Hay 3 % de probabilidad de que <span class="math inline">\(H_0\)</span> sea cierta.</li>
+<li>Si <span class="math inline">\(H_0\)</span> fuera cierta, datos así de extremos ocurrirían el 3 % de las veces.</li>
+<li>El efecto encontrado es grande.</li>
+</ol></li>
+<li><p><strong>Significancia vs relevancia.</strong> Una empresa prueba un cambio de diseño con 200 000 usuarios y encuentra que la tasa de clics sube de 4.00 % a 4.05 %, con <span class="math inline">\(p &lt; 0.001\)</span>. ¿Recomendarías implementar el cambio? ¿Qué información adicional pedirías?</p></li>
+<li><p><strong>Simula el p-hacking.</strong> Modificar el código de p-hacking para hacer 200 pruebas en lugar de 20. ¿Cuántas resultan significativas? ¿Coincide con lo esperado?</p></li>
+<li><p><strong>Tipos de error.</strong> Se contrasta <span class="math inline">\(H_0: \mu = 3\)</span> contra <span class="math inline">\(H_1: \mu &gt; 3\)</span>, y se decide rechazar <span class="math inline">\(H_0\)</span> cuando la media muestral supera 3.4. En ese contexto, ¿cuál de las siguientes describe el <strong>error tipo II</strong>?</p>
+<ol type="a">
+<li>Rechazar <span class="math inline">\(H_0\)</span> cuando en realidad <span class="math inline">\(\mu = 3\)</span>.</li>
+<li>No rechazar <span class="math inline">\(H_0\)</span> cuando en realidad <span class="math inline">\(\mu &gt; 3\)</span>.</li>
+<li>Rechazar <span class="math inline">\(H_0\)</span> cuando en realidad <span class="math inline">\(\mu &gt; 3\)</span>.</li>
+<li>No rechazar <span class="math inline">\(H_0\)</span> cuando en realidad <span class="math inline">\(\mu = 3\)</span>.</li>
+</ol></li>
+<li><p><strong>Una o dos colas.</strong> Plantear <span class="math inline">\(H_0\)</span> y <span class="math inline">\(H_1\)</span> para cada situación, indicando si la prueba es uni o bilateral:</p>
+<ol type="a">
+<li>Un laboratorio afirma que su nueva presentación produce <strong>menos</strong> efectos secundarios que el 12 % del medicamento actual.</li>
+<li>Se quiere saber si la temperatura media de un proceso <strong>difiere</strong> del valor nominal de 80 °C.</li>
+<li>Un fabricante sostiene que sus focos duran <strong>más</strong> de 8000 horas.</li>
+</ol></li>
+<li><p><strong>Elegir el nivel de significancia.</strong> Una empresa desea obtener evidencia a favor de su afirmación y puede escoger entre <span class="math inline">\(\alpha = 0.05\)</span> y <span class="math inline">\(\alpha = 0.01\)</span>. ¿Cuál le conviene y por qué? ¿Qué riesgo asume al elegirlo?</p></li>
+<li><p><strong>Potencia.</strong> Con <code>power.t.test()</code>, calcular la potencia para detectar una diferencia de 0.5 desviaciones estándar con <span class="math inline">\(n = 30\)</span>, y después con <span class="math inline">\(n = 100\)</span>. ¿Cuántas observaciones harían falta para alcanzar una potencia de 0.90?</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Soluciones y retroalimentación">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Soluciones y retroalimentación
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>1.</strong> Con <code>t.test(filter(lagartijas, habitat == "campo")$temp_corporal)$conf.int</code> se obtiene un intervalo alrededor de 34 °C. Interpretación correcta: <em>“Con 95 % de confianza, la temperatura corporal media de las lagartijas de campo abierto está entre los dos límites del intervalo”</em>, entendiendo que el 95 % se refiere a la tasa de acierto del procedimiento. <em>Conviene evitar la redacción “hay 95 % de probabilidad de que la media esté en este intervalo”.</em></p>
+<p><strong>2.</strong> El del <strong>99 %</strong> es el más ancho y el del <strong>90 %</strong> el más angosto. Tiene sentido: para estar más seguros de atrapar el parámetro hay que lanzar una red más grande. <em>Existe un intercambio inevitable entre <strong>confianza</strong> y <strong>precisión</strong>; la única forma de mejorar ambas a la vez es aumentar <span class="math inline">\(n\)</span>, como se ve en el laboratorio del <a href="#sec-lab-ic" class="quarto-xref"><span>Sección 8.2.1</span></a>.</em></p>
+<p><strong>3.</strong> Solo la <strong>(c)</strong> es correcta. La (a) es la interpretación equivocada más común: una vez calculado, el intervalo ya contiene o no contiene a <span class="math inline">\(\mu\)</span>; la probabilidad describe al método. La (b) confunde el intervalo de confianza —que habla de <strong>la media</strong>— con la dispersión de <strong>los datos individuales</strong>; un IC es mucho más angosto que el rango de los datos. <em>Distinguir (b) de un intervalo de predicción es una confusión sutil que vale la pena señalar en clase.</em></p>
+<p><strong>4.</strong> <span class="math inline">\(H_0: \mu = 10\)</span> contra <span class="math inline">\(H_1: \mu \neq 10\)</span>. Con <code>t.test(filter(ab, entorno == "Mac")$tiempo_ms, mu = 10)</code> se obtiene una media muestral cercana a <strong>10.6 ms</strong> y un valor p de alrededor de <strong>0.02</strong>, así que a <span class="math inline">\(\alpha = 0.05\)</span> se rechaza <span class="math inline">\(H_0\)</span>: el tiempo medio de Mac difiere significativamente de 10 ms. <em>Nótese que este caso es mucho menos contundente que el de las lagartijas (<span class="math inline">\(p &lt; 0.001\)</span>). Un p de 0.02 es evidencia moderada, y conviene decirlo así en vez de tratar todo lo menor que 0.05 como un sí rotundo. Reportar también el intervalo (aproximadamente de 10.1 a 11.1 ms): informa <strong>cuánto</strong> vale la media, no solo que difiere.</em></p>
+<p><strong>5.</strong> Las incorrectas son la <strong>(a)</strong> y la <strong>(c)</strong>. La (a) invierte el condicional: el valor p se calcula <strong>suponiendo</strong> <span class="math inline">\(H_0\)</span> cierta, así que no puede ser la probabilidad de <span class="math inline">\(H_0\)</span>. La (c) confunde significancia con magnitud: el valor p depende tanto del tamaño del efecto como del tamaño de muestra. La <strong>(b)</strong> es la lectura correcta. <em>La confusión (a) tiene nombre: <strong>falacia del condicional transpuesto</strong>, y es el error más frecuente al leer resultados científicos en prensa.</em></p>
+<p><strong>6.</strong> Probablemente <strong>no</strong> solo por ese resultado. El efecto es de 0.05 puntos porcentuales: estadísticamente significativo gracias a los 200 000 usuarios, pero práctica y económicamente irrelevante en casi cualquier contexto. Información adicional que pediría: el <strong>intervalo de confianza</strong> de la diferencia (para saber si el efecto podría ser aún menor), el <strong>costo</strong> de implementar el cambio, si hay efectos secundarios en otras métricas, y si el experimento fue una prueba A/B bien aleatorizada. <em>Este es el ejemplo canónico de por qué reportar solo el valor p es insuficiente. Significancia y relevancia son preguntas distintas.</em></p>
+<p><strong>7.</strong> Con 200 pruebas sobre datos sin efecto real, lo esperado es que alrededor de <strong>10</strong> resulten significativas (<span class="math inline">\(200 \times 0.05\)</span>). El número exacto varía por azar, típicamente entre 5 y 16. <em>La moraleja: si alguien corre 200 análisis y reporta solo los 10 “hallazgos”, está describiendo ruido con lenguaje de descubrimiento. Por eso importa preregistrar las hipótesis y reportar cuántas pruebas se hicieron en total.</em></p>
+<p><strong>8.</strong> La respuesta es la <strong>(b)</strong>: no rechazar <span class="math inline">\(H_0\)</span> cuando en realidad <span class="math inline">\(\mu &gt; 3\)</span>. El error tipo II consiste en <strong>no detectar un efecto que sí existe</strong>, es decir, quedarse con la hipótesis nula siendo falsa. La opción (a) describe el error tipo I; las opciones (c) y (d) describen <strong>decisiones correctas</strong>. <em>Truco para no confundirlos: el tipo I se comete al <strong>rechazar</strong> (falso positivo) y el tipo II al <strong>no rechazar</strong> (falso negativo). Basta con fijarse en qué decisión se tomó y compararla con la realidad.</em></p>
+<p><strong>9.</strong> (a) <span class="math inline">\(H_0: p = 0.12\)</span> contra <span class="math inline">\(H_1: p &lt; 0.12\)</span>, <strong>unilateral izquierda</strong>: la afirmación es que produce <em>menos</em> efectos. (b) <span class="math inline">\(H_0: \mu = 80\)</span> contra <span class="math inline">\(H_1: \mu \neq 80\)</span>, <strong>bilateral</strong>: interesa cualquier desviación del valor nominal. (c) <span class="math inline">\(H_0: \mu = 8000\)</span> contra <span class="math inline">\(H_1: \mu &gt; 8000\)</span>, <strong>unilateral derecha</strong>. <em>Nótese que la hipótesis nula siempre lleva la igualdad, y que la dirección de <span class="math inline">\(H_1\)</span> la dicta la pregunta —no los datos—.</em></p>
+<p><strong>10.</strong> Le conviene <span class="math inline">\(\alpha = 0.05\)</span>. Un nivel de significancia más alto hace <strong>más fácil rechazar</strong> <span class="math inline">\(H_0\)</span> y, por tanto, más probable obtener evidencia a favor de su afirmación. El riesgo que asume es un mayor <strong>error tipo I</strong>: cinco de cada cien veces declararía un efecto inexistente, contra una de cada cien con <span class="math inline">\(\alpha = 0.01\)</span>. <em>Vale la pena discutir la tensión ética. Quien tiene interés comercial en el resultado prefiere el umbral laxo, y por eso los niveles se fijan por convención de la disciplina y no los elige quien financia el estudio. En contextos donde un falso positivo es costoso (aprobar un fármaco inseguro) se usa <span class="math inline">\(\alpha = 0.01\)</span> o menor.</em></p>
+<p><strong>11.</strong> Con <code>power.t.test(n = 30, delta = 0.5, sd = 1, type = "one.sample")</code> la potencia es aproximadamente <strong>0.75</strong>; con <span class="math inline">\(n = 100\)</span> supera <strong>0.99</strong>. Para una potencia de 0.90 se necesitan alrededor de <strong>44</strong> observaciones, que se obtienen con <code>power.t.test(power = 0.90, delta = 0.5, sd = 1, type = "one.sample")</code>. <em>Esta función es la herramienta para planear el tamaño de muestra antes de recolectar datos: se fija el efecto mínimo que interesa detectar y la potencia deseada, y devuelve la <span class="math inline">\(n\)</span> necesaria. Hacerlo al revés —recolectar primero y calcular la potencia después— no sirve de nada.</em></p>
+</div>
+</div>
+</div>
 
 
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+W10=
+</script>
 </section>
 
 </main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBuaXZlbCA9IElucHV0cy5zZWxlY3QoWzkwLCA5NSwgOTldLCB7dmFsdWU6IDk1LCBsYWJlbDogXCJuaXZlbCBkZSBjb25maWFuemEgKCUpXCJ9KVxudmlld29mIG5JQyA9IElucHV0cy5yYW5nZShbNSwgMTAwXSwge3ZhbHVlOiAyNSwgc3RlcDogNSwgbGFiZWw6IFwidGFtYcOxbyBkZSBtdWVzdHJhIG5cIn0pXG52aWV3b2Ygc2VtaWxsYSA9IElucHV0cy5idXR0b24oXCJOdWV2YXMgbXVlc3RyYXNcIilcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InRjcml0ID0gKHs5MDogMS42NDUsIDk1OiAxLjk2LCA5OTogMi41NzZ9KVtuaXZlbF1cbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMyIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImludGVydmFsb3MgPSB7XG4gIHNlbWlsbGE7ICAgICAgICAgICAgICAgICAgICAgICAvLyBhbCBwcmVzaW9uYXIgZWwgYm90w7NuIHNlIHJlZ2VuZXJhblxuICBjb25zdCBub3JtYWwgPSBkMy5yYW5kb21Ob3JtYWwoMTAwLCAxNSk7XG4gIHJldHVybiBBcnJheS5mcm9tKHtsZW5ndGg6IDYwfSwgKF8sIGspID0+IHtcbiAgICBjb25zdCB4ID0gQXJyYXkuZnJvbSh7bGVuZ3RoOiBuSUN9LCBub3JtYWwpO1xuICAgIGNvbnN0IG0gPSBkMy5tZWFuKHgpLCBzID0gZDMuZGV2aWF0aW9uKHgpO1xuICAgIGNvbnN0IGUgPSB0Y3JpdCAqIHMgLyBNYXRoLnNxcnQobklDKTtcbiAgICByZXR1cm4geyBrLCBiYWpvOiBtIC0gZSwgYWx0bzogbSArIGUsIG1lZGlhOiBtLCBjdWJyZTogKG0gLSBlKSA8PSAxMDAgJiYgMTAwIDw9IChtICsgZSkgfTtcbiAgfSk7XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTQiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJQbG90LnBsb3Qoe1xuICBoZWlnaHQ6IDMwMCxcbiAgbWFyZ2luTGVmdDogMzAsXG4gIHg6IHsgbGFiZWw6IFwidmFsb3IgZGVsIHBhcsOhbWV0cm9cIiwgZG9tYWluOiBbODUsIDExNV0gfSxcbiAgeTogeyBheGlzOiBudWxsIH0sXG4gIGNvbG9yOiB7IGxlZ2VuZDogZmFsc2UgfSxcbiAgbWFya3M6IFtcbiAgICBQbG90LnJ1bGVZKGludGVydmFsb3MsIHtcbiAgICAgIHk6IFwia1wiLCB4MTogXCJiYWpvXCIsIHgyOiBcImFsdG9cIixcbiAgICAgIHN0cm9rZTogZCA9PiBkLmN1YnJlID8gXCIjMUY0RTc5XCIgOiBcIiNDMDM5MkJcIiwgc3Ryb2tlV2lkdGg6IDEuOFxuICAgIH0pLFxuICAgIFBsb3QuZG90KGludGVydmFsb3MsIHsgeTogXCJrXCIsIHg6IFwibWVkaWFcIiwgcjogMixcbiAgICAgIGZpbGw6IGQgPT4gZC5jdWJyZSA/IFwiIzFGNEU3OVwiIDogXCIjQzAzOTJCXCIgfSksXG4gICAgUGxvdC5ydWxlWChbMTAwXSwgeyBzdHJva2U6IFwiI0MwMzkyQlwiLCBzdHJva2VXaWR0aDogMiB9KVxuICBdXG59KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC01IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoibWRgRGUgZXN0b3MgKio2MCoqIGludGVydmFsb3MsICoqJHtpbnRlcnZhbG9zLmZpbHRlcihkID0+IGQuY3VicmUpLmxlbmd0aH0qKiBjb250aWVuZW4gZWwgdmFsb3IgdmVyZGFkZXJvICjCtSA9IDEwMCkuIE5pdmVsIG5vbWluYWw6ICoqJHtuaXZlbH0gJSoqIOKGkiBlc3BlcmFyw61hbW9zIGFscmVkZWRvciBkZSAqKiR7TWF0aC5yb3VuZCg2MCAqIG5pdmVsIC8gMTAwKX0qKi5gXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTYiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ2aWV3b2Ygb2JzID0gSW5wdXRzLnJhbmdlKFstNCwgNF0sIHt2YWx1ZTogMS4yLCBzdGVwOiAwLjA1LCBsYWJlbDogXCJlc3RhZMOtc3RpY28gb2JzZXJ2YWRvXCJ9KVxudmlld29mIGFsZmEgPSBJbnB1dHMuc2VsZWN0KFswLjEwLCAwLjA1LCAwLjAxXSwge3ZhbHVlOiAwLjA1LCBsYWJlbDogXCJuaXZlbCDOsVwifSlcbnZpZXdvZiBjb2xhcyA9IElucHV0cy5yYWRpbyhbXCJkb3MgY29sYXNcIiwgXCJ1bmEgY29sYVwiXSwge3ZhbHVlOiBcImRvcyBjb2xhc1wiLCBsYWJlbDogXCJ0aXBvIGRlIHBydWViYVwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNyIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImRub3JtMiA9ICh4KSA9PiBNYXRoLmV4cCgtMC41ICogeCAqIHgpIC8gTWF0aC5zcXJ0KDIgKiBNYXRoLlBJKVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC04IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiZXJmID0gKHgpID0+IHtcbiAgY29uc3QgcyA9IHggPCAwID8gLTEgOiAxOyB4ID0gTWF0aC5hYnMoeCk7XG4gIGNvbnN0IHQgPSAxIC8gKDEgKyAwLjMyNzU5MTEgKiB4KTtcbiAgY29uc3QgeSA9IDEgLSAoKCgoMS4wNjE0MDU0MjkgKiB0IC0gMS40NTMxNTIwMjcpICogdCArIDEuNDIxNDEzNzQxKSAqIHRcbiAgICAgICAgICAgIC0gMC4yODQ0OTY3MzYpICogdCArIDAuMjU0ODI5NTkyKSAqIHQgKiBNYXRoLmV4cCgteCAqIHgpO1xuICByZXR1cm4gcyAqIHk7XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTkiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJwbm9ybTIgPSAoeCkgPT4gMC41ICogKDEgKyBlcmYoeCAvIE1hdGguU1FSVDIpKVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0xMCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZhbG9yUCA9IGNvbGFzID09PSBcImRvcyBjb2xhc1wiID8gMiAqICgxIC0gcG5vcm0yKE1hdGguYWJzKG9icykpKSA6IDEgLSBwbm9ybTIob2JzKVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0xMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InJlamlsbGEgPSBkMy5yYW5nZSgtNC41LCA0LjUxLCAwLjAyKVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0xMiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImNvbGEgPSBjb2xhcyA9PT0gXCJkb3MgY29sYXNcIlxuICA/IHJlamlsbGEuZmlsdGVyKHggPT4gTWF0aC5hYnMoeCkgPj0gTWF0aC5hYnMob2JzKSlcbiAgOiByZWppbGxhLmZpbHRlcih4ID0+IHggPj0gb2JzKVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0xMyIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IlBsb3QucGxvdCh7XG4gIGhlaWdodDogMjUwLFxuICB4OiB7IGxhYmVsOiBcInZhbG9yIGRlbCBlc3RhZMOtc3RpY28gc2kgSOKCgCBmdWVyYSBjaWVydGFcIiwgZG9tYWluOiBbLTQuNSwgNC41XSB9LFxuICB5OiB7IGxhYmVsOiBcImRlbnNpZGFkXCIgfSxcbiAgbWFya3M6IFtcbiAgICBQbG90LmFyZWFZKGNvbGEsIHsgeDogZCA9PiBkLCB5OiBkbm9ybTIsIGZpbGw6IFwiI0MwMzkyQlwiLCBmaWxsT3BhY2l0eTogMC4yOCB9KSxcbiAgICBQbG90LmxpbmVZKHJlamlsbGEsIHsgeDogZCA9PiBkLCB5OiBkbm9ybTIsIHN0cm9rZTogXCIjMUY0RTc5XCIsIHN0cm9rZVdpZHRoOiAyIH0pLFxuICAgIFBsb3QucnVsZVgoW29ic10sIHsgc3Ryb2tlOiBcIiNDMDM5MkJcIiwgc3Ryb2tlV2lkdGg6IDIgfSksXG4gICAgUGxvdC5ydWxlWShbMF0pXG4gIF1cbn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTE0IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoibWRgVmFsb3IgcCA9ICoqJHt2YWxvclAudG9GaXhlZCg0KX0qKiDCtyBEZWNpc2nDs24gY29uIM6xID0gJHthbGZhfTogKioke3ZhbG9yUCA8IGFsZmEgPyBcInNlIHJlY2hhemEgSOKCgFwiIDogXCJubyBzZSByZWNoYXphIEjigoBcIn0qKmBcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnbml2ZWwnKSJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnbklDJykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ3NlbWlsbGEnKSJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnb2JzJykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ2FsZmEnKSJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnY29sYXMnKSJ9XX0=
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../..";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -730,12 +1496,12 @@ ul.task-list li input[type="checkbox"] {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./06-muestrales.html" class="pagination-link" aria-label="Distribuciones muestrales y TCL">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Distribuciones muestrales y TCL</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Distribuciones muestrales y TCL</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./08-dos-muestras.html" class="pagination-link" aria-label="Inferencia para dos parámetros">
-        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Inferencia para dos parámetros</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Inferencia para dos parámetros</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

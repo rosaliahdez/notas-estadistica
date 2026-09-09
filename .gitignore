@@ -14,3 +14,12 @@
 
 **/*.quarto_ipynb
 presentaciones/*.zip
+
+# Carpeta de salidas de Claude, si vuelve a aparecer
+Claude outputs/
+
+# Cache de Python de los guiones de figuras
+__pycache__/
+
+moodle/
+presentaciones/

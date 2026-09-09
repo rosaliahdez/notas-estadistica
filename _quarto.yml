@@ -47,6 +47,7 @@ book:
   appendices:
     - mapa-decision.qmd
     - formulario.qmd
+    - manual-r.qmd
     - apendice-python.qmd
     - laboratorio-r.qmd
 

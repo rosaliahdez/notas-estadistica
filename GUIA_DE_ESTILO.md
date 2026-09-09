@@ -49,6 +49,73 @@ Se eliminaron todas las menciones explícitas a la Maestría en Ciencia de Datos
 - Los datos aplicados son **simulados** y así se declara en el diccionario de datos.
 - Estructura de cada tema: pregunta real → técnica → supuestos → cómputo en R → interpretación.
 
+### Toda salida lleva su interpretación ✔ *(regla permanente, agosto 2026)*
+
+**Después de cada resumen gráfico o numérico va, por escrito, qué significa.** Sin
+excepción, en el libro y en las diapositivas. Una tabla, una caja, un histograma o una
+línea de R que devuelve un número no se dejan solos.
+
+La razón es de evaluación: interpretar resultados es una de las cuatro competencias que
+se les pide en el examen, junto con elegir la técnica, verificar supuestos y calcular en
+bases pequeñas. Si el material nunca modela la interpretación, no hay de dónde la
+aprendan.
+
+Forma adoptada: un párrafo que empieza con **Interpretación.** en negritas, dentro de la
+`\destaca` que acompaña a la figura o al bloque de código. En el libro, el recuadro
+`::: {.callout-note title="Interpretación"}`.
+
+**Cuándo va "Interpretación." y cuándo "Observación."** *(acuerdo de septiembre 2026)*
+La palabra **Interpretación** se reserva para cuando se aplica una herramienta a **datos de
+un caso**, que es la competencia que se evalúa: qué se le contestaría a quien trajo esos
+datos. Cuando la figura es solo **ilustrativa**, hecha para explicar un concepto y no para
+analizar un conjunto real, el párrafo empieza con **Observación.**
+
+### Sin referencias temporales en el material ✔ *(septiembre 2026)*
+
+Nada de "en la sesión pasada", "el viernes", "la semana pasada". El calendario real se
+mueve y el material queda mintiendo. Se remite al **contenido**, no al día: "al justificar
+el 1.5 de las barreras", "en la unidad 3", "en la diapositiva siguiente". La excepción son
+los avisos que de verdad hablan del calendario, como el de la semana sin clases.
+
+### Ningún concepto se usa antes de definirlo ✔ *(septiembre 2026)*
+
+Regla que salió de dos errores reales. El coeficiente $r$ del Q-Q plot estaba en la
+Unidad 2, tres semanas antes de que se definiera la correlación; se recorrió a la Unidad 3.
+Y los cuartiles de una distribución se usaban al justificar el 1.5 sin haberlos presentado.
+Antes de cerrar un bloque conviene recorrerlo preguntando, de cada símbolo y de cada
+palabra técnica, dónde se definió.
+
+### Los ejemplos a mano son transversales ✔ *(regla permanente, septiembre 2026)*
+
+Un conjunto chico de datos no se inventa para una diapositiva y se abandona: se
+**reutiliza a lo largo del parcial**. Las diez masas de pingüino sirvieron en la unidad 1
+para el histograma a mano, en la unidad 2 para media, mediana y moda, después para los
+cuartiles y las barreras del boxplot, y al final para construir el Q-Q plot y su recta.
+
+La ventaja es pedagógica y es la razón de ser de los proyectos ancla. Cuando llega una
+técnica nueva, los estudiantes ya se saben los datos, ya calcularon algunas de sus
+medidas, y toda su atención queda libre para el concepto. Además hace visible que las
+distintas medidas describen **el mismo conjunto** desde ángulos distintos, que es lo que
+un resumen de centro, dispersión y forma quiere decir.
+
+De ahí dos consecuencias prácticas. La primera, que los ejemplos a mano salen de los
+**proyectos ancla** y no de contextos sueltos. La segunda, que cuando una decisión de
+diseño choca con la continuidad, gana la continuidad: el ejercicio del Q-Q se dejó con
+los cuartiles del curso, y no con los de R, precisamente porque esos cuartiles ya se
+habían calculado en clase con esos mismos diez datos.
+
+El inventario de conjuntos disponibles está en `DATOS-DE-MANO.md`. Antes de inventar uno
+nuevo conviene revisarlo, y si de verdad hace falta, se diseña pensando en qué unidades
+posteriores podrá reaparecer y se registra ahí.
+
+---
+
+### Primero a mano, después en R ✔ *(regla permanente)*
+
+Cada técnica se presenta con el **cálculo a mano** antes del comando de R, y con un
+ejercicio breve en papel más sus respuestas. El grupo llegó sin poder trazar gráficas a
+mano, así que la cuenta manual es la que fija el concepto; R viene después, a comprobar.
+
 ---
 
 ## Pendiente de decidir
@@ -153,6 +220,11 @@ variable.
 
 Siguen abiertas, por falta de evidencia: "librería" contra "paquete", y "dataset"
 contra "conjunto de datos". Ella usa las dos de cada par.
+
+**Gráfica, nunca panel.** Cuando una figura trae dos o más dibujos, se les llama
+*gráficas* y se ubican por su lugar: "la de la izquierda", "la gráfica de al lado". La
+palabra *panel* es jerga de quien programa la figura, no de quien la lee, y Rosalía no
+la usa. Se corrigieron los dos lugares donde se había colado (semana 2 y semana 3).
 
 ### La raya de inciso ✔
 

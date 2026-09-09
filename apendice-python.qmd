@@ -44,8 +44,10 @@ datos = pd.read_csv("datos/galletas.csv")
 | Mediana | `median(x)` | `x.median()` |
 | Desviación estándar | `sd(x)` | `x.std()` |
 | Varianza | `var(x)` | `x.var()` |
-| Cuartiles | `quantile(x)` | `x.quantile([0,.25,.5,.75,1])` |
-| Rango intercuartílico | `IQR(x)` | `x.quantile(.75) - x.quantile(.25)` |
+| Cuartiles | `quantile(x, type = 6)` | `x.quantile([0,.25,.5,.75,1])` |
+| Rango intercuartílico | `IQR(x, type = 6)` | `x.quantile(.75) - x.quantile(.25)` |
+
+Nota sobre los cuartiles: el curso usa la convención de la posición $(n+1)p$, que en R se pide con `type = 6`. El valor por omisión de R y el de pandas usan la otra convención, así que sus $q_1$ y $q_3$ difieren un poco.
 | Tabla de frecuencias | `table(g)` | `g.value_counts()` |
 | Tabla de contingencia | `table(a, b)` | `pd.crosstab(a, b)` |
 | Resumen por grupo | `group_by(g) \|> summarise(...)` | `datos.groupby("g").agg(...)` |

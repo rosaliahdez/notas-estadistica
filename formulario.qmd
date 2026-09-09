@@ -5,7 +5,7 @@ Referencia completa del curso. Reúne las fórmulas de los once capítulos, cada
 Está pensado para consultarse durante el curso y después de él. Quien termine Estadística debería poder resolver aquí cualquier duda de "¿cómo era la fórmula?" sin volver a buscar en los capítulos.
 
 ::: {.callout-note title="Cómo está organizado"}
-Cada sección indica el capítulo del que proviene. Al final hay dos tablas de referencia rápida: los **valores críticos** más usados y una **guía de selección** que remite al @sec-mapa.
+Cada sección indica el capítulo del que proviene. Al final hay dos tablas de referencia rápida: los **valores críticos** más usados y una **guía de selección** que remite al @sec-mapa. Para el comando de R que calcula cada cosa, el @sec-manual-r.
 
 Las fórmulas no están para memorizarse. Están para reconocer la **estructura** de cada procedimiento (casi todos son una señal dividida entre su error estándar) y para poder calcular sin computadora cuando haga falta.
 :::
@@ -42,13 +42,21 @@ En R: `names(which.max(table(x)))`
 
 $$\text{Pos}(q_1) = \frac{n+1}{4}, \qquad \text{Pos}(q_2) = \frac{n+1}{2}, \qquad \text{Pos}(q_3) = \frac{3(n+1)}{4}$$
 
-En R: `quantile(x)`
+Si la posición no es entera, se interpola entre los dos datos vecinos. Si queda entre el dato $a$ y el siguiente $b$, a una fracción $f$ del camino:
 
-Si la posición no es entera, se interpola entre los dos datos vecinos.
+$$q = a + (b - a)\,f$$
+
+En R: `quantile(x, type = 6)`.
+
+**La convención de fábrica de R** es otra, la del tipo 7, que localiza el cuartil en
+
+$$\text{Pos}(q_i) = \frac{i\,(n-1)}{4} + 1$$
+
+y devuelve otros valores para $q_1$ y $q_3$. La mediana coincide en ambas. R implementa nueve convenciones; se consultan con `?quantile`, sección *Types*. Las más frecuentes son la 6, que usan Minitab y SPSS, la 7, que usan R y Excel, y la 8, recomendada por Hyndman y Fan (1996).
 
 **Percentil $k$.** Posición $\dfrac{k(n+1)}{100}$.
 
-En R: `quantile(x, k/100)`
+En R: `quantile(x, k/100, type = 6)`
 
 ## Medidas de dispersión {.unnumbered}
 
@@ -68,7 +76,15 @@ La segunda expresión es la **fórmula de cálculo**: solo requiere acumular $\s
 
 $$\text{Rango} = x_{\max} - x_{\min}, \qquad RI = q_3 - q_1$$
 
-En R: `range(x)` · `IQR(x)`
+En R: `diff(range(x))` · `IQR(x, type = 6)`
+
+**Barreras del diagrama de caja**
+
+$$f_1 = q_1 - 1.5\,RI, \quad f_3 = q_3 + 1.5\,RI \qquad \text{(interiores)}$$
+
+$$F_1 = q_1 - 3\,RI, \quad F_3 = q_3 + 3\,RI \qquad \text{(exteriores)}$$
+
+Entre las interiores y las exteriores están los **atípicos suaves**; más allá de las exteriores, los **atípicos extremos**.
 
 **Coeficiente de variación** (dispersión relativa, sin unidades)
 

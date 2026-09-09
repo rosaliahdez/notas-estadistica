@@ -1,0 +1,336 @@
+# Manual de comandos de R {#sec-manual-r .unnumbered}
+
+Esta página reúne los comandos de R que aparecen en el curso, **en el orden en que van apareciendo**. No es una lista alfabética ni una referencia del lenguaje: es el recorrido del curso visto desde el teclado, para que quien esté en la semana seis pueda repasar lo de la semana dos sin buscar en qué capítulo estaba.
+
+Cada entrada dice qué hace el comando, cómo se escribe en el caso más simple, y —cuando lo hay— el detalle que suele causar problemas.
+
+::: {.callout-tip title="Cómo encontrar algo aquí"}
+Si se sabe **cuándo** se vio, se busca por capítulo, que es como está ordenado. Si solo se recuerda **el nombre** de la función, al final hay un índice alfabético con el enlace a su entrada.
+
+Para las **fórmulas** y sus condiciones de validez, el @sec-formulario. Para elegir **qué técnica** usar, el @sec-mapa. Esta página responde otra pregunta: qué se teclea.
+:::
+
+---
+
+## Antes de todo: la sesión de trabajo {.unnumbered}
+
+Tres líneas que van al principio de casi cualquier guion.
+
+| Comando | Qué hace |
+|---|---|
+| `library(tidyverse)` | Carga el conjunto de paquetes que usa el curso: `ggplot2` para graficar, `dplyr` para resumir |
+| `library(palmerpenguins)` | Carga los datos de pingüinos, que se usan de ejemplo en casi todo el libro |
+| `theme_set(theme_minimal())` | Fija el aspecto de todas las gráficas que vengan después |
+
+::: {.callout-warning title="`library` no es `install.packages`"}
+`install.packages("tidyverse")` se corre **una vez en la vida** de la computadora y baja el paquete de internet. `library(tidyverse)` se corre **cada vez que se abre R** y lo pone a la mano. Confundirlos produce el error más común del curso: *"there is no package called…"* significa que falta el primero; *"could not find function…"* casi siempre significa que falta el segundo.
+:::
+
+---
+
+## Capítulo 1 · Exploración de los datos {.unnumbered}
+
+### Abrir y mirar una tabla {.unnumbered}
+
+```r
+lagartijas <- read.csv("datos/lagartijas.csv")   # leer un archivo .csv
+glimpse(lagartijas)      # una linea por variable: nombre, tipo y primeros valores
+head(lagartijas)         # los primeros seis renglones
+summary(lagartijas)      # resumen numerico de cada columna
+names(lagartijas)        # solo los nombres de las columnas
+nrow(lagartijas)         # cuantos renglones
+```
+
+`glimpse()` es lo primero que conviene correr al abrir datos nuevos: dice de un vistazo cuántos individuos hay, cuántas variables, y si R entendió cada columna como número o como texto.
+
+::: {.callout-warning title="La ruta del archivo"}
+`read.csv("datos/lagartijas.csv")` funciona si R está trabajando en la carpeta que **contiene** a `datos`. Si sale *"cannot open file"*, el problema casi nunca es el nombre del archivo, sino desde dónde está mirando R. `getwd()` dice dónde está parado.
+:::
+
+### El signo `$` y el operador `|>` {.unnumbered}
+
+```r
+lagartijas$masa_g        # una columna suelta, como vector
+lagartijas |> head()     # lo mismo que head(lagartijas)
+```
+
+El `$` saca **una columna**. El `|>` (léase "y luego") pasa lo de la izquierda como primer argumento de lo de la derecha, y sirve para encadenar pasos sin anidar paréntesis. Se vuelve indispensable en el capítulo 2.
+
+### Variables categóricas {.unnumbered}
+
+```r
+table(lagartijas$habitat)          # cuantos hay de cada categoria
+factor(x, levels = c("bajo", "medio", "alto"))   # fijar el orden de las categorias
+levels(f)                          # ver ese orden
+```
+
+::: {.callout-note title="Para qué sirve `factor()`"}
+R ordena las categorías alfabéticamente si no se le dice otra cosa, y eso pone "alto" antes que "bajo" en las gráficas. `factor()` con `levels` impone el orden que tiene sentido.
+:::
+
+### Las dos primeras gráficas {.unnumbered}
+
+```r
+ggplot(datos, aes(x = habitat)) + geom_bar()                 # barras: 1 categorica
+ggplot(datos, aes(x = masa_g))  + geom_histogram(bins = 12)  # histograma: 1 cuantitativa
+```
+
+La receta de `ggplot2` siempre tiene las mismas tres piezas: los **datos**, el `aes()` que dice qué variable va en qué eje, y una capa `geom_` que dice cómo dibujarlo. Las capas se suman con `+`.
+
+---
+
+## Capítulo 2 · Análisis numérico {.unnumbered}
+
+### Centro y dispersión {.unnumbered}
+
+```r
+mean(x)      median(x)              # centro
+sd(x)        var(x)                 # dispersion: desviacion estandar y varianza
+range(x)     diff(range(x))         # minimo y maximo; el rango
+quantile(x, type = 6)               # los cinco numeros
+IQR(x, type = 6)                    # rango intercuartilico
+```
+
+::: {.callout-warning title="Dos argumentos que hay que recordar"}
+**`na.rm = TRUE`.** Si la columna tiene datos faltantes, `mean(x)` devuelve `NA`. No es un error: R avisa que no puede promediar lo que no tiene. Se escribe `mean(x, na.rm = TRUE)` para que los ignore. Los datos de pingüinos tienen faltantes, así que en este libro aparece a cada rato.
+
+**`type = 6`.** R calcula cuartiles con nueve convenciones distintas y de fábrica usa una que **no** coincide con el cálculo a mano del curso. `quantile(x, type = 6)` e `IQR(x, type = 6)` reproducen el procedimiento manual. El detalle está en el @sec-descriptiva-mano.
+:::
+
+### El histograma, con criterio {.unnumbered}
+
+```r
+diff(range(x)) / (1 + log2(length(x)))    # ancho por Sturges
+2 * IQR(x, type = 6) / length(x)^(1/3)    # ancho por Freedman-Diaconis
+
+h <- hist(x, breaks = 12, plot = FALSE)   # calcular sin dibujar
+h$mids[which.max(h$counts)]               # centro de la clase mas alta
+```
+
+Guardar el histograma sin dibujarlo (`plot = FALSE`) permite sacarle números: dónde quedaron los cortes, cuántos cayeron en cada clase. Es lo que se usa para aproximar la moda de una variable continua.
+
+### Boxplot y barreras {.unnumbered}
+
+```r
+ggplot(datos, aes(x = habitat, y = masa_g)) + geom_boxplot()
+
+q1 <- quantile(x, 0.25, type = 6);  q3 <- quantile(x, 0.75, type = 6)
+ric <- q3 - q1
+q3 + 1.5 * ric        # barrera interior superior
+q3 + 3   * ric        # barrera exterior superior
+```
+
+`geom_boxplot()` usa la convención de fábrica, no `type = 6`; las barreras calculadas a mano pueden salir un poco distintas de las que dibuja. El @sec-barreras lo desarrolla.
+
+### Q-Q plot {.unnumbered}
+
+```r
+ggplot(datos, aes(sample = masa_g)) +
+  stat_qq() +
+  stat_qq_line()
+
+ppoints(x)              # las proporciones ajustadas, (i - 3/8) / (n + 1/4)
+qnorm(ppoints(x))       # los cuantiles teoricos: el eje horizontal
+```
+
+Nótese que aquí la variable va en `sample =`, no en `x =` ni en `y =`. Es la única geometría del curso que se declara así. `stat_qq_line()` traza la recta de referencia con los cuartiles; el @sec-qq-recta explica por qué con esos y no con la media.
+
+### Resúmenes por grupo {.unnumbered}
+
+```r
+datos |>
+  group_by(habitat) |>
+  summarise(
+    n       = n(),
+    media   = mean(masa_g),
+    de      = sd(masa_g)
+  )
+```
+
+Este bloque de tres piezas —`group_by`, `summarise`, y adentro las medidas que interesen— es probablemente el que más se repite en todo el curso. `n()` cuenta cuántos hay en cada grupo y se escribe sin nada adentro.
+
+::: {.callout-note title="El renglón `NA`"}
+Si la variable por la que se agrupa tiene faltantes, aparece un grupo extra etiquetado `NA`. Es información, no un defecto. Para excluirlo, `filter(!is.na(sex))` antes de agrupar, donde `!` significa *no*.
+:::
+
+### Seleccionar y filtrar {.unnumbered}
+
+```r
+datos |> filter(habitat == "urbana")       # quedarse con ciertos renglones
+datos |> select(especie, masa_g)           # quedarse con ciertas columnas
+datos |> mutate(masa_kg = masa_g / 1000)   # crear una columna nueva
+```
+
+::: {.callout-warning title="`=` contra `==`"}
+Un signo igual **asigna**; dos signos iguales **preguntan**. `filter(habitat == "urbana")` pregunta cuáles renglones cumplen. Escribirlo con uno solo es el error de dedo más frecuente.
+:::
+
+---
+
+## Capítulo 3 · Relación entre dos variables {.unnumbered}
+
+```r
+ggplot(datos, aes(x = lhc_mm, y = masa_g)) + geom_point()   # nube de puntos
+geom_smooth(method = "lm", se = FALSE)                      # + la recta encima
+
+cor(x, y)                    # coeficiente de correlacion
+modelo <- lm(y ~ x, data = datos)   # ajustar la recta
+coef(modelo)                 # ordenada al origen y pendiente
+fitted(modelo)               # valores ajustados
+resid(modelo)                # residuales
+```
+
+La virgulilla `~` de `lm(y ~ x)` se lee **"en función de"**: `masa_g ~ lhc_mm` es "la masa en función del largo". Esa notación reaparece en casi todos los procedimientos de la segunda mitad del curso.
+
+---
+
+## Capítulos 4 y 5 · Producción de los datos {.unnumbered}
+
+```r
+set.seed(2026)                       # fijar el azar para poder repetir
+slice_sample(datos, n = 30)          # tomar 30 renglones al azar
+sample(c("A", "B"), 20, replace = TRUE)   # sortear asignaciones
+replicate(1000, mean(slice_sample(datos, n = 30)$masa_g))   # repetir mil veces
+count(datos, habitat)                # contar por categoria
+```
+
+::: {.callout-note title="`set.seed()` no es opcional"}
+Sin ella, cada corrida da números distintos y los resultados no se pueden reproducir ni comparar con los del libro. Con ella, el azar es el mismo siempre. Va **antes** de lo que use azar, no después.
+:::
+
+---
+
+## Capítulo 6 · Distribuciones {.unnumbered}
+
+```r
+pnorm(q, mean = 0, sd = 1)     # AREA a la izquierda de q
+qnorm(p, mean = 0, sd = 1)     # el VALOR que deja p de area a su izquierda
+rnorm(n, mean = 0, sd = 1)     # generar n valores al azar de una normal
+rbinom(n, size, prob)          # lo mismo, pero binomial
+```
+
+::: {.callout-tip title="Cómo recordar `pnorm` y `qnorm`"}
+Son inversas la una de la otra. La **p** de `pnorm` es de *probabilidad*: se entrega un valor y devuelve área. La **q** de `qnorm` es de *cuantil*: se entrega un área y devuelve el valor. Si se confunden, `qnorm(pnorm(1.96))` regresa `1.96` y aclara cuál es cuál.
+:::
+
+---
+
+## Capítulo 7 · Estimación y pruebas {.unnumbered}
+
+```r
+t.test(x)                                   # intervalo y prueba para una media
+t.test(x, mu = 100)                         # contra un valor de referencia
+t.test(x, alternative = "greater")          # prueba de una cola
+t.test(x, conf.level = 0.99)                # cambiar el nivel de confianza
+power.t.test(n = 30, delta = 5, sd = 12)    # potencia y tamaño necesario
+```
+
+`t.test()` devuelve el intervalo y la prueba **en la misma salida**, y por eso aparece en los dos temas. Sin más argumentos hace la prueba bilateral contra cero, con 95 % de confianza.
+
+---
+
+## Capítulo 8 · Dos grupos {.unnumbered}
+
+```r
+t.test(masa_g ~ habitat, data = datos)                  # dos grupos independientes
+t.test(antes, despues, paired = TRUE)                   # datos pareados
+var.test(masa_g ~ habitat, data = datos)                # comparar dos dispersiones
+pivot_wider(datos, names_from = momento, values_from = valor)   # de largo a ancho
+facet_wrap(~ habitat)                                   # una grafica por grupo
+```
+
+Aquí reaparece la virgulilla: `masa_g ~ habitat` es "la masa según el hábitat". Y aparece la decisión que más se equivoca en el curso: `paired = TRUE` va **solo** cuando los dos números vienen del mismo individuo.
+
+---
+
+## Capítulo 9 · Datos categóricos {.unnumbered}
+
+```r
+prop.test(x = 45, n = 120)                  # una proporcion
+prop.test(c(45, 60), c(120, 130))           # dos proporciones
+tabla <- table(datos$a, datos$b)            # tabla de contingencia
+chisq.test(tabla)                           # prueba de independencia
+prop.table(tabla, margin = 1)               # porcentajes por renglon
+rowSums(tabla)                              # totales por renglon
+```
+
+En `prop.table()`, `margin = 1` da porcentajes **por renglón** y `margin = 2` por columna. Cuál conviene depende de qué se quiera comparar.
+
+---
+
+## Capítulo 10 · Más de dos grupos {.unnumbered}
+
+```r
+modelo <- aov(agrado ~ galleta, data = datos)
+summary(modelo)             # la tabla de ANOVA
+
+shapiro.test(residuals(modelo))    # normalidad de los residuales
+bartlett.test(agrado ~ galleta, data = datos)   # igualdad de dispersiones
+TukeyHSD(modelo)            # cuales parejas difieren
+plot(TukeyHSD(modelo))      # lo mismo, en grafica
+```
+
+El orden importa: primero se revisan los supuestos sobre los residuales, después se lee la tabla, y el `TukeyHSD` solo tiene sentido si la tabla dio diferencias.
+
+---
+
+## Capítulo 11 · Inferencia en regresión {.unnumbered}
+
+```r
+modelo <- lm(masa_g ~ lhc_mm, data = datos)
+summary(modelo)             # coeficientes, sus pruebas y el r cuadrada
+confint(modelo)             # intervalos para la pendiente y la ordenada
+cor.test(x, y)              # prueba para la correlacion
+
+par(mfrow = c(2, 2)); plot(modelo)     # las cuatro graficas de diagnostico
+predict(modelo, newdata = data.frame(lhc_mm = 65))   # predecir
+```
+
+`lm()` es la misma función del capítulo 3; lo que cambia es que ahora se lee su `summary()` completo, con las pruebas de los coeficientes.
+
+---
+
+## Índice alfabético {.unnumbered}
+
+| Función | Para qué | Dónde |
+|---|---|---|
+| `aov()` | ANOVA | Cap. 10 |
+| `bartlett.test()` | Igualdad de dispersiones | Cap. 10 |
+| `chisq.test()` | Independencia de dos categóricas | Cap. 9 |
+| `coef()` | Coeficientes de un modelo | Cap. 3 |
+| `confint()` | Intervalos para los coeficientes | Cap. 11 |
+| `cor()`, `cor.test()` | Correlación, y su prueba | Cap. 3, Cap. 11 |
+| `count()` | Contar por categoría | Cap. 4 |
+| `factor()`, `levels()` | Orden de las categorías | Cap. 1 |
+| `filter()`, `select()`, `mutate()` | Renglones, columnas, columnas nuevas | Cap. 2 |
+| `fitted()`, `resid()` | Ajustados y residuales | Cap. 3 |
+| `geom_bar()`, `geom_histogram()` | Barras e histograma | Cap. 1 |
+| `geom_boxplot()`, `geom_point()` | Caja y nube de puntos | Cap. 2, Cap. 3 |
+| `geom_smooth()` | La recta sobre la nube | Cap. 3 |
+| `glimpse()`, `head()`, `summary()` | Mirar una tabla | Cap. 1 |
+| `group_by()`, `summarise()`, `n()` | Resumen por grupo | Cap. 2 |
+| `hist()` | Histograma de R base, útil sin dibujar | Cap. 2 |
+| `IQR()` | Rango intercuartílico | Cap. 2 |
+| `library()` | Cargar un paquete | Antes de todo |
+| `lm()` | Ajustar una recta | Cap. 3, Cap. 11 |
+| `mean()`, `median()` | Centro | Cap. 2 |
+| `pivot_wider()` | De formato largo a ancho | Cap. 8 |
+| `pnorm()`, `qnorm()`, `rnorm()` | Área, cuantil y valores de una normal | Cap. 6 |
+| `power.t.test()` | Potencia y tamaño necesario | Cap. 7 |
+| `ppoints()` | Proporciones ajustadas del Q-Q | Cap. 2 |
+| `predict()` | Predecir con un modelo | Cap. 11 |
+| `prop.test()`, `prop.table()` | Proporciones; porcentajes de una tabla | Cap. 9 |
+| `quantile()` | Cuartiles y percentiles | Cap. 2 |
+| `range()`, `diff()` | Mínimo y máximo; el rango | Cap. 2 |
+| `rbinom()` | Valores al azar de una binomial | Cap. 6 |
+| `read.csv()` | Leer un archivo de datos | Cap. 1 |
+| `replicate()` | Repetir muchas veces | Cap. 4 |
+| `sample()`, `slice_sample()` | Sortear; tomar renglones al azar | Cap. 4, Cap. 5 |
+| `sd()`, `var()` | Dispersión | Cap. 2 |
+| `set.seed()` | Fijar el azar | Cap. 4 |
+| `shapiro.test()` | Normalidad | Cap. 10, Cap. 11 |
+| `stat_qq()`, `stat_qq_line()` | Q-Q plot y su recta | Cap. 2 |
+| `t.test()` | Media: intervalo y prueba | Cap. 7, Cap. 8 |
+| `table()` | Frecuencias y tablas de contingencia | Cap. 1, Cap. 9 |
+| `TukeyHSD()` | Qué parejas difieren | Cap. 10 |
+| `var.test()` | Comparar dos dispersiones | Cap. 8 |

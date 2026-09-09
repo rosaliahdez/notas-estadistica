@@ -2,6 +2,8 @@
 
 A lo largo del libro se fue armando, recuadro a recuadro, una guía para elegir la técnica correcta. Aquí está completa. Es la respuesta a la pregunta que abre todo análisis: **¿qué hacer con estos datos?**
 
+Elegida la técnica, el @sec-formulario tiene su fórmula y el @sec-manual-r el comando de R que la corre.
+
 ## Cómo se usa este mapa
 
 El mapa **no se consulta con las palabras del problema, sino con los tipos de variable**. Quien trae el problema habla de dimorfismo sexual, de tiempos de ejecución o de galletas; el trabajo estadístico empieza por traducir eso a tres respuestas:

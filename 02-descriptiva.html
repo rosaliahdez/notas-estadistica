@@ -329,6 +329,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./manual-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Manual de comandos de R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./apendice-python.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">R y Python, lado a lado</span></a>
   </div>
@@ -358,9 +364,18 @@ window.Quarto = {
   <li><a href="#medidas-de-dispersión-qué-tan-esparcidos-están" id="toc-medidas-de-dispersión-qué-tan-esparcidos-están" class="nav-link" data-scroll-target="#medidas-de-dispersión-qué-tan-esparcidos-están"><span class="header-section-number">2.2</span> Medidas de dispersión: ¿qué tan esparcidos están?</a>
   <ul class="collapse">
   <li><a href="#sec-descriptiva-mano" id="toc-sec-descriptiva-mano" class="nav-link" data-scroll-target="#sec-descriptiva-mano"><span class="header-section-number">2.2.1</span> El mismo cálculo a mano</a></li>
+  <li><a href="#sec-anchos" id="toc-sec-anchos" class="nav-link" data-scroll-target="#sec-anchos"><span class="header-section-number">2.2.2</span> El ancho de clase, otra vez: dos reglas</a></li>
   </ul></li>
-  <li><a href="#el-diagrama-de-caja-boxplot" id="toc-el-diagrama-de-caja-boxplot" class="nav-link" data-scroll-target="#el-diagrama-de-caja-boxplot"><span class="header-section-number">2.3</span> El diagrama de caja (boxplot)</a></li>
-  <li><a href="#forma-de-una-distribución-y-el-q-q-plot" id="toc-forma-de-una-distribución-y-el-q-q-plot" class="nav-link" data-scroll-target="#forma-de-una-distribución-y-el-q-q-plot"><span class="header-section-number">2.4</span> Forma de una distribución y el Q-Q plot</a></li>
+  <li><a href="#el-diagrama-de-caja-boxplot" id="toc-el-diagrama-de-caja-boxplot" class="nav-link" data-scroll-target="#el-diagrama-de-caja-boxplot"><span class="header-section-number">2.3</span> El diagrama de caja (boxplot)</a>
+  <ul class="collapse">
+  <li><a href="#sec-barreras" id="toc-sec-barreras" class="nav-link" data-scroll-target="#sec-barreras"><span class="header-section-number">2.3.1</span> Las barreras, y las dos clases de atípico</a></li>
+  </ul></li>
+  <li><a href="#forma-de-una-distribución-y-el-q-q-plot" id="toc-forma-de-una-distribución-y-el-q-q-plot" class="nav-link" data-scroll-target="#forma-de-una-distribución-y-el-q-q-plot"><span class="header-section-number">2.4</span> Forma de una distribución y el Q-Q plot</a>
+  <ul class="collapse">
+  <li><a href="#sec-qq-construccion" id="toc-sec-qq-construccion" class="nav-link" data-scroll-target="#sec-qq-construccion"><span class="header-section-number">2.4.1</span> Cómo se construye</a></li>
+  <li><a href="#sec-qq-recta" id="toc-sec-qq-recta" class="nav-link" data-scroll-target="#sec-qq-recta"><span class="header-section-number">2.4.2</span> De dónde sale la recta de referencia</a></li>
+  <li><a href="#sec-qq-lectura" id="toc-sec-qq-lectura" class="nav-link" data-scroll-target="#sec-qq-lectura"><span class="header-section-number">2.4.3</span> Cómo se lee una desviación</a></li>
+  </ul></li>
   <li><a href="#resúmenes-por-grupo-con-dplyr" id="toc-resúmenes-por-grupo-con-dplyr" class="nav-link" data-scroll-target="#resúmenes-por-grupo-con-dplyr"><span class="header-section-number">2.5</span> Resúmenes por grupo con <code>dplyr</code></a></li>
   <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen"><span class="header-section-number">2.6</span> Resumen</a></li>
   <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">2.7</span> Ejercicios</a></li>
@@ -462,9 +477,9 @@ window.Quarto = {
 </div>
 <p>Los <strong>cuartiles</strong> parten los datos en cuatro: el primer cuartil (Q1) deja abajo el 25 %, el segundo es la mediana (50 %) y el tercero (Q3) el 75 %.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(penguins<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   0%  25%  50%  75% 100% </span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2700 3550 4050 4750 6300</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(penguins<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">type =</span> <span class="dv">6</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      0%     25%     50%     75%    100% </span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2700.00 3550.00 4050.00 4756.25 6300.00</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Media o mediana, ¿cuál reporto?</strong> La media usa el valor exacto de cada dato, así que un valor extremo la jala hacia sí. La mediana solo mira la posición, por lo que es <strong>robusta</strong> ante valores atípicos y colas largas. Por eso los ingresos o los precios de casas (muy sesgados a la derecha) se resumen con la mediana.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
@@ -578,8 +593,8 @@ window.Quarto = {
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 801.9545</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(penguins<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)   <span class="co"># varianza (g^2)</span></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 643131.1</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">IQR</span>(penguins<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)   <span class="co"># rango intercuartílico</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1200</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">IQR</span>(penguins<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">type =</span> <span class="dv">6</span>)   <span class="co"># rango intercuartílico</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1206.25</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Dos propiedades de la varianza son útiles (y salen en exámenes):</p>
 <div class="cell">
@@ -612,9 +627,12 @@ window.Quarto = {
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="at">media =</span> <span class="fu">mean</span>(temps), <span class="at">varianza =</span> <span class="fu">var</span>(temps), <span class="at">desviacion =</span> <span class="fu">sd</span>(temps))</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      media   varianza desviacion </span></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  35.400000   1.340000   1.157584</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(temps)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(temps)               <span class="co"># convención de fábrica de R</span></span>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    0%   25%   50%   75%  100% </span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 33.80 34.65 35.40 36.10 37.10</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 33.80 34.65 35.40 36.10 37.10</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(temps, <span class="at">type =</span> <span class="dv">6</span>)     <span class="co"># la del cálculo a mano</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   0%  25%  50%  75% 100% </span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 33.8 34.2 35.4 36.3 37.1</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
 <div class="callout-header d-flex align-content-center">
@@ -626,8 +644,12 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Los valores coinciden. Dos observaciones sobre el procedimiento manual: la <strong>fórmula de cálculo</strong> de la varianza existe precisamente para hacerla con calculadora, porque solo requiere acumular <span class="math inline">\(\sum x_i\)</span> y <span class="math inline">\(\sum x_i^2\)</span> mientras se capturan los datos. Y las <strong>posiciones</strong> de los cuartiles rara vez caen en enteros; cuando no lo hacen se interpola entre los dos datos vecinos, que es lo que hace R (y por eso a veces sus cuartiles difieren ligeramente de los calculados a mano con otra convención).</p>
-<p>Nótese que el divisor de la varianza es <span class="math inline">\(n-1\)</span> y no <span class="math inline">\(n\)</span>. Esa corrección hace que <span class="math inline">\(s^2\)</span> sea un estimador insesgado de la varianza poblacional, tema que se retomará en el <a href="06-muestrales.html" class="quarto-xref"><span>Capítulo 7</span></a>.</p>
+<p>La media, la varianza y la desviación coinciden exactamente. <strong>Los cuartiles no</strong>, y conviene entender por qué.</p>
+<p>La <strong>fórmula de cálculo</strong> de la varianza existe precisamente para hacerla con calculadora, porque solo requiere acumular <span class="math inline">\(\sum x_i\)</span> y <span class="math inline">\(\sum x_i^2\)</span> mientras se capturan los datos.</p>
+<p>Con los cuartiles hay un asunto de fondo. Localizarlos por la posición <span class="math inline">\((n+1)p\)</span>, como se hizo arriba, es <strong>una convención entre varias</strong>. R implementa nueve, y la que trae de fábrica usa la posición <span class="math inline">\((n-1)p + 1\)</span>. Con estos siete datos, la de fábrica devuelve <span class="math inline">\(q_1 = 34.65\)</span> y <span class="math inline">\(q_3 = 36.1\)</span>, de donde <span class="math inline">\(RI = 1.45\)</span> en lugar de <span class="math inline">\(2.1\)</span>.</p>
+<p>Ninguna de las dos es incorrecta. Para reproducir en R el cálculo manual se pide <code>quantile(x, type = 6)</code>, y lo mismo con <code>IQR(x, type = 6)</code>. La <strong>mediana</strong> siempre coincide, porque las dos fórmulas dan la misma posición cuando <span class="math inline">\(p = 0.5\)</span>; la discrepancia solo aparece en <span class="math inline">\(q_1\)</span> y <span class="math inline">\(q_3\)</span>, y se encoge conforme crece <span class="math inline">\(n\)</span>.</p>
+<p>Lo importante es la disciplina de siempre: saber cuál convención se está usando y declararla si el número se reporta.</p>
+<p>Y nótese que el divisor de la varianza es <span class="math inline">\(n-1\)</span> y no <span class="math inline">\(n\)</span>. Esa corrección hace que <span class="math inline">\(s^2\)</span> sea un estimador insesgado de la varianza poblacional, tema que se retomará en el <a href="06-muestrales.html" class="quarto-xref"><span>Capítulo 7</span></a>.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled" title="¿Qué técnica usar?">
@@ -666,17 +688,103 @@ window.Quarto = {
 </div>
 </div>
 </section>
+<section id="sec-anchos" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="sec-anchos"><span class="header-section-number">2.2.2</span> El ancho de clase, otra vez: dos reglas</h3>
+<p>En el <a href="01-exploracion.html#sec-lab-bins" class="quarto-xref"><span>Sección 1.7.1</span></a> quedó claro que el ancho de las clases de un histograma es una decisión, y que decisiones distintas cuentan historias distintas. Ahora que tenemos el RIC podemos volver ahí con dos reglas que dan un punto de partida razonable.</p>
+<p>La primera parte del <strong>rango</strong>: repartirlo entre <span class="math inline">\(k\)</span> clases, con <span class="math inline">\(k = 1 + \log_2 n\)</span>. Es la <strong>regla de Sturges</strong>, y es la que R usa de fábrica.</p>
+<p><span class="math display">\[\text{ancho}_{\text{Sturges}} = \frac{\text{máx} - \text{mín}}{1 + \log_2 n}\]</span></p>
+<p>La segunda parte del <strong>RIC</strong>, y es la de <strong>Freedman–Diaconis</strong>:</p>
+<p><span class="math display">\[\text{ancho}_{\text{FD}} = \frac{2 \cdot RIC}{\sqrt[3]{n}}\]</span></p>
+<p>Las dos son razonables. La diferencia aparece cuando hay un dato disparatado, y vale la pena verla con un caso concreto: en las 62 lagartijas, supóngase que la temperatura más alta se capturó con un cero de más.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>lagartijas <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"datos/lagartijas.csv"</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> lagartijas<span class="sc">$</span>temp_corporal</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>mal  <span class="ot">&lt;-</span> temp</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>mal[<span class="fu">which.max</span>(mal)] <span class="ot">&lt;-</span> <span class="dv">60</span>          <span class="co"># el error de captura</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>ancho_sturges <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">diff</span>(<span class="fu">range</span>(x)) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">log2</span>(<span class="fu">length</span>(x)))</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>ancho_fd      <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="dv">2</span> <span class="sc">*</span> <span class="fu">IQR</span>(x, <span class="at">type =</span> <span class="dv">6</span>) <span class="sc">/</span> <span class="fu">length</span>(x)<span class="sc">^</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">medida =</span> <span class="fu">c</span>(<span class="st">"rango"</span>, <span class="st">"RIC"</span>, <span class="st">"ancho por Sturges"</span>, <span class="st">"ancho por Freedman-Diaconis"</span>),</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">sin_error =</span> <span class="fu">c</span>(<span class="fu">diff</span>(<span class="fu">range</span>(temp)), <span class="fu">IQR</span>(temp, <span class="at">type =</span> <span class="dv">6</span>),</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>                <span class="fu">ancho_sturges</span>(temp), <span class="fu">ancho_fd</span>(temp)),</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">con_error =</span> <span class="fu">c</span>(<span class="fu">diff</span>(<span class="fu">range</span>(mal)),  <span class="fu">IQR</span>(mal,  <span class="at">type =</span> <span class="dv">6</span>),</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>                <span class="fu">ancho_sturges</span>(mal),  <span class="fu">ancho_fd</span>(mal))</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">medida</th>
+<th style="text-align: right;">sin_error</th>
+<th style="text-align: right;">con_error</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">rango</td>
+<td style="text-align: right;">7.900</td>
+<td style="text-align: right;">29.900</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">RIC</td>
+<td style="text-align: right;">2.425</td>
+<td style="text-align: right;">2.425</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ancho por Sturges</td>
+<td style="text-align: right;">1.136</td>
+<td style="text-align: right;">4.300</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ancho por Freedman-Diaconis</td>
+<td style="text-align: right;">1.225</td>
+<td style="text-align: right;">1.225</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El ancho de Sturges casi se <strong>cuadruplica</strong>, y el de Freedman–Diaconis <strong>no se mueve ni un milímetro</strong>.</p>
+<p>La razón está en el renglón de arriba de cada uno. El rango se calcula con el máximo y el mínimo, y el dato falso es justamente el máximo: basta un valor para arrastrarlo. El RIC se calcula con <span class="math inline">\(q_1\)</span> y <span class="math inline">\(q_3\)</span>, y el dato más grande no interviene en ninguno de los dos; cambiarlo por un disparate los deja intactos.</p>
+<p>Es la <strong>robustez</strong> de la mediana, que ya se vio en el <a href="#sec-lab-robustez" class="quarto-xref"><span>Sección 2.1.1</span></a>, apareciendo ahora en una gráfica. Y tiene una consecuencia práctica: con el ancho de Sturges ese histograma se aplasta en tres o cuatro barras y deja de mostrar la forma, mientras que el de Freedman–Diaconis sigue dibujando la distribución de las 61 lagartijas bien capturadas, con el dato falso aparte, a la derecha, donde se puede ver que algo está mal.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled" title="Una regla no sustituye a mirar">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Una regla no sustituye a mirar
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ninguna de las dos reglas sabe qué se está buscando. En el laboratorio del <a href="01-exploracion.html#sec-lab-bins" class="quarto-xref"><span>Sección 1.7.1</span></a>, los dos montículos de la masa de los pingüinos aparecen y desaparecen según el ancho, y ninguna fórmula puede decidir por nosotros si esos montículos importan. Las reglas dan un punto de partida; la disciplina sigue siendo probar varios anchos antes de concluir.</p>
+</div>
+</div>
+</section>
 </section>
 <section id="el-diagrama-de-caja-boxplot" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="el-diagrama-de-caja-boxplot"><span class="header-section-number">2.3</span> El diagrama de caja (boxplot)</h2>
 <p>El boxplot resume una variable con cinco números: mínimo, Q1, mediana, Q3 y máximo. La caja abarca el 50 % central (su alto es el RIC), la línea de en medio es la mediana, y los puntos fuera de los “bigotes” son posibles <strong>valores atípicos</strong> (más allá de 1.5 × RIC).</p>
 <p>Su verdadero poder es <strong>comparar grupos</strong>. Veámoslo con las lagartijas: temperatura corporal en zona urbana vs.&nbsp;campo abierto.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>lagartijas <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"datos/lagartijas.csv"</span>)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(lagartijas, <span class="fu">aes</span>(<span class="at">x =</span> habitat, <span class="at">y =</span> temp_corporal, <span class="at">fill =</span> habitat)) <span class="sc">+</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Hábitat"</span>, <span class="at">y =</span> <span class="st">"Temperatura corporal (°C)"</span>) <span class="sc">+</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(lagartijas, <span class="fu">aes</span>(<span class="at">x =</span> habitat, <span class="at">y =</span> temp_corporal, <span class="at">fill =</span> habitat)) <span class="sc">+</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Hábitat"</span>, <span class="at">y =</span> <span class="st">"Temperatura corporal (°C)"</span>) <span class="sc">+</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="fig-boxplot-lagartijas" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -700,18 +808,104 @@ Figura&nbsp;2.1: Temperatura corporal de lagartijas por hábitat.
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>La caja urbana está claramente <strong>más arriba</strong>: las lagartijas de ciudad son más cálidas (isla de calor urbana). También parece un poco <strong>más alta</strong> (más dispersión). Esto es <em>descripción</em>: en el <a href="08-dos-muestras.html" class="quarto-xref"><span>Capítulo 9</span></a> pondremos a prueba si esa diferencia es estadísticamente significativa. Un boxplot es el mejor preludio de una comparación de dos grupos.</p>
+<p>La caja urbana está claramente <strong>más arriba</strong>: las lagartijas de ciudad son más cálidas (isla de calor urbana). También parece un poco <strong>más alta</strong> (más dispersión). Esto es <em>descripción</em>: la gráfica dice cómo se ven estos datos, no si la diferencia se sostendría con otras lagartijas. Para decidir eso hay procedimientos formales, y se verán en el <a href="08-dos-muestras.html" class="quarto-xref"><span>Capítulo 9</span></a>. Un boxplot es el mejor preludio de una comparación de dos grupos.</p>
+</div>
+</div>
+<section id="sec-barreras" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="sec-barreras"><span class="header-section-number">2.3.1</span> Las barreras, y las dos clases de atípico</h3>
+<p>Arriba se dijo que los puntos dibujados aparte son “posibles atípicos, más allá de 1.5 × RIC”. Conviene precisarlo, porque el boxplot distingue <strong>dos grados</strong> y la distinción cambia lo que uno hace después.</p>
+<p>A partir de los cuartiles se levantan dos pares de <strong>barreras</strong>:</p>
+<p><span class="math display">\[\text{barreras interiores} = q_1 - 1.5\,RIC \quad\text{y}\quad q_3 + 1.5\,RIC\]</span> <span class="math display">\[\text{barreras exteriores} = q_1 - 3\,RIC \quad\text{y}\quad q_3 + 3\,RIC\]</span></p>
+<p>Y con ellas, tres situaciones para un dato:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Dónde cae</th>
+<th>Cómo se llama</th>
+<th>Cómo se dibuja</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Dentro de las barreras interiores</td>
+<td>Dato ordinario</td>
+<td>Lo alcanza un bigote</td>
+</tr>
+<tr class="even">
+<td>Entre la interior y la exterior</td>
+<td>Atípico <strong>suave</strong></td>
+<td>Punto aparte</td>
+</tr>
+<tr class="odd">
+<td>Más allá de la exterior</td>
+<td>Atípico <strong>extremo</strong></td>
+<td>Punto aparte</td>
+</tr>
+</tbody>
+</table>
+<p>Los bigotes, entonces, no llegan hasta las barreras: llegan hasta el <strong>dato más alejado que todavía cae dentro</strong> de ellas. Por eso los bigotes de un boxplot casi nunca son igual de largos.</p>
+<p>Veámoslo con la masa de las lagartijas:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>m   <span class="ot">&lt;-</span> lagartijas<span class="sc">$</span>masa_g</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>q1  <span class="ot">&lt;-</span> <span class="fu">unname</span>(<span class="fu">quantile</span>(m, <span class="fl">0.25</span>, <span class="at">type =</span> <span class="dv">6</span>))   <span class="co"># unname: quantile devuelve el nombre "25%"</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>q3  <span class="ot">&lt;-</span> <span class="fu">unname</span>(<span class="fu">quantile</span>(m, <span class="fl">0.75</span>, <span class="at">type =</span> <span class="dv">6</span>))</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>ric <span class="ot">&lt;-</span> q3 <span class="sc">-</span> q1</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>barreras <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">interior_inf =</span> q1 <span class="sc">-</span> <span class="fl">1.5</span> <span class="sc">*</span> ric, <span class="at">interior_sup =</span> q3 <span class="sc">+</span> <span class="fl">1.5</span> <span class="sc">*</span> ric,</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">exterior_inf =</span> q1 <span class="sc">-</span> <span class="dv">3</span>   <span class="sc">*</span> ric, <span class="at">exterior_sup =</span> q3 <span class="sc">+</span> <span class="dv">3</span>   <span class="sc">*</span> ric)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(barreras, <span class="dv">3</span>)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; interior_inf interior_sup exterior_inf exterior_sup </span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        6.187       20.288        0.900       25.575</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(m[m <span class="sc">&lt;</span> barreras[<span class="st">"interior_inf"</span>] <span class="sc">|</span> m <span class="sc">&gt;</span> barreras[<span class="st">"interior_sup"</span>]])   <span class="co"># atípicos suaves</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 5.3</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(m[m <span class="sc">&lt;</span> barreras[<span class="st">"exterior_inf"</span>] <span class="sc">|</span> m <span class="sc">&gt;</span> barreras[<span class="st">"exterior_sup"</span>]])   <span class="co"># atípicos extremos</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; numeric(0)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Hay <strong>un solo</strong> dato fuera de las barreras interiores, la lagartija de 5.3 gramos, y <strong>ninguno</strong> fuera de las exteriores. Es un atípico <strong>suave</strong>.</p>
+<p>Esa palabra tiene consecuencias prácticas. Un atípico suave suele ser un dato legítimo de la cola de la distribución: una lagartija chica, quizá juvenil, que pertenece a la población y no se toca. Uno extremo, en cambio, merece que se revise si hubo un error de captura antes de hacer cualquier otra cosa; es lo que pasó con la temperatura de 60 grados del <a href="#sec-anchos" class="quarto-xref"><span>Sección 2.2.2</span></a>, que queda muy por fuera de la barrera exterior.</p>
+<p>Un atípico nunca se borra por ser atípico. Se investiga, y se decide con la razón que se encuentre.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled" title="`geom_boxplot()` usa la otra convención">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span><code>geom_boxplot()</code> usa la otra convención
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Las barreras de arriba se calcularon con <code>type = 6</code>, la convención del cálculo a mano. <code>geom_boxplot()</code> y <code>boxplot()</code> usan la de fábrica de R, así que sus barreras salen ligeramente distintas de las de este cuadro.</p>
+<p>En estos datos la conclusión no cambia —las dos convenciones señalan la misma lagartija y solo esa—, y eso es lo habitual: la convención mueve el número, rara vez la lectura. Pero si el examen pide las barreras a mano, el número que se espera es el de <code>type = 6</code>.</p>
 </div>
 </div>
 </section>
+</section>
 <section id="forma-de-una-distribución-y-el-q-q-plot" class="level2" data-number="2.4">
 <h2 data-number="2.4" class="anchored" data-anchor-id="forma-de-una-distribución-y-el-q-q-plot"><span class="header-section-number">2.4</span> Forma de una distribución y el Q-Q plot</h2>
-<p>Además del centro y la dispersión, nos importa la <strong>forma</strong>: ¿simétrica?, ¿sesgada?, ¿acampanada? Muchas técnicas que veremos (pruebas t, ANOVA, regresión) suponen que los datos —o los residuos— son aproximadamente <strong>normales</strong>. El <strong>Q-Q plot</strong> (“cuantil-cuantil”) es la herramienta para revisarlo: si los puntos caen cerca de la recta, los datos son compatibles con una normal.</p>
+<p>Además del centro y la dispersión, nos importa la <strong>forma</strong>: ¿simétrica?, ¿sesgada?, ¿acampanada? Muchas técnicas que veremos más adelante suponen que los datos son aproximadamente <strong>normales</strong>, así que conviene saber revisarlo desde ahora. El <strong>Q-Q plot</strong> (“cuantil-cuantil”) es la herramienta para revisarlo: si los puntos caen cerca de una recta, los datos son compatibles con una normal.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">sample =</span> flipper_length_mm)) <span class="sc">+</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>(<span class="at">color =</span> <span class="st">"#1F4E79"</span>) <span class="sc">+</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Cuantiles teóricos"</span>, <span class="at">y =</span> <span class="st">"Cuantiles de los datos"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">sample =</span> flipper_length_mm)) <span class="sc">+</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>(<span class="at">color =</span> <span class="st">"#1F4E79"</span>) <span class="sc">+</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Cuantiles teóricos"</span>, <span class="at">y =</span> <span class="st">"Cuantiles de los datos"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="fig-qqplot" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -735,22 +929,259 @@ Figura&nbsp;2.2: Q-Q plot del largo de la aleta de los pingüinos.
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Si los puntos siguen la recta, no hay evidencia contra la normalidad. Desviaciones sistemáticas en los extremos indican <strong>colas</strong> más pesadas o ligeras; una curvatura en forma de “S” o “C” delata <strong>sesgo</strong>. El Q-Q plot será nuestro chequeo de rutina antes de cualquier prueba que suponga normalidad.</p>
+<p>Si los puntos siguen la recta, no hay evidencia contra la normalidad. Desviaciones sistemáticas en los extremos indican <strong>colas</strong> más pesadas o más ligeras; una curvatura en forma de “S” o de arco delata <strong>sesgo</strong>. El Q-Q plot será nuestro chequeo de rutina antes de cualquier prueba que suponga normalidad.</p>
 </div>
 </div>
+<section id="sec-qq-construccion" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="sec-qq-construccion"><span class="header-section-number">2.4.1</span> Cómo se construye</h3>
+<p>La gráfica anterior sale de una línea de código, pero conviene saber qué hace esa línea, porque de ahí se entiende qué se está comparando y por qué la recta es la recta.</p>
+<p>La idea de fondo es esta: si los datos vinieran de una normal, el dato que ocupa el lugar <span class="math inline">\(i\)</span> de la lista ordenada debería caer más o menos donde una normal pone su cuantil de la misma proporción. El Q-Q plot pone esos dos números como coordenadas de un punto, y repite para cada dato. Si el parecido es bueno, los puntos se alinean.</p>
+<p>Son cuatro pasos:</p>
+<ol type="1">
+<li><strong>Ordenar</strong> los datos de menor a mayor.</li>
+<li>Asignarle a cada uno una <strong>proporción</strong> <span class="math inline">\(p_i\)</span>.</li>
+<li>Convertir esa proporción en el <strong>cuantil teórico</strong> <span class="math inline">\(z_i\)</span> de la normal estándar, el valor que deja <span class="math inline">\(p_i\)</span> de área a su izquierda.</li>
+<li>Graficar los pares <span class="math inline">\((z_i,\, x_i)\)</span>.</li>
+</ol>
+<p>El único paso que necesita explicación es el segundo. Lo natural sería contar: por debajo del <span class="math inline">\(i\)</span>-ésimo dato, contándolo a él, quedan <span class="math inline">\(i\)</span> de los <span class="math inline">\(n\)</span>, así que la proporción sería <span class="math inline">\(i/n\)</span>. Esa cuenta <strong>no se puede usar</strong>, y la razón se ve en el último dato: le tocaría <span class="math inline">\(n/n = 1\)</span>, o sea el 100 %, y <strong>ninguna normal deja a su izquierda toda el área</strong>. El cuantil teórico se iría al infinito y el punto no se podría dibujar.</p>
+<p>La salida es correr un poco todas las proporciones hacia adentro. R usa</p>
+<p><span class="math display">\[p_i = \frac{i - 3/8}{n + 1/4}\]</span></p>
+<p>que nunca llega ni a 0 ni a 1, y que trata igual a los dos extremos: <span class="math inline">\(p_1 + p_n = 1\)</span>, lo cual importa porque la normal contra la que se compara es simétrica.</p>
+<p>Hagámoslo completo con diez masas de pingüino, en gramos, chicas para que quepan a mano:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>masas <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3000</span>, <span class="dv">3200</span>, <span class="dv">3500</span>, <span class="dv">3600</span>, <span class="dv">3800</span>, <span class="dv">4000</span>, <span class="dv">4100</span>, <span class="dv">4400</span>, <span class="dv">4700</span>, <span class="dv">5000</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">i   =</span> <span class="fu">seq_along</span>(masas),</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">x_i =</span> masas,</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">p_i =</span> <span class="fu">ppoints</span>(masas),          <span class="co"># (i - 3/8) / (n + 1/4)</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">z_i =</span> <span class="fu">qnorm</span>(<span class="fu">ppoints</span>(masas))    <span class="co"># el cuantil teorico</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">4</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;">i</th>
+<th style="text-align: right;">x_i</th>
+<th style="text-align: right;">p_i</th>
+<th style="text-align: right;">z_i</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3000</td>
+<td style="text-align: right;">0.0610</td>
+<td style="text-align: right;">-1.5466</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3200</td>
+<td style="text-align: right;">0.1585</td>
+<td style="text-align: right;">-1.0005</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3500</td>
+<td style="text-align: right;">0.2561</td>
+<td style="text-align: right;">-0.6554</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3600</td>
+<td style="text-align: right;">0.3537</td>
+<td style="text-align: right;">-0.3755</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">3800</td>
+<td style="text-align: right;">0.4512</td>
+<td style="text-align: right;">-0.1226</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">4000</td>
+<td style="text-align: right;">0.5488</td>
+<td style="text-align: right;">0.1226</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">4100</td>
+<td style="text-align: right;">0.6463</td>
+<td style="text-align: right;">0.3755</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">4400</td>
+<td style="text-align: right;">0.7439</td>
+<td style="text-align: right;">0.6554</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">4700</td>
+<td style="text-align: right;">0.8415</td>
+<td style="text-align: right;">1.0005</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">5000</td>
+<td style="text-align: right;">0.9390</td>
+<td style="text-align: right;">1.5466</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Las proporciones arrancan en 0.061 y terminan en 0.939, nunca en 0 ni en 1, y suman 1 por parejas: la primera con la última, la segunda con la penúltima. Los cuantiles teóricos salen simétricos alrededor de cero por la misma razón.</p>
+<p>La columna <code>z_i</code> es el eje horizontal de la gráfica y la columna <code>x_i</code> el vertical. Nótese que <strong>los datos entran solo por su orden</strong>: las proporciones y los cuantiles teóricos son los mismos para cualquier conjunto de diez datos. Lo único que cambia de un conjunto a otro es a qué altura queda cada punto.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled" title="Un detalle de `ppoints()`">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Un detalle de <code>ppoints()</code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Con más de diez datos, R cambia el <span class="math inline">\(3/8\)</span> por <span class="math inline">\(1/2\)</span> y usa <span class="math inline">\(p_i = (i - 0.5)/n\)</span>. Las dos fórmulas hacen lo mismo —correr las proporciones hacia adentro— y la gráfica casi no se distingue. El <span class="math inline">\(3/8\)</span> está afinado para conjuntos chicos.</p>
+</div>
+</div>
+</section>
+<section id="sec-qq-recta" class="level3" data-number="2.4.2">
+<h3 data-number="2.4.2" class="anchored" data-anchor-id="sec-qq-recta"><span class="header-section-number">2.4.2</span> De dónde sale la recta de referencia</h3>
+<p>Si los datos fueran exactamente normales con media <span class="math inline">\(\mu\)</span> y desviación <span class="math inline">\(\sigma\)</span>, el dato de cuantil teórico <span class="math inline">\(z\)</span> caería en</p>
+<p><span class="math display">\[x = \sigma z + \mu\]</span></p>
+<p>que es una recta de pendiente <span class="math inline">\(\sigma\)</span> y ordenada al origen <span class="math inline">\(\mu\)</span>. Esa es <strong>la recta</strong>: no es un ajuste a los puntos, es dónde caerían si la normal fuera exacta.</p>
+<p>Hay un problema, y es el de siempre: <span class="math inline">\(\mu\)</span> y <span class="math inline">\(\sigma\)</span> son de la población, y no se conocen. Hay que estimarlas con los datos, y hay dos maneras razonables de hacerlo.</p>
+<p>La primera es la obvia: usar la media y la desviación estándar. La segunda usa los cuartiles, aprovechando que en una normal la distancia entre <span class="math inline">\(q_1\)</span> y <span class="math inline">\(q_3\)</span> vale siempre <span class="math inline">\(1.349\)</span> desviaciones:</p>
+<p><span class="math display">\[\text{pendiente} = \frac{q_3 - q_1}{1.349}, \qquad \text{ordenada} = \frac{q_1 + q_3}{2}\]</span></p>
+<p>La segunda es la que traza R con <code>stat_qq_line()</code>. Veamos las dos sobre los mismos diez datos.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>q1_masas <span class="ot">&lt;-</span> <span class="fu">unname</span>(<span class="fu">quantile</span>(masas, <span class="fl">0.25</span>, <span class="at">type =</span> <span class="dv">6</span>))</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>q3_masas <span class="ot">&lt;-</span> <span class="fu">unname</span>(<span class="fu">quantile</span>(masas, <span class="fl">0.75</span>, <span class="at">type =</span> <span class="dv">6</span>))</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>rectas <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">cual      =</span> <span class="fu">c</span>(<span class="st">"cuartiles"</span>, <span class="st">"media y desviación"</span>),</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">pendiente =</span> <span class="fu">c</span>((q3_masas <span class="sc">-</span> q1_masas) <span class="sc">/</span> <span class="fl">1.349</span>, <span class="fu">sd</span>(masas)),</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">ordenada  =</span> <span class="fu">c</span>((q1_masas <span class="sc">+</span> q3_masas) <span class="sc">/</span> <span class="dv">2</span>,     <span class="fu">mean</span>(masas))</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(rectas<span class="sc">$</span>pendiente, <span class="dv">1</span>)   <span class="co"># las dos pendientes</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 778.4 641.3</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(rectas<span class="sc">$</span>ordenada,  <span class="dv">1</span>)   <span class="co"># las dos ordenadas al origen</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 3950 3930</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="at">x =</span> masas), <span class="fu">aes</span>(<span class="at">sample =</span> x)) <span class="sc">+</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">data =</span> rectas, <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">slope =</span> pendiente, <span class="at">intercept =</span> ordenada, <span class="at">colour =</span> cual),</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>              <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="cn">NULL</span>, <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"cuartiles"</span> <span class="ot">=</span> <span class="st">"#1F4E79"</span>,</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>                                       <span class="st">"media y desviación"</span> <span class="ot">=</span> <span class="st">"#C0392B"</span>)) <span class="sc">+</span></span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Cuantiles teóricos"</span>, <span class="at">y =</span> <span class="st">"Masa (g)"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="fig-qq-dos-rectas" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-qq-dos-rectas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="02-descriptiva_files/figure-html/fig-qq-dos-rectas-1.png" class="img-fluid figure-img" width="480">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-qq-dos-rectas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.3: Las dos maneras de estimar la recta de referencia.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Con estos datos las dos rectas cuentan la misma historia: la de los cuartiles es <span class="math inline">\(x = 778.4\,z + 3950\)</span> y la de la media y la desviación, <span class="math inline">\(x = 641.3\,z + 3930\)</span>. Las ordenadas al origen casi coinciden —las dos ponen el centro cerca de 3940 gramos— y las pendientes difieren alrededor de un 20 %, lo bastante para verse pero no para cambiar la lectura. Mientras la distribución sea razonablemente simétrica y sin datos alejados, cualquiera de las dos sirve.</p>
+<p><strong>La diferencia aparece cuando hay un dato disparatado.</strong> La media y la desviación estándar lo usan y se van con él: la desviación se infla, la pendiente crece y la recta se acuesta. Los cuartiles no lo usan, así que la recta ni se entera. Es otra vez la <strong>robustez</strong> del <a href="#sec-lab-robustez" class="quarto-xref"><span>Sección 2.1.1</span></a>, ahora decidiendo la referencia contra la que se juzga la normalidad.</p>
+<p>Y por eso R traza la de los cuartiles. Si la recta de referencia se moviera con el mismo dato raro que se quiere detectar, la gráfica perdería su capacidad de delatarlo: el atípico arrastraría la vara con la que se le mide.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Dos cosas que conviene no confundir">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Dos cosas que conviene no confundir
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>La recta no pasa por el origen ni tiene pendiente 1.</strong> Es <span class="math inline">\(x = \sigma z + \mu\)</span>, con las unidades de los datos en el eje vertical. La diagonal <span class="math inline">\(y = x\)</span> solo aparecería si antes se estandarizaran los datos, y aun así sería una coincidencia de escalas, no el objetivo.</p>
+<p><strong>El Q-Q plot no prueba nada.</strong> Que los puntos caigan cerca de la recta dice que los datos son <em>compatibles</em> con una normal, no que lo sean. Es una lectura visual, y para conjuntos chicos incluso datos normales de verdad se ven algo torcidos en las puntas. Hay procedimientos formales para esto, que se verán más adelante.</p>
+</div>
+</div>
+</section>
+<section id="sec-qq-lectura" class="level3" data-number="2.4.3">
+<h3 data-number="2.4.3" class="anchored" data-anchor-id="sec-qq-lectura"><span class="header-section-number">2.4.3</span> Cómo se lee una desviación</h3>
+<p>Lo que se busca no es que los puntos toquen la recta, sino que <strong>no se desvíen de forma sistemática</strong>. Tres patrones vale la pena reconocer:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Lo que se ve</th>
+<th>Qué significa</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Los puntos suben más rápido que la recta en el extremo derecho, dibujando un arco</td>
+<td>Cola larga hacia los valores altos: sesgo a la derecha</td>
+</tr>
+<tr class="even">
+<td>El arco está del lado izquierdo</td>
+<td>Cola larga hacia los valores bajos: sesgo a la izquierda</td>
+</tr>
+<tr class="odd">
+<td>Una “S”: los dos extremos se apartan hacia el mismo lado que su vecino</td>
+<td>Colas más pesadas o más ligeras que las de una normal</td>
+</tr>
+<tr class="even">
+<td>Un escalón en medio, con un tramo casi vacío</td>
+<td>Dos grupos mezclados</td>
+</tr>
+</tbody>
+</table>
+<p>Ese último caso es el mismo que apareció con la masa de los pingüinos en el <a href="01-exploracion.html#sec-lab-bins" class="quarto-xref"><span>Sección 1.7.1</span></a>, y la moraleja es idéntica: si el Q-Q plot de un conjunto sale torcido, antes de concluir “no son normales” conviene preguntarse si no serán <strong>varios grupos juntos</strong>. La normalidad se revisa dentro de cada grupo.</p>
+</section>
 </section>
 <section id="resúmenes-por-grupo-con-dplyr" class="level2" data-number="2.5">
 <h2 data-number="2.5" class="anchored" data-anchor-id="resúmenes-por-grupo-con-dplyr"><span class="header-section-number">2.5</span> Resúmenes por grupo con <code>dplyr</code></h2>
 <p>Casi siempre queremos resumir <strong>por grupo</strong>, no en bloque. El patrón de <code>dplyr</code> es <code>group_by()</code> seguido de <code>summarise()</code>, encadenados con el operador <code>|&gt;</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">n       =</span> <span class="fu">n</span>(),</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">media   =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">de      =</span> <span class="fu">sd</span>(body_mass_g,   <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">mediana =</span> <span class="fu">median</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">n       =</span> <span class="fu">n</span>(),</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">media   =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">de      =</span> <span class="fu">sd</span>(body_mass_g,   <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">mediana =</span> <span class="fu">median</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -775,13 +1206,13 @@ Figura&nbsp;2.2: Q-Q plot del largo de la aleta de los pingüinos.
 </div>
 <p>La misma receta compara las lagartijas por hábitat:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>lagartijas <span class="sc">|&gt;</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(habitat) <span class="sc">|&gt;</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">n          =</span> <span class="fu">n</span>(),</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">temp_media =</span> <span class="fu">mean</span>(temp_corporal),</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">temp_de    =</span> <span class="fu">sd</span>(temp_corporal)</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>lagartijas <span class="sc">|&gt;</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(habitat) <span class="sc">|&gt;</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">n          =</span> <span class="fu">n</span>(),</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">temp_media =</span> <span class="fu">mean</span>(temp_corporal),</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">temp_de    =</span> <span class="fu">sd</span>(temp_corporal)</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -794,21 +1225,24 @@ Figura&nbsp;2.2: Q-Q plot del largo de la aleta de los pingüinos.
 </section>
 <section id="resumen" class="level2" data-number="2.6">
 <h2 data-number="2.6" class="anchored" data-anchor-id="resumen"><span class="header-section-number">2.6</span> Resumen</h2>
-<p>Aprendimos a describir una variable cuantitativa con un <strong>centro</strong> (media o mediana) y una <strong>dispersión</strong> (desviación estándar o RIC), a elegir entre ellas según la forma, a <strong>comparar grupos</strong> con boxplots y a revisar la <strong>normalidad</strong> con un Q-Q plot. Con <code>dplyr</code> producimos resúmenes por grupo en dos líneas. Ya sabemos <em>ver</em> y <em>resumir</em> datos; en el <a href="03-relaciones.html" class="quarto-xref"><span>Capítulo 3</span></a> estudiaremos la <strong>relación entre dos variables</strong>.</p>
+<p>Aprendimos a describir una variable cuantitativa con un <strong>centro</strong> (media o mediana) y una <strong>dispersión</strong> (desviación estándar o RIC), a elegir entre ellas según la forma, a <strong>comparar grupos</strong> con boxplots y a revisar la <strong>normalidad</strong> con un Q-Q plot. Con <code>dplyr</code> producimos resúmenes por grupo en dos líneas.</p>
+<p>Un hilo atraviesa el capítulo entero: la <strong>robustez</strong>. La mediana no se mueve con un dato disparatado, el RIC tampoco, y de ahí que el ancho de Freedman–Diaconis aguante lo que el de Sturges no, que las barreras del boxplot se calculen con cuartiles, y que R trace la recta del Q-Q plot con cuartiles en lugar de con la media y la desviación. Es la misma propiedad reapareciendo en cuatro lugares distintos.</p>
+<p>Ya sabemos <em>ver</em> y <em>resumir</em> datos; en el <a href="03-relaciones.html" class="quarto-xref"><span>Capítulo 3</span></a> estudiaremos la <strong>relación entre dos variables</strong>.</p>
 </section>
 <section id="ejercicios" class="level2" data-number="2.7">
 <h2 data-number="2.7" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">2.7</span> Ejercicios</h2>
 <ol type="1">
-<li><p><strong>Traslación de la varianza.</strong> Un conjunto de datos tiene varianza muestral 9. Si a cada valor se le suma 3, ¿cuánto vale la nueva varianza? Verifícalo en R con un vector de la elección.</p></li>
+<li><p><strong>Traslación de la varianza.</strong> Un conjunto de datos tiene varianza 9. Si a cada valor se le suma 3, ¿cuánto vale la nueva varianza? Verifícalo en R con un vector de la elección.</p></li>
 <li><p><strong>Escalamiento de la varianza.</strong> Si a cada valor de un conjunto con varianza 16 se le multiplica por 2, ¿cuál es la nueva varianza? Justificar con la propiedad correspondiente.</p></li>
 <li><p><strong>Varianza cero.</strong> Si un conjunto de datos tiene varianza igual a cero, ¿qué puede afirmarse sobre sus valores? Da un ejemplo.</p></li>
 <li><p><strong>Media, mediana y moda.</strong> En una distribución de salarios sesgada a la derecha, ordena de menor a mayor la media, la mediana y la moda, y explicar por qué.</p></li>
 <li><p><strong>Cuartiles en R.</strong> Con <code>datos/lagartijas.csv</code>, calcular la mediana y el RIC de <code>masa_g</code> para cada hábitat usando <code>group_by()</code> + <code>summarise()</code>. ¿Cuál grupo es más disperso?</p></li>
 <li><p><strong>Boxplot e interpretación.</strong> Hacer un boxplot de <code>frec_cardiaca</code> por hábitat. Describir en dos frases lo observado, como si se le explicara a una bióloga.</p></li>
 <li><p><strong>Normalidad.</strong> Hacer el Q-Q plot de <code>eficiencia_biologica</code> de <code>datos/hongos_sustrato.csv</code>. ¿Los datos parecen normales? ¿Cambia la conclusión al hacerlo por separado para el sustrato <code>aserrin</code>?</p></li>
+<li><p><strong>Las tres medidas sobre el histograma.</strong> El ejercicio 4 pide el orden de memoria; este pide verlo. Con <code>datos/lagartijas.csv</code>, hacer el histograma de <code>masa_g</code> y dibujarle encima tres líneas verticales: la media, la mediana y la moda. Para la moda, tomar el punto medio de la clase más alta del histograma, que es lo más cercano a una moda que tiene una variable continua. ¿Sale el orden que predice el ejercicio 4? ¿Qué tan separadas quedan las tres líneas, y qué dice eso sobre la simetría de esta variable?</p></li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled" title="Soluciones y retroalimentación">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -817,15 +1251,25 @@ Figura&nbsp;2.2: Q-Q plot del largo de la aleta de los pingüinos.
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div id="callout-19" class="callout-19-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>1.</strong> La nueva varianza sigue siendo <strong>9</strong>. Sumar una constante <strong>desplaza</strong> todos los datos por igual, sin cambiar sus distancias mutuas, y la varianza mide precisamente esas distancias. En R: <code>var(x)</code> y <code>var(x + 3)</code> dan lo mismo. <em>Regla: <span class="math inline">\(\text{Var}(X + c) = \text{Var}(X)\)</span>.</em></p>
 <p><strong>2.</strong> La nueva varianza es <strong>64</strong>, es decir <span class="math inline">\(16 \times 2^2\)</span>. Multiplicar por <span class="math inline">\(k\)</span> multiplica la varianza por <span class="math inline">\(k^2\)</span> (y la desviación estándar por <span class="math inline">\(|k|\)</span>). <em>Regla: <span class="math inline">\(\text{Var}(kX) = k^2\,\text{Var}(X)\)</span>. Error típico: contestar 32, olvidando que el factor va al cuadrado.</em></p>
 <p><strong>3.</strong> Varianza cero significa que <strong>todos los valores son idénticos</strong>: no hay dispersión alguna. Ejemplo: <code>c(7, 7, 7, 7)</code>. Geométricamente, todos los datos coinciden con la media, así que todas las desviaciones son cero. <em>Es el único caso en que la varianza puede valer cero: nunca es negativa.</em></p>
 <p><strong>4.</strong> El orden es <strong>moda &lt; mediana &lt; media</strong>. En un sesgo a la derecha, la cola larga de salarios altos jala la media hacia arriba; la mediana se mueve menos y la moda se queda en el pico de la distribución. <em>Truco para recordar: la media es la más “sensible” y siempre se va hacia la cola.</em></p>
-<p><strong>5.</strong> Con <code>group_by(habitat) |&gt; summarise(mediana = median(masa_g), ric = IQR(masa_g))</code> se observa que el grupo <strong>urbano</strong> tiene mayor RIC: es el más disperso, además de tener mayor masa mediana. <em>Interpretación biológica: la ciudad ofrece condiciones más heterogéneas —zonas de sombra, calor, alimento variable—, lo que se refleja en mayor variabilidad.</em></p>
+<p><strong>5.</strong> Con <code>group_by(habitat) |&gt; summarise(mediana = median(masa_g), ric = IQR(masa_g, type = 6))</code> se observa que el grupo <strong>urbano</strong> tiene mayor RIC: es el más disperso, además de tener mayor masa mediana. <em>Interpretación biológica: la ciudad ofrece condiciones más heterogéneas —zonas de sombra, calor, alimento variable—, lo que se refleja en mayor variabilidad.</em></p>
 <p><strong>6.</strong> Se observan cajas con centros distintos, la urbana por encima. Una redacción adecuada: <em>“Las lagartijas urbanas presentan una frecuencia cardiaca mediana mayor que las de campo abierto, y sus valores están algo más dispersos; ambos grupos se traslapan, así que la diferencia es de tendencia, no absoluta.”</em> <em>Lo importante aquí es no afirmar que “todas” las urbanas superan a las de campo: los boxplots se traslapan.</em></p>
-<p><strong>7.</strong> El Q-Q plot del conjunto completo muestra desviaciones de la recta, porque los datos <strong>mezclan cuatro sustratos con medias distintas</strong> (no es una sola población). Al analizar solo <code>aserrin</code>, los puntos se alinean mucho mejor con la recta. <em>Lección clave para todo el curso: la normalidad se verifica <strong>dentro de cada grupo</strong> (o sobre los residuos del modelo), no sobre la mezcla. Este es exactamente el chequeo que haremos antes del ANOVA en el <a href="10-anova.html" class="quarto-xref"><span>Capítulo 11</span></a>.</em></p>
+<p><strong>8.</strong> Una manera de hacerlo:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="fu">hist</span>(lagartijas<span class="sc">$</span>masa_g, <span class="at">breaks =</span> <span class="dv">12</span>, <span class="at">plot =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>moda <span class="ot">&lt;-</span> h<span class="sc">$</span>mids[<span class="fu">which.max</span>(h<span class="sc">$</span>counts)]          <span class="co"># centro de la clase mas alta</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(lagartijas, <span class="fu">aes</span>(<span class="at">x =</span> masa_g)) <span class="sc">+</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">12</span>, <span class="at">fill =</span> <span class="st">"#DCE6F1"</span>, <span class="at">colour =</span> <span class="st">"#1F4E79"</span>) <span class="sc">+</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(lagartijas<span class="sc">$</span>masa_g),   <span class="at">colour =</span> <span class="st">"#C0392B"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">median</span>(lagartijas<span class="sc">$</span>masa_g), <span class="at">colour =</span> <span class="st">"#1D9E75"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> moda,                      <span class="at">colour =</span> <span class="st">"#E8871E"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Con esta variable las tres líneas caen <strong>muy cerca unas de otras</strong>, señal de una distribución bastante simétrica: no hay una cola que jale la media hacia ningún lado. Conviene repetirlo con una variable claramente sesgada para ver el caso contrario.</p>
+<p>Dos advertencias sobre la moda de una variable continua. La primera, que <strong>depende del ancho de clase</strong>: al cambiar <code>bins</code>, la clase más alta puede ser otra y la moda se mueve. La segunda, que por eso mismo es la menos estable de las tres, y la razón por la que se reporta poco fuera de las variables categóricas. <em>El orden moda &lt; mediana &lt; media del ejercicio 4 es una regla para sesgos pronunciados; con datos casi simétricos las tres se confunden y el orden puede salir cualquiera.</em></p>
+<p><strong>7.</strong> El Q-Q plot del conjunto completo muestra desviaciones de la recta, porque los datos <strong>mezclan cuatro sustratos con medias distintas</strong> (no es una sola población). Al analizar solo <code>aserrin</code>, los puntos se alinean mucho mejor con la recta. <em>Lección clave para todo el curso: la normalidad se verifica <strong>dentro de cada grupo</strong>, no sobre la mezcla. Este es exactamente el chequeo que haremos antes del ANOVA en el <a href="10-anova.html" class="quarto-xref"><span>Capítulo 11</span></a>.</em></p>
 </div>
 </div>
 </div>

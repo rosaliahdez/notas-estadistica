@@ -69,7 +69,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./laboratorio-r.html" rel="next">
-<link href="./formulario.html" rel="prev">
+<link href="./manual-r.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -325,6 +325,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./manual-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Manual de comandos de R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./apendice-python.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">R y Python, lado a lado</span></a>
   </div>
@@ -469,41 +475,17 @@ window.Quarto = {
 </tr>
 <tr class="even">
 <td>Cuartiles</td>
-<td><code>quantile(x)</code></td>
+<td><code>quantile(x, type = 6)</code></td>
 <td><code>x.quantile([0,.25,.5,.75,1])</code></td>
 </tr>
 <tr class="odd">
 <td>Rango intercuartílico</td>
-<td><code>IQR(x)</code></td>
+<td><code>IQR(x, type = 6)</code></td>
 <td><code>x.quantile(.75) - x.quantile(.25)</code></td>
-</tr>
-<tr class="even">
-<td>Tabla de frecuencias</td>
-<td><code>table(g)</code></td>
-<td><code>g.value_counts()</code></td>
-</tr>
-<tr class="odd">
-<td>Tabla de contingencia</td>
-<td><code>table(a, b)</code></td>
-<td><code>pd.crosstab(a, b)</code></td>
-</tr>
-<tr class="even">
-<td>Resumen por grupo</td>
-<td><code>group_by(g) \|&gt; summarise(...)</code></td>
-<td><code>datos.groupby("g").agg(...)</code></td>
-</tr>
-<tr class="odd">
-<td>Correlación</td>
-<td><code>cor(x, y)</code></td>
-<td><code>x.corr(y)</code></td>
-</tr>
-<tr class="even">
-<td>Matriz de correlación</td>
-<td><code>cor(df)</code></td>
-<td><code>df.corr()</code></td>
 </tr>
 </tbody>
 </table>
+<p>Nota sobre los cuartiles: el curso usa la convención de la posición <span class="math inline">\((n+1)p\)</span>, que en R se pide con <code>type = 6</code>. El valor por omisión de R y el de pandas usan la otra convención, así que sus <span class="math inline">\(q_1\)</span> y <span class="math inline">\(q_3\)</span> difieren un poco. | Tabla de frecuencias | <code>table(g)</code> | <code>g.value_counts()</code> | | Tabla de contingencia | <code>table(a, b)</code> | <code>pd.crosstab(a, b)</code> | | Resumen por grupo | <code>group_by(g) \|&gt; summarise(...)</code> | <code>datos.groupby("g").agg(...)</code> | | Correlación | <code>cor(x, y)</code> | <code>x.corr(y)</code> | | Matriz de correlación | <code>cor(df)</code> | <code>df.corr()</code> |</p>
 <blockquote class="blockquote">
 <p>Nótese una diferencia de estilo: en R las funciones reciben el objeto (<code>mean(x)</code>), y en Python el objeto lleva el método (<code>x.mean()</code>). Es la distinción entre programación funcional y orientada a objetos, y explica casi toda la diferencia visual entre ambos lenguajes.</p>
 </blockquote>
@@ -1219,8 +1201,8 @@ window._ojs.runtime.interpretFromScriptTags();
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./formulario.html" class="pagination-link" aria-label="Formulario">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Formulario</span>
+      <a href="./manual-r.html" class="pagination-link" aria-label="Manual de comandos de R">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Manual de comandos de R</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

@@ -33,7 +33,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./apendice-python.html" rel="next">
+<link href="./manual-r.html" rel="next">
 <link href="./mapa-decision.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -290,6 +290,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./manual-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Manual de comandos de R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./apendice-python.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">R y Python, lado a lado</span></a>
   </div>
@@ -382,7 +388,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Cada sección indica el capítulo del que proviene. Al final hay dos tablas de referencia rápida: los <strong>valores críticos</strong> más usados y una <strong>guía de selección</strong> que remite al <span class="quarto-unresolved-ref">?sec-mapa</span>.</p>
+<p>Cada sección indica el capítulo del que proviene. Al final hay dos tablas de referencia rápida: los <strong>valores críticos</strong> más usados y una <strong>guía de selección</strong> que remite al <span class="quarto-unresolved-ref">?sec-mapa</span>. Para el comando de R que calcula cada cosa, el <span class="quarto-unresolved-ref">?sec-manual-r</span>.</p>
 <p>Las fórmulas no están para memorizarse. Están para reconocer la <strong>estructura</strong> de cada procedimiento (casi todos son una señal dividida entre su error estándar) y para poder calcular sin computadora cuando haga falta.</p>
 </div>
 </div>
@@ -415,10 +421,14 @@ window.Quarto = {
 <p>En R: <code>names(which.max(table(x)))</code></p>
 <p><strong>Posición de los cuartiles</strong> (en los datos ordenados)</p>
 <p><span class="math display">\[\text{Pos}(q_1) = \frac{n+1}{4}, \qquad \text{Pos}(q_2) = \frac{n+1}{2}, \qquad \text{Pos}(q_3) = \frac{3(n+1)}{4}\]</span></p>
-<p>En R: <code>quantile(x)</code></p>
-<p>Si la posición no es entera, se interpola entre los dos datos vecinos.</p>
+<p>Si la posición no es entera, se interpola entre los dos datos vecinos. Si queda entre el dato <span class="math inline">\(a\)</span> y el siguiente <span class="math inline">\(b\)</span>, a una fracción <span class="math inline">\(f\)</span> del camino:</p>
+<p><span class="math display">\[q = a + (b - a)\,f\]</span></p>
+<p>En R: <code>quantile(x, type = 6)</code>.</p>
+<p><strong>La convención de fábrica de R</strong> es otra, la del tipo 7, que localiza el cuartil en</p>
+<p><span class="math display">\[\text{Pos}(q_i) = \frac{i\,(n-1)}{4} + 1\]</span></p>
+<p>y devuelve otros valores para <span class="math inline">\(q_1\)</span> y <span class="math inline">\(q_3\)</span>. La mediana coincide en ambas. R implementa nueve convenciones; se consultan con <code>?quantile</code>, sección <em>Types</em>. Las más frecuentes son la 6, que usan Minitab y SPSS, la 7, que usan R y Excel, y la 8, recomendada por Hyndman y Fan (1996).</p>
 <p><strong>Percentil <span class="math inline">\(k\)</span>.</strong> Posición <span class="math inline">\(\dfrac{k(n+1)}{100}\)</span>.</p>
-<p>En R: <code>quantile(x, k/100)</code></p>
+<p>En R: <code>quantile(x, k/100, type = 6)</code></p>
 </section>
 <section id="medidas-de-dispersión" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="medidas-de-dispersión">Medidas de dispersión</h2>
@@ -430,7 +440,11 @@ window.Quarto = {
 <p>La segunda expresión es la <strong>fórmula de cálculo</strong>: solo requiere acumular <span class="math inline">\(\sum x_i\)</span> y <span class="math inline">\(\sum x_i^2\)</span>, y es la que conviene con calculadora.</p>
 <p><strong>Rango y rango intercuartílico</strong></p>
 <p><span class="math display">\[\text{Rango} = x_{\max} - x_{\min}, \qquad RI = q_3 - q_1\]</span></p>
-<p>En R: <code>range(x)</code> · <code>IQR(x)</code></p>
+<p>En R: <code>diff(range(x))</code> · <code>IQR(x, type = 6)</code></p>
+<p><strong>Barreras del diagrama de caja</strong></p>
+<p><span class="math display">\[f_1 = q_1 - 1.5\,RI, \quad f_3 = q_3 + 1.5\,RI \qquad \text{(interiores)}\]</span></p>
+<p><span class="math display">\[F_1 = q_1 - 3\,RI, \quad F_3 = q_3 + 3\,RI \qquad \text{(exteriores)}\]</span></p>
+<p>Entre las interiores y las exteriores están los <strong>atípicos suaves</strong>; más allá de las exteriores, los <strong>atípicos extremos</strong>.</p>
 <p><strong>Coeficiente de variación</strong> (dispersión relativa, sin unidades)</p>
 <p><span class="math display">\[CV = \frac{s}{\bar{x}} \times 100\,\%\]</span></p>
 <p><strong>Propiedades de la varianza.</strong> Para constantes <span class="math inline">\(a\)</span> y <span class="math inline">\(k\)</span>:</p>
@@ -1377,8 +1391,8 @@ window._ojs.runtime.interpretFromScriptTags();
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./apendice-python.html" class="pagination-link" aria-label="R y Python, lado a lado">
-        <span class="nav-page-text">R y Python, lado a lado</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./manual-r.html" class="pagination-link" aria-label="Manual de comandos de R">
+        <span class="nav-page-text">Manual de comandos de R</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

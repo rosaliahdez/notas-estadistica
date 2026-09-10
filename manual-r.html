@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Manual de comandos de R – Estadística para Ciencias de la Computación</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./apendice-python.html" rel="next">
+<link href="./formulario.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-22a2d3c8fd5a3a2e3c4a69971a64c298.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./mapa-decision.html">Apéndices</a></li><li class="breadcrumb-item"><a href="./manual-r.html">Manual de comandos de R</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Estadística para Ciencias de la Computación</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Alternar modo lector">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Presentación</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">I. Exploración de los datos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-exploracion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Exploración de los datos</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-descriptiva.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Análisis numérico de datos</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-relaciones.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Relaciones entre variables</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">II. Producción de los datos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-muestreo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Producción de datos: muestreo</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-experimentos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Producción de datos: diseño de experimentos</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">III. Inferencia estadística</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./laboratorio-estandarizacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Laboratorio interactivo: la estandarización</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-muestrales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Distribuciones muestrales y TCL</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-estimacion-pruebas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estimación y prueba de hipótesis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-dos-muestras.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Inferencia para dos parámetros</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-enumerativos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Inferencia para datos enumerativos</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Análisis de varianza (ANOVA)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-regresion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Inferencia en regresión</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referencias</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Apéndices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mapa-decision.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mapa de decisión</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./formulario.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Formulario</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./manual-r.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Manual de comandos de R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./apendice-python.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">R y Python, lado a lado</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./laboratorio-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Practicar R sin instalar nada</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En este capítulo</h2>
+   
+  <ul>
+  <li><a href="#antes-de-todo-la-sesión-de-trabajo" id="toc-antes-de-todo-la-sesión-de-trabajo" class="nav-link active" data-scroll-target="#antes-de-todo-la-sesión-de-trabajo">Antes de todo: la sesión de trabajo</a></li>
+  <li><a href="#capítulo-1-exploración-de-los-datos" id="toc-capítulo-1-exploración-de-los-datos" class="nav-link" data-scroll-target="#capítulo-1-exploración-de-los-datos">Capítulo 1 · Exploración de los datos</a>
+  <ul class="collapse">
+  <li><a href="#abrir-y-mirar-una-tabla" id="toc-abrir-y-mirar-una-tabla" class="nav-link" data-scroll-target="#abrir-y-mirar-una-tabla">Abrir y mirar una tabla</a></li>
+  <li><a href="#el-signo-y-el-operador" id="toc-el-signo-y-el-operador" class="nav-link" data-scroll-target="#el-signo-y-el-operador">El signo <code>$</code> y el operador <code>|&gt;</code></a></li>
+  <li><a href="#variables-categóricas" id="toc-variables-categóricas" class="nav-link" data-scroll-target="#variables-categóricas">Variables categóricas</a></li>
+  <li><a href="#las-dos-primeras-gráficas" id="toc-las-dos-primeras-gráficas" class="nav-link" data-scroll-target="#las-dos-primeras-gráficas">Las dos primeras gráficas</a></li>
+  </ul></li>
+  <li><a href="#capítulo-2-análisis-numérico" id="toc-capítulo-2-análisis-numérico" class="nav-link" data-scroll-target="#capítulo-2-análisis-numérico">Capítulo 2 · Análisis numérico</a>
+  <ul class="collapse">
+  <li><a href="#centro-y-dispersión" id="toc-centro-y-dispersión" class="nav-link" data-scroll-target="#centro-y-dispersión">Centro y dispersión</a></li>
+  <li><a href="#el-histograma-con-criterio" id="toc-el-histograma-con-criterio" class="nav-link" data-scroll-target="#el-histograma-con-criterio">El histograma, con criterio</a></li>
+  <li><a href="#boxplot-y-barreras" id="toc-boxplot-y-barreras" class="nav-link" data-scroll-target="#boxplot-y-barreras">Boxplot y barreras</a></li>
+  <li><a href="#q-q-plot" id="toc-q-q-plot" class="nav-link" data-scroll-target="#q-q-plot">Q-Q plot</a></li>
+  <li><a href="#resúmenes-por-grupo" id="toc-resúmenes-por-grupo" class="nav-link" data-scroll-target="#resúmenes-por-grupo">Resúmenes por grupo</a></li>
+  <li><a href="#seleccionar-y-filtrar" id="toc-seleccionar-y-filtrar" class="nav-link" data-scroll-target="#seleccionar-y-filtrar">Seleccionar y filtrar</a></li>
+  </ul></li>
+  <li><a href="#capítulo-3-relación-entre-dos-variables" id="toc-capítulo-3-relación-entre-dos-variables" class="nav-link" data-scroll-target="#capítulo-3-relación-entre-dos-variables">Capítulo 3 · Relación entre dos variables</a></li>
+  <li><a href="#capítulos-4-y-5-producción-de-los-datos" id="toc-capítulos-4-y-5-producción-de-los-datos" class="nav-link" data-scroll-target="#capítulos-4-y-5-producción-de-los-datos">Capítulos 4 y 5 · Producción de los datos</a></li>
+  <li><a href="#capítulo-6-distribuciones" id="toc-capítulo-6-distribuciones" class="nav-link" data-scroll-target="#capítulo-6-distribuciones">Capítulo 6 · Distribuciones</a></li>
+  <li><a href="#capítulo-7-estimación-y-pruebas" id="toc-capítulo-7-estimación-y-pruebas" class="nav-link" data-scroll-target="#capítulo-7-estimación-y-pruebas">Capítulo 7 · Estimación y pruebas</a></li>
+  <li><a href="#capítulo-8-dos-grupos" id="toc-capítulo-8-dos-grupos" class="nav-link" data-scroll-target="#capítulo-8-dos-grupos">Capítulo 8 · Dos grupos</a></li>
+  <li><a href="#capítulo-9-datos-categóricos" id="toc-capítulo-9-datos-categóricos" class="nav-link" data-scroll-target="#capítulo-9-datos-categóricos">Capítulo 9 · Datos categóricos</a></li>
+  <li><a href="#capítulo-10-más-de-dos-grupos" id="toc-capítulo-10-más-de-dos-grupos" class="nav-link" data-scroll-target="#capítulo-10-más-de-dos-grupos">Capítulo 10 · Más de dos grupos</a></li>
+  <li><a href="#capítulo-11-inferencia-en-regresión" id="toc-capítulo-11-inferencia-en-regresión" class="nav-link" data-scroll-target="#capítulo-11-inferencia-en-regresión">Capítulo 11 · Inferencia en regresión</a></li>
+  <li><a href="#índice-alfabético" id="toc-índice-alfabético" class="nav-link" data-scroll-target="#índice-alfabético">Índice alfabético</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./mapa-decision.html">Apéndices</a></li><li class="breadcrumb-item"><a href="./manual-r.html">Manual de comandos de R</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-manual-r" class="quarto-section-identifier">Manual de comandos de R</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Esta página reúne los comandos de R que aparecen en el curso, <strong>en el orden en que van apareciendo</strong>. No es una lista alfabética ni una referencia del lenguaje: es el recorrido del curso visto desde el teclado, para que quien esté en la semana seis pueda repasar lo de la semana dos sin buscar en qué capítulo estaba.</p>
+<p>Cada entrada dice qué hace el comando, cómo se escribe en el caso más simple, y —cuando lo hay— el detalle que suele causar problemas.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Cómo encontrar algo aquí">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Cómo encontrar algo aquí
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si se sabe <strong>cuándo</strong> se vio, se busca por capítulo, que es como está ordenado. Si solo se recuerda <strong>el nombre</strong> de la función, al final hay un índice alfabético con el enlace a su entrada.</p>
+<p>Para las <strong>fórmulas</strong> y sus condiciones de validez, el <span class="quarto-unresolved-ref">?sec-formulario</span>. Para elegir <strong>qué técnica</strong> usar, el <span class="quarto-unresolved-ref">?sec-mapa</span>. Esta página responde otra pregunta: qué se teclea.</p>
+</div>
+</div>
+<hr>
+<section id="antes-de-todo-la-sesión-de-trabajo" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="antes-de-todo-la-sesión-de-trabajo">Antes de todo: la sesión de trabajo</h2>
+<p>Tres líneas que van al principio de casi cualquier guion.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Comando</th>
+<th>Qué hace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>library(tidyverse)</code></td>
+<td>Carga el conjunto de paquetes que usa el curso: <code>ggplot2</code> para graficar, <code>dplyr</code> para resumir</td>
+</tr>
+<tr class="even">
+<td><code>library(palmerpenguins)</code></td>
+<td>Carga los datos de pingüinos, que se usan de ejemplo en casi todo el libro</td>
+</tr>
+<tr class="odd">
+<td><code>theme_set(theme_minimal())</code></td>
+<td>Fija el aspecto de todas las gráficas que vengan después</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-warning callout-titled" title="`library` no es `install.packages`">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span><code>library</code> no es <code>install.packages</code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>install.packages("tidyverse")</code> se corre <strong>una vez en la vida</strong> de la computadora y baja el paquete de internet. <code>library(tidyverse)</code> se corre <strong>cada vez que se abre R</strong> y lo pone a la mano. Confundirlos produce el error más común del curso: <em>“there is no package called…”</em> significa que falta el primero; <em>“could not find function…”</em> casi siempre significa que falta el segundo.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="capítulo-1-exploración-de-los-datos" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="capítulo-1-exploración-de-los-datos">Capítulo 1 · Exploración de los datos</h2>
+<section id="abrir-y-mirar-una-tabla" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="abrir-y-mirar-una-tabla">Abrir y mirar una tabla</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>lagartijas <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"datos/lagartijas.csv"</span>)   <span class="co"># leer un archivo .csv</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(lagartijas)      <span class="co"># una linea por variable: nombre, tipo y primeros valores</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(lagartijas)         <span class="co"># los primeros seis renglones</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lagartijas)      <span class="co"># resumen numerico de cada columna</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(lagartijas)        <span class="co"># solo los nombres de las columnas</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(lagartijas)         <span class="co"># cuantos renglones</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>glimpse()</code> es lo primero que conviene correr al abrir datos nuevos: dice de un vistazo cuántos individuos hay, cuántas variables, y si R entendió cada columna como número o como texto.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="La ruta del archivo">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>La ruta del archivo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>read.csv("datos/lagartijas.csv")</code> funciona si R está trabajando en la carpeta que <strong>contiene</strong> a <code>datos</code>. Si sale <em>“cannot open file”</em>, el problema casi nunca es el nombre del archivo, sino desde dónde está mirando R. <code>getwd()</code> dice dónde está parado.</p>
+</div>
+</div>
+</section>
+<section id="el-signo-y-el-operador" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="el-signo-y-el-operador">El signo <code>$</code> y el operador <code>|&gt;</code></h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>lagartijas<span class="sc">$</span>masa_g        <span class="co"># una columna suelta, como vector</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>lagartijas <span class="sc">|&gt;</span> <span class="fu">head</span>()     <span class="co"># lo mismo que head(lagartijas)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>El <code>$</code> saca <strong>una columna</strong>. El <code>|&gt;</code> (léase “y luego”) pasa lo de la izquierda como primer argumento de lo de la derecha, y sirve para encadenar pasos sin anidar paréntesis. Se vuelve indispensable en el capítulo 2.</p>
+</section>
+<section id="variables-categóricas" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="variables-categóricas">Variables categóricas</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(lagartijas<span class="sc">$</span>habitat)          <span class="co"># cuantos hay de cada categoria</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">factor</span>(x, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"bajo"</span>, <span class="st">"medio"</span>, <span class="st">"alto"</span>))   <span class="co"># fijar el orden de las categorias</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(f)                          <span class="co"># ver ese orden</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled" title="Para qué sirve `factor()`">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Para qué sirve <code>factor()</code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>R ordena las categorías alfabéticamente si no se le dice otra cosa, y eso pone “alto” antes que “bajo” en las gráficas. <code>factor()</code> con <code>levels</code> impone el orden que tiene sentido.</p>
+</div>
+</div>
+</section>
+<section id="las-dos-primeras-gráficas" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="las-dos-primeras-gráficas">Las dos primeras gráficas</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> habitat)) <span class="sc">+</span> <span class="fu">geom_bar</span>()                 <span class="co"># barras: 1 categorica</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> masa_g))  <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">12</span>)  <span class="co"># histograma: 1 cuantitativa</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>La receta de <code>ggplot2</code> siempre tiene las mismas tres piezas: los <strong>datos</strong>, el <code>aes()</code> que dice qué variable va en qué eje, y una capa <code>geom_</code> que dice cómo dibujarlo. Las capas se suman con <code>+</code>.</p>
+<hr>
+</section>
+</section>
+<section id="capítulo-2-análisis-numérico" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="capítulo-2-análisis-numérico">Capítulo 2 · Análisis numérico</h2>
+<section id="centro-y-dispersión" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="centro-y-dispersión">Centro y dispersión</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x)      <span class="fu">median</span>(x)              <span class="co"># centro</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(x)        <span class="fu">var</span>(x)                 <span class="co"># dispersion: desviacion estandar y varianza</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(x)     <span class="fu">diff</span>(<span class="fu">range</span>(x))         <span class="co"># minimo y maximo; el rango</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(x, <span class="at">type =</span> <span class="dv">6</span>)               <span class="co"># los cinco numeros</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">IQR</span>(x, <span class="at">type =</span> <span class="dv">6</span>)                    <span class="co"># rango intercuartilico</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-warning callout-titled" title="Dos argumentos que hay que recordar">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Dos argumentos que hay que recordar
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong><code>na.rm = TRUE</code>.</strong> Si la columna tiene datos faltantes, <code>mean(x)</code> devuelve <code>NA</code>. No es un error: R avisa que no puede promediar lo que no tiene. Se escribe <code>mean(x, na.rm = TRUE)</code> para que los ignore. Los datos de pingüinos tienen faltantes, así que en este libro aparece a cada rato.</p>
+<p><strong><code>type = 6</code>.</strong> R calcula cuartiles con nueve convenciones distintas y de fábrica usa una que <strong>no</strong> coincide con el cálculo a mano del curso. <code>quantile(x, type = 6)</code> e <code>IQR(x, type = 6)</code> reproducen el procedimiento manual. El detalle está en el <a href="02-descriptiva.html#sec-descriptiva-mano" class="quarto-xref"><span>El mismo cálculo a mano</span></a>.</p>
+</div>
+</div>
+</section>
+<section id="el-histograma-con-criterio" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="el-histograma-con-criterio">El histograma, con criterio</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">diff</span>(<span class="fu">range</span>(x)) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">log2</span>(<span class="fu">length</span>(x)))    <span class="co"># ancho por Sturges</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> <span class="fu">IQR</span>(x, <span class="at">type =</span> <span class="dv">6</span>) <span class="sc">/</span> <span class="fu">length</span>(x)<span class="sc">^</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)    <span class="co"># ancho por Freedman-Diaconis</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="fu">hist</span>(x, <span class="at">breaks =</span> <span class="dv">12</span>, <span class="at">plot =</span> <span class="cn">FALSE</span>)   <span class="co"># calcular sin dibujar</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>h<span class="sc">$</span>mids[<span class="fu">which.max</span>(h<span class="sc">$</span>counts)]               <span class="co"># centro de la clase mas alta</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Guardar el histograma sin dibujarlo (<code>plot = FALSE</code>) permite sacarle números: dónde quedaron los cortes, cuántos cayeron en cada clase. Es lo que se usa para aproximar la moda de una variable continua.</p>
+</section>
+<section id="boxplot-y-barreras" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="boxplot-y-barreras">Boxplot y barreras</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> habitat, <span class="at">y =</span> masa_g)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>q1 <span class="ot">&lt;-</span> <span class="fu">quantile</span>(x, <span class="fl">0.25</span>, <span class="at">type =</span> <span class="dv">6</span>);  q3 <span class="ot">&lt;-</span> <span class="fu">quantile</span>(x, <span class="fl">0.75</span>, <span class="at">type =</span> <span class="dv">6</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>ric <span class="ot">&lt;-</span> q3 <span class="sc">-</span> q1</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>q3 <span class="sc">+</span> <span class="fl">1.5</span> <span class="sc">*</span> ric        <span class="co"># barrera interior superior</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>q3 <span class="sc">+</span> <span class="dv">3</span>   <span class="sc">*</span> ric        <span class="co"># barrera exterior superior</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>geom_boxplot()</code> usa la convención de fábrica, no <code>type = 6</code>; las barreras calculadas a mano pueden salir un poco distintas de las que dibuja. El <a href="02-descriptiva.html#sec-barreras" class="quarto-xref"><span>Las barreras, y las dos clases de atípico</span></a> lo desarrolla.</p>
+</section>
+<section id="q-q-plot" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="q-q-plot">Q-Q plot</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">sample =</span> masa_g)) <span class="sc">+</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>()</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ppoints</span>(x)              <span class="co"># las proporciones ajustadas, (i - 3/8) / (n + 1/4)</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fu">ppoints</span>(x))       <span class="co"># los cuantiles teoricos: el eje horizontal</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Nótese que aquí la variable va en <code>sample =</code>, no en <code>x =</code> ni en <code>y =</code>. Es la única geometría del curso que se declara así. <code>stat_qq_line()</code> traza la recta de referencia con los cuartiles; el <a href="02-descriptiva.html#sec-qq-recta" class="quarto-xref"><span>De dónde sale la recta de referencia</span></a> explica por qué con esos y no con la media.</p>
+</section>
+<section id="resúmenes-por-grupo" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="resúmenes-por-grupo">Resúmenes por grupo</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>datos <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(habitat) <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">n       =</span> <span class="fu">n</span>(),</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">media   =</span> <span class="fu">mean</span>(masa_g),</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">de      =</span> <span class="fu">sd</span>(masa_g)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Este bloque de tres piezas —<code>group_by</code>, <code>summarise</code>, y adentro las medidas que interesen— es probablemente el que más se repite en todo el curso. <code>n()</code> cuenta cuántos hay en cada grupo y se escribe sin nada adentro.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="El renglón `NA`">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>El renglón <code>NA</code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si la variable por la que se agrupa tiene faltantes, aparece un grupo extra etiquetado <code>NA</code>. Es información, no un defecto. Para excluirlo, <code>filter(!is.na(sex))</code> antes de agrupar, donde <code>!</code> significa <em>no</em>.</p>
+</div>
+</div>
+</section>
+<section id="seleccionar-y-filtrar" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="seleccionar-y-filtrar">Seleccionar y filtrar</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>datos <span class="sc">|&gt;</span> <span class="fu">filter</span>(habitat <span class="sc">==</span> <span class="st">"urbana"</span>)       <span class="co"># quedarse con ciertos renglones</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>datos <span class="sc">|&gt;</span> <span class="fu">select</span>(especie, masa_g)           <span class="co"># quedarse con ciertas columnas</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>datos <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">masa_kg =</span> masa_g <span class="sc">/</span> <span class="dv">1000</span>)   <span class="co"># crear una columna nueva</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-warning callout-titled" title="`=` contra `==`">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span><code>=</code> contra <code>==</code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Un signo igual <strong>asigna</strong>; dos signos iguales <strong>preguntan</strong>. <code>filter(habitat == "urbana")</code> pregunta cuáles renglones cumplen. Escribirlo con uno solo es el error de dedo más frecuente.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="capítulo-3-relación-entre-dos-variables" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="capítulo-3-relación-entre-dos-variables">Capítulo 3 · Relación entre dos variables</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> lhc_mm, <span class="at">y =</span> masa_g)) <span class="sc">+</span> <span class="fu">geom_point</span>()   <span class="co"># nube de puntos</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)                      <span class="co"># + la recta encima</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(x, y)                    <span class="co"># coeficiente de correlacion</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> datos)   <span class="co"># ajustar la recta</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(modelo)                 <span class="co"># ordenada al origen y pendiente</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">fitted</span>(modelo)               <span class="co"># valores ajustados</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="fu">resid</span>(modelo)                <span class="co"># residuales</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>La virgulilla <code>~</code> de <code>lm(y ~ x)</code> se lee <strong>“en función de”</strong>: <code>masa_g ~ lhc_mm</code> es “la masa en función del largo”. Esa notación reaparece en casi todos los procedimientos de la segunda mitad del curso.</p>
+<hr>
+</section>
+<section id="capítulos-4-y-5-producción-de-los-datos" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="capítulos-4-y-5-producción-de-los-datos">Capítulos 4 y 5 · Producción de los datos</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)                       <span class="co"># fijar el azar para poder repetir</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">slice_sample</span>(datos, <span class="at">n =</span> <span class="dv">30</span>)          <span class="co"># tomar 30 renglones al azar</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>), <span class="dv">20</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)   <span class="co"># sortear asignaciones</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">replicate</span>(<span class="dv">1000</span>, <span class="fu">mean</span>(<span class="fu">slice_sample</span>(datos, <span class="at">n =</span> <span class="dv">30</span>)<span class="sc">$</span>masa_g))   <span class="co"># repetir mil veces</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(datos, habitat)                <span class="co"># contar por categoria</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled" title="`set.seed()` no es opcional">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span><code>set.seed()</code> no es opcional
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sin ella, cada corrida da números distintos y los resultados no se pueden reproducir ni comparar con los del libro. Con ella, el azar es el mismo siempre. Va <strong>antes</strong> de lo que use azar, no después.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="capítulo-6-distribuciones" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="capítulo-6-distribuciones">Capítulo 6 · Distribuciones</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(q, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)     <span class="co"># AREA a la izquierda de q</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(p, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)     <span class="co"># el VALOR que deja p de area a su izquierda</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)     <span class="co"># generar n valores al azar de una normal</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">rbinom</span>(n, size, prob)          <span class="co"># lo mismo, pero binomial</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Cómo recordar `pnorm` y `qnorm`">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Cómo recordar <code>pnorm</code> y <code>qnorm</code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Son inversas la una de la otra. La <strong>p</strong> de <code>pnorm</code> es de <em>probabilidad</em>: se entrega un valor y devuelve área. La <strong>q</strong> de <code>qnorm</code> es de <em>cuantil</em>: se entrega un área y devuelve el valor. Si se confunden, <code>qnorm(pnorm(1.96))</code> regresa <code>1.96</code> y aclara cuál es cuál.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="capítulo-7-estimación-y-pruebas" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="capítulo-7-estimación-y-pruebas">Capítulo 7 · Estimación y pruebas</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(x)                                   <span class="co"># intervalo y prueba para una media</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(x, <span class="at">mu =</span> <span class="dv">100</span>)                         <span class="co"># contra un valor de referencia</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(x, <span class="at">alternative =</span> <span class="st">"greater"</span>)          <span class="co"># prueba de una cola</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(x, <span class="at">conf.level =</span> <span class="fl">0.99</span>)                <span class="co"># cambiar el nivel de confianza</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">power.t.test</span>(<span class="at">n =</span> <span class="dv">30</span>, <span class="at">delta =</span> <span class="dv">5</span>, <span class="at">sd =</span> <span class="dv">12</span>)    <span class="co"># potencia y tamaño necesario</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>t.test()</code> devuelve el intervalo y la prueba <strong>en la misma salida</strong>, y por eso aparece en los dos temas. Sin más argumentos hace la prueba bilateral contra cero, con 95 % de confianza.</p>
+<hr>
+</section>
+<section id="capítulo-8-dos-grupos" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="capítulo-8-dos-grupos">Capítulo 8 · Dos grupos</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(masa_g <span class="sc">~</span> habitat, <span class="at">data =</span> datos)                  <span class="co"># dos grupos independientes</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(antes, despues, <span class="at">paired =</span> <span class="cn">TRUE</span>)                   <span class="co"># datos pareados</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">var.test</span>(masa_g <span class="sc">~</span> habitat, <span class="at">data =</span> datos)                <span class="co"># comparar dos dispersiones</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">pivot_wider</span>(datos, <span class="at">names_from =</span> momento, <span class="at">values_from =</span> valor)   <span class="co"># de largo a ancho</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">facet_wrap</span>(<span class="sc">~</span> habitat)                                   <span class="co"># una grafica por grupo</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Aquí reaparece la virgulilla: <code>masa_g ~ habitat</code> es “la masa según el hábitat”. Y aparece la decisión que más se equivoca en el curso: <code>paired = TRUE</code> va <strong>solo</strong> cuando los dos números vienen del mismo individuo.</p>
+<hr>
+</section>
+<section id="capítulo-9-datos-categóricos" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="capítulo-9-datos-categóricos">Capítulo 9 · Datos categóricos</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.test</span>(<span class="at">x =</span> <span class="dv">45</span>, <span class="at">n =</span> <span class="dv">120</span>)                  <span class="co"># una proporcion</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.test</span>(<span class="fu">c</span>(<span class="dv">45</span>, <span class="dv">60</span>), <span class="fu">c</span>(<span class="dv">120</span>, <span class="dv">130</span>))           <span class="co"># dos proporciones</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>tabla <span class="ot">&lt;-</span> <span class="fu">table</span>(datos<span class="sc">$</span>a, datos<span class="sc">$</span>b)            <span class="co"># tabla de contingencia</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(tabla)                           <span class="co"># prueba de independencia</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(tabla, <span class="at">margin =</span> <span class="dv">1</span>)               <span class="co"># porcentajes por renglon</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="fu">rowSums</span>(tabla)                              <span class="co"># totales por renglon</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>En <code>prop.table()</code>, <code>margin = 1</code> da porcentajes <strong>por renglón</strong> y <code>margin = 2</code> por columna. Cuál conviene depende de qué se quiera comparar.</p>
+<hr>
+</section>
+<section id="capítulo-10-más-de-dos-grupos" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="capítulo-10-más-de-dos-grupos">Capítulo 10 · Más de dos grupos</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">aov</span>(agrado <span class="sc">~</span> galleta, <span class="at">data =</span> datos)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo)             <span class="co"># la tabla de ANOVA</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(<span class="fu">residuals</span>(modelo))    <span class="co"># normalidad de los residuales</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">bartlett.test</span>(agrado <span class="sc">~</span> galleta, <span class="at">data =</span> datos)   <span class="co"># igualdad de dispersiones</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(modelo)            <span class="co"># cuales parejas difieren</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">TukeyHSD</span>(modelo))      <span class="co"># lo mismo, en grafica</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>El orden importa: primero se revisan los supuestos sobre los residuales, después se lee la tabla, y el <code>TukeyHSD</code> solo tiene sentido si la tabla dio diferencias.</p>
+<hr>
+</section>
+<section id="capítulo-11-inferencia-en-regresión" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="capítulo-11-inferencia-en-regresión">Capítulo 11 · Inferencia en regresión</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(masa_g <span class="sc">~</span> lhc_mm, <span class="at">data =</span> datos)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo)             <span class="co"># coeficientes, sus pruebas y el r cuadrada</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(modelo)             <span class="co"># intervalos para la pendiente y la ordenada</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(x, y)              <span class="co"># prueba para la correlacion</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>)); <span class="fu">plot</span>(modelo)     <span class="co"># las cuatro graficas de diagnostico</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(modelo, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">lhc_mm =</span> <span class="dv">65</span>))   <span class="co"># predecir</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>lm()</code> es la misma función del capítulo 3; lo que cambia es que ahora se lee su <code>summary()</code> completo, con las pruebas de los coeficientes.</p>
+<hr>
+</section>
+<section id="índice-alfabético" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="índice-alfabético">Índice alfabético</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Función</th>
+<th>Para qué</th>
+<th>Dónde</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>aov()</code></td>
+<td>ANOVA</td>
+<td>Cap. 10</td>
+</tr>
+<tr class="even">
+<td><code>bartlett.test()</code></td>
+<td>Igualdad de dispersiones</td>
+<td>Cap. 10</td>
+</tr>
+<tr class="odd">
+<td><code>chisq.test()</code></td>
+<td>Independencia de dos categóricas</td>
+<td>Cap. 9</td>
+</tr>
+<tr class="even">
+<td><code>coef()</code></td>
+<td>Coeficientes de un modelo</td>
+<td>Cap. 3</td>
+</tr>
+<tr class="odd">
+<td><code>confint()</code></td>
+<td>Intervalos para los coeficientes</td>
+<td>Cap. 11</td>
+</tr>
+<tr class="even">
+<td><code>cor()</code>, <code>cor.test()</code></td>
+<td>Correlación, y su prueba</td>
+<td>Cap. 3, Cap. 11</td>
+</tr>
+<tr class="odd">
+<td><code>count()</code></td>
+<td>Contar por categoría</td>
+<td>Cap. 4</td>
+</tr>
+<tr class="even">
+<td><code>factor()</code>, <code>levels()</code></td>
+<td>Orden de las categorías</td>
+<td>Cap. 1</td>
+</tr>
+<tr class="odd">
+<td><code>filter()</code>, <code>select()</code>, <code>mutate()</code></td>
+<td>Renglones, columnas, columnas nuevas</td>
+<td>Cap. 2</td>
+</tr>
+<tr class="even">
+<td><code>fitted()</code>, <code>resid()</code></td>
+<td>Ajustados y residuales</td>
+<td>Cap. 3</td>
+</tr>
+<tr class="odd">
+<td><code>geom_bar()</code>, <code>geom_histogram()</code></td>
+<td>Barras e histograma</td>
+<td>Cap. 1</td>
+</tr>
+<tr class="even">
+<td><code>geom_boxplot()</code>, <code>geom_point()</code></td>
+<td>Caja y nube de puntos</td>
+<td>Cap. 2, Cap. 3</td>
+</tr>
+<tr class="odd">
+<td><code>geom_smooth()</code></td>
+<td>La recta sobre la nube</td>
+<td>Cap. 3</td>
+</tr>
+<tr class="even">
+<td><code>glimpse()</code>, <code>head()</code>, <code>summary()</code></td>
+<td>Mirar una tabla</td>
+<td>Cap. 1</td>
+</tr>
+<tr class="odd">
+<td><code>group_by()</code>, <code>summarise()</code>, <code>n()</code></td>
+<td>Resumen por grupo</td>
+<td>Cap. 2</td>
+</tr>
+<tr class="even">
+<td><code>hist()</code></td>
+<td>Histograma de R base, útil sin dibujar</td>
+<td>Cap. 2</td>
+</tr>
+<tr class="odd">
+<td><code>IQR()</code></td>
+<td>Rango intercuartílico</td>
+<td>Cap. 2</td>
+</tr>
+<tr class="even">
+<td><code>library()</code></td>
+<td>Cargar un paquete</td>
+<td>Antes de todo</td>
+</tr>
+<tr class="odd">
+<td><code>lm()</code></td>
+<td>Ajustar una recta</td>
+<td>Cap. 3, Cap. 11</td>
+</tr>
+<tr class="even">
+<td><code>mean()</code>, <code>median()</code></td>
+<td>Centro</td>
+<td>Cap. 2</td>
+</tr>
+<tr class="odd">
+<td><code>pivot_wider()</code></td>
+<td>De formato largo a ancho</td>
+<td>Cap. 8</td>
+</tr>
+<tr class="even">
+<td><code>pnorm()</code>, <code>qnorm()</code>, <code>rnorm()</code></td>
+<td>Área, cuantil y valores de una normal</td>
+<td>Cap. 6</td>
+</tr>
+<tr class="odd">
+<td><code>power.t.test()</code></td>
+<td>Potencia y tamaño necesario</td>
+<td>Cap. 7</td>
+</tr>
+<tr class="even">
+<td><code>ppoints()</code></td>
+<td>Proporciones ajustadas del Q-Q</td>
+<td>Cap. 2</td>
+</tr>
+<tr class="odd">
+<td><code>predict()</code></td>
+<td>Predecir con un modelo</td>
+<td>Cap. 11</td>
+</tr>
+<tr class="even">
+<td><code>prop.test()</code>, <code>prop.table()</code></td>
+<td>Proporciones; porcentajes de una tabla</td>
+<td>Cap. 9</td>
+</tr>
+<tr class="odd">
+<td><code>quantile()</code></td>
+<td>Cuartiles y percentiles</td>
+<td>Cap. 2</td>
+</tr>
+<tr class="even">
+<td><code>range()</code>, <code>diff()</code></td>
+<td>Mínimo y máximo; el rango</td>
+<td>Cap. 2</td>
+</tr>
+<tr class="odd">
+<td><code>rbinom()</code></td>
+<td>Valores al azar de una binomial</td>
+<td>Cap. 6</td>
+</tr>
+<tr class="even">
+<td><code>read.csv()</code></td>
+<td>Leer un archivo de datos</td>
+<td>Cap. 1</td>
+</tr>
+<tr class="odd">
+<td><code>replicate()</code></td>
+<td>Repetir muchas veces</td>
+<td>Cap. 4</td>
+</tr>
+<tr class="even">
+<td><code>sample()</code>, <code>slice_sample()</code></td>
+<td>Sortear; tomar renglones al azar</td>
+<td>Cap. 4, Cap. 5</td>
+</tr>
+<tr class="odd">
+<td><code>sd()</code>, <code>var()</code></td>
+<td>Dispersión</td>
+<td>Cap. 2</td>
+</tr>
+<tr class="even">
+<td><code>set.seed()</code></td>
+<td>Fijar el azar</td>
+<td>Cap. 4</td>
+</tr>
+<tr class="odd">
+<td><code>shapiro.test()</code></td>
+<td>Normalidad</td>
+<td>Cap. 10, Cap. 11</td>
+</tr>
+<tr class="even">
+<td><code>stat_qq()</code>, <code>stat_qq_line()</code></td>
+<td>Q-Q plot y su recta</td>
+<td>Cap. 2</td>
+</tr>
+<tr class="odd">
+<td><code>t.test()</code></td>
+<td>Media: intervalo y prueba</td>
+<td>Cap. 7, Cap. 8</td>
+</tr>
+<tr class="even">
+<td><code>table()</code></td>
+<td>Frecuencias y tablas de contingencia</td>
+<td>Cap. 1, Cap. 9</td>
+</tr>
+<tr class="odd">
+<td><code>TukeyHSD()</code></td>
+<td>Qué parejas difieren</td>
+<td>Cap. 10</td>
+</tr>
+<tr class="even">
+<td><code>var.test()</code></td>
+<td>Comparar dos dispersiones</td>
+<td>Cap. 8</td>
+</tr>
+</tbody>
+</table>
+
+
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+W10=
+</script>
+</section>
+
+</main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../..";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./formulario.html" class="pagination-link" aria-label="Formulario">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Formulario</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./apendice-python.html" class="pagination-link" aria-label="R y Python, lado a lado">
+        <span class="nav-page-text">R y Python, lado a lado</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Estadística LCC · Universidad de Sonora</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Hecho con Quarto</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
